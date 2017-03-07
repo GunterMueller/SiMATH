@@ -1,0 +1,36 @@
+                         * * * * * * *
+                         * classnum  *
+                         * * * * * * *
+
+        "class number"
+        SYNTAX: X = classnum(D)
+                X = classnum(Nf)
+                X = classnum()
+
+        D is a nonzero integer equal to 0 or 1 mod 4. Nf is the current 
+        number field. In the second and the third case, the current number
+        field must be a quadratic number field and D is the discriminant 
+        of this number field.
+
+        X is assigned the class number of the quadratic number field 
+        Q(sqrt(D)).
+
+        Example 1: (correct)
+
+                classnum(5)
+
+
+        Example 2: (correct)
+
+                classnum(curNumberField)
+
+
+        Example 3: (correct)
+
+                classnum()
+
+        Example 4: (incorrect)
+
+                classnum(6)
+
+_ERR_NR_003

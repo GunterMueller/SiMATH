@@ -1,0 +1,18 @@
+                               * * * * * * *
+                               *   putoct  *
+                               * * * * * * *
+
+        "put integer, octal representation"
+        SYNTAX: M = putoct(N)
+
+        N is an integer.
+        putoct displays a sequence of 0,1,...,7 interpreted 
+        as the octal representation of N.
+
+        M is assigned N.
+
+
+        Example 1: (correct)
+
+                putoct( 12345 )
+

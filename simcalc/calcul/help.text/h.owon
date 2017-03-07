@@ -1,0 +1,13 @@
+                               * * * * * * *
+                               *    ow     *
+                               * * * * * * *
+
+
+        "owoff"         disables the overwrite protection mechanism.
+
+        "owon"          enables the overwrite protection mechanism.
+
+
+        By default, it is enabled.
+        owon and owoff cannot be used in loops. 
+        In loops, the overwrite protection mechanism is enabled.

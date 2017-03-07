@@ -1,0 +1,16 @@
+                               * * * * * * *
+                               *   cper    *
+                               * * * * * * *
+
+        "complex period of an elliptic curve"
+        SYNTAX: X = cper(E)
+
+        E is an expression whose value is an elliptic curve over Q.
+        
+        X is assigned the complex period of E.
+
+        
+        Example 1: (correct)
+                
+                cper( EC( 1, 0, 0, 1, 2 ) )     
+

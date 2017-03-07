@@ -1,0 +1,19 @@
+                           * * * * * * *
+                           *  dmconstr *
+                           * * * * * * *
+
+        "diagonal matrix construction"
+        SYNTAX: X = dmconstr(n, el)
+
+        n is a positive integer.
+        el is an element of Z, Q, Z/mZ, GF(p^n) (where p is a 
+        prime), number fields, polynomials over these structures 
+        or rational functions over Q.
+
+        X is assigned the nxn - diagonal matrix with el on the 
+        diagonal.
+
+
+        Example 1: (correct)
+
+                dmconstr(4,MOD(3*x+2))

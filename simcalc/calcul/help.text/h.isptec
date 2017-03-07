@@ -1,0 +1,31 @@
+                               * * * * * * *
+                               *  isptec   *
+                               * * * * * * *
+
+        "is point on elliptic curve ?"
+        SYNTAX: X = isptec(E, P)
+
+        E is an expression whose value is an elliptic curve over Q,
+        Z/pZ (where p is a prime), GF(2^n) or a number field.
+        P is an expression whose value is a projective or affine point
+        over Q, Z/pZ, GF(2^n) or a number field.
+
+        If P is a point on E, then 'Yes!' is displayed on the
+        screen and X = 1; otherwise 'No!' is displayed and X = 0.
+
+
+        Example 1: (correct)
+
+                isptec(EC(8, 9), PT(0, 3))
+
+
+        Example 2: (correct)
+
+                isptec(EC(MOD(8), 9), MOD(PT(0, 3)))
+
+
+        Example 3: (incorrect)
+
+                isptec(O)
+
+_ERR_NR_232

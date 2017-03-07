@@ -1,0 +1,32 @@
+                        * * * * * * * * * * *
+                        *   arsinh, arcosh  *
+                        *   artanh, arcoth  *
+                        * * * * * * * * * * *
+
+        "area sinus hyperbolicus, area cosinus hyperbolicus, 
+         area tangens hyperbolicus, area cotangens hyperbolicus"
+        SYNTAX: X = arsinh(A)
+                X = arcosh(A)
+                X = artanh(A)
+                X = arcoth(A)
+
+        A is an expression whose value is an integer, a rational
+        or a floating point number.
+
+        X is assigned the value of the hyperbolic function at A.
+
+        For X = arcosh(A), A must be >= 1.
+        For X = artanh(A), |A| must be < 1.
+        For X = arcoth(A), |A| must be > 1.
+        
+
+        Example 1: (correct)
+
+                arcosh(4.8)
+
+
+        Example 2: (incorrect)
+
+                arcoth(0)
+
+_ERR_NR_305

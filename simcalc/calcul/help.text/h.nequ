@@ -1,0 +1,28 @@
+                               * * * * * * *
+                               *    !=     *
+                               * * * * * * *
+
+        "not equal"
+
+        "!=" is an operator which compares two objects: "ob1 != ob2".
+        If they are equal, "!=" returns 0, if not, "!=" returns 1.
+
+
+        Example 1: (correct)
+
+                log2(123/45) != gcd(24, 76)
+
+
+        Example 2: (correct)
+
+                NF(A) != 1 + x
+
+
+        Example 3: (correct)
+
+                x/y != x * (1/y)
+
+
+        Example 4: (correct)
+
+                {{1, 1/2}} != {{-4, 5*x}}

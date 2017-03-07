@@ -1,0 +1,29 @@
+                               * * * * * * *
+                               *  putbits  *
+                               * * * * * * *
+
+        "put bits"
+        SYNTAX: X = putbits(A)
+
+        A is an expression whose value is an element of Z, Q, R, C, 
+        Z/mZ, GF(p^n), an algebraic number, a polynomial over Z, Q, 
+        Z/mZ, GF(p^n), a number field, over R or C, a rational 
+        function, a matrix or a vector over all these structures or 
+        an elliptic curve or a point of an elliptic curve over Q, 
+        Z/pZ (where p is a prime), GF(2^n) or a number field.
+
+        If A is an expression whose value is a single precision 
+        number, then putbits displays the bit representation of A.
+        Otherwise the bit representation of the address of the
+        object A is displayed.
+        X is assigned the value of A.
+        
+
+        Example 1: (correct)
+
+                putbits(1234)
+
+
+        Example 2: (correct)
+
+                putbits(x^2)

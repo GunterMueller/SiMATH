@@ -1,0 +1,51 @@
+                               * * * * * * *
+                               *   resul   *
+                               * * * * * * *
+
+        "resultant"
+        SYNTAX: X = resul(f, g, x, alg)
+
+        f and g are expressions whose values are polynomials over Z, 
+        Z/pZ (where p is a prime) or GF(p^n) (where p is a prime > 2).
+        x is a variable.
+        alg is 1, 2, 3 or 4.
+
+        X is assigned the resultant of f and g with respect to the
+        variable x. X is computed according to the following algorithms:
+
+        If P is a polynomial over Z:
+        the algorithm of Sylvester,             if alg = 1,
+        the algorithm of Bezout,                if alg = 2,
+                 (Warning: X is only exact up to sign!)
+        the algorithm of Collins-Sylvester,     if alg = 3,
+        the algorithm of Collins,               if alg = 4.
+
+        If P is a polynomial over Z/pZ:
+        the algorithm of Sylvester,             if alg = 1,
+        the algorithm of Bezout,                if alg = 2,
+                 (Warning: X is only exact up to sign!)
+        the algorithm of Collins,               if alg = 3 or 4.
+
+        If P is a polynomial over GF(p^n):
+        the algorithm of Sylvester in every case.
+
+        Warning: If p > 2^30, the primality of p is not tested.
+
+
+        Example 1: (correct)
+
+                resul(x*y + y, x + 1, x, 2)
+
+
+        Example 2: (incorrect)
+
+                resul(1/7*x + 1, x^2, x, 3)
+                
+_ERR_NR_037
+
+
+        Example 3: (incorrect)
+
+                resul(x^2 + 1, x^2 + 2, y, -4)
+                
+_ERR_NR_035

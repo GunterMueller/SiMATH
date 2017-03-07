@@ -1,0 +1,120 @@
+                               * * * * * * *
+                               *    rk     *
+                               * * * * * * *
+
+        "rank"
+        SYNTAX: X = rk(Y)
+                X = rk(Y, s)
+                X = rk(Y, s, b, v)
+
+
+        Y is an expression whose value is an elliptic curve over Q
+        or over a real quadratic number field with class number one
+        or a matrix over Z, Q, polynomials over Z or Q, rational 
+        functions over Q, number fields or GF(p^n) (where p is a 
+        prime). In the second case, Y must be an elliptic curve
+        over Q and s must be 0, 1, 2, or 3. In the third case, Y
+        must be an elliptic curve over a real quadratic number field
+        with class number one, s must be 0, 1, 2, b must be a single 
+        precision positive number, and v must be 0 or 1.
+
+        If Y is a matrix, X is assigned the rank of this matrix.
+        
+        If Y is an elliptic curve over Q, X is assigned the rank of 
+        the Mordell-Weil group of Y. The method used for the computation 
+        of the rank depends on the value of s:
+
+        s = 0: This is the default case.
+        If a 2-isogeny on Y over Q exists, the rank is computed
+        by 2-descent using the 2-isogeny. 
+        If this method is not successful or if there is no
+        2-isogeny, the rank is computed by general 2-descent.
+        If this method does not succeed, the rank is computed using the 
+        conjecture of Birch and Swinnerton-Dyer (Manin's conditional 
+        algorithm).
+
+        s = 1:
+        If a 2-isogeny on Y over Q exists, the rank is computed by 
+        2-descent using the isogeny. 
+        You can also use rk2d (see "?rk2d").
+ 
+        s = 2:
+        The rank is computed by general 2-descent.
+        You can also use rkg2d (see "?rkg2d").
+ 
+        s = 3:
+        The rank is computed using the conjecture of Birch and 
+        Swinnerton-Dyer (Manin's conditional algorithm).
+        You can also use rkbsd (see "?rkbsd").
+
+        If Y is an elliptic curve over a real quadratic number field with
+        class number 1, rk tries to compute the rank of the Mordell-Weil
+        group of Y over this quadratic field K=Q(sqrt(D)). 
+        You can use nfon in order to compute the rank of an elliptic curve
+        over Q over the field K.
+
+        Note: If the coefficients of Y are not integers in K, rk computes
+        the rank of an isomorphic curve with integral coefficients. 
+
+        Warning: If D > 100, the program does not really check whether the
+        class number is 1.
+
+        X is assigned the rank of the Mordell-Weil group. If the program 
+        finds more than one possibility for the rank, X is assigned the first
+        possible rank. The other possibilities can be found in the output.
+
+        The method used for the computation of the rank depends on the
+        value of s:
+
+        s=0: This is the default case. 
+        If there is a point of order 2, rk uses 2-descent via 2-isogeny.
+        If Y has trivial 2-torsion, rk uses general 2-descent.
+        You can also use rk2d (see "?rk2d").
+
+        s=1: This is the same as s=0. 
+        If there is a point of order 2, rk uses 2-descent via 2-isogeny.
+        If Y has trivial 2-torsion, rk uses general 2-descent.
+        You can also use rk2d (see "?rk2d").
+
+        s=2: 
+        The rank is computed via general 2-descent.
+        You can also use rkg2d (see "?rkg2d").
+
+        b must be a single precision positive number. It is the upper
+        bound for the search for points on the homogeneous spaces 
+        belonging to Y. The default value (in the case of an input rk(Y)
+        or rk(Y,s)) is 20. If rk finds more than one possible rank, a 
+        second run with a higher upper bound (e.g. 50 or 100) may lead to 
+        a uniquely determined rank.
+
+        v must be 0, if you want brief output, and 1, if you want detailed 
+        output. The default value is 1. If you put an ";" at the end of the 
+        input, v is automatically set to 0.
+
+        Warning: General 2-descent should currently only be used over
+        "small" quadratic number fields of class number 1, e.g. Q(sqrt(5)), 
+        Q(sqrt(2)), Q(sqrt(13)), and Q(sqrt(3)). Otherwise the cpu times may 
+        be "arbitrarily large". 2-descent via 2-isogeny can be used over any 
+	field Q(sqrt(D)) with sfp(D) < 2^30 and class number 1. 
+
+
+        
+        Example 1: (correct)
+                
+                rk( EC( 1, 0, 0, 1, 2 ) )       
+
+
+        Example 2: (correct)
+
+                rk( { { x^2+x, 2/3*z } { z+1, 3} } )
+
+
+        Example 3: (correct)
+                
+                rk( EC( 0, 2 ), 3)       
+
+
+        Example 4: (correct)
+                
+                rk( EC( NF(3), 0 ), 1)       
+

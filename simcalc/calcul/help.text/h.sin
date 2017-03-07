@@ -1,0 +1,32 @@
+                            * * * * * * * *
+                            *   sin, cos  *
+                            *   tan, cot  *
+                            * * * * * * * *
+
+        "sinus, cosinus, tangens, cotangens"
+        SYNTAX: X = sin(A)
+                X = cos(A)
+                X = tan(A)
+                X = cot(A)
+
+        A is an expression whose value is an integer, a rational
+        or a floating point number.
+
+        X is assigned the value of the trigonometric function at A.
+
+        For X = tan(A), A must not be of the form Pi/2 + k * Pi with
+        k in Z. 
+        For X = cot(A), A must not be of the form k * Pi with k in Z.
+        
+        Warning: Possibly, the above conditions are not exactly 
+                 recognized.
+
+
+        Example 1: (correct)
+
+                sin(Pi/4)
+
+
+        Example 2: (correct)
+
+                cot(Pi/2)

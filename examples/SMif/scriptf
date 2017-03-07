@@ -1,0 +1,28 @@
+# comment line
+# scriptname : scriptf
+
+IGNORE NEWLINE AFTER {[CHAR] \\}
+REPEAT UNTIL SEE {} {
+   SKIP UNTIL SEEN {[WORD] BLOCK}
+   SWITCH NEXTOBJ \
+      {[CHAR] a}  { SETITEM SIZE 4 PATTERN {$1+$2+$3+$4}
+                    REPEAT UNTIL SEE {[CHAR] *} {
+                       GET SINGLE {}
+                    }
+                    NOPOWER SETITEM
+                  }   \
+      {[CHAR] b}  { GET LIST {
+                       REPEAT UNTIL SEE {[CHAR] *} {
+                          GET LIST FOR NEXT 2 ITEM {}
+                       }
+                       STOPGET IF SEE {[CHAR] *}
+                     }
+                  }  \
+      {[CHAR] c}  { GET INT {} } \
+      {[CHAR] d}  { SKIP UNTIL SEEN {[CHAR] =}
+                    GET POL {
+                       STOPGET IF SEE {[CHAR] *}
+                    }
+                  }
+      # end SWITCH (comment)
+} 

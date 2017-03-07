@@ -1,0 +1,8 @@
+                               * * * * * * *
+                               *     Pi    *
+                               * * * * * * *
+
+        Pi is the representation of Pi (= 3.14... ) with the 
+        precision of DIGITS digits. By default, DIGITS = 37. 
+        In order to adjust this precision to s digits, please 
+        type "DIGITS = s", where s is single precision number.

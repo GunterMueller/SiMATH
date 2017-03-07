@@ -1,0 +1,31 @@
+                               * * * * * * *
+                               *   declaw  *
+                               * * * * * * *
+
+        "decomposition law"
+        SYNTAX: X = declaw(p)
+
+        p is an expression whose value is a prime.
+        
+        declaw computes the decomposition law of p in the current
+        number field, i.e. the number of extensions r of p and their
+        ramification indices ei and residue class degrees fi.
+        X is assigned the value of p.
+
+        In AV the additional values are stored as follows:
+        AV[0]=r, AV[1]=e1, AV[2]=f1, ..., AV[2*r-1]=er, AV[2*r]=fr
+        (see "?avfunc").
+        
+        Warning: If p > 2^30, the primality of p is not tested.
+        
+
+        Example 1: (correct)
+
+                declaw(97)
+
+
+        Example 2: (incorrect)
+
+                declaw(9)
+
+_ERR_NR_188

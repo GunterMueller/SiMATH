@@ -1,0 +1,34 @@
+                               * * * * * * *
+                               *   mval    *
+                               * * * * * * *
+
+        "multiplicative m-adic value"
+        SYNTAX: X = mval(m, A)
+
+        m is an expression whose value is a positive integer, and A is
+        an expression whose value is a nonzero element of Z or Q.
+
+        X is assigned the multiplicative m-adic value of A, i.e.
+        X equals m^(-aval(m,A)) (see "? aval").
+
+
+        Example 1: (correct)
+
+                mval(7, 49)
+
+
+        Example 2: (correct)
+
+                mval(15, 45)
+
+
+        Example 3: (incorrect)
+
+                mval(5, x + 1)
+                
+_ERR_NR_059
+
+
+        Example 4: (correct)
+
+                mval(3, 3/2)

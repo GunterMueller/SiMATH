@@ -1,0 +1,22 @@
+                               * * * * * * *
+                               *    norm   *
+                               * * * * * * *
+
+        "norm"
+        SYNTAX: X = norm(a)
+
+        a is an expression whose value is an algebraic number.
+        
+        X is assigned the norm of a over Q.
+        
+
+        Example 1: (correct)
+
+                norm(NF(A^7))
+
+
+        Example 2: (incorrect)
+
+                norm(NF(x))
+
+_ERR_NR_034_norm_             

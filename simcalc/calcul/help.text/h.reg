@@ -1,0 +1,25 @@
+                               * * * * * * *
+                               *    reg    *
+                               * * * * * * *
+
+        "regulator of an elliptic curve"
+        SYNTAX: X = reg(E1)
+                X = reg(E2,P1,...,Pn)
+
+        E1 is an expression whose value is an elliptic curve over Q.
+        E2 is an expression whose value is an elliptic curve over the
+        quadratic number field specified by curnf. P1,...,Pn are 
+        expressions whose values are points over the quadratic number field 
+        on the curve E2.
+        
+        X is assigned the regulator of E1 or the regulator of the points 
+        P1,...,Pn on E2 respectively.
+
+        
+        Example 1: (correct)
+                
+                reg( EC( 1, 0, 0, 1, 2 ) )      
+
+        Example 2: (correct)
+                
+                reg( EC( 0, NF(A), 0, 0, 6 ), PT(0,NF(A)), PT(0,-2*NF(A)) )      

@@ -1,0 +1,31 @@
+                               * * * * * * *
+                               *   trace   *
+                               * * * * * * *
+
+        "trace"
+        SYNTAX: X = trace(M)
+
+        First case:   M is an expression whose value is an algebraic 
+                      number.
+                      X is assigned the trace of M over Q.
+        Second case:  M is a square matrix over Z, Q, Z/mZ, GF(p^n),
+                      number fields, polynomials over these structures
+                      or rational functions over Q.
+                      X is assigned the trace of M.
+        
+
+        Example 1: (correct)
+
+                trace(NF(A^7))
+
+
+        Example 2: (incorrect)
+
+                trace(NF(x))
+
+_ERR_NR_034_trace_             
+
+
+        Example 3: (correct)
+   
+                trace({{MOD(3*x+4),MOD(2)}{MOD(x^3-2),MOD(3)}})

@@ -1,0 +1,12 @@
+c-mode を使おう
+===============
+
+スタイルの統一のために我々は emacs の c-mode を使うことに決めた。
+
+次の二行を各自の .emacs に書き加えて欲しい。
+
+(setq auto-mode-alist
+      (cons '("\\.S$" . c-mode) auto-mode-alist))
+
+
+$Id: c-mode.ja.txt,v 1.1 2002/05/24 01:22:08 tetsushi Exp $

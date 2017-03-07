@@ -1,0 +1,40 @@
+                                * * * * * * *
+                                *   file    *
+                                * * * * * * *
+
+        Strings may be read from files using the following commands:
+
+        "fopen"         
+        "fopen()"       opens the default file ___INP. It must exist
+                        in the current working directory 
+                        (see "? fopen").
+
+        "fopen(NAME)"   opens the file NAME. It must exist in the
+                        current working directory (see "? fopen").
+
+        "fread"         
+        "fread()"       reads the line the file pointer is pointing to 
+                        from the default file ___INP (see "? fread").   
+
+        "fread n"       
+        "fread(n)"      reads n lines beginning with the line the file 
+                        pointer is pointing to from the default file 
+                        ___INP (see "? fread").
+
+        "fread(NAME)"   reads the line the file pointer is pointing to
+                        from the file NAME (see "? fread").
+
+        "fread(NAME,n)"  reads n lines beginning with the line the file 
+                        pointer is pointing to from the file NAME
+                        (see "? fread").
+
+        "fclose"        
+        "fclose()"      closes the default file ___INP
+                        (see "? fclose").
+
+        "fclose(NAME)"  closes the file NAME (see "? fclose").
+
+        "openf"         lists all currently opened files.
+
+        Listing the currently opened files is not possible in
+        sequences and loops.

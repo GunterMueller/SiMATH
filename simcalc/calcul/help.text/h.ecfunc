@@ -1,0 +1,139 @@
+                                * * * * * * *
+                                *  ecfunc   *
+                                * * * * * * *
+
+        The variable HEIGHTBOUND determines the upper bound of the
+        height of points for the search in the algorithm of finding
+        basis points of an elliptic curve (i.e. basismwg and faintp). 
+        By default, HEIGHTBOUND = 11. In order to adjust this bound
+        to s, please type "HEIGHTBOUND = s", where s is an integer,
+        a rational or a floating point number with 0 <= s <= 2^999.
+        If HEIGHTBOUND is zero, then the height of points is 
+        unlimited.
+
+        If you need help in dealing with elliptic curves, please type 
+        "? EC", "? PT" or "? curec".
+
+        The following functions are available for elliptic curves:
+
+        *           aftopr      ecnpsnf     ntpair      sgnfeq 
+        +           areptsli    elog        ordtsg      swnf    
+        -           basismwg    faintp      prtoaf      taalg    
+        ==          bitrans     fp          ptcoef      tavb2 
+        !=          cond        intcoef     puto        tavb4  
+                    cper        isptec      red         tavb6    
+                    curec       jinv        reg         tavb8 
+                    derivL      minim       rk          tavc4
+                    discec      mtoi        rk2d        tavc6
+                    eccoef      np          rkbsd       tors      
+                    ecgnp       npfe        rkg2d       whei
+                    ecinf       nthei       rper
+
+                
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        '=='                    equal;
+   
+        '!='                    not equal;
+
+        'aftopr'                conversion from affine to projective 
+                                representation;
+
+        'areptsli'              are points linearly independent? ;
+
+        'basismwg'              basis of Mordell-Weil-group;
+
+        'bitrans'               birational transformation of an elliptic
+                                curve or a point;
+
+        'cond'                  conductor;      
+
+        'cper'                  complex period;
+        
+        'curec'                 current elliptic curve; 
+
+        'derivL'                derivation L-series;
+        
+        'discec'                discriminant of an elliptic curve;      
+
+        'eccoef'                elliptic curve coefficient;
+
+        'ecgnp'                 elliptic curve with given number of points;
+                                (only in SIEMENS-version)
+        
+        'ecinf'                 elliptic curve information;
+
+        'ecnpscf'               elliptic curve with point order with small cofactor;
+
+        'elog'                  elliptic logarithm;
+
+        'faintp'                finding all integral points;
+
+        'fp'                    finding point;
+        
+        'intcoef'               elliptic curve with integer coefficients;
+
+        'isptec'                is point on an elliptic curve? ;
+        
+        'jinv'                  j-invariant;                            
+        
+        'minim'                 global minimal model;
+
+        'mtoi'                  modular to integer;                     
+        
+        'np'                    number of points;
+
+        'npfe'                  number of points after field extension;
+
+        'nthei'                 Neron-Tate height;
+
+        'ntpair'                Neron-Tate pairing;
+
+        'ordtsg'                order of Tate-Shafarevic-group;
+
+        'prtoaf'                conversion from projective to affine 
+                                representation;         
+
+        'ptcoef'                point on elliptic curve coefficient;
+        
+        'puto'                  display internal object;
+        
+        'red'                   reduction of an elliptic curve;
+
+        'reg'                   regulator;
+
+        'rk'                    rank;
+
+        'rk2d'                  rank via 2-descent;
+
+        'rkbsd'                 rank via Birch and Swinnerton-Dyer conjecture;
+
+        'rkg2d'                 rank via general 2-descent;
+
+        'rper'                  real period;
+
+        'sgnfeq'                sign of functional equation;
+        
+        'swnf'                  short Weierstrass normal form;
+
+        'taalg'                 Tate's algorithm;
+        
+        'tavb2'                 Tate's value b2;
+
+        'tavb4'                 Tate's value b4;
+        
+        'tavb6'                 Tate's value b6;
+        
+        'tavb8'                 Tate's value b8;
+        
+        'tavc4'                 Tate's value c4;
+        
+        'tavc6'                 Tate's value c6;
+        
+        'tors'                  torsion group; 
+
+        'whei'                  Weil height;

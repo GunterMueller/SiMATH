@@ -1,0 +1,30 @@
+                               * * * * * * *
+                               *  derivL   *
+                               * * * * * * *
+
+        "derivation of L-series"
+        SYNTAX: X = derivL(r, E)
+
+        r is an expression whose value is a nonnegative integer.
+        E is an expression whose value is an elliptic curve over Q.
+        
+        X is assigned the value of the r-th derivation of the 
+        L-series L( E, s ) at s=1.
+
+        Remark: It makes only sense to compute the odd derivations
+                if the sign of the functional equation of E is -1
+                and to compute the even derivations if the sign
+                is 1.
+
+        
+        Example 1: (correct)
+                
+                derivL( 1, EC( 1, 0, 0, 1, 2 ) )        
+
+
+        Exapmle 2: (incorrect)
+
+                derivL( EC( 2, 0, 4, 1, 5 ) )
+
+_ERR_NR_232
+

@@ -1,0 +1,42 @@
+                               * * * * * * *
+                               *   tofl    *
+                               * * * * * * *
+
+        "to floating points"
+        SYNTAX: X = tofl(A)
+
+        A is an expression whose value is an element of Z, Q, R or a
+        polynomial over these structures.
+        
+        X is assigned the value of A over the floating points, rounded 
+        to DIGITS digits. 
+        
+        In order to change the precision to s digits, please type
+        "digits = s" where s is a positive single precision number.
+        By default, DIGITS = 37.
+
+
+        Example 1: (correct)
+
+                tofl(2/3)
+
+
+        Example 2: (correct)
+
+                DIGITS = 50
+                tofl(1/7)
+
+
+        Example 3: (correct)
+
+                tofl(123)
+
+
+        Example 4: (correct)
+
+                tofl(24342.4234e-8)
+
+
+        Example 5: (correct)
+
+                tofl( 3*x+1/3 )

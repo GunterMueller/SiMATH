@@ -1,0 +1,16 @@
+                               * * * * * * *
+                               *  sgnfeq   *
+                               * * * * * * *
+
+        "sign of the functional equation"
+        SYNTAX: X = sgnfeq(E)
+
+        E is an expression whose value is an elliptic curve over Q.
+
+        X is assigned the sign of the functional equation of the
+        modified Hasse-Weil L-function gamma.
+
+        
+        Example 1: (correct)
+
+                sgnfeq( EC( 1, 0, 0, 1, 2 ) )

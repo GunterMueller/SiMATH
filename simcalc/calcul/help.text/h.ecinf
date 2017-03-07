@@ -1,0 +1,62 @@
+                               * * * * * * *
+                               *   ecinf   *
+                               * * * * * * *
+
+        "elliptic curve information"
+        SYNTAX: X = ecinf(E)
+
+        E is an expression whose value is an elliptic curve over
+        Q, Z/pZ (where p is a prime), GF(2^n) or over a number field.
+
+        If E is an elliptic curve over Q, X is assigned a global 
+        minimal model of E; otherwise, X is assigned E.
+
+        You can use nfon in order to consider the elliptic curve over Q 
+        over the quadratic number field, specified by curnf. 
+        
+        ecinf displays:
+                - Tate's values b2, b4, b6, b8;
+                - Tate's values c4, c6;
+                - the discriminant (and its prime ideal factorization);
+                - the j-invariant [and the factorization of its 
+                  denominator];
+                - [a global minimal model and the parameters of 
+                  the transformation];
+                - (the conductor and its prime ideal factorization);
+                - (the Kodaira and Neron symbols for the primes
+                  of bad reduction).
+        Expressions in parentheses [] are only computed for elliptic
+        curves over Q.
+        Expressions in parentheses () are only computed for elliptic
+        curves over Q or quadratic number fields.
+
+        If the computation is done over Z/pZ, GF(2^n) or number fields,
+        AV[0]=b2, AV[1]=b4, AV[2]=b6, AV[3]=b8, AV[4]=c4, AV[5]=c6,
+        AV[6]=discriminant, AV[7]=j-invariant. 
+        If the computation is done over Q, the first 7 values in AV
+        are the same as above. After AV[6] is the factorization of
+        the discriminant is stored in the form factor - exponent in
+        increasing order. After that the j-invariant with the same
+        form of factorization of its denominator is stored in AV.
+        Afterwards the parameters of the transformation to the minimal
+        model are stored in the order r,s,t,u in AV. At least the
+        conductor with its factorization in the above form is stored
+        in AV (see "?avfunc").
+
+        For the representation of ideals in quadratic number fields,
+        please see "?fact".
+
+
+        Example 1: (correct)
+
+                ecinf(EC(3, 9, 27, 81, 3^6))
+
+
+        Example 2: (correct)
+
+                ecinf(EC(NF(A), 9))
+
+
+        Example 3: (correct)
+
+                ecinf(EC(1/7, 2))

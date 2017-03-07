@@ -1,0 +1,37 @@
+                                * * * * * * *
+                                *   eival   *
+                                * * * * * * *
+
+        "eigenvalues"
+        SYNTAX: X = eival(A, X1)
+
+        A is a square matrix over Z, Q, Z/pZ or GF(p^n) 
+        (where p is a prime).
+        X1 is a variable.
+
+        The roots of the characteristic polynomial of the matrix A 
+        in Z, Q, Z/pZ or GF(p^n), respectively, i.e. the eigenvalues of 
+        A are displayed on the screen.
+        X is assigned the characteristic polynomial of the matrix A
+        divided by its linear factors, i.e. the product of all 
+        irreducible factors of degree >= 2.
+        The factorization of X is displayed, too.
+
+        At first the eigenvalues of A are stored in AV and then the
+        irreducible factors with its exponents of the characteristic
+        polynomial are stored in AV in the form factor - exponent
+        (see "?avfunc").
+
+        Warning: If p > 2^30, the primality of p is not tested.
+
+
+        Example 1: (correct)
+
+                eival({{1, 0} {0, 1}}, x)
+
+
+        Example 2: (incorrect)
+
+                eival({{7, 4711}}, y)
+
+_ERR_NR_047

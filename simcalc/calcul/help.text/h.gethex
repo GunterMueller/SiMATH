@@ -1,0 +1,24 @@
+                               * * * * * * *
+                               *   gethex  *
+                               * * * * * * *
+
+        "hexadecimal representation to integer"
+        SYNTAX: N = gethex(Y)
+
+        Y is a sequence of 0,1,...,9,A,B,C,D,E,F,a,b,c,d,e,f.
+        They are interpreted as the hexadecimal representation of an 
+        integer. 
+
+        N is assigned the integer corresponding to Y.
+
+
+        Example 1: (correct)
+
+                gethex( 2A40c4F )
+
+
+        Example 2: (incorrect)
+
+                gethex( 34xy5 ) 
+
+_ERR_NR_015

@@ -1,0 +1,30 @@
+                            * * * * * * * * *
+                            *   sinh, cosh  *
+                            *   tanh, coth  *
+                            * * * * * * * * *
+
+        "sinus hyperbolicus, cosinus hyperbolicus, 
+         tangens hyperbolicus, cotangens hyperbolicus"
+        SYNTAX: X = sinh(A)
+                X = cosh(A)
+                X = tanh(A)
+                X = coth(A)
+
+        A is an expression whose value is an integer, a rational
+        or a floating point number.
+
+        X is assigned the value of the hyperbolic function at A.
+
+        For X = coth(A), A must not be zero.
+        
+
+        Example 1: (correct)
+
+                sinh(4.8)
+
+
+        Example 2: (incorrect)
+
+                coth(0)
+
+_ERR_NR_305

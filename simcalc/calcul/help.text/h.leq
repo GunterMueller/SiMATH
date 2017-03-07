@@ -1,0 +1,26 @@
+                               * * * * * * *
+                               *    <=     *
+                               * * * * * * *
+
+        "less or equal"
+
+        "<=" is an operator which compares two elements of Z, Q, R
+        or the current modulus : "el1 <= el2".
+        If el1 <= el2, "<=" returns 1, else "<=" returns 0.
+
+
+        Example 1: (correct)
+
+                log2(123/45) <= gcd(24, 76)
+
+
+        Example 2: (correct)
+
+                curModulus <= 6
+
+
+        Example 3: (incorrect)
+
+                5 + x <= x^2 + 1/y
+
+_ERR_NR_284             

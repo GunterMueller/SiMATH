@@ -1,0 +1,26 @@
+                               * * * * * * *
+                               *    unit   *
+                               * * * * * * *
+
+        "unit group"
+        SYNTAX: X = unit()
+
+        The current number field must be quadratic.
+        
+        The unit group of the current (quadratic) number field (see
+        "? curnf") is displayed on the screen. In the imaginary
+        quadratic case, the generator of the unit group is assigned to
+        X; in the real quadratic case, the fundamental unit is assigned
+        to X.
+        
+
+        Example 1: (correct)
+
+                unit()
+
+
+        Example 2: (incorrect)
+
+                unit(9)
+
+_ERR_NR_231_unit_             

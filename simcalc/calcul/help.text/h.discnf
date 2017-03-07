@@ -1,0 +1,26 @@
+                               * * * * * * *
+                               *   discnf  *
+                               * * * * * * *
+
+        "discriminant of a number field"
+        SYNTAX: X = discnf()
+
+        discnf computes the discriminant X of the current number field
+        and displays its factorization on the screen.
+
+        The factors and exponents are stored in AV (see "? avfunc"). 
+        If the discriminant has its prime factorization 
+        p1^e1 * ... * pN^eN in increasing order, then 
+        AV[0]=p1, AV[1]=e1, ..., AV[2*N-2]=pN, AV[2*N-1]=eN.
+
+
+        Example 1: (correct)
+
+                discnf()
+
+
+        Example 2: (incorrect)
+
+                discnf(9)
+
+_ERR_NR_231_discnf_

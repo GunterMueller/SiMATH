@@ -1,0 +1,54 @@
+                               * * * * * * *
+                               *   subst   *
+                               * * * * * * *
+
+        "substitution"
+        SYNTAX: X = f(x1 = A1, ..., xn = An)
+
+        f is a polynomial over Z, Q, Z/mZ, GF(p^t), a number field, 
+        over R or C, a rational function or a matrix or a vector over 
+        these structures, if possible.
+        The variables x1, ..., xn must occur in f, n>0.
+        A1, ..., An are expressions whose values are elements of Z, Q,
+        Z/mZ, GF(p^t), algebraic numbers, floating point numbers or
+        complex numbers, polynomials over these structures or rational 
+        functions.
+
+        The variables x1, ..., xn are substituted successively by 
+        the values of A1, ..., An. The result of the substitution 
+        is assigned to X.
+        
+        Recursive substituions and substitutions of the form
+                X = f(x1 = x2 = ... = xm = A) or
+                X = f(x1 = ... = A = ... = xm)
+        (m <= n) are possible too.
+
+        Warning: If for i<j Ai is a polynomial containing the
+                 variable xj, then this xj is also substituted
+                 by Aj.
+
+
+        Example 1: (correct)
+
+                f = x + y + z
+                f(x = 3/2, y = a/b = z)
+
+
+        Example 2: (correct)
+
+                f = x*y + z + NF(A + 1/4)
+                f(x = f(x = 9), y = NF(A-1))
+
+
+        Example 3: (correct)
+
+                a = {{x, y} {x^2 + y, y * x}}
+                a(x = z/t, y = -3)
+
+
+        Example 4: (incorrect)
+
+                f = x + y
+                f(x = 3 = 4)
+
+_ERR_NR_033

@@ -1,0 +1,77 @@
+# Generated automatically from Makefile.flags.in by configure.
+# The following symbols are set automatically by the configure script. If
+# you decided to install SIMATH _not_ in "/usr/local" you might want to
+# change BINDIR and set it to "/usr/local/bin" after having run
+# "configure".
+
+prefix= 		/usr/local
+SM_HOME=		/usr/local/simath
+BINDIR=			/usr/local/bin
+
+INSTALL=		/usr/bin/install -c
+INSTALLDIR=		/usr/bin/install -c -d -m 755
+INSTALLFILE=		/usr/bin/install -c -m 644
+INSTALLBIN=		/usr/bin/install -c -m 755
+
+LN_S=			ln -s
+
+CC=			gcc
+CPPFLAGS=		-I../../include -I..
+CFLAGS=			-O
+LDFLAGS=
+
+RANLIB=			ranlib
+AR=			ar
+
+AS=			/usr/bin/as
+
+# On some hosts, "configure" fails to determine the location of the "lex"
+# (or "flex") library (because the library is installed in an unusual
+# place or does not exist). If "LEXLIB" is empty after having run
+# "configure", you must set "LEXLIB" by hand. If you do not have "libl"
+# (or the Gnu replacement "libfl") you must first install "flex" and then
+# rerun "configure". If you have the library /usr/local/lib/flex/libfl.a
+# (say) set "LEXLIB=-L/usr/local/lib/flex -lfl".
+
+LEXLIB=			-lfl
+
+# The next two symbols should be set automatically by configure. On all
+# platforms except Apollo computers, we now use readline by default.
+
+RL_INCLUDE=		-I/home/gunter/GM_MATH/NUMBER_THEORY/SiMath/SIMATH-4.6.1/readline-2.0
+RL_FLAGS=		-L/home/gunter/GM_MATH/NUMBER_THEORY/SiMath/SIMATH-4.6.1/readline-2.0 -lreadline
+
+# The macro "TERMLIB" should be set automatically by configure.
+
+TERMLIB=		-lcurses
+
+CFLAGS_BIN=		-O
+CFLAGS_SIMCALC=		$(CFLAGS)
+CPPFLAGS_BIN=		$(CPPFLAGS) -I../include
+CPPFLAGS_SIMCALC=	$(RL_INCLUDE) -I. -I.. -I../include -I../../include 
+LDFLAGS_SIMCALC=	$(LDFLAGS) -L./lib -lsimov -lsimre -lsimmv -lsimer -lsimuv $(RL_FLAGS) $(TERMLIB) -L../lib -l_kern -l_ec4 -l_arith4 -l_pol4 -l_matr3 -l_ec3 -l_arith3 -l_pol3 -l_matr2 -l_ec2 -l_arith2 -l_pol2 -l_matr1 -l_pol1 -l_ec1 -l_arith1 -l_list -lm
+
+#
+#
+# Do not change the following rules unless you know what you are doing.
+# If you know what you are doing and if you find better rules for
+# compiling SIMATH programs, please let us know.
+#
+#
+
+SMBIN=../../bin
+
+.SUFFIXES: .s .c .o .P .S .x
+.PRECIOUS: %.c
+
+%.o : %.S # reset implicit rule .S.o
+
+.S.c:
+	$(SMBIN)/preV3_1.x $*.S $*.P
+	$(SMBIN)/preproc.x $*.P $*.c
+.c.o:
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $*.c
+
+.s.o:
+	$(AS) $*.s -o $*.o $(CPPFLAGS)
+

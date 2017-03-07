@@ -1,0 +1,50 @@
+                               * * * * * * *
+                               *  helpfunc *
+                               * * * * * * *
+
+        Information about functions
+
+                                
+         "? func"               lists all functions together with a 
+                                short description.
+
+         "? cfunc"              lists all functions for complex numbers
+                                together with a short description.
+
+         "? ecfunc"             lists all functions for elliptic curves 
+                                and their points together with a short 
+                                description.
+
+         "? flfunc"             lists all functions for floating point 
+                                numbers together with a short description.
+        
+         "? gffunc"             lists all functions for Galois-fields
+                                together with a short description.
+
+         "? ifunc"              lists all functions for Z together with 
+                                a short description.
+
+         "? mfunc"              lists all functions for matrices together 
+                                with a short description.
+
+         "? modfunc"            lists all functions for Z/mZ together 
+                                with a short description.
+
+         "? nffunc"             lists all functions for number fields 
+                                together with a short description.
+
+         "? pfunc"              lists all functions for polynomials 
+                                together with a short description.
+
+         "? progfunc"           lists all constructions which make
+                                simcalc programmable together with a 
+                                short description.
+
+         "? rfunc"              lists all functions for Q together with 
+                                a short description.
+
+         "? vfunc"              lists all functions for vectors together 
+                                with a short description.
+
+         "? f"                  displays detailed information about the
+                                function f.

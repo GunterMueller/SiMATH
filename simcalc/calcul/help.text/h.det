@@ -1,0 +1,29 @@
+                                * * * * * * *
+                                *    det    *
+                                * * * * * * *
+
+        "determinant"
+        SYNTAX: X = det(A)
+
+        A is a square matrix over Z, Q, Z/mZ, GF(p^n) (where p is a 
+        prime), over a number field, over polymonials over these 
+        structures or over rational functions.
+
+        X is assigned the determinant of A.
+
+
+        Example 1: (correct)
+
+                det({{x, y} {x + 2, y^3}})
+
+
+        Example 2: (incorrect)
+
+                det({{x, y}})
+
+_ERR_NR_074
+
+
+        Example 3: (correct)
+
+                det({{NF(A), y - 4, 2} {x, 3, 1/2} {-NF(A^2), 1, -4/3}})

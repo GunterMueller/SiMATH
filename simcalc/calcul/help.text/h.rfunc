@@ -1,0 +1,81 @@
+                               * * * * * * *
+                               *   rfunc   *
+                               * * * * * * *
+
+        The following functions are available for rational numbers:
+
+
+        +         !=          aval        log2        puto 
+        -         <           ceil        max         root 
+        *         <=          denom       min         sfp
+        ^         >           exp         mod         sgn
+        /         >=          fact        mval        sqrt
+        [ ]       &&          floor       num         tofl
+        ==        ||          ln
+                    
+
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        '^'                     exponentiation;
+
+        '/'                     division;
+
+        '[ ]'                   absolute value;
+
+        '=='                    equal;
+
+        '!='                    not equal;
+
+        '<'                     less;
+
+        '<='                    less or equal;
+
+        '>'                     greater;
+
+        '>='                    greater or equal;
+
+        '&&'                    and;
+
+        '||'                    or;
+
+        'aval'                  additive m-adic value;
+
+        'ceil'                  smallest integer, greater or equal;
+
+        'denom'                 denominator;
+
+        'exp'                   exponential function;
+
+        'fact'                  factorization;
+
+        'floor'                 greatest integer, less or equal;
+
+        'ln'                    natural logarithm;
+
+        'log2'                  integer part of the logarithm, base 2;
+
+        'max'                   maximum;
+
+        'min'                   minimum;
+
+        'mod'                   modular homomorphism;
+
+        'mval'                  multiplicative m-adic value;
+
+        'num'                   numerator;
+
+        'puto'                  display internal representation;
+
+        'root'                  root;
+
+        'sfp'                   squarefree part;
+
+        'sgn'                   sign;
+
+        'sqrt'                  square root;
+
+        'tofl'                  to floating points.

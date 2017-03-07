@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *    getb   *
+                               * * * * * * *
+
+        "bit representation to integer"
+        SYNTAX: N = getb(Y)
+
+        Y is a sequence of 0 and 1.
+        They are interpreted as the bit representation of an integer. 
+
+        N is assigned the integer corresponding to Y.
+
+
+        Example 1: (correct)
+
+                getb( 1011010 )
+
+
+        Example 2: (incorrect)
+
+                getb( 345 ) 
+
+_ERR_NR_015

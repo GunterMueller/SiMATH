@@ -1,0 +1,11 @@
+                               * * * * * * *
+                               *   exit    *
+                               *   quit    *
+                               * * * * * * *
+
+
+        "exit"        
+        "quit"
+        "CTRL/D"	 terminates simcalc.	
+
+        Terminating simcalc is not possible in sequences and loops.

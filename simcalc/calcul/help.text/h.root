@@ -1,0 +1,38 @@
+                               * * * * * * *
+                               *    root   *
+                               * * * * * * *
+
+        "root"
+        SYNTAX: X = root(A, n)
+
+        A is an expression whose value is an element of Z, Q, 
+        R, C or Z/mZ. 
+        n is an expression whose value is a single precision number.
+
+        If A is an element of Z/mZ or C, n must be of the form 2^r. 
+        If the modulus m is greater than 2^30, m must be a 
+        prime, but this primality is not tested.
+
+        X is assigned the nth root of A.
+
+
+        Example 1: (correct)
+
+                root(11/7, 8)
+
+
+        Example 2: (correct)
+
+                root(0.23423, 6)
+
+
+        Example 3: (correct)
+
+                root(MOD(40), 16)
+
+
+        Example 4: (incorrect)
+
+                root(12, 1/7)
+
+_ERR_NR_034_root_

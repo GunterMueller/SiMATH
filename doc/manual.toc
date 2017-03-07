@@ -1,0 +1,81 @@
+\contentsline {chapter}{\tocchapter {Chapter}{1}{Introduction to SIMATH}}{1}
+\contentsline {section}{\tocsection {}{1}{Introducing SIMATH}}{1}
+\contentsline {section}{\tocsection {}{2}{The logical structure of SIMATH}}{3}
+\contentsline {section}{\tocsection {}{3}{The installation of SIMATH}}{4}
+\contentsline {chapter}{\tocchapter {Chapter}{2}{The Interface}}{5}
+\contentsline {section}{\tocsection {}{1}{Starting SIMATH}}{5}
+\contentsline {section}{\tocsection {}{2}{Example session}}{5}
+\contentsline {section}{\tocsection {}{3}{Description of SIMATH commands}}{13}
+\contentsline {subsection}{\tocsubsection {}{3.1}{Overview}}{13}
+\contentsline {subsection}{\tocsubsection {}{3.2}{Menu-line 1:\ \ Editing and compiling programs}}{15}
+\contentsline {subsection}{\tocsubsection {}{3.3}{Menu-line 2:\ \ Archiving object modules}}{19}
+\contentsline {subsection}{\tocsubsection {}{3.4}{Menu-line 3:\ \ Archiving source files}}{22}
+\contentsline {subsection}{\tocsubsection {}{3.5}{Menu-line 4:\ \ SIMATH-sources commands}}{25}
+\contentsline {subsection}{\tocsubsection {}{3.6}{Menu-line 5:\ \ General commands}}{26}
+\contentsline {chapter}{\tocchapter {Chapter}{3}{Programming in SIMATH}}{29}
+\contentsline {section}{\tocsection {}{1}{The extended programming language C}}{29}
+\contentsline {section}{\tocsection {}{2}{Include files in SIMATH}}{29}
+\contentsline {section}{\tocsection {}{3}{Data types in SIMATH}}{30}
+\contentsline {subsection}{\tocsubsection {}{3.1}{C data types}}{30}
+\contentsline {subsection}{\tocsubsection {}{3.2}{Additional data types in SIMATH}}{30}
+\contentsline {subsection}{\tocsubsection {}{3.3}{Definitions using SIMATH data types}}{31}
+\contentsline {subsection}{\tocsubsection {}{3.4}{The {\bf bind()} and {\bf init()} instructions}}{31}
+\contentsline {subsection}{\tocsubsection {}{3.5}{Computations with SIMATH data types}}{34}
+\contentsline {section}{\tocsection {}{4}{Example}}{35}
+\contentsline {section}{\tocsection {}{5}{Nested function calls}}{38}
+\contentsline {section}{\tocsection {}{6}{Nomenclature of SIMATH functions}}{39}
+\contentsline {section}{\tocsection {}{7}{Global parameters in SIMATH}}{42}
+\contentsline {chapter}{\tocchapter {Chapter}{4}{The SIMATH system}}{47}
+\contentsline {section}{\tocsection {}{1}{The base system}}{47}
+\contentsline {subsection}{\tocsubsection {}{1.1}{Overview}}{47}
+\contentsline {subsection}{\tocsubsection {}{1.2}{Data Types}}{47}
+\contentsline {subsection}{\tocsubsection {}{1.3}{Representing lists}}{48}
+\contentsline {subsection}{\tocsubsection {}{1.4}{The memory administration}}{49}
+\contentsline {subsection}{\tocsubsection {}{1.5}{The list functions}}{51}
+\contentsline {section}{\tocsection {}{2}{The arithmetic package}}{63}
+\contentsline {subsection}{\tocsubsection {}{2.1}{Overview}}{63}
+\contentsline {subsection}{\tocsubsection {}{2.2}{Data types}}{63}
+\contentsline {subsection}{\tocsubsection {}{2.3}{Internal representation}}{63}
+\contentsline {subsection}{\tocsubsection {}{2.4}{The arithmetic functions}}{68}
+\contentsline {section}{\tocsection {}{3}{The polynomial package}}{76}
+\contentsline {subsection}{\tocsubsection {}{3.1}{Overview}}{76}
+\contentsline {subsection}{\tocsubsection {}{3.2}{Convenient input/output}}{76}
+\contentsline {subsection}{\tocsubsection {}{3.3}{Internal representation}}{76}
+\contentsline {subsection}{\tocsubsection {}{3.4}{The polynomial functions}}{79}
+\contentsline {section}{\tocsection {}{4}{The matrix/vector package}}{85}
+\contentsline {subsection}{\tocsubsection {}{4.1}{Overview}}{85}
+\contentsline {subsection}{\tocsubsection {}{4.2}{Internal representation}}{85}
+\contentsline {subsection}{\tocsubsection {}{4.3}{The matrix/vector functions}}{86}
+\contentsline {section}{\tocsection {}{5}{The elliptic curves package}}{94}
+\contentsline {subsection}{\tocsubsection {}{5.1}{Overview}}{94}
+\contentsline {subsection}{\tocsubsection {}{5.2}{Internal representation}}{94}
+\contentsline {subsection}{\tocsubsection {}{5.3}{The functions for elliptic curves}}{100}
+\contentsline {section}{\tocsection {}{6}{The NON-SIMATH package}}{104}
+\contentsline {chapter}{\tocchapter {Chapter}{5}{The calculator simcalc}}{105}
+\contentsline {section}{\tocsection {}{1}{What is simcalc?}}{105}
+\contentsline {section}{\tocsection {}{2}{Editing command lines}}{106}
+\contentsline {subsection}{\tocsubsection {}{2.1}{Moving the cursor}}{106}
+\contentsline {subsection}{\tocsubsection {}{2.2}{Inserting and deleting characters}}{106}
+\contentsline {subsection}{\tocsubsection {}{2.3}{The Ctrl P command}}{106}
+\contentsline {section}{\tocsection {}{3}{Example session}}{107}
+\contentsline {section}{\tocsection {}{4}{Operators and functions}}{112}
+\contentsline {subsection}{\tocsubsection {}{4.1}{Operators}}{113}
+\contentsline {subsection}{\tocsubsection {}{4.2}{Standard functions}}{115}
+\contentsline {subsection}{\tocsubsection {}{4.3}{Functions for elliptic curves and their points}}{123}
+\contentsline {subsection}{\tocsubsection {}{4.4}{{\bf simcalc}'s program control statements and user defined functions}}{127}
+\contentsline {section}{\tocsection {}{5}{Variable administration}}{129}
+\contentsline {section}{\tocsection {}{6}{Computing in \unhbox \voidb@x \hbox {$\mathbb Z$}/m\unhbox \voidb@x \hbox {$\mathbb Z$}}}{132}
+\contentsline {section}{\tocsection {}{7}{Computing in Galois fields}}{132}
+\contentsline {section}{\tocsection {}{8}{Computing in number fields}}{133}
+\contentsline {section}{\tocsection {}{9}{Elliptic curves}}{134}
+\contentsline {section}{\tocsection {}{10}{Computing over $\unhbox \voidb@x \hbox {$\mathbb R$}$ and $\unhbox \voidb@x \hbox {$\mathbb C$}$}}{135}
+\contentsline {section}{\tocsection {}{11}{Variable substitution}}{136}
+\contentsline {section}{\tocsection {}{12}{Reading from files}}{136}
+\contentsline {section}{\tocsection {}{13}{Predefinitions}}{137}
+\contentsline {section}{\tocsection {}{14}{Log files}}{137}
+\contentsline {section}{\tocsection {}{15}{Statistical functions}}{138}
+\contentsline {section}{\tocsection {}{16}{Suppressing the output}}{138}
+\contentsline {section}{\tocsection {}{17}{Interrupting output and computations}}{138}
+\contentsline {section}{\tocsection {}{18}{Special characters as commands}}{139}
+\contentsline {section}{\tocsection {}{19}{Error messages}}{140}
+\contentsline {chapter}{\tocchapter {Chapter}{}{Index}}{141}

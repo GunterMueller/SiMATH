@@ -1,0 +1,43 @@
+                         * * * * * * *
+                         *  ecnpscf  *
+                         * * * * * * *
+
+        "elliptic curve with point order with small cofactor"
+        SYNTAX: X = ecnpscf(p,cf)
+                X = ecnpscf(cf)
+
+        p is an expression whose value is a prime > 3. cf is an 
+        integer.
+
+        In the first case, ecnpscf determines an elliptic curve
+        in short Weierstrass normal form over Q, which has a point
+        order with cofactor <= cf over Z/pZ.
+        In the second case, ecnpscf determines an elliptic curve
+        in short Weierstrass normal form over the current Modulus,
+        which has a point order with cofactor <= cf. 
+        X is assigned this elliptic curve.
+
+        The number of points of the curve X modulo p is stored 
+        in AV (see "?avfunc")
+
+
+        Warning: If p > 2^30, the primality of p is not tested.
+
+
+        Example 1: (correct)
+
+                ecnpscf(10000000000000000000001993,100)
+
+
+        Example 2: (correct)
+
+                ecnpscf(99);
+
+
+        Example 3: (incorrect)
+
+                ecnpscf(100,3);
+
+_ERR_NR_328
+
+

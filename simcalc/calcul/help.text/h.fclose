@@ -1,0 +1,16 @@
+                               * * * * * * *
+                               *   fclose  *
+                               * * * * * * *
+
+        "file close"
+        SYNTAX: fclose
+                fclose()
+                fclose(NAME)
+
+        Strings may be read from files using the commands "fload", 
+        "fopen", "fread", "fclose". (For more information type "?fload",
+        "? fopen", and "? fread".)
+        
+        "fclose" 
+        "fclose()"     closes the default file ___INP.
+        "fclose(NAME)" closes the file NAME.

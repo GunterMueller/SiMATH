@@ -1,0 +1,31 @@
+                               * * * * * * *
+                               *    mam2   *
+                               * * * * * * *
+
+        "matrix over Z/2Z in special bit notation"
+        SYNTAX: M = mam2(n,l_1,...,l_m)
+
+        n is an expression whose value is a positive single precision 
+        number. l_1,...,l_m are integers with 0 <= l_i <= 2^n-1. 
+        The l_i represent lines of a mxn-matrix over Z/2Z in
+        special bit notation. 
+        For example: The matrix { { 1 1 1 }
+                                  { 1 0 1 }
+                                  { 0 1 1 }
+                                  { 0 0 1 } }
+        is represented by (3,7,5,3,1).
+        
+        M is assigned the matrix over Z/2Z, represented by
+        (n,l_1,...,l_m).
+
+        
+        Example 1: (correct)
+
+                mam2(7,2,5,1,7)
+
+
+        Example 2: (incorrect)
+
+                mam2(2,5,6)
+
+_ERR_NR_166

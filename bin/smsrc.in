@@ -1,0 +1,91 @@
+#!/bin/sh
+#
+#  FILE  : smsrc
+#  AUTHOR: M.Pfeifer / E.Herrmann
+#  DATE  : 970411.
+#
+#  DESCRIPTION: smsrc locates the SIMATH-function and displays the source
+#               code using ``more''
+#
+ECHO_T=@ECHO_MINUS_N@
+
+SM_HOME=@prefix@/simath
+SM_SOURCES=$SM_HOME/sources
+SM_VERSION=SIMATH-4.6
+SM_SRC_DIR=/tmp/DOC_$2
+
+SRC_FCN=`basename $1 .S`
+SRC_FILE=""
+
+# First we check the current working directory.
+
+if test -f $SRC_FCN.S
+then
+	SRC_FILE="./$SRC_FCN.S"
+fi
+
+# If we cannot find the source file in the current working directory we
+# try to find it in the SIMATH sources directory.
+
+if test "$SRC_FILE" = ""
+then
+	for file in `ls $SM_SOURCES`
+	do
+		if test -s $SM_SOURCES/$file/$SRC_FCN.S
+		then
+		SRC_FILE="$SM_SOURCES/$file/$SRC_FCN.S";
+	fi
+	done
+fi
+
+# In this case there is no matching function.
+
+if test "$SRC_FILE" = ""
+then
+        if test "$ECHO_T" = "true"
+        then
+           echo -n "smsrc: could not locate $SRC_FCN.S"
+           echo " aborting"
+           exit 1      
+        else               
+           echo "smsrc: could not locate $SRC_FCN.S\c"
+           echo " aborting"
+           exit 1        
+        fi
+fi
+
+echo "smsrc: extracting source-code from"
+echo "	$SRC_FILE..."
+
+# /tmp should be world-writable. We create the directories we need.
+
+for TMP_DIR in /tmp/DOC_$2 \
+	       /tmp/DOC_$2/man \
+	       /tmp/DOC_$2/man/man3
+do
+	if test -s $TMP_DIR
+	then
+		if test -f $TMP_DIR
+		then
+                if "$ECHO_T" = "true"
+                then
+                   echo -n "smsrc: \`$TMP_DIR\' is a regular file..."
+                   echo " aborting."
+                   exit 1      
+                else               
+                   echo "smsrc: \`$TMP_DIR\' is a regular file...\c"
+                   echo " aborting."
+                   exit 1        
+                fi
+		fi
+	else
+		mkdir $TMP_DIR
+	fi
+done
+
+cat $SRC_FILE > $SM_SRC_DIR/man/$SRC_FCN.tmp
+
+
+	more $SM_SRC_DIR/man/$SRC_FCN.tmp
+        rm -rf $SM_SRC_DIR
+

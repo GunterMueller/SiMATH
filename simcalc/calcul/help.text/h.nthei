@@ -1,0 +1,30 @@
+                               * * * * * * *
+                               *   nthei   *
+                               * * * * * * *
+
+        "Neron-Tate height"
+        SYNTAX: X = nthei(P)
+
+        P is an expression whose value is a point on the current
+        elliptic curve. The current elliptic curve as well as the
+        point P must be defined over Q or over a quadratic number
+        field.
+
+        X is assigned the Neron-Tate height of P.
+
+
+        Example 1: (correct)
+
+                nthei(PT(0, 3, 1))
+
+
+        Example 2: (correct)
+
+                nthei(PT(NF(A), 3))
+
+
+        Example 3: (incorrect)
+
+                nthei(x)
+                
+_ERR_NR_220

@@ -1,0 +1,21 @@
+                               * * * * * * *
+                               *   fopen   *
+                               * * * * * * *
+
+        "file open"
+        SYNTAX: fopen
+                fopen()
+                fopen(NAME)
+
+        Strings may be read from files using the commands "fload", 
+        "fopen", "fread", "fclose". (For more information type "?fload",
+        "? fread", and "? fclose".)
+        
+        "fopen" 
+        "fopen()"     opens the default file ___INP.
+        "fopen(NAME)" opens the file NAME.
+        
+        The file you want to read from must exist in the current working 
+        directory. At most 10 files can be opened at the same time.
+        
+        "openf" lists all currently opened files.

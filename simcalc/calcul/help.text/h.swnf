@@ -1,0 +1,48 @@
+                               * * * * * * *
+                               *   swnf    *
+                               * * * * * * *
+
+        "short Weierstrass normal form"
+        SYNTAX: X = swnf(E, s)
+
+        E is an expression whose value is an elliptic curve over Q,
+        Z/pZ (where p is a prime) or over a number field.
+        s is equal to 0 or 1.
+        
+        X is assigned an elliptic curve in short Weierstrass normal 
+        form which is birational isomorphic to E.
+ 
+        If s=1 and E is given in general Weierstrass normal form, 
+        the parameters r, s, t and u of the birational transformation 
+           x  ->  u^2*x + r,
+           y  ->  u^3*y + u^2*s*x + t 
+        are displayed.
+
+        In this case the parameters r,s,t,u are stored in AV 
+        (see "?avfunc").
+
+
+        Example 1: (correct)
+
+                swnf(EC(4, 2, 0, 1, 3), 1)
+
+
+        Example 2: (incorrect)
+
+                swnf(EC(4, 2, 0, 1, 3), x)
+                
+_ERR_NR_121
+
+
+        Example 3: (incorrect)
+
+                swnf(EC(4, 2, 0, 1, 3))
+                
+_ERR_NR_232
+
+
+        Example 4: (incorrect)
+
+                swnf(O, 0)
+                
+_ERR_NR_120

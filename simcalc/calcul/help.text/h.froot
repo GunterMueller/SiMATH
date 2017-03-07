@@ -1,0 +1,44 @@
+                         * * * * * * *
+                         *   froot   *
+                         * * * * * * *
+
+        "finding root"
+        SYNTAX: X = froot(p,P)
+                X = froot(Q)
+
+        p is an expression whose value is a prime.
+        In the first case, P is a univariate polynomial over Z.
+        In the second case, Q is a univariate polynomial over
+        Z/pZ, where p is a prime, over GF(p^n), over Z, Q or R.
+
+        In the first case, froot computes the roots of P over Z/pZ. 
+        In the second case, froot computes the roots of Q over Z/pZ,
+        over GF(p^n) or in the last three cases over C.
+        X is assigned such a root of P (or Q), if there exists one.
+
+        All roots are stored in AV (see "?avfunc").
+
+        Warning: If p > 2^30, the primality of p is not tested.
+                 If you want to compute the roots of Q over C
+                 and the result is not satisfactory, then increase
+                 the precision via DIGITS (see "? flfunc").
+
+
+        Example 1: (correct)
+
+                froot(5,x^2+1)
+
+
+        Example 2: (correct)
+
+                froot(MOD(x^3+2*x+1))
+
+
+        Example 3: (correct)
+
+                froot(GF(A*x^3+x^2+A^4+3))
+
+
+        Example 4: (correct)
+
+                froot(x^4-2)

@@ -1,0 +1,34 @@
+CC_CMD gcc
+CC_PATH /usr/bin/gcc
+CPP_CMD gcc -E -P
+CPP_PATH /usr/bin/gcc
+CCC_CMD CCC
+CCC_PATH /usr/local/simath/bin/CCC
+LPR_CMD dr
+LPR_PATH /usr/local/simath/bin/dr
+SM_PREV3_CMD preV3_1.x
+SM_PREV3_PATH /usr/local/simath/bin/preV3_1.x
+SM_PRE_CMD preproc.x 
+SM_PRE_PATH /usr/local/simath/bin/preproc.x
+AR_CMD ar
+AR_PATH /usr/bin/ar
+LS_CMD ls
+LS_PATH /bin/ls
+EMACS_CMD emacs
+EMACS_PATH /usr/bin/emacs
+VI_CMD vi
+VI_PATH /usr/bin/vi
+PAGE_CMD more
+PAGE_PATH /bin/more
+RANLIB_CMD ranlib
+RANLIB_PATH /usr/bin/ranlib
+CPPFLAGS -I. -I/usr/local/simath/include
+CFLAGS -O
+LDPATH -L/usr/local/simath/lib
+LDFLAGS -l_kern -l_ec4 -l_arith4 -l_pol4 -l_matr3 -l_ec3 -l_arith3 -l_pol3 -l_matr2 -l_ec2 -l_arith2 -l_pol2 -l_matr1 -l_pol1 -l_ec1 -l_arith1 -l_list -lm
+XDVI_CMD xdvi
+XDVI_PATH /usr/bin/xdvi
+XDVIFLAGS -s 3 -paper 15x20cm  -xoffset -0cm -yoffset -0cm -margins -0cm
+ROFF_CMD groff
+ROFF_FLAGS -C -man -Tascii
+PAGE_ROFF_FLAGS -s -f

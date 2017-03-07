@@ -1,0 +1,40 @@
+                               * * * * * * *
+                               *    if     *
+                               * * * * * * *
+
+        "if-statement"
+        SYNTAX: if(B, seq1, seq2)
+
+
+        B is a boolean expression. If its value is nonzero, then seq1 
+        is executed, else seq2.
+        seq1 and seq2 are sequences of expressions, separated by '_' or 
+        ';'. If an expression ends with '_', its output is displayed,
+        if it ends with ';', its output is suppressed.
+        Remark: The last expression of seq1 or seq2 must not be
+                terminated by '_' and need not be terminated by ';'.
+                If you want its output to be suppressed, terminate it
+                by ';'.
+        The sequences may be empty.
+
+
+        Example 1: (correct)
+
+                if(a mod 2, b = (a - 1)/2, b = a/2)
+
+
+        Example 2: (correct)
+
+                if( (3||t)&&r, r=3*t;t=r^4;, t=3*r;r=t^4;)
+
+
+        Example 3: (correct)
+
+                if( 4>=t, ,r=t mod 2; e = (t-r)/2 _ t=e^3 )
+
+
+        Example 4: (incorrect)
+
+                if( 3>2, r=3 )
+
+_ERR_NR_232

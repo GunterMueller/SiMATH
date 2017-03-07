@@ -1,0 +1,52 @@
+                               * * * * * * *
+                               *     PT    *
+                               * * * * * * *
+
+        "point"
+        SYNTAX: X = PT(x, y, z)
+                X = PT(x, y)
+
+        x, y, z are expressions whose values are elements of Z, Q, Z/pZ
+        (where p is a prime), GF(2^n) or a number field.
+
+        Depending on the number of arguments, X is assigned a projective or
+        affine point on an elliptic curve.
+
+        Remark: Points on elliptic curves are displayed on the screen in
+                a similar way they are entered, i.e.
+                PT(x', y', z') ( where x', y' and z' are integers )
+                or PT(x, y).
+
+        Warning: If p > 2^30, the primality of p is not tested.
+        
+
+        Example 1: (correct)
+
+                PT(4, 0)
+
+
+        Example 2: (correct)
+
+                PT(3, 3, 9)
+
+
+        Example 3: (correct)
+ 
+                PT(MOD(3), 3, MOD(9))
+
+
+        Example 4: (correct)
+
+                PT(NF(A), 3)
+        
+
+        Example 5: (correct)
+
+                PT(GF(3*A),1)
+
+
+        Example 6: (incorrect)
+
+                PT(x, y)
+
+_ERR_NR_109

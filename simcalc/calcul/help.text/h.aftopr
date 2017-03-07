@@ -1,0 +1,33 @@
+                               * * * * * * *
+                               *  aftopr   *
+                               * * * * * * *
+
+        "affine to projective"
+        SYNTAX: X = aftopr(P1)
+
+        P1 is an expression whose value is an affine point on an 
+        elliptic curve.
+
+        X is assigned the corresponding projective point.
+
+
+        Example 1: (correct)
+
+                aftopr(NF(PT(0, 3)))
+
+
+        Example 2: (correct)
+
+                aftopr(O)
+
+
+        Example 3: (correct)
+
+                aftopr(PT(GF(3*A),1))
+
+
+        Example 4: (incorrect)
+
+                aftopr(PT(0, 3, 1))
+
+_ERR_NR_117

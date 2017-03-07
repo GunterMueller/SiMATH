@@ -1,0 +1,2492 @@
+%\documentstyle[11pt]{book1}
+%\setlength{\voffset}{-2cm}
+%\oddsidemargin0.5cm    \evensidemargin0.5cm
+%\parindent0pt
+%\textwidth 6.0in \textheight 21.8cm
+%\input texdefs.tex
+%\begin{document}
+%\pagestyle{plain}
+%\setcounter{chapter}{4}                % one less than the intended chapter number
+
+
+\chapter{The calculator simcalc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 1 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{What is simcalc?}
+The SIMath CALCulator is an interactive system which evaluates simple to
+highly complex mathematical expressions using operators and SIMATH functions.
+The user can also edit input lines, store computational results in variables,
+write programs using the various \\
+{\bf simcalc} program control statements,
+etc. We will describe {\bf simcalc}'s utility and mathematical functions
+in the following sections.
+
+The command {\bf simcalc} opens a session with {\bf simcalc}. 
+After the prompt symbol $>$, {\bf simcalc} expects an input of the form
+\leer
+$>$ {\bf expression} \care
+\leer
+or
+\leer
+$>$ {\bf variable = expression} \care .
+\leer
+Several commands separated by ``{\bf \_}'' or ``{\bf ;}'' can be entered on one line
+(for ``{\bf ;}'' see section 5.16); the input line can be longer than the length of
+a screen line.
+
+The input is passed to {\bf simcalc} by pressing
+\mbox{RETURN (\ \care)}.
+\leer
+The command
+\leer
+{\tt
+  {\bf $>$LINELN = $n$} \care 
+}
+
+where $n$ is a nonnegative single-precision number, changes the 
+line length of the output to $n$ characters.
+The default value of {\bf LINELN} is the global SIMATH paramter {\bf LN\_SIZE}.
+\leer
+The commands  {\bf exit}, {\bf quit}, or {\bf CTRL/D}
+terminate a simcalc session.\index{simcalc commands/for terminating a session}
+
+{\bf simcalc} uses the {\bf GNU} readline library to enable emacs style command
+line editing.
+Please refer to the appropriate manuals 
+for a description on how to edit input lines. We describe some commands 
+in \S 5.2.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 2 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Editing command lines}
+\subsection{Moving the cursor}
+\index{simcalc commands/for moving the cursor}
+The following keys are used to move the cursor:\\[2ex]
+\begin{tabular}{|ccc|}
+\hline
+\hspace*{2cm}&\hspace*{0.5cm}&\hspace*{10cm}\\
+        \begin{tabular}{l}
+        \fbox{$\ \leftarrow\ $}\ ,\  \fbox{\ Ctrl B\ }\\[2ex]
+        \fbox{$\ \rightarrow\ $}\ ,\  \fbox{\ Ctrl F\ }
+        \end{tabular} &&
+        \begin{minipage}{10cm}
+        The cursor moves one space to the left or to the right. It can be moved only
+        within the current command line.
+        \end{minipage}\hfill \\
+& & \\ \hline
+\end{tabular}
+
+\subsection{Inserting and deleting characters}
+\index{simcalc commands/for inserting and deleting characters}
+Characters are inserted simply by typing them at the position of
+the cursor; characters to the right of the cursor will be moved to the right.
+
+The following keys are used to delete characters:\\[2ex]
+\begin{tabular}{|ccc|} \hline
+\hspace*{1.5cm}&\hspace*{0.5cm}&\hspace*{10.5cm}\\
+        \begin{tabular}{|c|} \hline
+        \tiny BACKSPACE\\ \hline
+        \end{tabular} &&
+        \begin{minipage}{10.5cm}
+        The character to the left of the cursor is erased and the cursor is
+        moved one space backward. All the characters to the right of the
+        erased character are moved one space backward.
+        \end{minipage}\hfill \\
+& & \\ \hline
+& & \\
+        \begin{tabular}{|c|} \hline
+        \tiny Ctrl D \\ \hline
+        \end{tabular} &&
+        \begin{minipage}{10.5cm}
+        The character at the cursor is erased and all the characters to the right
+        of this character are moved one space backward.
+        \end{minipage}\hfill \\
+& & \\ \hline
+\end{tabular}
+
+\subsection{The Ctrl P command}
+\index{simcalc commands/for editing previous input lines}
+The {\bf Ctrl P} command lets you edit previous input lines.
+If you enter 
+\leer
+{\tt
+  {\bf $>$Ctrl P}\ \ \care
+}  
+\leer
+the last instruction appears on the screen. This instruction can also be edited. 
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 3 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Example session}
+\index{simcalc/example session}
+We now give an example session with {\bf simcalc}; you might want to do it
+yourself to get an idea of {\bf simcalc}. For this example session, the output
+of the computer will be shown in typewriter style and your input in bold face;
+we use \% as the shell prompt.
+
+After your shell's prompt symbol, type in
+\leer
+{\tt
+  {\bf \% simcalc } \care
+}
+\leer
+The introductory screen of {\bf simcalc} will appear on your screen.
+You can type in
+\leer
+$>${\bf ?help}\ \ \care
+\leer
+to get general information about {\bf simcalc}.\index{simcalc commands/for getting general information about simcalc} Use the space key to scroll
+until the {\bf simcalc} prompt symbol $>$ appears or press {\bf q}
+to quit the description.
+
+We now want to ``log'' the session into a log file named $test$
+\leer
+{\tt
+  \begin{tabbing}
+  1234567\=12354678\=\kill
+  $>${\bf logon(test)}\ \ \care\\
+  \ Logging to file test.\\
+  $>$
+  \end{tabbing}
+}
+\index{simcalc commands/for logging a session}
+\leer
+All the following computations will be written into the log file.
+In the course of the session, you will be able to look up what you have
+computed since opening the log file. Proceed as follows:
+{\tt
+  \begin{tabbing}
+  1234567\=12345678\=\kill
+  $>${\bf k=1+2}\ \ \care\\
+  \> k = 3\\
+  $>${\bf k-7}\ \ \care\\
+  \> @ = -4\\
+  $>$
+  \end{tabbing}
+}
+
+If you do not explicitly assign an expression to a variable
+(as above), its value will automatically be assigned
+to the system variable {\bf @}. Check its current contents:
+\leer
+{\tt
+  \begin{tabbing}
+  1234567\=12345678\=\kill
+  $>${\bf @}\ \ \care\\
+  \> @ = -4\\
+  $>$
+  \end{tabbing}
+}
+\newpage
+You can enter two expressions on one line seperated by {\bf \_} :
+\leer
+{\tt
+  \begin{tabbing}
+  1234567\=12345678123456789012345\=\kill
+  $>${\bf y=1+2\_z=k-7}\ \ \care
+  \> \\
+  \> y = 1+2\\
+  \>\ \ = 3
+  \> \\
+  \> z = k-7\\
+  \> \ \ = -4\\
+  $>$
+  \end{tabbing}
+}
+\leer
+If you want to assign a new value to a variable that is already used (e.g.\/ z := 9),
+type in
+\leer
+{\tt
+  \begin{tabbing}
+  1234567\=12345678\=123456\=\kill
+  $>${\bf z=9} \care \>\\
+  \> \>\\
+  z is already used. \>\\
+  overwrite? (y/n) {\bf  y}\ \ \care \>\\
+  \> z = 9 \>\\
+  $>${\bf k=100!/(10!$*$90!)}\ \ \care \>\\
+  \> \>\\
+  k is already used. \>\\
+  overwrite? (y/n) {\bf n}\ \ \care\\
+  \> \>\\
+  new variable name: {\bf h}\ \ \care \>\\
+  \> h = 17310309456440 \>\\
+  \> \>\\
+  $>$ \>
+  \end{tabbing}
+}
+\leer
+You can look at the contents of the log file by typing in
+\leer
+{\tt
+  $>${\bf loglist} \care
+}
+\index{simcalc commands/for getting the log file of a session}
+
+\newpage
+
+\begin{verbatim}
+                       log file of Fri Sep 22 11:04:46 1992
+                       ====================================
+
+
+
+            in : k=1+2
+            out: k = 3
+
+            in : k-7
+            out: @ = -4
+
+            in : @
+            out: @ = -4
+
+            in : y=1+2_z=k-7
+            out: y = 1+2
+                   = 3
+
+            out: z = k-7
+                   = -4
+
+            in : z=9
+            out: z is already used.
+                 overwrite? (y/n)
+            in : y
+            out: z = 9
+
+            in : k=100!/(10!*90!)
+            out: k is already used.
+                 overwrite? (y/n)
+            in : n
+            out: new variable name :
+            in : h
+            out: h = 17310309456440
+
+            in : loglist
+      >
+\end{verbatim}
+
+You can close the log file $test$ as follows
+\leer
+{\tt
+  $>${\bf logoff}\ \  \care\\
+  \ \ Log file test closed.
+}
+\index{simcalc commands/for closing the log file}
+\leer
+Now use a {\bf simcalc} function, e.g.\/ the greatest common divisor
+\leer
+{\tt
+  \begin{tabbing}
+  1234567\=12345678\=\kill
+  $>${\bf gcd(12, 15, 18)} \care\\
+  \> @ = 3\\
+  $>${\bf gcd(5)}\\
+  ***** Error: Illegal number of arguments!\\
+  $>$
+  \end{tabbing}
+}
+\leer
+If you do not know why an error was reported, {\bf simcalc} will give
+you a detailed description of the function {\bf gcd()} when you type in
+\leer
+{\tt
+  $>${\bf ?gcd }\care
+}
+\index{simcalc commands/for a detailed description of a function}
+\begin{verbatim}
+                               * * * * * * *
+                               *    gcd    *
+                               * * * * * * *
+
+        "greatest common divisor"
+        SYNTAX: X = gcd(A1, A2, ..., An)
+
+        A1, ..., An are expressions whose values are elements in Z,
+        polynomials over Z, Z/pZ, GF(p^m), n>=2, (where p is a prime),
+        or over number fields.
+
+        X is assigned the greatest common divisor of A1, ..., An.
+
+        Warning: If p > 2^30, the primality of p is not tested.
+
+
+        Example 1: (correct)
+
+                gcd(a1, (2*5-75), 234 + 23)
+
+        Example 2: (incorrect)
+
+                gcd(2/3,14)
+ 
+                Error message:
+                Illegal parameter!
+
+        Example 3: (correct)
+
+                  gcd(x^2 + 2*x + 1, x + 1)
+
+        Example 4: (correct)
+
+                gcd(MOD(x^2 + 2*x + 1), x + MOD(1))
+\end{verbatim}
+
+\newpage
+
+An error was reported since the function requires at least two arguments.
+
+The function {\bf tofl() }\ (``to floating points'') returns the floating point representation of integer, rational, or floating point numbers or polynomials
+over these structures rounded to {\bf DIGITS} digits. The system variable 
+{\bf DIGITS} gives the number of decimal places and internal computation 
+precision for floating point and complex numbers.
+\leer
+{\tt
+  \begin{tabbing}
+  123456\=12345678\=\kill
+  $>${\bf DIGITS = 40}\ \ \care \\
+  \> DIGITS = 40\\
+  $>${\bf tofl(1/7)}\ \  \care\\
+  \>\> @ = 0.1428571428571428571428571428571428571429e0\\
+  $>$
+  \end{tabbing}
+}
+\leer
+
+{\bf simcalc} will list the variables currently used and their current
+contents\index{simcalc commands/for the currently used variables} when you type in
+\leer
+{\tt
+  $>${\bf ??}\ \ \care
+
+  \begin{tabbing}
+  1234567\=12345678\=\kill
+  variables over Z:\\
+  \> h = 17310309456440\\
+  \> k = 3\\
+  \> y = 3\\
+  \> z = 9\\
+  \> \\
+  variables over R:\\
+  \> @ = 0.1428571428571428571428571428571428571429e0\\
+  \> \\
+  global variable:\\
+  \> DEPTH = 30\\
+  \> DIGITS = 40\\
+  \> HEIGHTBOUND = 0.11e2\\
+  \> LINELN = 79\\
+  \> OUTPUTDIG = 0\\
+  $>$
+  \end{tabbing}
+}
+
+End the example session by entering the command
+\leer
+$>${\bf exit}\ \ \care
+
+\begin{verbatim}
+                                   B Y E
+
+
+
+***   # GCs: 0        GC time: 0.00 s     # collected cells: 0      ***
+***   # blocks: 1     block size: 16383   # free cells:     15055   ***
+***   total CPU time: 15.33 s                                       ***
+\end{verbatim}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 4 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Operators and functions}
+In {\bf simcalc}, an {\em expression} is any combination of constant,
+variable, and operator. {\bf simcalc} can evaluate single expressions, a
+sequence of expressions connected by \_ or ; (see \S 5.3 or \S 5.15), and
+functions which can be passed expressions and functions as arguments. It
+is also possible to program in {\bf simcalc} by using control statements or
+user defined functions (see \S 5.4.4).
+
+From this point on, we will use the following notation
+
+\begin{center}
+\begin{tabular}{p{0.8in}p{3in}}
+$p$ & prime number of $\Z$\\
+$\Z/m\Z$ & residue class ring modulo $m$\\
+Nf & number field\\
+Gf & Galois field\\
+$P(\Z /m\Z )$ & polynomial ring $\Z /m\Z [X_1,...,X_n]$\\
+$P(\Z)$ & polynomial ring $\Z[X_1,...,X_n]$\\
+$P(\Q)$ & polynomial ring $\Q[X_1,...,X_n]$\\
+$P(\R)$ & polynomial ring $\R[X_1,...,X_n]$\\
+$P(\C)$ & polynomial ring $\C[X_1,...,X_n]$\\
+$P($Nf$)$ & polynomial ring Nf$[X_1,...,X_n]$\\
+$P($Gf$)$ & polynomial ring Gf$[X_1,...,X_n]$\\
+$F(\Q)$ & function field $\Q(X_1,...,X_n)$
+\end{tabular}
+\end{center}
+
+Note: for any variable $A$, we have
+$$
+A \in \C \Ra A \in \R \Ra A \in \Q \Ra A \in \Z
+$$
+$$
+A \in P(\C) \Ra A \in P(\R) \Ra A \in P(\Q) \Ra A \in P(\Z)
+$$
+
+``polynomial'' (denoted $P()$) refers to polynomials over any of $\Z/m\Z$, $\C$, the
+current number field or the current Galois field.
+
+``matrix'' and ``vector'' refer to matrices and vectors (respectively) over any of $\Z/m\Z$,
+$\Q$, Nf, Gf, $P()$, or $F(\Q)$.
+
+Polynomials, matrices, and vectors are also called ``structures'';\index{structure} e.g. a structure over $\Z$
+is either a polynomial over $\Z$, a matrix, or a vector over $\Z$, or a matrix or vector
+over $P(\Z)$.
+
+Remark: {\bf simcalc} reads vectors \index{vector}as 
+$${\bf \{ a_1,...,a_n\} },$$
+and $m\times n$-matrices \index{matrix} as
+$${\bf \{ \{ a_{11},...,a_{1m}\} \{ a_{21},...,a_{2m}\} ...\{ a_{n1},...,a_{nm}\} \}}.$$
+
+\newpage
+
+\subsection{Operators}
+The following table lists the precedence of the {\bf simcalc} operators \index{operator};
+operators with equal priority are left associative.
+
+\begin{center}
+\begin{tabular}{|c|}
+{\bf hierarchy} \\ \hline
+\ \\
+{\bf [\ ]} \\
+\ \\
+{\bf  \^{ }} \\
+\ \\
+$-$ (negation) \Spp {\bf !} \\
+\ \\
+{\bf $*$ \Spp / \Spp : \Spp mod} \\
+\ \\
+{\bf $+$ \Spp $-$ }\\
+\ \\
+{\bf $<$ \Spp $<=$ \Spp $>$ \Spp $>=$ }\\
+\ \\
+{\bf $==$ \Spp !$=$ }\\
+\ \\
+{\bf $\&\&$ }\\
+\ \\
+{\bf $||$ }\\
+\ \\ \hline
+\end{tabular}
+\end{center}
+
+\leer\leer
+
+\begin{tabular}{|p{0.3in}|p{0.65in}|p{2.5in}|p{1.88in}|} \hline
+{\bf op.} & {\bf form} & {\bf arguments} & {\bf result} \\ \hline
+
+{\bf $+$} &
+{\bf $A+B$} &
+$A$, $B\in \Z/m\Z$, $\C$, Nf, Gf, $P()$, $F(\Q)$\newline
+$A$, $B$ points on an elliptic curve;\newline
+$A$, $B$ matrices; $A$, $B$ vectors &
+sum of $A$ and $B$\\ \hline
+
+{\bf $-$} &
+{\bf $A-B$} &
+$A$, $B\in \Z/m\Z$, $\C$, Nf, Gf, $P()$, $F(\Q)$\newline
+$A$, $B$ points on an elliptic curve;\newline
+$A$, $B$ matrices; $A$, $B$ vectors &
+difference of $A$ and $B$\\ \hline
+
+{\bf $-$ } &
+{\bf $-A$} &
+$A\in \Z/m\Z$, $\C$, Nf, Gf, $P()$, $F(\Q)$\newline
+$A$ point on an elliptic curve;\newline
+$A$ matrix; $A$ vector &
+additive inverse of $A$ \\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{0.3in}|p{0.7in}|p{2.5in}|p{1.88in}|} \hline
+{\bf op.} & {\bf form} & {\bf arguments} & {\bf result} \\ \hline
+
+{\bf $*$ }
+& $A*B$ &
+$A$, $B\in \Z/m\Z$, $\C$, Nf, Gf, $P()$, $F(\Q)$\newline
+$A$, $B$ matrices &
+product of $A$ and $B$ \\
+\cline{3-4} & &
+$A$ matrix; $B$ vector &
+matrix-vector multiplication\newline
+of $A$ by $B$ \\
+\cline{3-4}  & &
+$A$ matrix or vector; $B$ scalar &
+scalar multiplication\newline
+of $A$ by $B$ \\
+\cline{3-4}  & &
+$A$ integer; $B$ point on an elliptic curve &
+multiple of $B$ \\ \hline
+
+{\bf / } &
+{\bf $A$/$B$} &
+$A$, $B\in \Z/m\Z$, $\C$, Nf, Gf, $P(\Q)$, \newline
+\hspace*{0.5cm} $P(\Z/m\Z)$, $P($Nf$)$, $P($Gf$)$, $F(\Q)$;\newline
+\hspace*{5.0cm} $B\not= 0$;\newline
+$A$, $B$ matrices; $B$ invertible &
+quotient of $A$ by $B$  \\ \hline
+
+{\bf \^{ } }&
+{\bf $A$\^{ }$B$ } &
+$A\in \R$; $B\in \R$ &
+$A$ to the power $B$ \\
+\cline{3-3} & &
+$A\in \Z /m\Z, \C$;\newline
+$B\in \Q$, $B$ of the form ${S}/{2^t}, S\in \Z$ & \\
+\cline{3-3} & &
+$A \in$ Nf, Gf, $P(\Q)$, $F$($\Q$);\newline
+$B\in \Z$, $|B| < {\rm {\bf BASIS}}$ & \\
+\cline{3-3} & &
+$A\in P(\Z /m\Z )$, $P($Nf$)$, $P($Gf$)$, $P(\C)$;\newline
+$B\in \N _0$, $|B| < {\rm {\bf BASIS}}$ & \\
+\cline{3-3} & &
+$A$ square matrix; $B\in \Z$;\newline
+$|B| < {\rm {\bf BASIS}}$; if $B<0$, $A$ invertible & \\ \hline
+
+{\bf [\ ] }
+& {\bf [$A$]} &
+$A\in \C$ &
+absolute value of $A$ \\ \hline
+
+{\bf :} &
+{\bf $A$:$B$ } &
+$A$, $B\in \Z$, $P(\Q)$, $P(\Z/m\Z)$, $P($Nf$)$, \newline
+\hspace*{0.5cm} $P($Gf$)$; \newline
+\hspace*{5.0cm} $B\not= 0$ &
+the  integer part of the quo\-tient \\ \hline
+
+{\bf \rm mod} &
+{\bf $A\mod B$} &
+$A\in \Q$, $P(\Q )$; $B\in \N$, $P(\Q)$;&
+$A$ modulo $B$ \\
+\cline{3-3} & &
+$A, B\in P(\Z /p\Z )$, $P($Nf$)$, $P($Gf$)$; & \\
+\cline{3-4} & &
+$A$ matrix or vector over $\Q$, $P(\Q )$; \newline
+$B\in \N$, $P(\Q )$; &
+$A$  modulo $B$\newline (componentwise) \\
+\cline{3-3} & &
+$A$ matrix or vector over $P(\Z /p\Z )$, \newline
+\hspace*{0.3cm} $P($Nf$)$, $P($Gf$)$;\newline
+$B\in P(\Z /p\Z )$, $P($Nf$)$, $P($Gf$)$; & \\ \hline
+
+{\bf !} &
+{\bf $A$!} &
+$A\in \N_0$, $A < {\rm {\bf BASIS}}$ &
+factorial of $A$ \\ \hline
+
+{\bf $<$}\newline
+{\bf $<=$}\newline
+{\bf $>$}\newline
+{\bf $>=$} &
+{\bf $A < B$}\newline
+{\bf $A <= B$}\newline
+{\bf $A > B$}\newline
+{\bf $A >= B$} &
+$A, B \in \R$, curModulus &
+comparison of $A$ and $B$ \\ \hline
+
+{\bf $==$}\newline
+{\bf $!=$}\newline &
+{\bf $A==B$}\newline
+{\bf $A\ !=B$}\newline &
+$A$, $B\in \Z/m\Z$, $\C$, Nf, Gf, $P()$, $F(\Q)$\newline
+\hspace*{1.2cm} matrices, vectors,\newline
+\hspace*{1.2cm} elliptic curves, points; &
+comparison of $A$ and $B$ \\ \hline
+
+{\bf $\&\&$} &
+{\bf $A\ \&\&\ B$} &
+$A, B \in \Z/m\Z, \C$, Nf, Gf; &
+$A$ and $B$ \\ \hline
+
+{\bf $||$} &
+{\bf $A\ ||\ B$} &
+$A, B \in \Z/m\Z, \C$, Nf, Gf; &
+$A$ or $B$ \\ \hline
+\end{tabular}
+
+\leer\leer
+For details see {\tt ``?op''}.
+
+\newpage
+
+\subsection{Standard functions}
+\index{standard function}
+
+{\ }
+{\tabcolsep3.5pt
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf arccos($A$)} &
+$A \in \R$\newline
+{\bf arccos} returns the arc cosine of $A$ \\ \hline
+
+{\bf arccot($A$)} &
+$A \in \R$\newline
+{\bf arccot} returns the arc cotangent of $A$ \\ \hline
+
+{\bf arcosh($A$)} &
+$A \in \R$\newline
+{\bf arcosh} returns the arc hyperbolic cosine of $A$ \\ \hline
+
+{\bf arcoth($A$)} &
+$A \in \R$\newline
+{\bf arcoth} returns the arc hyperbolic cotangent of $A$ \\ \hline
+
+{\bf arcsin($A$)} &
+$A \in \R$\newline
+{\bf arcsin} returns the arc sine of $A$ \\ \hline
+
+{\bf arctan($A$)} &
+$A \in \R$\newline
+{\bf arctan} returns the arc tangent of $A$ \\ \hline
+
+{\bf arsinh($A$)} &
+$A \in \R$\newline
+{\bf arsinh} returns the arc hyperbolic sine of $A$ \\ \hline
+
+{\bf artanh($A$)} &
+$A \in \R$\newline
+{\bf artanh} returns the arc hyperbolic tangent of $A$ \\ \hline
+
+{\bf aval($m,A$)} &
+$m \in \N$; $A \in \Q$ with $A \neq 0$.\newline
+{\bf aval} returns the additive $m$--adic value of $A$. \\ \hline
+
+{\bf binom($A,B$)} &
+$A,B \in \N_0$ with $0 \leq B \leq A$.\newline
+{\bf binom} returns the binomial coefficient of $A$ over $B$.\\ \hline
+
+{\bf ceil($A$)} &
+$A \in \R$.\newline
+{\bf ceil} returns the smallest integer $\geq A$.\\ \hline
+
+{\bf chcoef($P,X,e,Q$)} &
+$P$ is a polynomial; $X$ is a variable of $P$; $e \in \Z$ \newline
+with $|e| < {\rm {\bf BASIS}}$; $Q$ is a number or a polynomial.\newline
+{\bf chcoef} replaces the coefficient of $X^e$ of $P$ by $Q$.\\ \hline
+
+{\bf chinrem($A_1,M_1, ... , A_n,M_n$)} &
+$A_1,...,A_n \in \Z, P(\Z)$; $M_1,...,M_n \in \N$ and pairwise coprime.\newline
+{\bf chinrem} returns a solution of the simultanous con\-gru\-ences
+$B \equiv A_i \mod M_i$, $1 \leq i \leq n,$ using the Chinese remainder theorem.\\ \hline
+
+{\bf chpol($A,X$)} &
+$A$ is a square matrix; $X$ is a variable (not in $A$).\newline
+{\bf chpol} returns the characteristic polynomial of $A$ in $X$. \\ \hline
+
+{\bf classnum($A$) \newline
+classnum()} &
+$A$ is a nonzero integer equal to $0$ or $1$ mod $4$ or the current number
+field. \newline
+{\bf classnum} returns the class number of the quadratic number field with
+discriminant $A$ or of the current qua\-dra\-tic number field. \\ \hline
+
+{\bf coef($P,X,e$)} &
+$P$ is a polynomial; $X$ is a variable of $P$;\newline
+$e \in \Z$ with $|e| < {\rm {\bf BASIS}}$.\newline
+{\bf coef} returns the coefficient of $X^e$ of $P$.\\ \hline
+
+{\bf conjug($A$)} &
+$A \in \C$ or a quadratic number field.\newline
+{\bf conjug} returns the conjugate of $A$.\\ \hline
+
+{\bf cont($P,X$)} &
+$P \in P(\Z)$, $X$ is a variable which occurs in $P$.\newline
+{\bf cont} returns the content of $P$ with respect to the variable $X$.\\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf cos($A$)} &
+$A \in \R$\newline
+{\bf cos} returns the cosine of $A$. \\ \hline
+
+{\bf cosh($A$)} &
+$A \in \R$\newline
+{\bf cosh} returns the hyperbolic cosine of $A$. \\ \hline
+
+{\bf cot($A$)} &
+$A \in \R$\newline
+{\bf cot} returns the cotangent of $A$. \\ \hline
+
+{\bf coth($A$)} &
+$A \in \R$\newline
+{\bf coth} returns the hyperbolic cotangent of $A$. \\ \hline
+
+{\bf curgf($p, Y, Q$)} &
+$p$ is a single-precision prime number; $Y$ is a variable; $Q$ is
+a univariate irreducible polynomial in $Y$ over $\Z/p\Z$ or $\Z$
+of degree $> 1$ or an integer $> 1$ \newline
+{\bf curgf} specifies the current Galois field Gf$(p^n)$ where
+$n$ is the degree of $Q$ or $Q$ respectively; the polynomial associated with
+GF$(p^n)$ is returned. The current Galois field Gf$(p^n)$ remains valid until 
+the next call of {\bf curgf} or {\bf curgf2bit}.\\ \hline
+
+{\bf curgf2bit($Y, S$)} &
+$Y$ is a variable; $S$ is a sequence of $0$ and $1$, which represents a
+univariate irreducible polynomial $Q$ in $Y$ over $\Z/2\Z$ of degree 
+$> 1$ \newline
+{\bf curgf2bit} specifies the current Galois field Gf$(2^n)$ where
+$n$ is the degree of $Q$; the polynomial associated with GF$(2^n)$ is returned. 
+The current Galois field remains valid until the next
+call of {\bf curgf} or {\bf curgf2bit}.\\ \hline
+
+{\bf curmod($m$)} &
+$m$ is an integer $> 1$.\newline
+{\bf curmod} specifies the current modulus $m$; it remains valid
+until the next call of {\bf curmod}.\\ \hline
+
+{\bf curnf($Y,P$)} &
+$Y$ is a variable, $P$ is a univariate irreducible polynomial in $Y$
+over $\Z/m\Z$ or $\Z$ of degree $> 1$.\newline
+{\bf curnf} specifies the current number field $K=\Q(\alpha )$ where
+$\alpha $ is a root of $P$; it remains valis until the next call of
+{\bf curnf}.\\ \hline
+
+{\bf declaw($p$)} &
+$p$ is a prime number.\newline
+{\bf declaw} computes the decomposition law of $p$ in the current
+number field.\\ \hline
+
+{\bf deg($P, Y$)\newline
+deg($P$)} &
+$P$ is a polynomial. $Y$ is a variable.\newline
+{\bf deg} computes the degree of $P$ with respect to the variable $Y$
+or the main variable.\\ \hline
+
+{\bf denom($A$)} &
+$A \in \Q, F(\Q)$, or structure over $\Q$\newline
+If $A \in \Z$ or structure over $\Z$, {\bf denom} returns 1.\newline
+If $A \in \Q, F(\Q)$, {\bf denom} returns the denominator of $A$;
+otherwise {\bf denom} returns the least common denominator of the coefficients
+or entries of $A$.\\ \hline
+
+{\bf deriv($A,X_1, \ldots ,X_r$)} &
+$A \in P(), F(\Q)$; $X_1,...,X_r$ are variables.\newline
+{\bf deriv} returns the derivatives of $A$  with respect to\newline
+$X_1,..., X_r$ successively.\\ \hline
+
+{\bf det($A$) } &
+$A$ is a square matrix.\newline
+{\bf det} returns the determinant of $A$.\\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf disc($A,X,N$)} &
+$A \in P(\Z/p\Z), P(\Z)$; $X$ is a variable of $P$; \newline
+$N$ is $1$, $2$, $3$, or $4$ and specifies the algorithm.\newline
+{\bf disc} returns the discriminant of $A$ with respect to $X$.\\ \hline
+
+{\bf discnf()} &
+{\bf discnf} returns the discriminant of the current number field and
+displays its factorization. \\ \hline
+
+{\bf dmconstr($n,A$)} &
+$n\in \N$; $A\in \Q, \Z/m\Z$, Nf, Gf, or a polynomial or a rational
+function.\newline
+{\bf dmconstr} returns a $n\times n$-diagonal matrix with $A$ on the
+diagonal.\\ \hline
+
+{\bf egcd($A_1,...,A_n$)} &
+$A_1,...,A_n \in \Z, P(\Z/p\Z)$, or $P($Gf$)$. \newline
+{\bf egcd} returns the greatest common divisor of $A_1,...,A_n$ and
+computes the cofactors.\\ \hline
+
+{\bf eival($A,X$)} &
+$A$ is a square matrix over $\Z/p\Z$, $\Q$, or Gf;\newline
+$X$ is a variable.\newline
+{\bf eival} computes the eigenvalues of $A$ and the irreducible factors of degree
+$> 1$ of the characteristic polynomial; the characteristic polynomial divided by
+its linear factors is returned.\\ \hline
+
+{\bf elform($A,col,cor$)} &
+$A$ is a nonzero matrix over $\Z$, $P(\Z/p\Z)$, or $P(\Q)$;\newline
+$cor$ and $col$ are 0 or 1.\newline
+{\bf elform} returns the elementary divisor form of $A$
+and displays the left cofactor if $col$ is $1$,
+and the right cofactor if $cor$ is $1$.\\ \hline
+
+{\bf elsubst($M,el,pz,ps$)}\newline
+{\bf elsubst($V,el,pos$)} &
+$M$ is a matrix; $V$ is a vector;\newline
+$el \in \Z/m\Z, \Q$, Nf, Gf, $P()$, $F(\Q)$;\newline
+$pz$, $ps$, and $pos$ are positive integers.\newline
+{\bf elsubst} replaces the element in position ($pz,ps$) in $M$ (the element in
+position $pos$ in $V$) by $el$.\\ \hline
+
+{\bf exp($A$)} &
+$A \in \C$.\newline
+{\bf exp} returns $e^A$.\\ \hline
+
+{\bf f1root($p,A$)}\newline
+{\bf f1root($B$)} &
+$A\in P(\Z)$; $B\in P(\Z/p\Z)$, $P($Gf$)$, $P(\R)$.\newline
+{\bf f1root} computes and returns one root of $A$ mod $p$ or of $B$. \\ \hline
+
+
+{\bf fact($A$)} &
+$A \in \Q$, $P(\Z/p\Z), P(\Q)$, $P($Nf$)$, $P($Gf$)$, $F(\Q)$, or quadratic \newline
+\hspace*{0.7cm}number field; $A \neq 0$.\newline
+{\bf fact} computes the list of prime factors of $A$, displays the prime factorization and returns the largest
+prime factor. If $A$ is a rational number or a rational function, the numerator
+and denominator are factorized and displayed seperately and the largest prime factor of the
+numerator is returned. If $A$ is an algebraic number, {\bf fact} computes and displays the prime ideal
+factorization of the principal ideal.\\ \hline
+
+{\bf floor($A$)} &
+$A \in \R$.\newline
+{\bf floor} returns the largest integer $\leq A$.\\ \hline
+
+{\bf fltoi($A$)} &
+$A \in \R$, $P(\R)$.\newline
+{\bf fltoi} returns the value of $A$ over $\Z$, if possible.\\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf froot($p,A$)}\newline
+{\bf froot($B$)} &
+$A\in P(\Z)$; $B\in P(\Z/p\Z)$, $P($Gf$)$, $P(\R)$.\newline
+{\bf froot} returns a root of $A$ mod $p$ or of $B$ and computes all 
+roots.\\ \hline
+
+
+{\bf gcd($A_1,...,A_n$)} &
+$A_1,...,A_n \in \Z, P(\Z/p\Z), P(\Z), P($Nf$)$, or $P($Gf$)$. \newline
+{\bf gcd} returns the greatest common divisor of $A_1,...,A_n$.\\ \hline
+
+{\bf getb($S$)} &
+$S$ is  a sequence of $0$ and $1$, which is the bit representation of an 
+integer.\newline
+{\bf getb} returns the integer represented by $S$.\\ \hline
+
+{\bf gethex($S$)} &
+$S$ is  a sequence of $0,1,...,9,A,B,...,F,a,b,...,f$, which is the hexadecimal 
+representation of an integer. \newline
+{\bf gethex} returns the integer represented by $S$.\\ \hline
+
+{\bf getoct($S$)} &
+$S$ is  a sequence of $0,1,...,7$, which is the octal re\-pre\-sen\-ta\-tion of 
+an integer. \newline
+{\bf getoct} returns the integer represented by $S$.\\ \hline
+
+{\bf gftopol($A$)} &
+$A$ is an element or a structure over Gf.\newline
+{\bf gftopol} transforms $A$ into an element or structure over $P(\Z)$ in
+the variable specified by {\bf curgf}.\\ \hline
+
+{\bf herm($A,np$)} &
+$A$ is a regular square matrix over $\Z$; $np$ is $1$ or $-1$.\newline
+{\bf herm} returns the Hermite normal form of $A$. If $np$ is 1, the entries
+below the main diagonal are $\geq 0$; otherwise, they are $\leq 0$.\\ \hline
+
+{\bf imag($A$)} &
+$A \in \C$\newline
+{\bf imag} returns the imaginary part of $A$.\\ \hline
+
+{\bf intbas()} &
+{\bf intbas} computes the integral basis of the current number field
+and returns the index of the polynomial order in the maximal order.
+The factorization of the index is displayed on the screen.\\ \hline
+
+{\bf integr($ P,X_1,L_1,U_1, ...$}\newline
+\hspace*{0.6cm} {\bf $...,X_n,L_n,U_n$)} &
+$P \in P(\Q)$; $X_1,...,X_n$ are variables; \newline
+$L_1,...,L_n$ and $U_1,...,U_n$ $\in \Q, P(\Q)$, or $F(\Q)$.\newline
+{\bf integr} returns the integral of $P$ with respect to the variables $X_1,...,X_n$
+with corresponding lower bounds\newline
+$L_1, ..., L_n$ and upper bounds $U_1, ..., U_n$.\\ \hline
+
+{\bf irpgen($p,Y,D,N$)} \newline
+{\bf irpgen($Y,D,N$)} \newline
+{\bf irpgen($Y,D$)} &
+$Y$ is a variable; $D\in \N$; $N\in \N_0$.\newline
+In the first two cases {\bf irpgen} returns a univariate ir\-re\-du\-ci\-ble 
+polynomial in $Y$ of degree $D$ over $\Z/p\Z$, where in the second case $p$ is 
+the current modulus. $N$ specifies the number of coefficients $\not= 0$.\newline
+In the third case {\bf irpgen} returns a univariate irreducible polynomial in
+$Y$ of degree $D$ over the current Galois field. \\ \hline
+
+{\bf ispprime($A$)} &
+$A \in \N$\newline
+{\bf ispprime} test $A$ for pseudo primality.\\ \hline
+
+{\bf isprime($A$)} &
+$A \in \N$\newline
+{\bf isprime} test $A$ for primality.\\ \hline
+
+{\bf isqrt($A$)} &
+$A \in \N$\newline
+{\bf isqrt} returns the integral part of the square root of $A$.\\ \hline
+
+{\bf jacsym($A,M$)} &
+$A,M \in \Z$; $A$ and $M$ coprime, $M>0$ and odd.\newline
+{\bf jacsym} returns the Jacobi symbol $(A\Spp /\Spp M)$.\\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf lcm($A_1,...,A_n$)} &
+$A_1,...,A_n \in \Z, P(\Z/p\Z), P(\Z), P($Nf$)$, or $P($Gf$)$.\newline
+{\bf lcm} returns the least common multiple of $A_1,...,A_n$.\\ \hline
+
+{\bf linequ($A,b$)} &
+$A$ is an $(m \times n)$--matrix over $\Z/p\Z$, $\Q$, Nf, Gf, $P(\Q)$,
+$F(\Q)$;\newline
+$b$ is a vector of length $m$ over $\Z/p\Z$, $\Q$, Nf, Gf, $P(\Q)$,
+$F(\Q)$;\newline
+{\bf linequ} returns the solution to the system of linear equa\-tions
+$A \cdot X = b$.\\ \hline
+
+{\bf ln($A$)} &
+$A \in \R$, $A>0$.\newline
+{\bf ln} returns the natural logarithm of $A$.\\ \hline
+
+{\bf log2($A$)} &
+$A \in \R$, $A>0$.\newline
+{\bf log2} returns the integer part of the base $2$ logarithm of $A$. \\ \hline
+
+{\bf log10($A$)} &
+$A \in \Z$\newline
+{\bf log10} returns $1 +$ the integer part of the base $10$ logarithm of $A$,
+i.e. the number of digits of $A$. \\ \hline
+
+{\bf mam2($n,l_1,...,l_m$)} &
+$n$ is a positive single-precision integer, $l_1,...,l_m$ are integers with
+$0\leq l_i \leq 2^n-1$.\newline
+{\bf mam2} returns the matrix which is represented by these numbers in special 
+bit representation (see \S 5.6).\\ \hline
+
+{\bf max($A_1,...,A_n$)} &
+$A_1,...,A_n\in\R$.\newline
+{\bf max} returns the maximum of $A_1,...,A_n$.\\ \hline
+
+{\bf mcoef($A,l,k$)} &
+$A$ is a matrix; $l,k\in \N$.\newline
+{\bf mcoef} extracts the $l\times k$-th coefficient of $A$.\\ \hline
+
+{\bf mex($M,A,E$)} &
+$M \in \N$, $A \in \Q$, $E \in \Z$; the denominator of $A$ is relatively prime to $M$.\newline
+{\bf mex} returns $(A^E)$ mod $M$.\\ \hline
+
+{\bf min($A_1,...,A_n$)} &
+$A_1,...,A_n\in\R$.\newline
+{\bf min} returns the minimum of $A_1,...,A_n$.\\ \hline
+
+{\bf minor($A,l,k$)}\newline
+{\bf minor($A,R,C,r_1,\ldots $}\newline
+\hspace*{0.6cm} {\bf $\ldots, r_R, c_1, \ldots, c_C$)} &
+$A$ is a matrix; $l,k,R,C,r_1,\ldots ,r_R,c_1,\ldots ,c_C \in \N_0$.\newline
+{\bf minor} returns the matrix which is derived from $A$ by deleting
+the $l$-th row and the $k$-th column or the $r_k$-th rows and the
+$c_l$-th columns.\\ \hline
+
+{\bf mtoi($A$)} &
+$A$ is an element, a structure, an elliptic curve or a point over $\Z/m\Z$.\newline
+{\bf mtoi} transforms $A$ into an element or structure over $\Z$. \\ \hline
+
+{\bf mval($m,A$)} &
+$m \in \N$; $A \in \Q, A \neq 0$.\newline
+{\bf mval} returns the multiplicative $m$--adic value of $A$. \\ \hline
+
+{\bf nftopol($A$)} &
+$A$ is an element or a structure over Nf.\newline
+{\bf nftopol} transforms $A$ into an element or structure over $P(\Z)$ in the
+variable specified by {\bf curnf}. \\ \hline
+
+{\bf norm($A$)} &
+$A \in$ Nf.\newline
+{\bf norm} returns the norm of $A$ over $\Q$.\\ \hline
+
+{\bf num($A$)} &
+$A \in \Q, F(\Q)$, or structure over $\Q$\newline
+{\bf num} returns $A * {\rm {\bf denom}}(A)$, i.e. the numerator of $A$.\\ \hline
+
+{\bf ord($m,A$)} \newline
+{\bf ord($B$)} &
+$m\in \N$; $A\in \Z$; $B\in \Z/m\Z$.\newline
+{\bf ord} returns the order of $A$ or $B$ in the multiplicative group
+of $\Z/m\Z$.\\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf pconstr($A, n$)} &
+$A \in \N$; $n$ is 0, 1, or 2 and specifies the algorithm.\newline
+{\bf pconstr} returns a prime $p > A$ and displays the fac\-to\-ri\-za\-tion of
+$p - 1$.\\ \hline
+
+{\bf pfact($p,A$)} &
+$p$ is a prime number; $A \in P(\Q)$ (univariate).\newline
+{\bf pfact} factorizes $A$ as a polynomial over $\Z/p\Z$, displayes the factorization and returns the prime
+factor of highest degree.\\ \hline
+
+{\bf pgen($U,O$)} &
+$U,O \in \N_0$, $U \leq O$.\newline
+{\bf pgen} computes the list of primes between $U$ and $O$ and returns the
+smallest one.\\ \hline
+
+{\bf phi($A$)} &
+$A \in \N$.\newline
+{\bf phi} returns the value of the Euler $\varphi$--function of $A$.\\ \hline
+
+{\bf ppconstr($A, n$)} &
+$A \in \N$; $n$ is 0, 1, or 2 and specifies the algorithm.\newline
+{\bf ppconstr} returns a pseudo prime $p > A$ and displays the 
+factorization of
+$p - 1$.\\ \hline
+
+{\bf prfunc($A,X_1, ..., X_r$)} &
+$A \in P(\Q)$; $X_1,...,X_r$ are variables.\newline
+{\bf prfunc} returns the primitive function of $A$ with respect to
+$X_1,X_2,...,X_r$.\\ \hline
+
+{\bf prim($P,X$)} &
+$P \in P(\Z)$, $X$ is a variable which occurs in $P$.\newline
+{\bf prim} returns the primitive part of $P$ with respect to the variable 
+$X$.\\ \hline
+
+{\bf pripgen($X,n, j$)} &
+$X$ is a variable, $n$ and $j$ are single-precision integers
+with $n>1$ and $n+2>j>2$.\newline
+{\bf pripgen} returns a monic univariate primitive polynomial $P$
+of degree $n$ in the variable $X$ over a specified Galoisfield of
+characteristic $2$. $P$ has $j$ non vanishing coefficients and
+$P(0)\not= 0$. \\ \hline
+
+{\bf print($A_1, ..., A_n$)} &
+$A_1,...,A_n$ are strings or {\bf simcalc} expressions.\newline
+If the input is a string, {\bf print} displays it as it is. If the input
+is a {\bf simcalc} expression, {\bf print} displays its value.\\ \hline
+
+{\bf proot($A$)\newline
+proot()} &
+$A\in \N$ or the current modulus.\newline
+{\bf proot} returns a primitive root of $\Z/A\Z$.\\ \hline
+
+{\bf putb($A$)} &
+$A\in \N$. \newline
+{\bf putb} displays the bit representation of $A$ and returns the value of
+$A$. \\ \hline
+
+{\bf putbits($A$)} &
+$A$ may be any SIMATH type variable .\newline
+If $A \in \Z$, $|A| < {\rm {\bf BASIS}}$, {\bf putbits} displays the bit 
+representation of $A$. Otherwise, {\bf putbits} displays the bit representation
+of the address of $A$.\\ \hline
+
+{\bf putGF2bit($A$)} &
+$A$ is an element of Gf$(2^n)$.\newline
+{\bf putGF2bit} displays the bit representation of $A$, in\-ter\-pre\-ted as a 
+polynomial over $\Z/2\Z$.\\ \hline
+
+{\bf puthex($A$)} &
+$A\in \N$. \newline
+{\bf puthex} displays the hexadecimal representation of $A$ and returns 
+the value of $A$. \\ \hline
+
+{\bf puto($A$)} &
+$A$ may be any SIMATH type variable .\newline
+{\bf puto} displays the internal representation of $A$. \\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf putoct($A$)} &
+$A\in \N$. \newline
+{\bf putoct} displays the octal representation of $A$ and returns the 
+value of $A$. \\ \hline
+
+{\bf real($A$)} &
+$A \in \C$\newline
+{\bf real} returns the real part of $A$.\\ \hline
+
+{\bf relcln($p^n,A$)} &
+$p\not= 2$; $A\ |\ \varphi(p^n)$.\newline
+{\bf relcln} returns the relative class number of the abelian number
+field of conductor $p^n$ and degree $A$. \\ \hline
+
+{\bf resul($A,B,X,N$)} &
+$A, B \in P(\Z/p\Z), P(\Z), P($Gf$)$; $X$ is a variable; \newline
+$N$ is $1$, $2$, $3$, or $4$ and specifies the algorithm.\newline
+{\bf resul} returns the resultant of $A$ and $B$ with respect to $X$. \\ \hline
+
+{\bf rk($A$)} &
+$A$ is a matrix.\newline
+{\bf rk} returns the rank of $A$. \\ \hline
+
+{\bf root($A,n$)} &
+$A \in \Z/m\Z, \R, \C$; $n \in \Z$, $|n| < {\rm {\bf BASIS}}$.\newline
+If $A \in \Z/m\Z, \C$, then $n$ must be a power of $2$.\newline
+{\bf root} returns the $n^{\rm th}$ root of $A$.\\ \hline
+
+{\bf scalar($A,B$)} &
+$A$ and $B$ are vectors of the same length.\newline
+{\bf scalar} returns the euclidian scalar product of $A$ and $B$.\\ \hline
+
+{\bf sfp($A$)} &
+$A \in \Q, P(\Q), P(\Z/p\Z), P(\mbox{Nf}), P(\mbox{Gf})$, or $F(\Q)$.\newline
+{\bf sfp} returns the square free part of $A$.\\ \hline
+
+{\bf sgn($A$)} &
+$A \in \R$.\newline
+{\bf sgn} returns the sign of $A$.\\ \hline
+
+{\bf sin($A$)} &
+$A \in \R$.\newline
+{\bf sin} returns the sine of $A$.\\ \hline
+
+{\bf sinh($A$)} &
+$A \in \R$.\newline
+{\bf sinh} returns the hyperbolic sine of $A$.\\ \hline
+
+{\bf sort($A,X_{p(1)} , ... , X_{p(r)}$)} &
+$A$ is a polynomial in the variables $X_{p(1)},...,X_{p(r)}$.\newline
+{\bf sort} returns $A$ sorted with respect to the specified order
+of variables; $A$ is unchanged. \\ \hline
+
+{\bf sqrt($A$)} &
+$A \in \R$, $\Z/m\Z$, $\C$.\newline
+{\bf sqrt} returns the square root of $A$. \\ \hline
+
+{\bf tan($A$)} &
+$A \in \R$.\newline
+{\bf tan} returns the tangent of $A$.\\ \hline
+
+{\bf tanh($A$)} &
+$A \in \R$.\newline
+{\bf tanh} returns the hyperbolic tangent of $A$.\\ \hline
+
+{\bf tofl($A$)} &
+$A \in \R$, $P(\R)$.\newline
+{\bf tofl} returns the floating point representation of $A$ rounded to 
+{\bf DIGITS} digits (see \S 5.4.4).\\ \hline
+
+{\bf trace($A$)} \newline
+{\bf trace($M$)} &
+$A \in$ Nf; $M$ is a square matrix.\newline
+{\bf trace} returns the trace of $A$ over $\Q$ or the trace of $M$.\\ \hline
+
+{\bf transp($A$)} &
+$A$ is a matrix.\newline
+{\bf transp} returns the transpose of $A$.\\ \hline
+
+{\bf unit()} &
+The current number field must be quadratic. \newline
+{\bf unit} computes the unit group of the current number field. For imaginary
+quadratic fields, the generator is returned; in the real quadratic case, the
+fundamental unit is returned.\\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf vcoef($A,l$)} &
+$A$ is a vector; $l\in\N$.\newline
+{\bf vcoef} extracts the $l$-th coefficient of $A$.\\ \hline
+
+{\bf zmconstr($m,n$)} &
+$m,n \in\N$.\newline
+{\bf zmconstr} constructs the $m\times n$-zeromatrix.\\ \hline
+
+{\bf zvconstr($n$)} &
+$n\in\N$.\newline
+{\bf zvconstr} constructs the zerovector of length $n$.\\ \hline
+\end{tabular}
+
+\leer \leer
+For details see {\tt ``?functionname''}.
+
+\newpage
+
+\subsection{Functions for elliptic curves and their points}
+\index{functions for elliptic curves}
+In the following, ``elliptic curves'' and their ``points''
+refer to elliptic curves and points over $\Z/p\Z$, $\Q$, Gf$(2^n)$, or
+the current number field. Otherwise, the field over which the elliptic
+curve is defined is mentioned explicitly.
+
+For any points on the current elliptic curve, addition is done with the ``$+$''
+operator, subtraction and negation with the ``$-$'' operator (see \S 5.4.1
+and \S 5.9).
+
+\leer\leer
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf aftopr($P$)} &
+$P$ is an affine point on an elliptic curve.\newline
+{\bf aftopr} returns the corresponding projective representation of $P$.\\ \hline
+
+{\bf areptsli($P_1, ... ,P_n$)} &
+$P_i$ are points on the current elliptic curve over $\Q$ or over 
+quadratic number fields.\newline
+{\bf areptsli} computes the determinant of the matrix of N\'eron-Tate pairings 
+and decides if the points are linear independent or not.\\ \hline
+
+{\bf basismwg($E$)} &
+$E$ is an elliptic curve over $\Q$.\newline
+{\bf basismwg} computes the basis of the Mordell-Weil group and returns the
+rank of the Mordell-Weil group of $E$.\\ \hline
+
+{\bf bitrans($E,r,s,t,u$)\newline
+bitrans($P,r,s,t,u$)} &
+$E$ is an elliptic curve; $P$ is a point on an elliptic curve; 
+$r,s,t$, and $u$ are elements of the field over
+which the elliptic curve is defined, $u \neq 0$.\newline
+{\bf bitrans} computes the birational transformation of $E$ or $P$ by 
+$r,s,t$, and $u$ and returns the tansformed curve or point.\\ \hline
+
+{\bf cond($E$)} &
+$E$ is an elliptic curve over $\Q$ or a quadratic number field.\newline
+{\bf cond} returns the conductor of the global minimal model of $E$.\\ \hline
+
+{\bf cper($E$)} &
+$E$ is an elliptic curve over $\Q$.\newline
+{\bf cper} returns the complex period of $E$.\\ \hline
+
+{\bf curec($E$)} &
+$E$ is an elliptic curve.\newline
+{\bf curec} specifies the current elliptic curve. The group law is
+defined with respect to this curve. The current elliptic curve remains
+valid until the next call to {\bf curec}.\\ \hline
+
+{\bf derivL($n, E$)} &
+$n \in \N_0$; $E$ is an elliptic curve over $\Q$.\newline
+{\bf derivL} returns the $n^{\rm th}$ derivative of the
+$L$-series $L(E, s)$ at $s = 1$.\\ \hline
+
+{\bf discec($E$)} &
+$E$ is an elliptic curve.\newline
+{\bf discec} returns the discriminant of $E$.\\ \hline
+
+{\bf eccoef($E,n$)} &
+$E$ is an elliptic curve; $n = 1, 2, 3, 4$, or $6$.\newline
+{\bf eccoef} returns the $n$-th coefficient of $E$.\\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf ecgnp($p, n, D$)\newline
+ecgnp($n, D$)} &
+$p$ is a prime $> 3$; in the second case, a prime $p > 3$ must
+be specified by {\bf curmod}. If $n \in \N_0$, $D = 0$ or\newline
+$D  = (p + 1 - n)^2 - 4 \cdot p$; $n$ and $D$ must not be both 0.\newline
+{\bf ecgnp} returns an elliptic curve of $n$ points over $\Z/p\Z$ or $\Q$
+respectively.\\ \hline
+
+{\bf ecinf($E$) } &
+$E$ is an elliptic curve.\newline
+Depending on which field $E$ is defined, {\bf ecinf} displays
+Tate's values, discriminant (and its factorization), \newline
+j-invariant (and the factorization of its denominator), a global
+minimal model and the parameters of the transformation, the conductor
+and its factorization, the Kodaira and N\'eron symbols for the primes
+of bad reduction.\\ \hline
+
+{\bf ecnpscf($p, cf$)\newline
+ecnpscf($cf$)} &
+$p$ is a prime $> 3$; in the second case, a prime $p > 3$ must
+be specified by {\bf curmod}. $cf \in \N$\newline
+{\bf ecnpscf} returns an elliptic curve with point order with small 
+cofactor $\leq cf$ over $\Z/p\Z$. \\ \hline
+
+{\bf elog($P$)} &
+$P$ is a point on an elliptic curve over $\Q$.\newline
+{\bf elog} computes the elliptic logarithm of $P$. \\ \hline
+
+{\bf faintp($E$)} &
+$E$ is an elliptic curve over $\Q$.\newline
+{\bf faintp} computes all integral points of $E$. \\ \hline
+
+{\bf fp($E$)} &
+$E$ is an elliptic curve over $\Z/p\Z$ or GF$(2^n)$.\newline
+{\bf fp} returns any projective point of $E$ which is not the point at
+infinity.\\ \hline
+
+{\bf intcoef($E$) } &
+$E$ is an elliptic curve over $\Q$ or a quadratic number field.\newline
+{\bf intcoef} returns a birational isomorphic elliptic curve  with coefficients
+in the integral domain.\\ \hline
+
+{\bf isptec($E,P$)} &
+$E$ is an elliptic curve; $P$ is a point on an elliptic curve.\newline
+{\bf isptec} tests whether $P$ lies on $E$ or not. \\ \hline
+
+{\bf jinv($E$)} &
+$E$ is an elliptic curve.\newline
+{\bf jinv} returns the j-invariant of $E$. \\ \hline
+
+{\bf minim($E,s$)} &
+$E$ is an elliptic curve over $\Q$; $s$ is $0$ or $1$.\newline
+{\bf minim} returns the birational isomorphic global minimal elliptic
+curve of restricted type. If $s=1$, the transformation parameters
+$r,s,t$, and $u$ are displayed.\\ \hline
+
+{\bf np($p,A$)}\newline
+{\bf np($E$)} &
+$p$ is a prime number; $A$ is an elliptic curve over $\Q$ with good
+reduction at $p$, $p$ and the denominator of the coefficients of $A$ coprime.
+$E$ is an elliptic curve over $\Z/p\Z$ or GF$(2^n)$.\newline
+{\bf np} returns the number of points on the reduced elliptic curve $A$ mo\-du\-lo $p$
+or on $E$.\\ \hline
+
+{\bf npfe($E, N_p, P$)} &
+$E$ is an elliptic curve over Gf$(2^m)$. $N_p$ is the number of points
+of $E$ over Gf$(2^m)$. $P$ is a univariate polynomial of degree $n$ over $\Z/2\Z$
+or $\Z$ or $P$ is the degree $n$; $m$ must divide $n$ ($m < n$).\newline
+{\bf npfe} returns the number of points of $E$ over Gf$(2^n)$.\\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf nthei($P$)} &
+$P$ is a point on the current elliptic curve over $\Q$ or over 
+quadratic number fields.\newline
+{\bf nthei} returns the N\'eron--Tate height of $P$.\\ \hline
+
+{\bf ntpair($P,Q$)} &
+$P,Q$ are points on the current elliptic curve over $\Q$ or over 
+quadratic number fields.\newline
+{\bf ntpair} returns the N\'eron-Tate pairing of $P$ and $Q$.\\ \hline
+
+{\bf ordtsg($E$)} &
+$E$ is an elliptic curve over $\Q$.\newline
+{\bf ordtsg} returns the order of the Tate-Shafarevic group of $E$.\\ \hline
+
+{\bf prtoaf($P$)} &
+$P$ is a point on an elliptic curve in projective 
+re\-pre\-sen\-ta\-tion.\newline
+{\bf prtoaf} returns the affine representation of $P$.\\ \hline
+
+{\bf ptcoef($P,n$)} &
+$P$ is a point on an elliptic curve; $n = 1, 2, 3$.\newline
+{\bf ptcoef} returns the $n$-th coefficient of $P$.\\ \hline
+
+{\bf red($p,E$)} &
+$p$ is a prime number; $E$ is an elliptic curve over $\Q$. $E$ must be minimal
+and have good reduction at $p$, $p$ and the denominator of the coefficients of
+$E$ coprime.\newline
+{\bf red} returns the reduced elliptic curve $E$ modulo $p$.\\ \hline
+
+{\bf reg($E$)} &
+$E$ is an elliptic curve over $\Q$ or over 
+quadratic number fields.\newline
+{\bf reg} returns the regulator of $E$.\\ \hline
+
+{\bf rk($E$)}\newline
+{\bf rk($E,s$)}\newline
+{\bf rk($E, s, b, v$)} &
+$E$ is an elliptic curve over $\Q$ or over a real quadratic 
+number field with class number $1$. $s$ is $0,1,2,$ or $3$. $b$ is 
+a single precision positive number. $v$ is $0$ or $1$.\newline
+{\bf rk} returns the rank of the Mordell-Weil group of $E$. $s$ 
+determines the algorithm for computing the rank. For real quadratic
+fields, $b$ is the upper bound for the search for points on the
+homogeneous spaces. $v$ causes brief output or detailed output. \\ \hline
+
+{\bf rk2d($E$)} &
+$E$ is an elliptic curve over $\Q$ or over a real quadratic number field 
+with class number $1$ which 
+has a torsion group of order divisible by $2$.\newline
+{\bf rk2d} returns the rank of the Mordell-Weil group of $E$, 
+computed via 2-descent.\\ \hline
+
+{\bf rkbsd($E$)} &
+$E$ is an elliptic curve over $\Q$ or over a real quadratic number
+field with class number $1$.\newline
+{\bf rkbsd} returns the rank of the Mordell-Weil group of $E$, 
+computed via the Birch and Swinnerton-Dyer conjecture.\\ \hline
+
+{\bf rkg2d($E$)}\newline
+{\bf rkg2d($E,b$)}\newline
+{\bf rkg2d($E, b, v$)} &
+$E$ is an elliptic curve over $\Q$ or over a real quadratic 
+number field with class number $1$. $b$ is 
+a single precision positive number. $v$ is $0$ or $1$.\newline
+{\bf rkg2d} returns the rank of the Mordell-Weil group of $E$, computed
+via general 2-descent. For real quadratic
+fields, $b$ is the upper bound for the search for points on the
+homogeneous spaces. $v$ causes brief output or detailed output. \\ \hline
+\end{tabular}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.83in}|} \hline
+
+{\bf rper($E$)} &
+$E$ is an elliptic curve over $\Q$.\newline
+{\bf rper} returns the real period of $E$.\\ \hline
+
+{\bf sgnfeq($E$)} &
+$E$ is an elliptic curve over $\Q$.\newline
+{\bf sgnfeq} returns the sign of the functional equation
+of the modified Hasse-Weil $L$-function $\Gamma$.\\ \hline
+
+{\bf swnf($E,s$)} &
+$E$ is an elliptic curve over $\Z/p\Z (p\not=2)$, $\Q$, Nf; $s$ is 0 or 1.\newline
+{\bf swnf} returns a birational isomorphic model of $E$ in short Weierstrass
+normal form. If $s=1$, the transformation parameters $r,s,t$, and $u$ are
+displayed.\\ \hline
+
+{\bf taalg($p,E$)} &
+$p$ is a prime number; $E$ is an elliptic curve over a quadratic number field
+or with coefficients in $\Z$.\newline
+If $E$ is an elliptic curve over $\Q$ and not minimal at $p$, {\bf taalg}
+returns a birational isomorphic elliptic curve minimal at $p$.
+Otherwise, {\bf taalg} displays the reduction type of $E$ modulo $p$;
+in the case of bad reduction at $p$, {\bf taalg} also displays the
+Kodaira and N\'eron symbols and returns the index of the N\'eron symbol.\\ \hline
+
+{\bf tavb2($E$)} &
+$E$ is an elliptic curve.\newline
+{\bf tavb2} returns Tate's value $b_2$ of $E$.\\ \hline
+
+{\bf tavb4($E$)} &
+$E$ is an elliptic curve.\newline
+{\bf tavb4} returns Tate's value $b_4$ of $E$.\\ \hline
+
+{\bf tavb6($E$)} &
+$E$ is an elliptic curve.\newline
+{\bf tavb6} returns Tate's value $b_6$ of $E$.\\ \hline
+
+{\bf tavb8($E$)} &
+$E$ is an elliptic curve.\newline
+{\bf tavb8} returns Tate's value $b_8$ of $E$.\\ \hline
+
+{\bf tavc4($E$)} &
+$E$ is an elliptic curve.\newline
+{\bf tavc4} returns Tate's value $c_4$ of $E$.\\ \hline
+
+{\bf tavc6($E$)} &
+$E$ is an elliptic curve.\newline
+{\bf tavc6} returns Tate's value $c_6$ of $E$.\\ \hline
+
+{\bf tors($E,s$)} &
+$E$ is an elliptic curve with coefficients in $\Z$ or an elliptic curve
+over a quadratic number field $\Q(\sqrt{D})$, where $D$ is a squarefree
+integer;\newline
+$s$ is $1$, $2$, or $3$.\newline
+{\bf tors} returns the order of the torsion group of $E$ over $\Q$ or
+over $\Q(\sqrt{D})$.
+Depending on the value of $s$, {\bf tors} displays the structure,
+the generators and/or all elements of the torsion group.\\ \hline
+
+{\bf whei($P$)} &
+$P$ is a point on the current elliptic curve over $\Q$ or over 
+quadratic number fields.\newline
+{\bf whei} returns the Weil height of $P$.\\ \hline
+\end{tabular}}
+
+\leer\leer
+For details see  {\tt ``?functionname''}.
+
+\newpage
+
+\subsection{{\bf simcalc}'s program control statements and user defined
+            functions}
+The variable {\bf DEPTH} determines the recursion depth of user-defined
+functions. By default, {\bf DEPTH} $=$ 30 (see ``?progfunc''). You can 
+change the value of {\bf DEPTH} to $n$ by typing in 
+\leer
+{\tt
+  {\bf $>$DEPTH = $n$} \care 
+}
+\leer
+
+In the following, $B$ is a boolean expression which may contain
+any of the operators
+$$ == \Spp\ != \Spp\ < \Spp\ <= \Spp\ > \Spp\ >= \Spp\ \&\& \Spp\ ||\Spp .$$
+
+{\sl Sequence\/} is any number of expressions separated by\Spp {\bf \_}\Spp or
+\Spp{\bf ;}\Spp (for\Spp {\bf ;}\Spp see \S 5.16).
+
+\leer\leer
+\begin{tabular}{|p{1.95in}|p{3.7in}|} \hline
+
+{\bf break} &
+{\bf break} terminates the current loop.\\ \hline
+
+{\bf continue} &
+{\bf continue} forces the next iteration of the current loop to
+take place. Before the next iteration, for $dowhile$ and $while$ loops,
+the boolean expression is evaluated, for $for$, $forprime$, and $forstep$
+loops, reinitialization is done.\\ \hline
+
+{\bf decl($F_1,\ldots,F_n$)\newline
+$F_i$: fct($p_1,\ldots,p_m)=seq$\newline
+\hspace*{0.7cm}fct$()=seq$} &
+{\bf $F_1,\ldots,F_n$} are user defined functions; {\bf fct} is the
+function name; {\bf $p_1,\ldots,p_m$} are the function parameters; {\bf $seq$}
+is a sequence.\newline
+{\bf decl} assigns the function {\bf $F_i$} to the function name {\bf fct}.\\ \hline
+
+{\bf dowhile($B, seq$)} &
+$seq$ is a sequence.\newline
+$seq$ is executed as long as the value of $B$ is nonzero; $seq$ is
+executed at least once.\\ \hline
+
+{\bf for($x = l, u, seq$)\newline
+for($x = l;, u, seq$)\newline
+for($l, u, seq$)\newline
+for($l;, u, seq$)} &
+$l, u \in \R$, $l \leq u$.\newline
+$seq$ is a sequence.\newline
+$seq$ is executed  while $x$ (or the system variable {\bf @} in
+the third and fourth cases) runs from $l$ to $u$ in increments of 1.\\ \hline
+
+{\bf forprime($x = l, u, seq$)\newline
+forprime($x = l;, u, seq$)\newline
+forprime($l, u, seq$)\newline
+forprime($l;, u, seq$)} &
+$l, u \in \R$, $l \leq u$, $u \geq 2$.\newline
+$seq$ is a sequence.\newline
+$seq$ is executed  while $x$ (or the system variable {\bf @} in
+the third and fourth cases) runs through all prime numbers in the
+range $[l, u]$.\\ \hline
+
+{\bf forstep($x = l, u, step, seq$)\newline
+forstep($x = l;, u, step, seq$)\newline
+forstep($l, u, step, seq$)\newline
+forstep($l;, u, step, seq$)} &
+$l, u, step \in \R$, $step \neq 0$.\newline
+If $step > 0$, $l \leq u$; if $step < 0$, $l \geq u$.\newline
+$seq$ is a sequence.\newline
+$seq$ is executed  while $x$ (or the system variable {\bf @} in
+the third and fourth cases) runs from $l$ to $u$ in increments of
+$step$.\\ \hline
+\end{tabular}
+
+\index{break}
+\index{continue}
+\index{decl}
+\index{dowhile}
+\index{for}
+\index{forprime}
+\index{forstep}
+
+\newpage
+
+\begin{tabular}{|p{1.95in}|p{3.7in}|} \hline
+
+
+{\bf if($B, seq1, seq2$)} &
+$seq1$ and $seq2$ are sequences.\newline
+If the value of $B$ is nonzero, $seq1$ is executed; otherwise
+$seq2$ is executed.\\ \hline
+
+{\bf local$(x_1,\ldots,x_n)$} &
+{\bf $x_1,\ldots,x_n$} are variables.\newline
+At the beginning of user defined functions, {\bf local} creates the local
+variables {\bf $x_1,\ldots,x_n$}.\\ \hline
+
+{\bf prod($x=l,u,$exp)}\newline
+{\bf prod($l,u,$exp)} &
+$l,u \in \N$; exp is an expression.\newline
+{\bf prod} returns the product of the expression exp for $x=l$ to $u$ or $@=l$ to $u$.\\ \hline
+
+{\bf return$(A)$} &
+{\bf $A$} is a {\bf simcalc} expression.\newline
+{\bf return} terminates a user defined function and returns the value of
+{\bf $A$} as the value of that function.\\ \hline
+
+{\bf sum($x=l,u,$exp)}\newline
+{\bf sum($l,u,$exp)} &
+$l,u \in \N$; exp is an expression.\newline
+{\bf sum} returns the sum of the expression exp for $x=l$ to $u$ or $@=l$ to $u$.\\ \hline
+
+{\bf while($B, seq$)} &
+$seq$ is a sequence.\newline
+$seq$ is executed while the value of $B$ is nonzero.\\ \hline
+\end{tabular}
+
+\leer\leer
+The user defined functions are evaluated by calling {\bf fct$(A_1,\ldots,A_m)$}
+or {\bf fct()}, where \linebreak
+{\bf $A_1,\ldots,A_m$} are any valid {\bf simcalc} expressions.
+
+For details see {\tt ``?csname''}.
+
+\index{if}
+\index{local}
+\index{prod}
+\index{return}
+\index{sum}
+\index{while}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 5 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Variable administration}
+\leer
+{\bf Variable names}
+\leer
+A variable name \index{variable name} of at most 20 characters. The first character must be
+a letter and subsequent characters must be alphanumeric. A variable name cannot be
+the same as any of the following {\bf simcalc} keyword. \index{simcalc keyword}
+\index{keyword}
+
+Note: {\bf simcalc} distinguishes between lower- and uppercase.
+
+\leer\leer
+{\bf
+%%%\begin{tabular}{p{0.8in}p{0.8in}p{0.8in}p{0.8in}p{0.8in}p{0.8in}}
+\begin{tabular}{p{0.8in}p{0.8in}p{0.8in}p{0.8in}p{0.9in}p{0.8in}}
+AV       & continue  & faintp    & lcm      & owon      & rper     \\
+EC       & cos       & fclose    & linequ   & pconstr   & scalar   \\
+GF       & cosh      & file      & ln       & pfact     & sfp      \\
+GF2bit   & cot       & flfunc    & local    & pfunc     & sgn      \\
+I        & coth      & fload     & log      & pgen      & sgnfeq   \\
+MOD      & cper      & floor     & log2     & phi       & sin      \\
+NF       & curec     & fltoi     & log10    & ppconstr  & sinh     \\
+O        & curgf     & fopen     & loglist  & ppoff     & sort     \\
+PT       & curgf2bit & for       & logoff   & ppon      & sqrt     \\
+Pi       & curmod    & forprime  & logon    & prfunc    & stat     \\
+aftopr   & curnf     & forstep   & mam2     & prim      & statoff  \\
+arccos   & decl      & fp        & max      & pripgen   & staton   \\
+arccot   & declaw    & fread     & mcoef    & print     & subst    \\
+arcosh   & deg       & froot     & mex      & prod      & sum      \\
+arcoth   & denom     & func      & mfunc    & progfunc  & swnf     \\
+arcsin   & deriv     & gcd       & min      & proot     & sysvar   \\
+arctan   & derivL    & getb      & minim    & prtoaf    & taalg    \\
+areptsli & det       & gethex    & minor    & ptcoef    & tan      \\
+arsinh   & disc      & getoct    & mod      & putb      & tanh     \\
+artanh   & discec    & gffunc    & modfunc  & putbits   & tavb2    \\
+aval     & discnf    & gftopol   & mtoi     & putGF2bit & tavb4    \\
+avoff    & dmconstr  & help      & mval     & puthex    & tavb6    \\
+avon     & dowhile   & herm      & nffunc   & puto      & tavb8    \\
+basismwg & eccoef    & i         & nfoff    & putoct    & tavc4    \\
+binom    & ecfunc    & if        & nfon     & quit      & tavc6    \\
+bitrans  & ecgnp     & ifunc     & nftopol  & real      & tofl     \\
+break    & ecinf f   & imag      & norm     & red       & tors     \\
+ceil     & ecnpscf   & intbas    & np       & reg       & trace    \\
+cfunc    & egcd      & intcoef   & npfe     & relcln    & transp   \\   
+chcoef   & eival     & integr    & nthei    & resul     & unit     \\
+chinrem  & elform    & irpgen    & ntpair   & return    & vardel   \\
+chpol    & elog      & ispprime  & num      & rfunc     & vcoef    \\
+classnum & elsubst   & isprime   & openf    & rk        & vfunc    \\
+coef     & exit      & isptec    & ord      & rk2d      & whei     \\
+cond     & exp       & isqrt     & ordtsg   & rkbsd     & while    \\
+conjug   & f1root    & jacsym    & ow       & rkg2d     & zmconstr \\
+cont     & fact      & jinv      & owoff    & root      & zvconstr \\
+\end{tabular}
+}
+
+\newpage
+
+{\bf Creating variables}
+\leer
+ If you want to assign the result of a computation to a variable {\bf VAR}, enter
+\leer
+{\tt 
+  $>${\bf VAR = expression} \care \Spp {\rm or} \Spp {\bf VAR[i] = expression} \care
+}
+\leer
+If the variable {\bf VAR} does not exist, it will be created and the value of
+{\bf expression} assigned to it. For array variables, the index must be a nonnegative
+integer $< 100000$.
+
+\leer\leer
+{\bf The system variables @ and AV}
+\leer
+If an expression is not explicitly assigned to a variable, it will be assigned
+automatically to the system variable {\bf @}. Type in
+\leer
+{\tt
+  {\bf $>$?sysvar \care}
+}
+\leer
+to obtain further information on how to use {\bf @}.
+\leer
+If besides the return value further results are computed by
+a function, these results are stored in the auxiliary array {\bf AV}.
+The values in {\bf AV} can be recalled for other computations
+(see {\tt ``?avfunc''}).\\
+The command {\bf avon} enables the storage of additional results in
+{\bf AV} and the command {\bf avoff} disables it.  By default, it is
+enabled.
+
+\leer\leer
+{\bf The system variables DIGITS and OUTPUTDIG}
+\leer
+The variable {\bf DIGITS} gives the internal computation precision when performing
+operations with floating point and complex numbers and polynomials over these
+structures. The default value of {\bf DIGITS} is 37. {\bf OUTPUTDIG} determines
+the output format of numbers or polynomials. A value of 0 means output in 
+scientific notation; any other value means output in fixpoint notation with 
+{\bf OUTPUTDIG} digits precision. You can change the value of {\bf DIGITS} or 
+{\bf OUTPUTDIG} to $n$ by typing in
+\leer
+{\tt
+  {\bf $>$DIGITS = $n$} \care \Spp {\rm or} \Spp {\bf OUTPUTDIG = $n$} \care
+}
+
+\leer\leer
+{\bf Using predefined variables}
+\leer
+Predefined and system variables can be used in any expression.
+
+\leer\leer
+{\bf Assigned variables (variables store)}
+\leer
+If you want a list of all the variables which have been assigned a value,
+enter
+\leer
+{\tt
+  {\bf  $>$?? }\ \ \care
+}
+\leer
+The variables, ordered by type, and their current value are listed in lexicographical
+order.
+
+\newpage
+
+If you type in
+\leer
+{\tt
+  {\bf $>$? VAR1, ..., VARn} \care
+}
+\leer
+these variables and their current value will be displayed. You can use the character $*$
+as a wildcard for any alphanumeric string.
+
+\leer\leer
+{\bf Overwriting a variable}
+\leer
+Whenever a variable is assigned a value, {\bf simcalc} automatically checks whether
+the variable name has already been used. If so, the message ``overwrite?\ (y/n)'' will
+appear on the screen. If you enter {\bf y}, the old value of the variable is replaced
+by the value of the expression; otherwise, you will be asked for another variable name.
+
+At any point during the session, you can check the value of a variable with the {\bf ?}
+command (see \S 5.17).
+
+Note: the command {\bf CTRL/C} does not work when a variable is being
+overwritten (see \S 5.16).
+
+The command {\bf owoff} turns off the overwrite protection and {\bf owon} turns it on
+(for details see {\tt ``?ow''}).
+
+The overwrite protection mechanism is automatically disabled within a loop. It is restored
+at the end of the loop. In user defined functions, there is no overwrite protection
+for local variables created by the {\bf local} command.
+
+\leer\leer
+{\bf Deleting variables}
+\leer
+You can delete variables with
+\leer
+{\tt
+  {\bf $>$vardel}\ \  \care
+}
+\leer
+{\bf simcalc} will ask for variable names; you can use the character $*$ as a
+wildcard for any alphanumeric string. (Deleting all variables using $*$ is ensured
+against possible misuse.) Enter {\bf CTRL/D} to cancel the delete command.
+
+{\bf CTRL/C} does not work here (see \S 5.17) (for details see {\tt ``?vardel''}).
+
+\leer\leer
+{\bf Variable store overflow}
+\leer
+The variable store can hold up to 300 variables. If it overflows, a message will
+appear on your screen and you will be asked to delete some variables. (The command
+{\bf CTRL/C} does not work here (see \S 5.17).)
+
+If you do not want to delete any variable, the value of the current expression
+will be assigned to the system variable {\bf @}.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 6 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Computing in \Z /m\Z }
+Before doing any computation in $\Z /m\Z$, the user must specify the current modulus
+$m$ with the function {\bf curmod($m$)}. $m$ is stored in the variable $curModulus$
+(for details see {\tt ``?curmod''}).
+
+The symbol {\bf MOD} is used for input/output of elements from the residue class ring
+$\Z /m\Z$. For $A \in \Q$, structure over $\Q$, elliptic curve or point on an elliptic
+curve over $\Q$,
+$$
+X = \mbox{\bf MOD}(A)
+$$
+assigns to $X$ the corresponding value of $A$ over $\Z/m\Z$.
+
+Vectors are entered as
+$$\begin{array}{lrl}
+ & (1) & X  =  \mbox{\bf MOD}(\{ a_1,...,a_n\} ) \\
+\mbox{or} & & \\
+ & (2) & X  = \{ a_1,...,\mbox{\bf MOD}(a_i),...,a_n\}\ ;
+\end{array}$$
+
+similarly for matrices. In case $(2)$, the function {\bf MOD} must be used for at least
+one parameter.
+
+There is a special (internal) bit representation for matrices over $\Z/2\Z$
+(see \S 4.4.2).
+You can enter a matrix in special bit notation by using the function {\bf mam2}.
+
+Remark: on the screen or in a file, e.g.
+$$
+{\rm {\bf MOD}}{\bf (100*x+10*x*y+3)}
+$$
+is displayed as
+$$
+{\rm {\bf MOD}}{\bf (100)*x+}{\rm {\bf MOD}}{\bf (10)*x*y+}{\rm {\bf MOD}}{\bf (3)}.
+$$
+(For details see {\tt ``?MOD''}.)
+
+Remark: If $m_1, m_2 \in \Z /m\Z $, $m$ defined by {\bf curmod},
+then for example the sum of $m_1$ and $m_2$ is given by {${\bf m_1 + m_2}$} (see \S 5.4).
+
+If the current modulus $m$ is changed to $m^{\prime }$ using the function {\bf curmod},
+all the elements over $\Z /m\Z $ are transformed into elements over $\Z /m^{\prime }\Z$
+automatically.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 7 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Computing in Galois fields}
+Before doing any computation in a Galois field, the user must specify 
+the current Galois field Gf$(p^n)$ with the function {\bf curgf($p, Y, Q$)},
+where $p$ is a single-precision prime, $Y$ is a variable and $Q$ is a
+univariate irreducible polynomial in $Y$ over $\Z/p\Z$ or $\Z$ of degree $n$
+or the degree $n$ ($n > 1$). In the second case, {\bf curgf} generates randomly
+an irreducible monic polynomial in $Y$ over $\Z/p\Z$ of degree $Q = n$.
+In characteristic $2$, the second possibility to specify the current Galois
+field is to use the function {\bf curgf2bit($Y, S$)}, where $Y$ is a
+variable and $S$ is a sequence of $0$ and $1$. The sequence is interpreted as
+the coefficients of a polynomial in $Y$ over $\Z/2\Z$ (For example, the sequence
+$100101$ represents the polynomial $Y^5+Y^2+1$.).
+
+The polynomial is stored in the variable $curGaloisField$ (for details see 
+{\tt ``?curgf''} or {\tt ``?curgf2bit''}).
+
+The symbol {\bf GF} is used for input/output of elements from the Galois field Gf$(p^n)$.
+For $A \in \Z/p\Z, \Q$, structure over $\Z/p\Z$ or $\Q$, elliptic curve in long Weierstrass
+normal form or point on an elliptic curve over $\Z/2\Z$ or $\Q$,
+$$
+X = \mbox{\bf GF}(A)
+$$
+assigns to $X$ the expression corresponding to $A$ over Gf$(p^n)$.
+
+Vectors are entered as
+$$\begin{array}{lrl}
+ & (1) & X = \mbox{\bf GF}(\{a_1,\ldots,a_n\})\\
+\mbox{or} & & \\
+ & (2) & X = \{a_1,\ldots,\mbox{\bf GF}(a_i),\ldots,a_n\}\ ;
+\end{array}$$
+similarly for matrices. In case (2), the function {\bf GF} must be used for at least
+one parameter.
+
+Remark: on the screen or in a file, e.g.
+$$
+\mbox{\bf GF}(4 * x + 4 * x * y + Y)
+$$
+is displayed as
+$$
+\mbox{\bf GF}(4) * x + \mbox{\bf GF}(4) * x * y + \mbox{\bf GF}(Y)\ .
+$$
+(For details see {\tt ``?GF''}.)
+
+In characteristic $2$, you can enter Galois-field elements with the function
+$$
+X = \mbox{\bf GF2bit}(S).
+$$
+$S$ is a sequence of $0$ and $1$. They are interpreted as coefficients of the
+Galois-field element (For example, $X=${\bf GF2bit}$(1101)$ represents the 
+Galois-field element $X=${\bf GF}$(Y^3+Y^2+1)$.). If you want to see the bit
+representation of an element of Gf$(2^n)$, please use {\bf putGF2bit} (see 
+{\tt ``?putGF2bit''}).
+
+Remark: if $e_1, e_2 \in$ Gf$(p^n)$, defined by {\bf curgf} or {\bf curgf2bit}, 
+then for example the sum of $e_1$ and $e_2$ is given by $e_1 + e_2$ 
+(see \S 5.4).
+
+If the current Galois field Gf$(p^n)$ is changed to Gf$(q^m)$ using the function
+{\bf curgf}, all the elements of Gf$(p^n)$ are transformed into elements of Gf$(q^m)$
+automatically. If $p = q$ and $n\ |\ m$, the user is asked if the variables over the old
+Galois field should be embeded into the new one (for details see {\tt ``?curgf''} or {\tt ``?curgf2bit''}).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 8 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Computing in number fields}
+Before doing any computations with algebraic numbers, the user must specify the current
+number field $K$ with the function {\bf curnf($Y,P$)}, where $Y$ is a variable and
+$P$ is a univariate irreducible polynomial in $Y$; then $K=\Q (\alpha )$ where
+$P(\alpha ) = 0$, i.e.\/ $K \cong \Q [Y]/(P(Y))$. All algebraic numbers are considered
+to be elements of this field $K$. $P$ is stored in the variable $curNumberField$
+(for details see {\tt ``?curnf''}).
+
+The symbol {\bf NF} is used for input/output of elements from the number field $K$.
+For $A \in \Q$, structure over $\Q$, elliptic curve or point on an elliptic curve over $\Q$,
+$$
+X = \mbox{\bf NF}(A)
+$$
+assigns to $X$ the expression corresponding to $A$ over $K$.
+
+Vectors are entered as
+$$\begin{array}{lrl}
+ & (1) & X = \mbox{\bf NF}(\{ a_1,...,a_n\} ) \\
+\mbox{or} & & \\
+ & (2) & X = \{ a_1,...,\mbox{\bf NF}(a_i),...,a_n\}\ ;
+\end{array}$$
+similarly for matrices. In case $(2)$, the function {\bf NF} must be used for at least
+one parameter.
+
+Remark: on the screen or in a file, e.g.
+$$
+\mbox{\bf NF}(100*x+10*x*y+Y)
+$$
+is displayed as
+$$
+100 * x + 10 * x * y + {\bf NF}(Y)\ .
+$$
+(For details see {\tt ``?NF''}.)
+
+Remark: if $e_1,e_2 \in K$, defined by {\bf curnf}, then for example the sum of $e_1$ and $e_2$
+is given by $e_1 + e_2$ (see \S 5.4).
+
+Structures over number fields, which may be considered as structures over $\Q$,
+are usually treated as structures over the rationals. If you want to lift them
+to the number field specified by curnf, you can use the switch 
+{\bf nfon} / {\bf nfoff}. After {\bf nfon}, in the following functions - cond, 
+ecinf, fact, sfp, taalg, tors - the algorithms for structures over number 
+fields are used for the structure over $\Q$. This is valid until {\bf nfoff}.
+
+If the current number field $K$ is changed to $K^{\prime }$ using the function 
+{\bf curnf}, all the elements of $K$ are transformed into elements over 
+$K^{\prime }$ automatically.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 9 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Elliptic curves}
+Before doing any computations with elliptic curves, the user must specify
+the current elliptic curve with the function {\bf curec($E$)}, where $E$ is
+an elliptic curve over $\Z/p\Z$, $\Q$, Nf, or Gf$(2^n)$. The group law on the
+set of points is defined with respect to this curve until the next call to
+{\bf curec}. The current elliptic curve is stored in the variable $curEllCurve$
+(for details see {\tt ``?curec''}).
+
+The symbol {\bf EC} is used for input/ouput of elliptic curves. For $a_1, ... ,a_6$
+and $a,b$ $\in \Z/p\Z$, $\Q$, Nf, or Gf$(2^n)$,
+$$
+X = \mbox{\bf EC}(a_1, a_2, a_3, a_4, a_6)\quad \mbox{or}\quad
+X = \mbox{\bf EC}(a, b)
+$$
+assigns to $X$ the elliptic curve in long or short Weierstrass normal form (respectively):
+$$\begin{array}{rrcl}
+E: &y^2\ +\ a_1xy\ +\ a_3y &= &x^3\ +\ a_2x^2\ +\ a_4x\ +\ a_6\quad \mbox{or}\\
+E: &y^2 &= &x^3\ +\ ax\ +\ b.
+\end{array}$$
+
+Remark: on the screen or in a file, {\bf EC}$(a_1, a_2, a_3, a_4, a_6)$ or {\bf EC}$(a, b)$
+is displayed.
+
+(For details see {\tt ``?EC''}.)
+
+The symbol {\bf PT} is used for input/output of points on an elliptic curve.
+For $x,y,z \in \Z/p\Z$, $\Q$, Nf, or Gf$(2^n)$,
+$$
+X = \mbox{\bf PT}(x, y, z) \quad \mbox{or}\quad X = \mbox{\bf PT}(x,y)
+$$
+assigns to $X$ a point on any elliptic curve in projective or affine coordinates
+(respectively).
+
+Remark: on the screen or in a file, {\bf PT}$(x,y,z)$ or {\bf PT}$(x,y)$ is displayed.
+
+(For details see {\tt ``?PT''}.)
+
+Elliptic curves over $\Z /p\Z $, Nf, or Gf$(2^n)$ are entered and displayed as
+$$\begin{array}{rl}
+(1) & X  =  \mbox{\bf MOD}(\mbox{\bf EC}(a_1,a_2,a_3,a_4,a_6))\\
+ & X  = \mbox{\bf NF}(\mbox{\bf EC}(a_1,a_2,a_3,a_4,a_6))\\
+ & X  = \mbox{\bf GF}(\mbox{\bf EC}(a_1,a_2,a_3,a_4,a_6))
+\end{array}
+$$
+or
+$$\begin{array}{rl}
+(2) & X  =  \mbox{\bf EC}(a_1,\mbox{\bf MOD}(a_2),a_3,a_4,a_6)\\
+ & X  = \mbox{\bf EC}(a_1,\mbox{\bf NF}(a_2),a_3,a_4,a_6)\\
+ & X  = \mbox{\bf EC}(a_1,\mbox{\bf GF}(a_2),a_3,a_4,a_6)
+\end{array}$$
+respectively. In case $(2)$, the function {\bf MOD}, {\bf NF}, or {\bf GF} must be used
+for at least one parameter. Similarly for elliptic curves in short Weierstrass normal form
+and for points on elliptic curves.
+
+Warning: form (2) must be used for elliptic curves with coefficients 
+$\in K\setminus \Q$ or Gf$(2^n)\setminus \Z/2\Z$. {\bf NF}$(a_i)$ and 
+{\bf GF}$(a_i)$ must be used for all coefficients $a_i \in K\setminus \Q$ and 
+Gf$(2^n)\setminus \Z/2\Z$ respectively. $a_i$ or {\bf NF}$(a_i)$ can be used 
+for coefficients $\in \Q$, and $a_i$ or {\bf GF}$(a_i)$ for coefficients 
+$\in \Z/2\Z$. Similarly for points on elliptic curves.
+
+If the current modulus $p$ is changed using the function {\bf curmod()}, 
+curves over $\Z /p\Z$ which would be singular over the new modulus are 
+transformed into elliptic curves over $\Q$. If the current modulus $p$ is 
+changed to $q$, where $q$ is not a prime, elliptic curves and points on 
+elliptic curves over $\Z /p\Z$ are transformed into elliptic curves and points 
+over $\Q$. Similarly for {\bf curgf()}.
+
+{\bf O} denotes the point at infinity in affine representation (for details see 
+{\tt ``?O''}). The pro\-jec\-tive representation of the point at infinity is
+{\bf PT}$(0,1,0)$.
+
+The sum of two points on the current elliptic curve is given by 
+$P_1+P_2$. For an integer $m$ the point $mP$ is given by $m*P$ (see \S 5.4).
+
+The variable {\bf HEIGHTBOUND} determines the upper bound of the
+height of points for the search in the algorithm of finding
+basis points of an elliptic curve (i.e. in basismwg and faintp). 
+By default, {\bf HEIGHTBOUND} $=$ 11 (see ``?ecfunc''). You can 
+change the value of {\bf HEIGHTBOUND} to $n$ by typing in 
+\leer
+{\tt
+  {\bf $>$HEIGHTBOUND = $n$} \care 
+}
+\leer
+where $n$ is an integer, a rational or a floating point number with 
+$0 \leq n \leq 2^{999}$. If {\bf HEIGHTBOUND} is zero, then the height 
+of points is unlimited.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 10 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Computing over $\R$ and $\C$}
+Input of floating point numbers and polynomials over $\R$ can be done in fix 
+point or scientific notation. Ouput is done depending on the value of 
+{\bf OUTPUTDIG} (see \S 5.5) (for details see {\tt ``?flfunc''}).
+
+{\bf simcalc} computes floating point and complex numbers and polynomials 
+over these structures with a precision of {\bf DIGITS} digits; the default 
+value is {\bf DIGITS} $= 37$ (see \S 5.5).
+
+Input of complex numbers can be done in two ways
+\begin{eqnarray*}
+ & (1)\Spp & a + b * i \ ,\\
+ & (2)\Spp & a + b * I \ ;
+\end{eqnarray*}
+they are always displayed in the first form. The variables $i$ and $I$ are 
+reserved for $\sqrt{-1}$. For details see {\tt ``?cfunc''}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 11 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Variable substitution}
+In any computation with variables, it is possible to substitute values for the variables.
+The substitution is done by
+$$X = f(x_1 = A_1, ..., x_n = A_n).$$
+$f$ is either a polynomial, a rational function, a matrix or a vector; $f$ must contain
+all the variables $x_1,...,x_n$. $A_1,...,A_n$ are expressions which evaluate to numbers,
+polynomials or rational functions. 
+
+
+Recursive substitution and substitutions of the form
+$$X = f(x_1 = x_2 = ...  = x_m = A)$$
+or
+$$X = f(x_1 = ... = A = ... = x_m), \Spp m \leq n$$
+are also allowed (for details see {\tt ``?subst''}).
+
+Warning: if $A_i$ contains the variable $x_j$ ($i < j$), then this $x_j$ will also
+be substituted by $A_j$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 12 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Reading from files}
+In {\bf simcalc} it is possible to read strings from files; each string is
+displayed on the screen
+
+\leer
+\begin{tabular}{p{1.2in}p{3.96in}}
+{\bf fload, fload()} &
+opens the default file \_\_\_$INP$ (it must exist in the current working directory), 
+reads all lines and closes the file.\\
+
+{\bf fload($NAME$)} &
+opens the file $NAME$ (it must exist in the current working directory),
+reads all lines and closes the file.
+\end{tabular}
+
+\leer
+\begin{tabular}{p{1.2in}p{3.96in}}
+{\bf fopen, fopen()} &
+opens the default file \_\_\_$INP$; it must exist in the current working directory.\\
+
+{\bf fopen($NAME$)} &
+opens the file $NAME$; it must exist in the current working directory.
+\end{tabular}
+
+\leer
+Note: no more than 10 files can be opened at the same time (for details see {\tt ``?fopen''}).
+
+\leer
+\begin{tabular}{p{1.4in}p{3.96in}}
+{\bf fread, fread()} &
+reads from the file \_\_\_$INP$ the line marked by the file pointer.\\
+
+{\bf fread $n$, fread($n$)} &
+starting at the line marked by the file pointer, reads $n$ lines from the file \_\_\_$INP$.\\
+
+
+{\bf fread($NAME$)} &
+reads from the file $NAME$ the line marked by the file pointer.\\
+
+{\bf fread($NAME$, $n$)} &
+starting at the line marked by the file pointer, reads $n$ lines from the file $NAME$.
+\end{tabular}
+
+\leer
+Before calling {\bf fread}, the file must have been previously opened by {\bf fopen}
+(for details see {\tt ``?fread''}).
+
+\leer
+\begin{tabular}{p{1.2in}p{3.96in}}
+{\bf fclose, fclose()} &
+closes the file \_\_\_$INP$.\\
+
+{\bf fclose($NAME$)} &
+closes the file $NAME$.
+\end{tabular}
+
+\leer
+The file must have been previously opened before calling {\bf fclose}.
+
+\leer
+\begin{tabular}{p{1.2in}p{3.96in}}
+{\bf openf} &
+lists all files currently opened.
+\end{tabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 13 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Predefinitions}
+
+Predefinitions for {\bf simcalc} are read from the file {\bf .simcalcrc} in the current
+or home directory.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 14 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Log files}
+\index{log file}
+As seen in \S 5.3, it is possible to ``log'' all or parts of a session with {\bf simcalc}
+into a file.
+
+\leer\leer
+{\bf Opening a log file}
+\leer
+A log file with the name {\bf $FILE$} is opened with the command
+\leer
+{\tt
+  {\bf $>$logon($FILE$)}\ \ \care
+}
+\index{logon}
+
+The command
+\leer
+{\tt
+  {\bf $>$logon}\ \   \care \Spp {\rm or}\Spp\Spp {\bf $>$logon()}\ \   \care
+}
+\leer
+opens the log file {\bf \_\_\_$LOG$}. If the file $FILE$ or \_\_\_$LOG$ does not exist,
+it will be created; other\-wise, the new protocol will be added to the end of the log file.
+{\bf simcalc} will au\-to\-mati\-cally close the current log file before opening a new one.
+
+Immediately after opening a log file, all interaction with {\bf simcalc} (input and output)
+will additionally be written to the file. (For details see {\tt ``?log''}.)
+
+\leer\leer
+{\bf Listing the contents of a log file}
+\leer
+The command
+\leer
+{\tt
+  {\bf $>$loglist }\ \ \care
+}
+\leer
+displays the contents of the current log file on the screen. \index{loglist}
+
+\newpage
+
+\leer\leer
+{\bf Closing a log file}
+\leer
+There are two ways to close the current log file:
+\begin{itemize}
+   \item create a new log file
+   \item use the command
+\leer
+{\tt
+  {\bf $>$logoff }\ \ \care \Spp {\rm or}\Spp\Spp {\bf $>$logoff()}\ \ \care
+}
+\end{itemize}
+\index{logoff}
+(For details see {\tt ``?log''}.)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 15 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Statistical functions}
+After receiving the command \index{staton}
+\leer
+{\tt
+  {\bf $>$staton}\ \ \care
+}
+\leer
+{\bf simcalc} will list the following information after each computation:
+
+\begin{tabbing}
+1234567\=12345678\=\kill
+\> computation time (in seconds) needed for the current computation\\
+\> total computation time (in seconds) needed so far\\
+\end{tabbing}
+
+If you no longer want the statistical information, enter the command \index{statoff}
+\leer
+{\tt
+  {\bf $>$statoff}\ \  \care
+}
+\leer
+By default {\bf simcalc} does not list statistical information. (For details see
+{\tt ``?stat''}.)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 16 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Suppressing the output}
+It is sometimes convenient to be able to suppress the output of computational results,
+e.g. during loop execution. If you end the expression to be evaluated with a semicolon ``{\bf ;}'',
+the result of the computation will be assigned internally to a variable (see \S 5.5), but will
+not be shown on your screen.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 17 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Interrupting output and computations}
+{\bf Interrupting the output}
+\leer
+You can interrupt the output of a computational result with {\bf CTRL/C}. {\bf simcalc} confirms
+with the message
+\begin{verbatim}
+           **********      Output is interrupted.      **********
+\end{verbatim}
+When listing the contents of the variables store, only the output of the variable that is
+currently being displayed is interrupted.
+
+\newpage
+
+{\bf Interrupting a computation}
+\leer
+The command {\bf CTRL/C} can also be used to interrupt a computation. {\bf simcalc} confirms
+with the message
+\begin{verbatim}
+           **********    Calculation is interrupted.   **********
+\end{verbatim}
+Whenever the result of a computation is known {\em internally\/}, the equality symbol will appear
+on your screen. Then, {\bf CTRL/C} interrupts the output of the result and the following message
+appears:
+\begin{verbatim}
+           **********        Result is computed.       **********
+           **********       Output is interrupted.     **********
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 18 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Special characters as commands}
+
+{\bf The ? command}
+\leer
+The {\bf ?} command provides detailed information on
+\begin{itemize}
+\item  the contents of the variables store (see \S 5.5),
+\item  deleting variables (see \S 5.5),
+\item  working with log files (see \S 5.14),
+\item  reading from files (see \S 5.12),
+\item  the overwrite protection (see \S 5.5),
+\item  using statistical functions (see \S 5.15),
+\item  variable substitution (see \S 5.11),
+\item  operators and functions (see \S 5.4).
+\end{itemize}
+
+For details on the {\bf ?} command enter
+\leer
+{\tt
+  {\bf $>$?help}\ \ \care
+}
+
+
+Detailed information is obtained with
+\leer
+\begin{tabular}{p{1in}p{4.16in}}
+{\bf ?func}     & for general functions\\
+{\bf ?progfunc} & for program control statements\\
+{\bf ?modfunc}  & for functions over $\Z /m\Z $\\
+{\bf ?ifunc}    & for functions over $\Z$\\
+{\bf ?rfunc}    & for functions over $\Q$\\
+{\bf ?flfunc}   & for functions over $\R$\\
+{\bf ?cfunc}    & for functions over $\C$\\
+{\bf ?nffunc}   & for functions over number fields\\
+{\bf ?gffunc}   & for functions over Gf$(p^n)$\\
+{\bf ?pfunc}    & for functions over polynomials\\
+{\bf ?mfunc}    & for functions over matrices\\
+{\bf ?vfunc}    & for functions over vectors\\
+{\bf ?ecfunc}   & for functions over elliptic curves
+\end{tabular}
+
+\newpage
+
+\leer\leer
+{\bf The \&-command}
+\leer
+The command
+\leer
+{\tt
+  {\bf $>$\&}\ \ \care
+}
+\leer
+displays {\bf simcalc}'s introductory screen.
+
+\leer\leer
+{\bf Using shell commands}
+\leer
+During a {\bf simcalc} session you can execute a shell command by typing
+\leer
+{\tt
+  {\bf $>$\$ command}\ \ \care
+}
+\leer
+The system command {\bf command} will be executed. Concatenating commands using {\bf \_}
+or {\bf ;} is not allowed (for details see {\tt ``?\$''}).
+
+\leer\leer
+{\bf  Branching into a shell}
+\leer
+The command
+\leer
+{\tt
+  {\bf $>$!} \care
+}
+\leer
+lets you branch into a subshell. Enter {\bf CTRL/D} or {\bf exit} to return to the current
+{\bf simcalc} session (for details see {\tt ``?\$''}).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 5 19 . t e x  %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Error messages}
+\index{error messages}
+All {\bf simcalc} error messages are self--explanatory. {\bf simcalc} reports only the first
+error found.
+
+You can use the {\bf \%} command (see \S 5.2) ({\bf CTRL/P} or {\bf CTRL/N} for the GNU
+readline version) to correct erroneous input.
+%\end{document}

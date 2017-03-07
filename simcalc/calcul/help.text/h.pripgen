@@ -1,0 +1,32 @@
+                            * * * * * * *
+                            *  pripgen  *
+                            * * * * * * *
+
+        "primitive polynomial generator"
+        SYNTAX: X = pripgen(A,n,j)
+
+        A is a variable.
+        n > 1 is a single precision integer.
+        j is a single precision integer with n+2 > j > 2.
+
+        X is assigned a monic univariate primitive polynomial of 
+        degree n in the variable A over the specified Galois field 
+        GF(2^m) (m>1). X has j non vanishing coefficients and X(0) 
+        is not equal to zero.
+
+        The exponent of a polynomial f(A) over GF(2^m) is the minimal
+        e such that f(A) divides A^e-1. The polynomial f(A) is
+        primitive, if the exponent of f(A) has the maximal possible
+        value 2^m-1.
+
+
+        Example 1: (correct)
+
+                X = pripgen(A,8,3)
+
+        
+        Example 2: (incorrect)
+
+                X = pripgen(A,4,6) 
+
+_ERR_NR_217             

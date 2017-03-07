@@ -1,0 +1,25 @@
+                                * * * * * * *
+                                *    ceil   *
+                                * * * * * * *
+
+        "ceil"
+        SYNTAX: X = ceil(R)
+
+        R is an expression whose value is an element of Z, Q or R.
+
+        X is assigned the smallest integer greater than or equal to R.
+
+
+        Example 1: (correct)
+
+                 ceil(3/4)
+
+
+        Example 2: (correct)
+
+                ceil(9/3)
+
+
+        Example 3: (correct)
+
+                ceil(23423.283472349e-3)

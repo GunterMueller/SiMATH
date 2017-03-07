@@ -1,0 +1,25 @@
+                                * * * * * * *
+                                *   floor   *
+                                * * * * * * *
+
+        "floor"
+        SYNTAX: X = floor(R)
+
+        R is an expression whose value is an element of Z, Q or R.
+
+        X is assigned the greatest integer less than or equal to R.
+
+
+        Example 1: (correct)
+
+                 floor(3/4)
+
+
+        Example 2: (correct)
+
+                floor(9/3)
+
+
+        Example 3: (correct)
+
+                floor(23423.283472349e-3)

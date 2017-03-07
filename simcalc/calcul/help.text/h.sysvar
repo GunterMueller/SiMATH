@@ -1,0 +1,30 @@
+                               * * * * * * *
+                               *   sysvar  *
+                               * * * * * * *
+
+        "system variable"
+
+        The result of a computation that is not assigned to a specified
+        variable using the '=' operator is automatically assigned to the 
+        system variable '@'.
+        
+        It is not allowed to assign a value explicitly to '@'.
+
+
+        Example 1: (incorrect)
+ 
+                @ = 5
+                
+_ERR_NR_005
+
+
+        Example 2: 
+
+                8
+                message on the screen: @ = 8
+ 
+                @ + x
+                message on the screen: @ = x + 8
+
+                @(x=3)
+                message on the screen: @ = 11

@@ -1,0 +1,63 @@
+                               * * * * * * *
+                               *   ecgnp   *
+                               * * * * * * *
+
+        "elliptic curve with given number of points"
+        SYNTAX: X = ecgnp(p, m, D)
+                X = ecgnp(m, D)
+
+        p is an expression whose value is a prime > 3.
+        In the second case, the prime p > 3 must be specified by curmod.
+        m is an expression whose value is a nonnegative integer. 
+
+        If m > 0 then m specifies the number of points on the 
+        elliptic curve which is wanted.
+
+        If m = 0 then D must not be 0 and all possible m's are
+        computed and for each m the corresponding elliptic curve.
+  
+        D is an expression whose value is a nonpositive integer.
+        If D < 0 then D specifies the imaginary quadratic number
+        field Q( D^(1/2) ) where D = (p+1-m)^2 - 4*p.
+        If D = 0 then D is computed in ecgnp and m must not be 0.
+
+        X is assigned an elliptic curve with given number of points. 
+        In the first case, X is an elliptic curve over Q with
+        coefficients in Z/pZ and in the second case, X is an 
+        elliptic curve over Z/pZ.
+
+        If m=0, the class number of Q( D^(1/2) ) is stored in AV[0].
+        The following values in AV are: AV[1]=m1, AV[2]=elliptic
+        curve with m1 points over Z/pZ, and so on (see "? avfunc").
+
+        Warning: If p > 2^30, the primality of p is not tested.
+        
+
+        Example 1: (correct)
+
+                ecgnp(1000117, 10^6, 0) 
+
+
+        Example 2: (correct)
+
+                ecgnp(1009, 0, -35) 
+
+
+        Example 3: (correct)
+
+		curmod(1009)
+                ecgnp(0, -35)
+
+
+        Example 4: (incorrect)
+
+                ecgnp(11, 0, 0)
+
+_ERR_NR_034_ecgnp_
+
+
+        Example 5: (incorrect)
+
+                ecgnp(1009,10,0)
+
+_ERR_NR_280

@@ -1,0 +1,45 @@
+                                * * * * * * *
+                                *  elsubst  *
+                                * * * * * * *
+
+        "element substitution"
+        SYNTAX: X = elsubst(M, el, pz, ps)
+                X = elsubst(V, el, pos)
+
+        M is a matrix (m(i,j)) with 1 <= i <= m and 1 <=j <=n and V is 
+        a vector (v(k)) with 1 <= k <= l.
+
+        First case: X = elsubst(M, el, pz, ps).
+        M = (m(i,j)) is a (m x n) matrix over Z, Q, Z/mZ, GF(p^n) (where
+        p is a prime) or a number field, of polynomials over these 
+        structures or of rational functions.
+        1 <= pz <= m and 1 <= ps <= n.
+        elsubst replaces the element m(pz, ps) by the value of el.
+        X is assigned the result of this substitution.
+
+        Second case: X = elsubst(V, el, pos).
+        V = (v(k)) is a vector of length l over Z, Q, Z/mZ, GF(p^n) 
+        (where p is a prime) or a number field, of polynomials over 
+        these structures or of rational functions.
+        1 <= pos <= l.
+        elsubst replaces the element v(pos) by the value of el.
+        X is assigned the result of this substitution.
+
+
+        Example 1: (correct)
+
+                elsubst({{x, y} {1/7, x/y}}, z, 1, 2)
+
+
+        Example 2: (incorrect)
+
+                elsubst({{x, y} {1/7, 0}}, z, 3, 2)
+
+_ERR_NR_098
+                
+
+        Example 3: (incorrect)
+
+                elsubst({x, y, 8}, {z}, 2)
+
+_ERR_NR_077

@@ -1,0 +1,22 @@
+                               * * * * * * *
+                               *    phi    *
+                               * * * * * * *
+
+        "Eulerian phi-function"
+        SYNTAX: X = phi(A)
+
+        A is an expression whose value is a positive integer.
+
+        X is assigned the value of the Eulerian phi-function at A.
+
+
+        Example 1: (correct)
+
+                phi(34 * gcd(456, 123) - 45)
+
+
+        Example 2: (incorrect)
+
+                phi(-458/79)
+                
+_ERR_NR_016

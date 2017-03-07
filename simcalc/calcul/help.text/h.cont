@@ -1,0 +1,16 @@
+                               * * * * * * *
+                               *    cont   *
+                               * * * * * * *
+
+        "content"
+        SYNTAX: X = cont(P,Y)
+
+        P is an expression whose value is a polynomial over Z.
+        Y is a variable which occurs in P.
+
+        X is assigned the content of P with respect to the variable Y.
+
+
+        Example 1: (correct)
+
+                cont(3*x*y + 3*x*y^2,x)

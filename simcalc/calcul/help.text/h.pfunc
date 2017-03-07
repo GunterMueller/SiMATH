@@ -1,0 +1,94 @@
+                                * * * * * * *
+                                *   pfunc   *
+                                * * * * * * *
+
+        simcalc computes polynomials over Z, Q, Z/mZ, number
+        fields, Galois-fields, R and C. (For details see 
+        "? modfunc", "? nffunc", "? gffunc", "? flfunc", "? cfunc").
+        The following functions are available for polynomials:
+        
+        +           chcoef      egcd        lcm         pripgen
+        -           chinrem     fact        mod         prfunc    
+        *           coef        fltoi       mtoi        puto
+        :           cont        froot       nftopol     resul
+        ^           deg         gcd         num         sfp
+        /           denom       gftopol     pfact       sort
+        ==          deriv       integr      prim        tofl
+        !=          disc        irpgen
+
+
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        ':'                     quotient;
+
+        '^'                     exponentiation;
+
+        '/'                     division;
+
+        '=='                    equal;
+
+        '!='                    not equal;
+
+        'chcoef'                change coefficient of a polynomial;
+
+        'chinrem'               chinese remainder algorithm;
+
+        'coef'                  coefficient of a polynomial;
+
+        'cont'                  content;
+
+        'deg'                   degree;
+
+        'denom'                 denominator;
+
+        'deriv'                 derivation;
+
+        'disc'                  discriminant of a polynomial;
+
+        'egcd'                  extended greatest common divisor;
+
+        'fact'                  factorization;
+
+        'fltoi'                 floating points to integers;
+
+        'froot'                 finding root;
+
+        'gcd'                   greatest common divisor;
+
+        'gftopol'               Galois-field to polynomial;
+
+        'integr'                integration;
+
+        'irpgen'                irreducible polynomial generator;
+
+        'lcm'                   least common multiple;
+
+        'mod'                   module homomorphism;
+
+        'mtoi'                  modular to integer;
+
+        'nftopol'               number field to polynomial;
+
+        'num'                   numerator;
+
+        'pfact'                 factorization modulo prime;
+
+        'prfunc'                primitive function;
+
+        'prim'                  primitive part;
+
+        'pripgen'               primitive polynomial generator;
+
+        'puto'                  display internal representation;
+
+        'resul'                 resultant;
+
+        'sfp'                   squarefree part;
+
+        'sort'                  sort polynomial;
+
+        'tofl'                  to floating points.

@@ -1,0 +1,25 @@
+                               * * * * * * *
+                               *  gftopol  *
+                               * * * * * * *
+
+        "Galois-field to polynomial"
+        SYNTAX: X = gftopol(a)
+
+        a is an expression whose value is a Galois-field element, a
+        polynomial over a Galois-field, a matrix or a vector over
+        these structures.
+        
+        gftopol transforms the structures over the Galois-field 
+        into the corresponding polynomials over Z adding to the
+        variable list the by curgf or curgf2bit specified variable.
+        X is assigned the corresponding structure over polynomials 
+        over Z.
+        
+
+        Example 1: (correct)
+
+                gftopol(GF(3*A^2+A))
+
+        Example 2: (correct)
+
+                gftopol(GF(4*A+A^3+y))

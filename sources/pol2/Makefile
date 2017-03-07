@@ -1,0 +1,239 @@
+include ../../Makefile.flags
+
+
+SMBIN = ../../bin
+
+
+OBJECTS = \
+  bpmisubcubeq.o \
+  cdprfcl.o \
+  cdprfupr.o \
+  cdprinv.o \
+  cdpriquot.o \
+  cdprlfcdmar.o \
+  cdprsum.o \
+  cdprzmodhom.o \
+  clfcdpr.o \
+  dippicgb.o \
+  dippicp.o \
+  dippidif.o \
+  dippidim.o \
+  dippigb.o \
+  dippigba.o \
+  dippigbr.o \
+  dippigt.o \
+  dippilotoglo.o \
+  dippilotolio.o \
+  dippilototdo.o \
+  dippineg.o \
+  dippipim.o \
+  dippipiprod.o \
+  dippiprod.o \
+  dippiqff.o \
+  dippircgb.o \
+  dippisp.o \
+  dippisum.o \
+  fgetdippicd.o \
+  fgetdippil.o \
+  fputdippicgb.o \
+  fputdippidim.o \
+  fputdippigbs.o \
+  fputdippigt.o \
+  fputdippil.o \
+  fputdippipim.o \
+  fputdippiqff.o \
+  fu_pol2_cgb.o \
+  fu_pol2_gb.o \
+  getdippicd.o \
+  getdippil.o \
+  infeminpmpp.o \
+  infempmppip.o \
+  isdippione.o \
+  isimupm2.o \
+  isimupmi.o \
+  isimupms.o \
+  isiupi.o \
+  isiupr.o \
+  isiuspi.o \
+  isuspi.o \
+  nfespecmpc1.o \
+  nfespecmpc2.o \
+  pibezout.o \
+  picevalp.o \
+  picont.o \
+  picontpp.o \
+  pidiscr.o \
+  pidiscrhank.o \
+  pifact.o \
+  pifcb.o \
+  pigcdcf.o \
+  pigfcb.o \
+  pihlfa.o \
+  pilmfcb.o \
+  pimidhom.o \
+  pimidprod.o \
+  pimidqhl.o \
+  piprimpart.o \
+  pipsrem.o \
+  piresbez.o \
+  pirescoll.o \
+  pirescspec.o \
+  piressylv.o \
+  pisfact.o \
+  pitrprod.o \
+  pitrunc.o \
+  pmibezout.o \
+  pmidiscr.o \
+  pmidiscrhank.o \
+  pmigcdcf.o \
+  pmiinter.o \
+  pmimidprod.o \
+  pmimidqhl.o \
+  pmimidqhls.o \
+  pmimidqrem.o \
+  pmimidse.o \
+  pmipsrem.o \
+  pmires.o \
+  pmirescoll.o \
+  pmiucont.o \
+  pmiupmiprod.o \
+  pmiupmiquot.o \
+  pmsalidpo.o \
+  pmsbezout.o \
+  pmsdiscr.o \
+  pmsgcdcf.o \
+  pmsinter.o \
+  pmspsrem.o \
+  pmsres.o \
+  pmsrescoll.o \
+  pmsucont.o \
+  pmsupmsprod.o \
+  pmsupmsquot.o \
+  psylvester.o \
+  ptdtrunc.o \
+  ptrunc.o \
+  putdippicgb.o \
+  putdippidim.o \
+  putdippigbs.o \
+  putdippigt.o \
+  putdippil.o \
+  putdippipim.o \
+  putdippiqff.o \
+  qffmisearchs.o \
+  qffmsapprox.o \
+  qffmseuler.o \
+  qffmseuler1.o \
+  qffmseuler2.o \
+  qffmseuler2s.o \
+  qffmseuler3.o \
+  qffmseuler4.o \
+  qffmseuler5.o \
+  qffmseuler6.o \
+  qffmseuler7.o \
+  qffmseuler8.o \
+  qffmseuler9.o \
+  qffmsreglap.o \
+  qffmsreglapv.o \
+  qffmssearch.o \
+  qffmssearchs.o \
+  sclfupi.o \
+  spifact.o \
+  udpm2togf2el.o \
+  udpm2tosb.o \
+  udpmiegcd.o \
+  udpmigcd.o \
+  udpmihegcd.o \
+  udpmijacsym.o \
+  udpmsegcd.o \
+  udpmsgcd.o \
+  udpmshegcd.o \
+  udpmsjacsym.o \
+  udpmssumjs.o \
+  upifact.o \
+  upifscl.o \
+  upihlfa.o \
+  upihlfaip.o \
+  upihli.o \
+  upihliip.o \
+  upihlqs.o \
+  upihlqsip.o \
+  upireddiscc.o \
+  upiresulc.o \
+  upisfp.o \
+  upm2cfact.o \
+  upm2ctosb.o \
+  upm2imgen.o \
+  upm2imncgen.o \
+  upm2imtgen.o \
+  upmibfact.o \
+  upmibfls.o \
+  upmibfzm.o \
+  upmibofact.o \
+  upmibofacts.o \
+  upmibofactsr.o \
+  upmibqp.o \
+  upmicfact.o \
+  upmicfacts.o \
+  upmiddfact.o \
+  upmiegcd.o \
+  upmigcd.o \
+  upmigsd.o \
+  upmihegcd.o \
+  upmijacsym.o \
+  upmimpexp.o \
+  upminif.o \
+  upmirelpfact.o \
+  upmires.o \
+  upmiresulc.o \
+  upmirf.o \
+  upmirfspec.o \
+  upmisfact.o \
+  upmisfed.o \
+  upmisfp.o \
+  upmisrpp.o \
+  upmitfsp.o \
+  upmsbfact.o \
+  upmsbfls.o \
+  upmsbfzm.o \
+  upmsbqp.o \
+  upmscfact.o \
+  upmscfacts.o \
+  upmsddfact.o \
+  upmsegcd.o \
+  upmsgcd.o \
+  upmsgsd.o \
+  upmshegcd.o \
+  upmsimgen.o \
+  upmsimtgen.o \
+  upmsjacsym.o \
+  upmsnif.o \
+  upmsrelpfact.o \
+  upmsres.o \
+  upmsresulc.o \
+  upmsrf.o \
+  upmssfact.o \
+  upmssfp.o \
+  upmssrpp.o \
+  upmssrpser.o \
+  uprfact.o \
+  uprfcdpr.o \
+  uspifact.o
+
+
+LIB= ../../lib/lib_pol2.a
+
+
+all: ${LIB}
+
+
+clean:
+	rm -f *.P *.c *.o *~
+
+
+veryclean: clean
+	rm -f ${LIB}
+
+
+${LIB}: ${OBJECTS}
+	${AR} rc $@ ${OBJECTS}
+	- ${RANLIB} ${LIB}

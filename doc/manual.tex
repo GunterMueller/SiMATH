@@ -1,0 +1,30 @@
+\documentclass[11pt]{amsbook}
+\language=4
+\usepackage{a4}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{epsfig}
+\setlength{\voffset}{+.5cm}
+\oddsidemargin0.5cm     \evensidemargin0.5cm
+\parindent0pt
+\textwidth 6.0in \textheight 21.8cm
+\input texdefs.tex
+\hyphenation{com-mands mo-di-fi-ca-tion pre-pro-ces-sor num-bers ad-mi-nistration hand-ling ap-pro-xi-ma-ted con-tained re-spec-tive-ly name-ly im-pos-si-ble
+ana-lo-gous poly-no-mials trans-form pa-ra-me-ters trans-for-ma-tion pack-ages mathe-ma-ti-cal auto-ma-ti-cal-ly struc-tures}
+\makeindex
+\begin{document}
+\input title.tex
+\pagestyle{plain}
+\setcounter{page}{1}
+\renewcommand{\thepage}{\roman{page}}
+\tableofcontents
+\setcounter{page}{1}
+\renewcommand{\thepage}{\arabic{page}}
+\include{chap1}
+\include{chap2}
+\include{chap3}
+\include{chap4}
+\include{chap5}
+%\input bibliography.tex
+\input index.tex
+\end{document}

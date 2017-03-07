@@ -1,0 +1,25 @@
+                               * * * * * * *
+                               *  nftopol  *
+                               * * * * * * *
+
+        "number field to polynomial"
+        SYNTAX: X = nftopol(a)
+
+        a is an expression whose value is an algebraic number, a
+        polynomial over a number field, a matrix or a vector over
+        these structures.
+        
+        nftopol transforms the structures over the number field 
+        into the corresponding polynomials over Q adding to the
+        variable list the by curnf specified variable.
+        X is assigned the corresponding structure over polynomials 
+        over Q.
+        
+
+        Example 1: (correct)
+
+                nftopol(NF(A^7))
+
+        Example 2: (correct)
+
+                nftopol(NF(A*x+A^2*x+y))

@@ -1,0 +1,32 @@
+                               * * * * * * *
+                               *   sort    *
+                               * * * * * * *
+
+        "sort polynomial"
+        SYNTAX: X = sort(P, X1, X2, ..., Xn)
+
+        P is an expression whose value is a polynomial in the variables 
+        X1, ..., Xn over Z, Q, Z/mZ, GF(p^t), a number field, over R or
+        C, and n>0. 
+        
+        X is assigned the polynomial P sorted with respect to the 
+        specified order of variables.
+
+
+        Example 1: (correct)
+
+                sort(x + y + z, y, z, x)
+
+
+        Example 2: (incorrect)
+
+                sort(x*y*z, x, z)
+                
+_ERR_NR_034_sort_
+
+
+        Example 3: (incorrect)
+
+                sort((x*y)/(x + y), x, y)
+                
+_ERR_NR_057

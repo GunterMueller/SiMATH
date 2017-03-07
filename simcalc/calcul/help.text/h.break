@@ -1,0 +1,6 @@
+                               * * * * * * *
+                               *   break   *
+                               * * * * * * *
+
+        In loops, "break" terminates the surrounding loop.
+        Outside, it has no effect.

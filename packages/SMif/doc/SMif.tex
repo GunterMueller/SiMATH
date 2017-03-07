@@ -1,0 +1,563 @@
+\documentclass{article}
+
+\addtolength{\textwidth}{18pt}
+
+\begin{document}
+
+\section{SMif --- The SIMATH interface functions}
+
+SMif is the SIMATH interface program. SMif uses a simple script
+language to extract data from arbitrary text files or from the output
+of arbitrary programs. In some sense it is similar to the standard
+Unix utilities awk or sed although some of the capabilities of these
+languages have not been implemented and the design of SMif focuses on
+the extraction of numerical data, and not on general text pieces.
+
+SMif uses the \emph{tcl} library and numerical operations and internal
+representations depend on \emph{tcl}.
+
+\subsection{SMif functions}
+
+The following funtions resp.\ macros can be used to obtain data from
+the underlying SMif interpreter and to administrate the results of the
+interpreter. All these functions can be used in any C program, in
+particular in SIMATH programs. Since all of the \emph{tcl}
+functionality resides in the interpreter, programs using SMif do not
+have to be linked against the \emph{tcl} library.
+
+\begin{verbatim}
+  void SMifRes_Init (SMifRes* smifres)
+
+  void SMifRes_FromFile (SMifRes smifres, char* textfname, 
+                         char* scriptname)
+
+  void SMifRes_FromProg (SMifRes smifres, char* progname,
+                         char* paralist, char* scriptname)
+
+  single SMifRes_Count (SMifRes smifres)
+
+  single SMifRes_Error (SMifRes smifres)
+
+  char* SMifRes_ErrMsg (SMifRes smifres)
+
+  single SMifRes_Type (SMifRes smifres, single nr)
+
+  char* SMifRes_Get (SMifRes smifres, single nr)
+
+  void SMifRes_SetCsh (SMifRes smifres, char* cshname)
+
+  void SMifRes_Free (SMifRes *smifres)
+\end{verbatim}
+
+Here, \texttt{SMifRes} is a data type used to store the results
+returned by the SMif interpreter.
+
+Every variable of type \texttt{SMifRes} must be initialized by a call
+to \texttt{SMifRes\_Init()} before it can be used in any of the SMif
+functions.  \texttt{SMifRes\_Free()} frees the storage area allocated
+by \texttt{SMifRes\_Init()} for an object of type \texttt{SMifRes}.
+
+\texttt{SMifRes\_FromFile()} requires as parameters the name of a text
+file \texttt{textfname} and the name of a script file
+\texttt{scriptname}.  The interpreter SMif operates on the text file
+\emph{textfname} according to the script file \texttt{scriptname}. The
+results are stored in the variable \texttt{smifres}.
+
+\texttt{SMifRes\_FromProg()} expects as parameters the name of an
+external program \texttt{progname}, the argument list
+\texttt{paralist} for this program, and the name \texttt{scriptname}
+of an SMif script. The external program \texttt{progname} is executed
+for the arguments in \texttt{paralist} and the SMif interpreter
+operates on its output according to the scriptfile
+\texttt{scriptname}. The results are stored in the variable
+\texttt{smifres}.
+
+SMif creates some temporary \texttt{csh} scripts. By default, these
+files are processed by \texttt{/bin/csh}. This can be changed by a
+call to the \texttt{SMifRes\_SetCsh()} function.
+
+The rest of the functions resp.\ marcos are used to read the results
+of the SMif interpreter in a convenient manner.
+\texttt{SMifRes\_Count()} returns the number of entries in a
+\texttt{SMifRes} object. A valid entry can be of one of the types
+\texttt{SM\_single}, \texttt{SM\_int}, \texttt{SM\_list}, or
+\texttt{SM\_pol}.  \texttt{SMifRes\_Type()} returns the type of entry
+\texttt{nr}. If this entry does not exist, \texttt{SM\_unknown} is
+returned.  \texttt{SMifRes\_Get()} accesses the value of the entry
+\texttt{nr}, i.\ e.\ a single precision number, an integer of
+arbitrary size, a SIMATH list, or a polynomial in the appropriate
+external representation of these types.  (I.\ e.\ the
+\texttt{SMifRes\_Get()} returns a string which can be easily converted
+to the appropriate SIMATH data type by certain SIMATH functions.)
+
+If SMif encounters an error, the macro \texttt{SMifRes\_Error()}
+returns \texttt{SMifRes\_error}. (Otherwise \texttt{SMifRes\_ok} is
+returned.)  In case of an error \texttt{SMifRes\_ErrMsg()} returns a
+detailed description of the error.
+
+The functions, macros, and constants described above are declared
+resp.\ defined in the header file \texttt{\_SMfiRes.h}.
+
+\vspace*{12pt} \textbf{Example.} Let \texttt{anyprogram} be an
+external program (i.\ e.\ a program which could as well be executed by
+a shell) which returns the output
+
+\begin{verbatim}
+  *** anyprogram
+  %1 = (x + y^3)(x^3 + y)
+\end{verbatim}
+
+for the arguments (in the string) \texttt{arg1 arg2}. Suppose that the
+script file \texttt{script} looks as follows:
+
+\begin{verbatim}
+  SKIP UNTIL SEEN {[CHAR] =}
+  GET POL
+\end{verbatim}
+
+We examine the following code fragment:
+
+\begin{verbatim}
+#include <_simath.h>
+#include <_SMifRes.h>
+
+int main() 
+{
+  SMifRes smifres;
+  char *tmpstr = NULL;
+
+  .....
+
+  /* bind(), init() for SIMATH data types */
+
+  .....
+
+  /* Initialize a SMifRes variable */
+  SMifRes_Init(&smifres);  
+  
+  SMifRes_FromProg(smifres, "anyprogram", "arg1 arg2", "script");
+  
+  if(SMifRes_Error(smifres) != SMif_ok) {
+    /* Error processing */
+    printf("SMifRes_Error: %s\n", SMifRes_ErrMsg(smifres));
+    exit(1);
+  }
+
+  if(SMifRes_Count(smifres) != 1 || 
+     SMifRes_Type(smifres, 1) != SM_pol) {
+    /* Something went wrong */
+    printf(.....);
+    exit(1);
+  }
+
+  tmpstr = SMifRes_Get(smifres, 1);
+  printf("example: %s\n", tmpstr);
+
+  .....
+  
+  SMifRes_Free (&smifres);
+ 
+  .....
+}
+\end{verbatim}
+
+A part of the output of the program:
+
+\begin{verbatim}
+  example: 1*x^4*y^0 + 1*x^1*y^1 + 1*x^3*y^3 + 1*x^0*y^4
+\end{verbatim}
+
+\subsection{The SMif script language}
+
+\subsubsection{Characters and words.}
+
+SMif commands operate on a given text file. A pointer always points at
+a well defined position in the text file. The text file is splitted in
+appropriate tokens by default symbols or user defined symbols. The
+following notation is used to describe characters and words.
+
+\begin{verbatim}
+  {[CHAR] ch1 ch2 ... [WORD] word1 word2 ...}
+\end{verbatim}
+
+Strings of this form are called \emph{controldefinestrings}. The
+following command tells the interpreter to ignore all of the given
+characters and strings within a text file to be processed by SMif.
+
+\texttt{IGNORE} \emph{controldefinestring}
+
+\subsubsection{\texttt{GET} commands}
+
+The four \texttt{GET} comands \texttt{GET SINGLE}, \texttt{GET INT},
+\texttt{GET LIST}, and \texttt{GET POL} generate the output of the
+interpreter.  The \texttt{GET SINGLE}, \texttt{GET INT}, and
+\texttt{GET LIST} command search for integer expressions beginning
+with the current pointer position. A \texttt{GET POL} command collects
+all the items which are not to be ignored. There are certain commands
+which change the default behaviour of \texttt{GET} commands.
+
+\texttt{IGNORE NEWLINE AFTER} \emph{controldefinestring}
+
+\texttt{SETITEM SIZE} \emph{n} \texttt{PATTERN} $\{$
+\emph{patterndefinestring }$\}$
+
+\texttt{STOPGET IF SEE} \emph{controldefinestring}
+
+The \texttt{IGNORE NEWLINE AFTER} command tells SMif which characters
+or words at the end of a line have to be treated as a continuation
+mark.  A continuation mark indicates that the line is to be treated as
+continued in the next line (without line break). The \texttt{GET
+  SINGLE}, \texttt{GET INT}, and \texttt{GET LIST} commands put
+together two integer expressions before and after a continuation mark.
+\texttt{GET POL} puts together two arbitrary words before and after a
+continuation mark.
+
+\texttt{SETITEM SIZE} is valid for \texttt{GET SINGLE}, \texttt{GET
+  INT}, and \texttt{GET LIST} commands only. It is ignored for
+\texttt{GET POL} commands. \texttt{SETITEM SIZE} defines how many
+integer expressions will be treated together and what will happen with
+these expressions.  We will see an example for this later. The
+expressions are identified by the symbols \texttt{\$1}, \texttt{\$2},
+...  \emph{patterndefinestring} is a mathematical formula over these
+symbols.  For example,
+
+\texttt{SETITEM SIZE 3 PATTERN \{\$1\}} \newline defines that only the
+first expression of three expressions will be returned.  For
+\texttt{GET INT}, this is the only valid type of
+\emph{patterndefinestring}. The \texttt{GET SINGLE} and \texttt{GET
+  LIST} commands are based on C long integers and it is possible to
+apply any mathematical operation defined in the \emph{tcl} language to
+the symbols \texttt{\$1}, \texttt{\$2}, ... In this case, valid
+expressions are for example
+
+\texttt{SETITEM SIZE 2 PATTERN \{int (cos(\$1)*tan(\$2))\}} \newline
+or
+
+\texttt{SETITEM SIZE 2 PATTERN \{\$1>\$2?\$1:\$2\}}.  \newline A
+complete list of available operators can be found in the \texttt{expr}
+man page of the \emph{tcl} library.
+
+The \texttt{STOPGET} command tells SMif to stop moving the file
+pointer as soon as a given character or the beginning of a given word
+are read. This is one of the three conditions for a \texttt{GET}
+command to terminate.  Furthermore, a \texttt{GET} command will
+terminate if a \texttt{REPEAT} loop or a \texttt{GET} command
+enclosing this \texttt{GET} command terminate, and of course, a
+\texttt{GET} command will terminate at the end of the input file.
+
+\subsubsection{The scope of control commands}
+
+A \texttt{GET} command can contain a sub script. In particular, a
+\texttt{GET LIST} command can contain another \texttt{GET LIST}
+command.  In this way, SMif can deal with sub lists of lists.  The
+validity domain of a definition (made by a \emph{controldefinestring})
+is determined by the following rules.
+
+1. The global level, i.\ e.\ the part of the SMif script not contained
+in any \texttt{GET} command has level number 0.  Every \texttt{GET}
+command increments the level number by 1 and all the definitions of
+level number $n - 1$ are valid in level number $n$.
+
+2. A definition by \texttt{IGNORE}, \texttt{IGNORE NEWLINE}, and
+\texttt{STOPGET} remains valid until it is canceled by one of the
+following \texttt{NOPOWER} commands on the same level:
+
+\texttt{NOPOWER IGNORE} \emph{controldefinestring}
+
+\texttt{NOPOWER IGNORE NEWLINE AFTER} \emph{controldefinestring}
+
+\texttt{NOPOWER STOPGET} \emph{controldefinestring}
+
+3. A valid \texttt{SETITEM} definition is canceled by a new
+\texttt{SETITEM} command on the same level or by the command
+\texttt{NOPOWER SETITEM} which restores the default behaviour.  The
+default definition is \texttt{SIZE 1 PATTERN \{\$1\}}.
+
+\textbf{Example.}
+
+\begin{verbatim}
+  # comment: example
+  IGNORE {[WORD 123 234]}
+  GET SINGLE {}
+  GET SINGLE {
+    NOPOWER IGNORE {[WORD] 123}
+  }
+  GET SINGLE {}
+\end{verbatim}
+In this example, the words \texttt{123} and \texttt{234} are ignored
+by the first and the third \texttt{GET} command, while the second one
+ignores only \texttt{234}. (The integer part in the word
+\texttt{blabla1234} is not ignored since this is not a seperate
+token.)
+
+\subsubsection{The \texttt{SKIP} command}
+
+While executing a \texttt{GET} command, the file pointer in the text
+file is moved character by character. Apart from \texttt{GET} command,
+\texttt{SKIP} is the only command which influences the file pointer
+position:
+
+\texttt{SKIP} \emph{n} \texttt{LINE}
+
+\texttt{SKIP UNTIL SEE} \emph{controldefinestring}
+
+\texttt{SKIP UNTIL SEEN} \emph{controldefinestring}
+
+Suppose that the file pointer points at some position in line $x$.
+The first \texttt{SKIP} command moves the file pointer to the
+beginning of line $x + n$. $n$ can be positive or negative. This is
+the only possibility to move the file pointer backwards in the text
+file.
+
+The other two commands move the text pointer forward until one of the
+characters or words given by \emph{controldefinestring} are read (or
+until an EOF condition is encountered).  \texttt{SKIP UNTIL SEE} moves
+the pointer to the first character or the beginning of the first word
+given in \emph{controldefinestring}.  \texttt{SKIP UNTIL SEEN} moves
+the pointer to the position after the first specified character or
+word. If a character or a word is specified by an \texttt{IGNORE}
+command, this character or word will be ignored by every SMif command.
+It is not possible to search for these strings.
+
+\subsubsection{More \texttt{GET} commands}
+
+The following variants for \texttt{GET} commands are defined:
+
+\texttt{GET SINGLE \{} \emph{subscript} \texttt{\}}
+
+\texttt{GET INT \{} \emph{subscript} \texttt{\}}
+
+\texttt{GET LIST \{} \emph{subscript} \texttt{\}}
+
+\texttt{GET LIST FOR NEXT} \emph{n} \texttt{ITEM \{} \emph{subscript}
+\texttt{\}}
+
+\texttt{GET LIST FOR NEXT} \emph{n} \texttt{LINE \{} \emph{subscript}
+\texttt{\}}
+
+\texttt{GET POL \{} \emph{subscript} \texttt{\}}
+
+\texttt{GET POL FOR NEXT} \emph{n} \texttt{LINE \{} \emph{subscript}
+\texttt{\}}
+
+The \texttt{GET SINGLE} and \texttt{GET INT} commands return one
+integer.  The first \texttt{GET LIST} command returns a list of single
+precision integers and possible sublists while the \texttt{GET LIST
+  FOR ... LINE} and \texttt{GET LIST FOR ... ITEM} return only a list
+of single precision integers.
+
+A list returned by a \texttt{GET LIST FOR NEXT} \emph{n} \texttt{ITEM}
+command consists of exactly $n$ single precision integers.  A list
+returned by a \texttt{GET LIST FOR NEXT} \emph{n} \texttt{LINE}
+command consists of all the integers within the next \emph{n} lines
+unless the \texttt{GET} command is terminated by a \texttt{STOPGET}
+command or an enclosing \texttt{REPEAT} command or end of file is
+reached.
+
+\texttt{GET POL} gets a string and treats this string as a polynomial.
+The command returns a \#--terminated polynomial in complete monomials.
+This representation is readily understood by SIMATH functions. The
+polynomial representation in the text file must suffice the following
+conditions:
+
+1. The coefficients of the complete monomials must be valid single
+precision integers.
+
+2. If some but not all multiplications of variables are denoted by
+\texttt{$\star$}, this must not lead to ambiguities. For example,
+\texttt{ab(a+b)} is a valid representation with variables \texttt{a}
+and \texttt{b}. But this must not be written as
+\texttt{ab$\star$(a+b)} since in this case SMif treats \texttt{ab} as
+a new variable.
+
+\emph{subscript} always denotes a sub script which is executed at the
+beginning of a \texttt{GET} command. In the \emph{subscripts} of some
+of the \texttt{GET} commands, not all of the control commands are
+available. Sub scripts can be empty.
+
+The following table shows which \texttt{GET} and control commands can
+be used in sub scripts of a given \texttt{GET} command. Here, $+$
+means that the operation is supported, and $-$ means that the
+operation is not allowed.
+
+\begin{displaymath}
+\begin{array}{|c|c|c|c|c|c|c|c|}
+\hline
+                           & \texttt{GET}    & \texttt{GET} & \texttt{GET}  & \texttt{GET}  & \texttt{GET}  & \texttt{GET}  & \texttt{GET}  \\
+                           & \texttt{SINGLE} & \texttt{INT} & \texttt{LIST} & \texttt{LIST} & \texttt{LIST} & \texttt{POL}  & \texttt{POL}  \\
+                           &                 &              & \{ \}         & \texttt{ITEM} & \texttt{LINE} & \{ \}         & \texttt{LINE} \\
+\hline
+\texttt{IGNORE}            & +               & +            & +             & +             & +             & +             & +             \\
+\hline
+\texttt{IGNORE NEWLINE}    & +               & +            & +             & +             & +             & +             & +             \\
+\hline
+\texttt{SETITEM}           & +               & +            & +             & +             & +             & -             & -             \\
+\hline
+\texttt{STOPGET}           & +               & +            & +             & +             & +             & +             & +             \\
+\hline
+\texttt{SKIP}              & +               & +            & +             & +             & -             & +             & +             \\
+\hline
+\texttt{GET SINGLE (INT)}  & -               & -            & -             & -             & -             & -             & -             \\
+\hline
+\texttt{GET LIST}          & -               & -            & +             & -             & -             & -             & -             \\
+\hline
+\texttt{GET POL}           & -               & -            & -             & -             & -             & -             & -             \\
+\hline
+\end{array}
+\end{displaymath}
+
+As explained above, the use of \texttt{SETITEM} in \texttt{GET INT} is
+restricted. Only the sub script of \texttt{GET LIST \{ ... \}} command
+is allowed to contain further \texttt{GET LIST} commands. Apart from
+this, no \texttt{GET} command is allowed to be contained in the sub
+script of a \texttt{GET} command.
+
+\subsubsection{Conditionals}
+
+{~}
+
+\texttt{REPEAT UNTIL SEE} \emph{controldefinestring} \texttt{\{}
+\emph{script} \texttt{\}}
+
+\texttt{IF SEE} \emph{controldefinestring} \texttt{\{} \emph{script}
+\texttt{\}}
+
+\texttt{IF SEE} \emph{controldefinestring} \texttt{\{} \emph{script1}
+\texttt{\}} \texttt{ELSE} \texttt{\{} \emph{script2} \texttt{\}}
+
+\texttt{SWITCH NEXTOBJ} \texttt{$\backslash$} \newline \hspace*{64pt}
+\emph{controldefinestring\_1} \texttt{\{} \emph{script\_1} \texttt{\}}
+\texttt{$\backslash$} \newline \hspace*{64pt} \texttt{.....}
+\texttt{$\backslash$} \newline \hspace*{64pt}
+\emph{controldefinestring\_n} \texttt{\{} \emph{script\_n} \textrm{\}}
+\texttt{$\backslash$} \newline \hspace*{64pt} \texttt{OTHERWISE}
+\texttt{\{} \emph{script\_n+1} \texttt{\}}
+
+In SMif scripts, one can write a part of a command in a new line by
+using the $\backslash$ symbol. (See the syntax of the \texttt{SWITCH
+  NEXTOBJ} command above.)
+
+The \texttt{REPEAT UNTIL SEE} command executes the sub script
+\emph{script} until one of the following conditions is fulfilled.
+
+1. A character or a word defined by \emph{controldefinestring} is
+read.  \emph{controldefinestring} can be empty.
+
+2. A \texttt{REPEAT} or \texttt{GET} command enclosing the
+\texttt{REPEAT} command terminates.
+
+3. End of file is reached.
+
+An \texttt{IF SEE} command first tests whether the next character or
+the next word is defined by \emph{controldefinestring}. In this case
+\emph{script} resp.\ \emph{script1} is executed. If the condition is
+not fulfilled and there is an \texttt{ELSE} part of the \texttt{IF
+  SEE} command \emph{script2} is executed.
+
+The \texttt{SWITCH NEXTOBJ} command works similar to the \texttt{IF
+  SEE} command with the difference that there are arbitrary many cases
+available. Only one sub script is executed.
+
+Using the command described above one can write SMif scripts which
+work on large classes of similar text files.
+
+\textbf{Beispiel.} In most cases, SMif scripts will consist of a few
+lines only. Here, we give an example of a very complicated script to
+demonstrate the use of the different SMif commands. Suppose we want to
+process the following text file:
+
+\begin{verbatim}
+  *** TEXT FILE: textf
+  *** BLOCK a
+      1 2 3 4 5 6 7 8
+  *** BLOCK b
+      1111 2\
+      2\
+      22 3333 4444
+  *** BLOCK c
+      123123123123123123
+  *** BLOCK d
+      %1 = 2x(x+y(2x+y))
+  *** END
+\end{verbatim}
+
+We consider the follwing SMif script:
+
+\begin{verbatim}
+1  # comment line.
+2  # scriptname: scriptf
+3  
+4  IGNORE NEWLINE AFTER {[CHAR] \\}
+5  REPEAT UNTIL SEE {} {
+6    SKIP UNTIL SEEN {[WORD] BLOCK}
+7    SWITCH NEXTOBJ \
+8      {[CHAR] a} { SETITEM SIZE 4 PATTERN {$1+$2+$3+$4}
+9                   REPEAT UNTIL SEE {[CHAR] *} {
+10                    GET SINGLE {}
+11                  }
+12                  NOPOWER SETITEM
+13                } \
+14     {[CHAR] b} { GET LIST {
+15                    REPEAT UNTIL SEE {[CHAR] *} {
+16                      GET LIST FOR NEXT 2 ITEM {}
+17                    } 
+18                    STOPGET IF SEE {[CHAR] *}
+19                  }
+20                } \
+21     {[CHAR] c} { GET INT {} } \
+22     {[CHAR] d} { SKIP UNTIL SEEN {[CHAR] = }
+23                  GET POL {
+24                    STOPGET IF SEE {[CHAR] *}
+25                  }
+26                }
+27    # end SWITCH command
+28 }
+\end{verbatim}
+
+\begin{itemize}
+\item Line 1: Comments start with a \# sign.
+\item Line 4: $\backslash$ characters must be escaped. Similar for
+  \texttt{'\{'}, \texttt{'\}'}, \texttt{'\#'} characters.
+\item Line 5: The subscript of the \texttt{REPEAT} command is repeated
+  until end of file is reached.
+\item Line 6: After the \texttt{SKIP UNTIL SEEN} command has been
+  executed, the file pointer points at the first character after the
+  word \texttt{BLOCK}.
+\item Line 7: The next object is the character \texttt{'a'},
+  \texttt{'b'}, \texttt{'c'}, \texttt{'d'}, or the word \texttt{"a"},
+  \texttt{"b"}, \texttt{"c"}, \texttt{"d"}.
+\item Line 8: Here \texttt{\{[CHAR] a\}} is the same as
+  \texttt{\{[WORD] a\}}
+\item Line 10: This \texttt{GET} command is repeated twice. The first
+  time it returns $1+2+3+4 = 10$ and the second time it returns
+  $5+6+7+8 = 26$.
+\item Line 12: The \texttt{NOPOWER SETITEM} command cancels the
+  definition of line 8.
+\item Lines 14--19: This returns the list \texttt{( (1111 2222) (3333
+    4444) )}.
+\item Line 24: \texttt{GET POL} reads the polynomial
+  \texttt{2x(x+y(2x+y))} and returns \texttt{2*x\^{}2*y\^{}0 +
+    4*x\^{}2*y\^{}1 + 2*x\^{}1*y\^{}2\#}.
+\end{itemize}
+
+If a SIMATH program executes
+
+\texttt{SMifRes\_FromFile(smifres, "textf", "scriptf")}; where
+\texttt{smifres} is an initialized variable of type \texttt{SMifRes},
+the following contents woll be assigned to the variable
+\texttt{smifres}.
+
+Number of entries: \texttt{SMifRes\_Count(smifres) = 5}
+
+Entry 1: \texttt{SM\_single}: "10"
+
+Entry 2: \texttt{SM\_single}: "26"
+
+Entry 3: \texttt{SM\_list}: "( (1111 2222) (3333 4444) )"
+
+Entry 4: \texttt{SM\_int}: "123123123123123123"
+
+Entry 5: \texttt{SM\_pol}: "2*x\^{}2*y\^{}0 + 4*x\^{}2*y\^{}1 +
+2*x\^{}1*y\^{}2\#"
+
+\end{document}

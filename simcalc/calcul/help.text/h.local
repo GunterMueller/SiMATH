@@ -1,0 +1,44 @@
+                           * * * * * * *
+                           *   local   *
+                           * * * * * * *
+
+        "local variable declaration"
+        SYNTAX: local(X1,X2,...,Xn)
+
+        X1,...,Xn are variables, n>=1.
+
+        local can only be used at the beginnig of user-defined 
+        functions.
+        It creates local variables X1,...,Xn, which exist only
+        while the function is evaluated.
+        local(X1,...,Xn) is a stand-alone function which cannot be 
+        used in expressions like X=local(X1,...,Xn) or 
+        3+local(X1,...,Xn)-5.
+
+        Global and local variables can be used in user-defined 
+        functions. If a value is assigned to a variable which is 
+        declared by local, then that local variable is used. If
+        the variable is not declared by local in this function, 
+        the value is assigned to the global variable.
+        There is no overwrite-protection for local variables 
+        in functions. At the end of a user-defined function,
+        the local variables are deleted.
+        
+        
+        Example 1: (correct)
+
+                decl(f(a)=local(b,c)_if(a>0,b=fact(a)_c=a/b,)_return(c))
+
+
+        Example 2: (incorrect)
+
+                local(a1)
+                
+_ERR_NR_318
+
+
+        Example 3: (incorrect)
+
+                decl(f()=a=3_local(b)_b=a^2)
+               
+_ERR_NR_318 

@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *   getoct  *
+                               * * * * * * *
+
+        "octal representation to integer"
+        SYNTAX: N = getoct(Y)
+
+        Y is a sequence of 0,1,...,7.
+        They are interpreted as the octal representation of an integer. 
+
+        N is assigned the integer corresponding to Y.
+
+
+        Example 1: (correct)
+
+                getoct( 1713601 )
+
+
+        Example 2: (incorrect)
+
+                getoct( -389 ) 
+
+_ERR_NR_015

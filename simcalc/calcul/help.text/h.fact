@@ -1,0 +1,96 @@
+                               * * * * * * *
+                               *    fact   *
+                               * * * * * * *
+
+        "factorization"
+        SYNTAX: X=fact(A)
+
+        A is an expression whose value is a nonzero element of Z, Q
+        or a quadratic number field, a polynomial over Z, Q, Z/pZ 
+        (where p is a prime) or over number fields or a rational 
+        function or a univariate polynomial over GF(p^n).
+
+        If A is an integer or a polynomial, fact computes the
+        factorization of A. If A is a rational number or a rational
+        function, fact computes the factorization of the numerator
+        and denominator of A. If A is an algebraic number, fact
+        computes the prime ideal factorization of the principal ideal
+        (A).
+
+        You can use nfon in order to factorize elements of Z, Q and
+        polynomials over Z or Q over the number field, specified by
+        curnf. You must consider the restrictions for factorization
+        over number fields.
+        
+        Ideals in quadratic number fields are represented in the
+        following form:
+
+        If the number field is specified by x^2 +/- D, with D 
+        squarefree:
+
+        ((a)[b/s,(c+D^(1/2))/s]) = (a) * ((b/s)*Z + ((c+D^(1/2))/s)*Z)
+
+        where s = 1 if D = 2 or 3 mod 4, s = 2 if D = 1 mod 4,
+              a in N,
+              b = min{ n in N : n is in (b/s*Z + (c+D^(1/2))/s*Z) },
+              0 <= c < b.
+
+        If the number field is specified by Ax^2+Bx+C, with A not 0:
+        
+        x0 is a root of the polynomial, h = B/A, k = C/A, 
+        Dm^2 = h^2-4k with a rational number m and a squarefree
+        integer D. Then the ideal in Q(x0)=Q(D^(1/2)) is represented as
+
+        ((a)[b/ms,(c'+ 2x0)/ms]) = (a) * ((b/ms)*Z + ((c'+2x0)/ms)*Z)
+  
+        where c' = mc+h and s,a,b,c are the same as in the case
+        of Q(D^(1/2)).
+
+        See also A.J.Stephens and H.C.Williams: "Some Computational
+                 Results on a Problem Concerning Powerful Numbers",
+                 Math. Comp. V. 50, #182 (April 1988), pp 619-632.
+
+        If A is an integer or a polynomial, X is the largest 
+        prime factor of A. If A is a rational number or a rational
+        function, X is the largest prime factor of the numerator
+        of A. If A is an algebraic number, X is assigned the value
+        of A.
+
+        If A is an element of Q and its factorization is of the form:
+        +- p1^e1 * ... * pN^eN, then AV[0]=p1, AV[1]=e1, ..., 
+        AV[2*N-2]=pN, AV[2*N-1]=eN.
+        If A is polynomial or a rational function with factorization
+        c * p1^e1 * ... * pN^eN, then AV[0]=c, AV[1]=p1, AV[2]=e1, ...,
+        AV[2*N-1]=pN, AV[2*N]=eN. (See "?avfunc".)
+
+        Warning: If p > 2^30, the primality of p is not tested.
+
+
+        Example 1: (correct)
+
+                fact(36471289470)
+
+
+        Example 2: (correct)
+
+                fact(-360/49)
+
+
+        Example 3: (correct)
+
+                fact(NF(3 * Y - 2))
+
+
+        Example 4: (correct)
+
+                 fact(1/9 * x^2 + 1/7*x)
+ 
+
+        Example 5: (correct)
+
+                fact(x * y + x^2 * y^2)
+
+
+        Example 6: (correct)
+
+                fact((x^3 + x^2 + x) / (x^2 + 2*x +1))

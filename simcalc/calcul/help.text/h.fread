@@ -1,0 +1,34 @@
+                               * * * * * * *
+                               *   fread   *
+                               * * * * * * *
+
+        "file read"
+        SYNTAX: fread
+                fread()
+                fread n
+                fread(n)
+                fread(NAME)
+                fread(NAME,n)
+
+        Strings may be read from files using the commands "fload", 
+        "fopen", "fread", "fclose". (For more information type "?fload",
+        "? fopen", and "? fclose".)
+
+        "fread" 
+        "fread()"        reads the line the file pointer is pointing to 
+                         from the default file ___INP.
+        "fread(NAME)"    reads the line the file pointer is pointing to 
+                         from the file NAME.
+        "fread n" 
+        "fread(n)"       reads n lines beginning with the line the file 
+                         pointer is pointing to from the default 
+                         file ___INP.
+        "fread(NAME,n)"  reads n lines beginning with the line the file 
+                         pointer is pointing to from the file NAME.
+        
+        n must be less than 100.
+        
+        Before reading from a file you must open it using the command
+        fopen (see "? fopen).
+
+        "openf" lists all currently opened files.

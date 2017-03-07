@@ -1,0 +1,27 @@
+                               * * * * * * *
+                               *   intbas  *
+                               * * * * * * *
+
+        "integral basis"
+        SYNTAX: X = intbas()
+
+        intbas computes an integral basis of the current number
+        field. The index of the polynomial order in the maximal 
+        order is assigned to X, and the factorization of the index 
+        is displayed on the screen.
+
+        The integral basis elements are stored in AV and after that
+        the factorization of the index in the form factor - exponent
+        in increasing order is stored in AV (see "?avfunc").
+        
+
+        Example 1: (correct)
+
+                intbas()
+
+
+        Example 2: (incorrect)
+
+                intbas(9)
+
+_ERR_NR_231_intbas             

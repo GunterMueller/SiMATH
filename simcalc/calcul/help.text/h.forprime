@@ -1,0 +1,58 @@
+                               * * * * * * *
+                               *  forprime *
+                               * * * * * * *
+
+        "forprime-loop"
+        SYNTAX: forprime(x=l, u, seq)
+                forprime(x=l;, u, seq)
+                forprime(l, u, seq)
+                forprime(l;, u, seq)
+
+
+        seq is executed while x (or the system variable @ in the third 
+        and fourth case) runs through all prime numbers in [l,u].
+
+        l and u are expressions whose values are integers, rational 
+        or real numbers, where l <= u and u >= 2.
+        Remark: If u is an expression containing x (or @), u is 
+                evaluated once at the beginning and remains fixed.
+        If you type "x=l" or "l", resp., the new value of x or @, resp.,
+        is displayed in every step. To avoid this, terminate this
+        expression by ';' like in the second and fourth case.
+   
+        seq is a sequence of several expressions, separated by '_' or 
+        ';'. If an expression ends with '_', its output is displayed,
+        if it ends with ';', its output is suppressed. 
+        Remark: The last expression of seq must not be terminated by 
+                '_' and need not be terminated by ';'. If you want its 
+                output to be suppressed, terminate it by ';'.
+                To avoid the output of unnecessary results during the 
+                computation, please use ';'.
+        At the end of the outermost loop, the values of all variables 
+        used during the computation are displayed.
+
+        The overwrite protection mechanism is automatically disabled
+        in a loop. At the end of the loop, it is restored.
+  
+        If an error occurs, the user is asked, if the loop should be 
+        continued. If the answer is positive, the actual loop is continued, 
+        else the loop is left.
+
+        "break" and "continue" may be used (see "? break","? continue").
+
+
+        Example 1: (correct)
+
+                forprime(a=0,sqrt(17),b=exp(a))
+
+
+        Example 2: (correct)
+
+                forprime(t=(-5);,10,r=[t]_t=t+0.5;)
+
+
+        Example 3: (incorrect)
+
+                forprime(a=(-3),0,b=2*a)
+
+_ERR_NR_034_forprime_

@@ -1,0 +1,77 @@
+                                * * * * * * *
+                                *  flfunc   *
+                                * * * * * * *
+
+        simcalc computes floating point numbers and polynomials over
+        floating point numbers with a precision of DIGITS digits. 
+        By default, DIGITS = 37. In order to adjust this precision 
+        to s digits, please type "DIGITS = s", where s is single 
+        precision number.
+        The variable OUTPUTDIG determines the output format. If
+        OUTPUTDIG = 0, the output is in scientific notation.
+        If OUTPUTDIG > 0, the output is in fixpoint notation with
+        OUTPUTDIG digits. By default, OUTPUTDIG = 0. In order to 
+        adjust this precision to s digits, please type "OUTPUTDIG = s", 
+        where s is a nonnegative single precision number < DIGITS.
+
+        The following functions are available for floating point numbers:
+
+        +           [ ]         >           ceil        min 
+        -           ==          >=          exp         puto
+        *           !=          &&          floor       root
+        ^           <           ||          fltoi       sgn
+        /           <=                      ln          sqrt   
+                                            max         tofl
+
+
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        '^'                     exponentiation;
+
+        '/'                     division;
+
+        '[ ]'                   absolute value;
+
+        '=='                    equal;
+
+        '!='                    not equal;
+
+        '<'                     less;
+
+        '<='                    less or equal;
+
+        '>'                     greater;
+
+        '>='                    greater or equal;
+
+        '&&'                    and;
+
+        '||'                    or;
+
+        'ceil'                  smallest integer greater or equal;
+
+        'exp'                   exponential function;
+
+        'floor'                 greatest integer less or equal;
+
+        'fltoi'                 floating points to integers;
+
+        'ln'                    natural logarithm;
+
+        'max'                   maximum;
+
+        'min'                   minimum;
+
+        'puto'                  display internal representation;
+
+        'root'                  root;
+
+        'sgn'                   sign;
+
+        'sqrt'                  square root;
+
+        'tofl'                  to floating points.

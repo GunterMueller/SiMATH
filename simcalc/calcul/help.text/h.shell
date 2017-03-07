@@ -1,0 +1,16 @@
+                               * * * * * * *
+                               *    $,!    *
+                               * * * * * * *
+
+        "shell commands and branching to a subshell"
+
+        a) If the first input character different from a blank is a
+           '$', the rest of the line is executed by a subshell.
+
+        b) Entering a '!' sign causes branching to a subshell.
+           Please type `CTRL/D' or "exit" in order to return to
+           simcalc
+
+        Shell commands and branching into subshell is not possible
+        in sequences and loops.
+

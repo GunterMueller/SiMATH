@@ -1,0 +1,22 @@
+                               * * * * * * *
+                               *  conjug   *
+                               * * * * * * *
+
+        "conjugate"
+        SYNTAX: X = conjug(Z)
+
+        Z is an expression whose value is an integer, a rational,
+        a real or complex number, or an element of a quadratic number 
+        field.
+
+        X is assigned the value of the conjugate of Z.
+
+
+        Example 1: (correct)
+
+                conjug(3.6 + 6 * i)
+
+
+        Example 2: (correct)
+
+                conjug(NF(A^3+2*A^2))

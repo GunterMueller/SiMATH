@@ -1,0 +1,67 @@
+                               * * * * * * *
+                               *   rk2d    *
+                               * * * * * * *
+
+        "rank via 2-descent"
+        SYNTAX: r = rk2d(E)
+                r = rk2d(E,b)
+                r = rk2d(E,b,v)
+
+        In the first case, E is an expression whose value is an elliptic 
+        curve over Q or over a real quadratic number field with class
+        number 1. In the second case, E must be an elliptic curve over
+        a real quadratic number field of class number 1.
+        b must be a single precision positive number and v must be 0 or 1.
+
+        If E is an elliptic curve over Q, the order of the torsion group of 
+        E must be even. r is assigned the rank of the Mordell-Weil group of 
+        E over Q, computed using 2-descent via 2-isogeny.
+
+        If E is an elliptic curve over a real quadratic number field with
+        class number 1, rk2d tries to compute the rank of the Mordell-Weil
+        group of E over this quadratic field K=Q(sqrt(D)). 
+        You can use nfon in order to compute the rank of an elliptic curve
+        over Q over the field K.
+
+        Note: If the coefficients of E are not integers in K, rk2d computes
+        the rank of an isomorphic curve with integral coefficients. 
+
+        Warning: If D > 100, the program does not really check whether the
+        class number is 1.
+
+        r is assigned the rank of the Mordell-Weil group. If the program 
+        finds more than one possibility for the rank, r is assigned the first
+        possible rank. The other possibilities can be found in the output.
+
+        In the number field case, if there is a point of order 2, rk2d uses 
+        2-descent via 2-isogeny. If E has trivial 2-torsion, rk2d uses general 
+        2-descent.
+
+        b must be a single precision positive number. It is the upper
+        bound for the search for points on the homogeneous spaces 
+        belonging to E. The default value (in the case of an input rk2d(E))
+        is 20. If rk2d finds more than one possible rank, a second run with 
+        a higher upper bound (e.g. 50 or 100) may lead to a uniquely 
+        determined rank.
+
+        v must be 0, if you want brief output, and 1, if you want detailed 
+        output. The default value is 1. If you put an ";" at the end of the 
+        input, v is automatically set to 0.
+
+        
+        Example 1: (correct)
+                
+                rk2d( EC( 1, 2, 0, 1, 0 ) )       
+
+        
+        Example 2: (incorrect)
+                
+                rk2d( EC( 1, 0, 0, 1, 2 ) )       
+
+_ERR_NR_149
+
+        
+        Example 3: (correct)
+                
+                rk2d( EC( NF(3), 0 ))       
+

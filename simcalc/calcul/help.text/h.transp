@@ -1,0 +1,24 @@
+                                * * * * * * *
+                                *   transp  *
+                                * * * * * * *
+
+        "transpose"
+        SYNTAX: X = transp(A)
+
+        A is a matrix over Z, Q, Z/mZ, GF(p^n) (where p is a prime) or 
+        over a number field, over polynomials over these structures or 
+        over rational functions.
+
+        X is assigned the transpose of A.
+
+
+        Example 1: (correct)
+
+                transp({{x/z, 1} {y ,2}})
+
+
+        Example 2: (incorrect)
+
+                transp(x^2)
+                
+_ERR_NR_078

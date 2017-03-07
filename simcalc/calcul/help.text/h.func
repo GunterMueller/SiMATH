@@ -1,0 +1,429 @@
+                                * * * * * * *
+                                *    func   *
+                                * * * * * * *
+
+        The following functions and operations are available in simcalc:
+
+        +           aftopr      discec     linequ      putoct     
+        -           arccos      discnf     ln          real        
+        *           arccot      dmconstr   local       red        
+        :           arcosh      dowhile    log2        reg      
+        ^           arcoth      eccoef     log10       relcln      
+        /           arcsin      ecgnp      mam2        resul
+        !           arctan      ecinf      max         return
+        [ ]         areptsli    ecnpscf    mcoef       rk
+        ==          arsinh      egcd       mex         rk2d
+        !=          artanh      eival      min         rkbsd
+        <           aval        elform     minim       rkg2d
+        <=          basismwg    elog       minor       root
+        >           binom       elsubst    mod         rper
+        >=          bitrans     exp        mtoi        scalar
+        &&          break       fact p     mval        sfp
+        ||          ceil        faintp     nftopol     sgn
+                    chcoef      floor      norm        sgnfeq   
+                    chinrem     fltoi      np          sin     
+                    chpol       for        npfe        sinh    
+                    classnum    forprime   nthei       sort    
+                    coef        forstep    ntpair      sqrt
+                    cond        fp         num         sum     
+                    conjug      f1root     ord         swnf
+                    cont        froot      ordtsg      taalg
+                    continue    gcd        pconstr     tan
+                    cos         getb       pfact       tanh
+                    cosh        gethex     pgen        tavb2
+                    cot         getoct     phi         tavb4
+                    coth        gftopol    ppconstr    tavb6
+                    cper        herm       prfunc      tavb8
+                    curec       if         prim        tavc4
+                    curgf       imag       print       tavc6
+                    curgf2bit   intbas     pripgen     tofl 
+                    curmod      intcoef    prod        tors
+                    curnf       integr     proot       trace 
+                    decl        irpgen     prtoaf      transp
+                    declaw      ispprime   ptcoef      unit
+                    deg         isprime    putb        vcoef
+                    denom       isptec     putbits     whei
+                    deriv       isqrt      putGF2bit   while
+                    derivL      jacsym     puthex      zmconstr
+                    det         jinv       puto        zvconstr
+                    disc        lcm
+
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        ':'                     (integer part of) quotient;
+
+        '^'                     exponentiation;
+
+        '/'                     division;
+
+        '!'                     factorial;
+
+        '[ ]'                   absolute value;
+
+        '=='                    equal;
+
+        '!='                    not equal;
+
+        '<'                     less;
+
+        '<='                    less or equal;
+
+        '>'                     greater;
+
+        '>='                    greater or equal;
+
+        '&&'                    and;
+
+        '||'                    or;
+
+        'aftopr'                conversion from affine to projective 
+                                representation;
+
+        'arccos'                arcus cosinus;
+
+        'arccot'                arcus cotangens;
+
+        'arcosh'                area cosinus hyperbolicus;
+
+        'arcoth'                area cotangens hyperbolicus;
+
+        'arcsin'                arcus sinus;
+
+        'arctan'                arcus tangens;
+
+        'areptsli'              are points linearly independent? ;
+
+        'arsinh'                area sinus hyperbolicus;
+
+        'artanh'                area tangens hyperbolicus;
+
+        'aval'                  additive m-adic value;
+
+        'basismwg'              basis of Mordell-Weil-group;
+
+        'binom'                 binomial coefficient;
+
+        'bitrans'               birational transformation of an elliptic
+                                curve or a point;
+
+        'break'                 break;
+
+        'ceil'                  smallest integer greater or equal;
+
+        'chcoef'                change coefficient of a polynomial;
+         
+        'chinrem'               chinese remainder algorithm;
+
+        'chpol'                 characteristic polynomial;
+
+        'classnum'              class number;
+
+        'coef'                  coefficient of a polynomial;
+
+        'cond'                  conductor;
+
+        'conjug'                conjugate;
+
+        'cont'                  content;
+
+        'continue'              continue;
+
+        'cos'                   cosinus;
+
+        'cosh'                  cosinus hyperbolicus;
+
+        'cot'                   cotangens;
+ 
+        'coth'                  cotangens hyperbolicus;
+
+        'cper'                  complex period;
+
+        'curec'                 current elliptic curve;
+
+        'curgf'                 current Galois-field;
+
+        'curgf2bit'             current Galois-field over characteristic 2,
+                                special bit representation;
+
+        'curmod'                current modulus;
+
+        'curnf'                 current algebraic number field;
+
+        'decl'                  declaration of functions;
+
+        'declaw'                decomposition law;
+
+        'deg'                   degree;
+
+        'denom'                 denominator;
+
+        'deriv'                 derivation;
+        
+        'derivL'                derivation L-series;
+
+        'det'                   determinant;
+
+        'disc'                  discriminant of a polynomial;
+
+        'discec'                discriminant of an elliptic curve;
+
+        'discnf'                discriminant of a number field;
+
+        'dmconstr'              diagonal matrix construction;
+
+        'dowhile'               dowhile-loop;
+
+        'eccoef'                elliptic curve coefficient;
+
+        'ecgnp'                 elliptic curve with given number of points;
+                                (only in SIEMENS-version)
+
+        'ecinf'                 elliptic curve information;
+
+        'ecnpscf'               elliptic curve with point order with small cofactor;
+
+        'egcd'                  extended greatest common divisor;
+
+        'eival'                 eigenvalues and irreducible factors of the 
+                                characteristic polynomial;
+
+        'elform'                elementary divisor form and cofactors;
+
+        'elog'                  elliptic logarithm;
+
+        'elsubst'               element substitution in matrices or vectors;
+
+        'exp'                   exponential function;
+
+        'fact'                  factorization;
+
+        'faintp'                finding all integral points;
+
+        'floor'                 greatest integer less or equal;
+
+        'fltoi'                 floating points to integers;
+
+        'for'                   for-loop;
+
+        'forprime'              forprime-loop;
+
+        'forstep'               forstep-loop;
+
+        'fp'                    finding point;
+
+        'f1root'                finding one root;
+
+        'froot'                 finding root;
+
+        'gcd'                   greatest common divisor;
+
+        'getb'                  bit representation to integer;
+
+        'gethex'                hexadecimal representation to integer;
+
+        'getoct'                octal representation to integer;
+
+        'gftopol'               Galois-field to polynomial;
+
+        'herm'                  Hermite normal form;
+
+        'if'                    if-statement;
+
+        'imag'                  imaginary part;
+ 
+        'intbas'                integral basis;
+
+        'intcoef'               elliptic curve with integer coefficients;
+
+        'integr'                integration;
+
+        'irpgen'                irreducible polynomial generator;
+
+        'ispprime'              is pseudoprime ? ;
+
+        'isprime'               is prime ? ;
+
+        'isptec'                is point on elliptic curve ? ; 
+
+        'isqrt'                 integral part of square root;
+
+        'jacsym'                Jacobi symbol;
+
+        'jinv'                  j-invariant;
+
+        'lcm'                   least common multiple;
+
+        'linequ'                solution of a system of linear equations;
+
+        'ln'                    natural logarithm;
+
+        'local'                 local variable declaration;
+
+        'log2'                  integer part of the logarithm, base 2;
+
+        'log10'                 1 + integer part of the logarithm,
+                                base 10;
+       
+        'mam2'                  matrix over Z/2Z in special bit notation;
+
+        'max'                   maximum;
+
+        'mcoef'                 matrix coefficient;
+
+        'mex'                   exponentiation in Z/mZ;
+
+        'min'                   minimum;
+
+        'minim'                 global minimal model;
+
+        'minor'                 minor matrix;
+
+        'mod'                   module homomorphism;
+
+        'mtoi'                  modular to integer;
+
+        'mval'                  multiplicative m-adic value;
+
+        'nftopol'               number field to polynomial;
+
+        'norm'                  norm of an algebraic number;
+
+        'np'                    number of points;
+
+        'npfe'                  number of points after field extension;
+
+        'num'                   numerator;
+
+        'nthei'                 Neron-Tate height;
+
+        'ntpair'                Neron-Tate pairing;
+
+        'ord'                   order;
+
+        'ordtsg'                order of Tate-Shafarevic-group;
+
+        'pconstr'               prime construction; 
+
+        'pfact'                 factorization modulo prime;
+
+        'pgen'                  prime generator;
+
+        'phi'                   Eulerian phi-function;
+
+        'ppconstr'              pseudo prime construction; 
+
+        'prfunc'                primitive function;
+
+        'prim'                  primitive part;
+
+        'print'                 print;
+
+        'pripgen'               primitive polynomial generator;
+
+        'prod'                  product;
+
+        'proot'                 primitive root;
+
+        'prtoaf'                conversion from projective to affine 
+                                representation;
+
+        'ptcoef'                point on elliptic curve coefficient;
+
+        'putb'                  put bit representation;
+
+        'putbits'               display bit representation;
+
+        'putGF2bit'             put Galois-field element in characteristic 2, 
+                                special bit representation"
+
+        'puthex'                put hexadecimal representation;
+
+        'puto'                  display internal representation;
+
+        'putoct'                put octal representation;
+
+        'real'		        real part;
+
+        'red'                   reduction of an elliptic curve;
+
+        'reg'                   regulator;
+
+        'relcln'                relative class number;
+
+        'resul'                 resultant;
+
+        'return'                return;
+        
+        'rk'                    rank;
+
+        'rk2d'                  rank via 2-descent;
+
+        'rkbsd'                 rank via Birch and Swinnerton-Dyer conjecture;
+
+        'rkg2d'                 rank via general 2-descent;
+
+        'root'                  root;
+
+        'rper'                  real period;
+
+        'scalar'                euclidian scalar product;
+
+        'sfp'                   squarefree part;
+
+        'sgn'                   sign;
+
+        'sgnfeq'                sign of functional equation;
+
+        'sin'                   sinus;
+
+        'sinh'                  sinus hyperbolicus;
+
+        'sort'                  sort polynomial;
+
+        'sqrt'                  square root;
+
+        'sum'                   sum;
+
+        'swnf'                  short Weierstrass normal form;
+
+        'taalg'                 Tate's algorithm;
+
+        'tan'                   tangens;
+
+        'tanh'                  tangens hyperbolicus;
+
+        'tavb2'                 Tate's value b2;
+
+        'tavb4'                 Tate's value b4;
+
+        'tavb6'                 Tate's value b6;
+
+        'tavb8'                 Tate's value b8;
+
+        'tavc4'                 Tate's value c4;
+
+        'tavc6'                 Tate's value c6;
+
+        'tofl'                  to floating points;
+
+        'tors'                  torsion group;
+
+        'trace'                 trace;
+
+        'transp'                transpose;
+
+        'unit'                  unit group;
+
+        'vcoef'                 vector coefficient;
+
+        'whei'                  Weil height;
+
+        'while'                 while-loop;
+
+        'zmconstr'              zero matrix construction;
+
+        'zvconstr'              zero vector construction.

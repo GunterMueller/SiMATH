@@ -1,0 +1,241 @@
+include ../../Makefile.flags
+
+
+SMBIN = ../../bin
+
+
+OBJECTS = \
+  dipgfsdif.o \
+  dipgfsgb.o \
+  dipgfsgba.o \
+  dipgfsgbr.o \
+  dipgfsgfprod.o \
+  dipgfslotglo.o \
+  dipgfslotlio.o \
+  dipgfslottdo.o \
+  dipgfsmonic.o \
+  dipgfsneg.o \
+  dipgfsprod.o \
+  dipgfssp.o \
+  dipgfssum.o \
+  dipnfdif.o \
+  dipnfgb.o \
+  dipnfgba.o \
+  dipnfgbr.o \
+  dipnflotoglo.o \
+  dipnflotolio.o \
+  dipnflototdo.o \
+  dipnfmonic.o \
+  dipnfneg.o \
+  dipnfnfprod.o \
+  dipnfprod.o \
+  dipnfsp.o \
+  dipnfsum.o \
+  fgetdipgfsl.o \
+  fgetdipnfl.o \
+  fgetpgf2.o \
+  fgetpgfs.o \
+  fgetpnf.o \
+  fgetppf.o \
+  fputdipgfsl.o \
+  fputdipnfl.o \
+  fputpgf2.o \
+  fputpgfs.o \
+  fputpnf.o \
+  fputppf.o \
+  fu_pol3_gb.o \
+  gf2nbinv.o \
+  isdppf.o \
+  ispgf2.o \
+  ispgfs.o \
+  issfpnf.o \
+  pgf2deriv.o \
+  pgf2derivsv.o \
+  pgf2eval.o \
+  pgf2exp.o \
+  pgf2expprem.o \
+  pgf2gf2prod.o \
+  pgf2gf2quot.o \
+  pgf2monic.o \
+  pgf2prod.o \
+  pgf2qrem.o \
+  pgf2square.o \
+  pgf2sum.o \
+  pgf2topgfs.o \
+  pgf2transf.o \
+  pgfsderiv.o \
+  pgfsderivsv.o \
+  pgfsdif.o \
+  pgfsefe.o \
+  pgfseval.o \
+  pgfsevalsv.o \
+  pgfsexp.o \
+  pgfsexpprem.o \
+  pgfsgcdcf.o \
+  pgfsgfsprod.o \
+  pgfsgfsquot.o \
+  pgfshlift.o \
+  pgfsinter.o \
+  pgfsmonic.o \
+  pgfsneg.o \
+  pgfsprod.o \
+  pgfsqrem.o \
+  pgfssum.o \
+  pgfstopgf2.o \
+  pgfstransf.o \
+  pgfstrprod.o \
+  pgfsucont.o \
+  pgfsupgfsp.o \
+  pgfsupgfsq.o \
+  pigf2evalfvs.o \
+  pigfsevalfvs.o \
+  pinfevalfvs.o \
+  pitopnf.o \
+  pitoppf.o \
+  pm2topgf2.o \
+  pmstopgfs.o \
+  pnfcont.o \
+  pnfcontpp.o \
+  pnfderiv.o \
+  pnfderivsv.o \
+  pnfdif.o \
+  pnfeval.o \
+  pnfevalsv.o \
+  pnfexp.o \
+  pnffact.o \
+  pnfgcdcf.o \
+  pnfhlift.o \
+  pnfmonic.o \
+  pnfneg.o \
+  pnfnfprod.o \
+  pnfnfquot.o \
+  pnfprod.o \
+  pnfpsrem.o \
+  pnfqrem.o \
+  pnfsfact.o \
+  pnfsum.o \
+  pnftopgfs.o \
+  pnftopr.o \
+  pnftrans.o \
+  pnftransav.o \
+  pnftransf.o \
+  ppfderiv.o \
+  ppfderivsv.o \
+  ppfdif.o \
+  ppfeval.o \
+  ppfevalsv.o \
+  ppfexp.o \
+  ppffit.o \
+  ppfiprod.o \
+  ppfneg.o \
+  ppford.o \
+  ppfpfprod.o \
+  ppfpprod.o \
+  ppfprod.o \
+  ppfrprod.o \
+  ppfsubst.o \
+  ppfsubstsv.o \
+  ppfsum.o \
+  ppftrans.o \
+  ppftransav.o \
+  ppftransf.o \
+  prnfevalfvs.o \
+  prtopnf.o \
+  prtopnfdnv.o \
+  prtoppf.o \
+  spnffact.o \
+  udpgf2remsp.o \
+  udpitoudppf.o \
+  udppfdif.o \
+  udppfexp.o \
+  udppffit.o \
+  udppfneg.o \
+  udppfpfprod.o \
+  udppfpprod.o \
+  udppfprod.o \
+  udppfsum.o \
+  udprtoudppf.o \
+  upgf22pvprem.o \
+  upgf2bofact.o \
+  upgf2bofacts.o \
+  upgf2bqp.o \
+  upgf2btc.o \
+  upgf2ddfact.o \
+  upgf2egcd.o \
+  upgf2eval.o \
+  upgf2gcd.o \
+  upgf2hegcd.o \
+  upgf2modexps.o \
+  upgf2mprem.o \
+  upgf2nbgcd.o \
+  upgf2nbmonic.o \
+  upgf2nbnfact.o \
+  upgf2nbprod.o \
+  upgf2nbqrem.o \
+  upgf2nbsqrt.o \
+  upgf2nbsqu.o \
+  upgf2nfact.o \
+  upgf2prirand.o \
+  upgf2pritest.o \
+  upgf2rand.o \
+  upgf2sfact.o \
+  upgf2sfed.o \
+  upgf2sfp.o \
+  upgf2tf.o \
+  upgfsbfact.o \
+  upgfsbfls.o \
+  upgfsbfzm.o \
+  upgfsbofact.o \
+  upgfsbofacts.o \
+  upgfsbqp.o \
+  upgfscfact.o \
+  upgfscfacts.o \
+  upgfsddfact.o \
+  upgfsegcd.o \
+  upgfsgcd.o \
+  upgfsgsd.o \
+  upgfshegcd.o \
+  upgfsmieprem.o \
+  upgfsmprem.o \
+  upgfsnif.o \
+  upgfsrand.o \
+  upgfsrandpd.o \
+  upgfsrelpfac.o \
+  upgfsrf.o \
+  upgfssfact.o \
+  upgfssfed.o \
+  upgfssfp.o \
+  upgfstf.o \
+  upinfeval.o \
+  upinfseval.o \
+  upnfegcd.o \
+  upnfeval.o \
+  upnffact.o \
+  upnfgcd.o \
+  upnfgcdcf.o \
+  upnfsfact.o \
+  upnfsfp.o \
+  upqnfzero.o \
+  uprnfeval.o \
+  uprnfseval.o \
+  uspiapf.o \
+  uspnffact.o
+
+
+LIB= ../../lib/lib_pol3.a
+
+
+all: ${LIB}
+
+
+clean:
+	rm -f *.P *.c *.o *~
+
+
+veryclean: clean
+	rm -f ${LIB}
+
+
+${LIB}: ${OBJECTS}
+	${AR} rc $@ ${OBJECTS}
+	- ${RANLIB} ${LIB}

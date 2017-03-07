@@ -1,0 +1,71 @@
+#!/bin/sh
+
+# Please set the environment variable SIMATH_HOME to your simath-dev
+# directory.  Otherwise, it is set to the default old value.
+if test "x$SIMATH_HOME" = "x" ; then
+    SIMATH_HOME=/home/lehrstuhl/ag-zimmer/marc/simath-dev
+    export SIMATH_HOME
+fi
+SIMATH_SOURCES=$SIMATH_HOME/sources
+NAME=extract-keys
+
+echo "" > /tmp/KEYWORDS
+
+for directory in $SIMATH_SOURCES/[a-p]*
+do
+	for file in $directory/*.S
+	do
+		echo "$file"
+
+		if head -10 $file | grep DOC_SKIP > /dev/null
+		then
+			echo "skipping $file"
+		else
+
+			# Check if the function is a macro
+
+			if head -10 $file | grep MACRO > /dev/null
+		        then
+		        	MACRO=true
+		        else
+				MACRO=false
+		        fi
+	
+			# Check for the documentation style. We assume that a
+			# function which is not documented in manual style is
+			# documented in ASCII style. This assumption might be wrong.
+
+			if head -10 $file | grep '/\*M' > /dev/null
+			then
+				emacs -batch -l ./extract-M.el $file -f extract-M; wait
+				# 2>/dev/null > /dev/null
+			else
+				emacs -batch -l ./extract-C.el $file -f extract-C; wait
+				#  2>/dev/null > /dev/null
+			fi		
+	
+			wait
+			# sleep 1
+
+#	 		ARGS0=`cat /tmp/ARGS`
+#	 		echo "	$ARGS0"
+			ARGS=`sed -e 's/	//g' /tmp/ARGS | sed -e 's/(MACRO)//g' | sed -e 's/ //g' | tr '\n' ' ' | sed 's/,/, /g' | sed -e 's/(/	(/g'`
+#	 		echo "	$ARGS"
+			NAME=`cat /tmp/NAME | tr '\n' ' ' | sed -e 's/(MACRO)//g' | tr -s ' '`
+			NAME=\"$NAME\"
+			NAME=`echo $NAME | sed -e 's/ \"/\"/g'`
+#	 		echo " 	$NAME"
+
+			if test "$MACRO" = "true"
+			then
+				echo "$ARGS		(MACRO)	$NAME" >> /tmp/KEYWORDS
+			else
+				echo "$ARGS		$NAME" >> /tmp/KEYWORDS
+			fi
+		fi
+		wait 
+	done
+done
+
+sort /tmp/KEYWORDS > /tmp/KEYWORDS.sort
+mv /tmp/KEYWORDS.sort /tmp/KEYWORDS

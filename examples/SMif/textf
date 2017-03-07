@@ -1,0 +1,12 @@
+*** TEXT FILE : textf
+*** BLOCK a
+    1 2 3 4 5 6 7 8
+*** BLOCK b
+    1111 2\
+    2\
+    22 3333 4444
+*** BLOCK c
+    123123123123123123
+*** BLOCK d
+    %1 = 2x(x+y(2x+y))
+*** END

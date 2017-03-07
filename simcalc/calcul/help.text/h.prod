@@ -1,0 +1,38 @@
+                               * * * * * * *
+                               *   prod    *
+                               * * * * * * *
+
+        "product"
+        SYNTAX: prod(x=l, u, exp)
+                prod(l, u, exp)
+
+
+        l and u are expressions whose values are integers.
+        Remark: If u is an expression containing x (or @), u is 
+                evaluated once at the beginning and remains fixed.
+   
+        exp is an expression whose value is an element of Z, Q, R, C, Z/mZ, 
+        GF(p^n), number fields, a polynomial over Z, Q, Z/mZ, GF(p^n), 
+        number fields, a rational function over Q or a matrix over all these 
+        structures. 
+
+        prod computes the product of exp for x=l to u (or @=l to u), the
+        value of x (or @) at the end is u.
+	If u<l, the result is 1.
+              
+
+        Example 1: (correct)
+
+                prod(a=1,1000,a/(a+1))
+
+
+        Example 2: (correct)
+
+                prod(3,10,x+@)
+
+
+        Example 3: (incorrect)
+
+                prod(a=0,5,b=2*a)
+
+_ERR_NR_006

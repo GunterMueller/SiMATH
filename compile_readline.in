@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# This file checks the hosttype of the host currently compiling SIMATH.
+# If the host is not an Apollo workstation, the readline library will be
+# configured and compiled. On SGI systems, the compiler flag -DUSG will
+# be added when compiling readline. This prevents readline from assuming
+# the existence of BSD signals. (This is subject to change with a future
+# readline version.) The check wether we are running on an Apollo system
+# should be obsolete since Apollos are no longer supported.
+
+if fgrep -i -s apollo ./hosttype
+then
+	echo "compile_readline: simcalc will use curses/termcap on Apollo workstations."
+	echo "compile_readline: Skipping the compilation of the readline library."
+else
+        if [ ! -r ./readline-2.0/config.h ]
+        then
+                echo "compile_readline: Configuring readline ..."
+                (cd ./readline-2.0; /bin/sh ./configure)
+        fi
+
+	SYSDEFS=`fgrep "DEFS = " ./readline-2.0/Makefile`
+	if fgrep -i -s sgi ./hosttype
+	then
+		SYSDEFS="$SYSDEFS -DUSG"
+	else
+		SYSDEFS="$SYSDEFS"
+	fi
+
+	echo "compile_readline: Compiling readline ..."
+	(cd ./readline-2.0; make CC=@CC@ "$SYSDEFS")
+	echo "./compile_readline: Installing header files ..."
+	if [ ! -d ./readline-2.0/readline ]
+	then
+		mkdir ./readline-2.0/readline
+	fi	
+	rm -f ./readline-2.0/readline/*.h
+	cp ./readline-2.0/*.h ./readline-2.0/readline
+fi

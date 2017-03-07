@@ -1,0 +1,43 @@
+                               * * * * * * *
+                               *   pgen    *
+                               * * * * * * *
+
+        "prime generator"
+        SYNTAX: X = pgen(a, b)
+
+        a an b are expressions whose values are positive integers, 
+        a <= b.
+
+        pgen displays a list of all primes with a <= p <= b.
+        If [a, b] contains at least one prime, the smallest prime
+        in [a, b] is assigned to X; otherwise, X = 0.
+
+        All prime numbers in [a, b] besides X are stored in increasing
+        order in AV (see "?avfunc").
+
+        Warning: If you want only to construct one prime, please use
+                 pconstr.
+
+
+        Example 1: (correct)
+
+                p = pgen(2^30, 2^30 + 10)
+
+
+        Example 2: (correct)
+
+                pgen(12, 100)
+
+
+        Example 3: (incorrect)
+
+                pgen(-4, 3)
+
+_ERR_NR_034_pgen_             
+
+
+        Example 4: (incorrect)
+ 
+                pgen(2^35, 2^34)
+                
+_ERR_NR_034_pgen_

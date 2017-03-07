@@ -1,0 +1,202 @@
+/***
+SIMATH-Version
+4.6
+***/
+
+ /*
+  * SM_HOME is the path of the directory where SIMATH will be (or is)
+  * installed. Upon installation SM_HOME should be set automatically by the
+  * configure script.
+  */
+
+#define SM_HOME "@prefix@/simath"
+
+ /*
+  * MAX_BLOCK_NUMBER determines the maximal number of "blocks" that can be
+  * allocated by a SIMATH process. One block equals 128 KB and we have set
+  * the default for MAX_BLOCK_NUMBER to 64, i.e. about 8 MB. We suggest that
+  * you allow SIMATH processes to allocate about half of the main memory of
+  * your machine. (Note that on startup, a SIMATH process will allocate only
+  * one block, i.e. 128 KB.) If you do not want to limit the size of a SIMATH
+  * process, set MAX_BLOCK_NUMBER to 4096 (say). You can override
+  * MAX_BLOCK_NUMBER at run time using the SIMATH function gcreinit().
+  */
+
+#define MAX_BLOCK_NUMBER 64
+
+ /*
+  * The rest of this file is generated automatically. You probably will not 
+  * have to change anything below this line.
+  */
+
+ /*
+  * We define the symbol ___APOLLO here. This is required by some programs
+  * because Apollo workstations sometimes do not behave like other
+  * workstations. This should be obsolete by now since Apollo systems
+  * are no longer supported.
+  */
+
+#ifdef apollo
+#define ___APOLLO
+#endif
+
+ /*
+  * We define the symbol ___HP here because on HP workstations, the macros
+  * ltop() and ptol() are implemented in a slightly different way.
+  */
+
+#ifdef hppa
+#define ___HP
+#endif
+
+ /*
+  * The following is used somewhere in the simcalc sources.
+  */
+
+#if (MAX_BLOCK_NUMBER < 64)
+#define ___SMALL_SYSTEM
+#else
+#if (MAX_BLOCK_NUMBER < 512)
+#define ___MEDIUM_SYSTEM
+#else
+#define ___LARGE_SYSTEM
+#endif
+#endif
+
+ /*
+  * This symbol is set automatically if simcalc uses readline. This should
+  * be obsolete by now since readline will be used on every platform.
+  */
+
+#undef USE_READLINE
+
+ /*
+  * These symbols define whether certain header files exist. They are set 
+  * automatically by the configure script. Do not edit.
+  */
+
+#undef HAVE_FCNTL_H
+#undef HAVE_MALLOC_H
+#undef HAVE_SGTTY_H
+#undef HAVE_SYS_FILE_H
+#undef HAVE_UNISTD_H
+#undef HAVE_VARARGS_H
+
+#undef HAVE_SYS_TIME_H
+#undef HAVE_TIME_H
+#undef TIME_WITH_SYS_TIME
+#undef TM_IN_SYS_TIME
+
+/*
+ * One of four *dir*.h is selected automatically.
+ * It is used in readline.
+ */
+
+#undef HAVE_DIRENT_H
+#undef HAVE_SYS_NDIR_H
+#undef HAVE_SYS_DIR_H
+#undef HAVE_NDIR_H
+
+/* other headers tested */
+
+#undef HAVE_TERMIO_H
+#undef HAVE_STRINGS_H
+#undef HAVE_SYS_IOCTL_H
+#undef HAVE_SYS_WAIT_H
+
+#undef STDC_HEADERS
+
+ /*
+  * These symbols define if the C functions log2() and random() exist. They
+  * are set automatically by the configure script. Do not edit.
+  */
+
+#undef HAVE_LOG2
+#undef HAVE_RANDOM
+
+ /*
+  * These symbols define if the signals SIGEMT and SIGSYS are available on
+  * the current host. They are set automatically by the configure script. Do
+  * not edit.
+  */
+
+#undef HAVE_SIGEMT
+#undef HAVE_SIGSYS
+
+ /*
+  * These symbols define if the functions random(), srandom() initstate() and
+  * setstate() are declared in <math.h>. They are set automatically by the
+  * configure script. Do not edit.
+  */
+
+#undef RANDOM_IN_MATH_H
+#undef SRANDOM_IN_MATH_H
+#undef INITSTATE_IN_MATH_H
+#undef SETSTATE_IN_MATH_H
+
+ /*
+  * On systems without random(), we use rand() instead of random().
+  */
+
+#ifndef HAVE_RANDOM
+#define random() rand()
+#define srandom(seed) srand(seed)
+#endif
+
+ /*
+  *    If `signal.h' declares `signal' as returning a pointer to a
+  *    function returning `void', define `RETSIGTYPE' to be `void';
+  *    otherwise, define it to be `int'.
+  */
+
+#undef RETSIGTYPE
+
+ /*
+  * Memory architecture should be checked.
+  */
+
+#undef SIZEOF_CHAR
+#undef SIZEOF_SHORT
+#undef SIZEOF_INT
+#undef SIZEOF_LONG
+#undef SIZEOF_LONG_LONG
+#undef SIZEOF_VOID_P
+#undef SIZEOF_FLOAT
+#undef SIZEOF_DOUBLE
+
+ /*
+  * ILP32: sizeof(int),sizeof(long) and sizeof(void *) are all 4.
+  *  LP64: sizeof(int) is 4, sizeof(long) and sizeof(void *) are 8.
+  */
+
+#if SIZEOF_INT==4 && SIZEOF_LONG==4 && SIZEOF_VOID_P==4
+#define ILP32
+#elif SIZEOF_INT==4 && SIZEOF_LONG==8 && SIZEOF_VOID_P==8
+#define LP64
+#else
+#error "Your machine is not supported. Please report."
+#endif
+
+ /*
+  * This defines the preprocessor symbol for readline. Used in the simcalc
+  * sources.
+  */
+
+#ifdef USE_READLINE
+#define ___SIMCALC_RL
+#endif
+
+ /*
+  * This symbol defines if the SIMATH extension library was found in
+  * the sources subdirectory. simcalc depends on this symbol.
+  */
+
+#undef HAVE_SM_EXT
+
+ /*
+  * This symbol defines if the SIMATH C++ extensions were found when
+  * compiling SIMATH.
+  */
+
+#undef HAVE_SM_CXX
+

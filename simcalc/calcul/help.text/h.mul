@@ -1,0 +1,63 @@
+                               * * * * * * *
+                               *     *     *
+                               * * * * * * *
+
+        "multiplication"
+
+        "*" is the operator for the multiplication of elements of Z, Q,
+        R, C, Z/mZ, GF(p^n) and number fields, of polynomials over Z, 
+        Q, Z/mZ, GF(p^n), number fields, R or C, of rational functions 
+        and of matrices over these structures, if possible.
+        
+        Furthermore, "*" is the operator for scalar multiplication of
+        matrices and vectors, and for the multiplication of a matrix 
+        and a vector. n*P1 (or P1*n) denotes the (scalar) multiplication 
+        of points on the current elliptic curve, specified by curec.
+
+        The operands may be either variables or expressions of the 
+        same type or of different type.
+
+
+        Example 1: (correct)
+
+                (log2(123/45) * gcd(24,76)) * 17896785235
+
+
+        Example 2: (correct)
+
+                NF(A^2 + A + 1/3) * NF(A^6)   
+
+
+        Example 3: (correct)
+
+                x*y*(3*z + 4)
+
+
+        Example 4: (correct)
+
+                {{x, y} {x/2, 1/3} {-1/4, 4}} * {{1, 2} {1, z}}
+
+
+        Example 5: (correct)
+
+                x*y/3 * {{1, 2} {x, z}}
+
+
+        Example 6: (correct)
+
+                -1/2 * {1, 2, 3, x, y/5}
+
+
+        Example 7: (correct)
+
+                {x/z, y} *  {{-x(x - 1), 2} {1, z/y}}
+
+
+        Example 8: (correct)
+
+                5 * PT(8, 9)
+
+
+        Example 9: (correct)
+
+                888.999 * 1e-7

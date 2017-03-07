@@ -1,0 +1,26 @@
+                               * * * * * * *
+                               *    puto   *
+                               * * * * * * *
+
+        "put object"
+        SYNTAX: X = puto(A)
+
+        A is an expression whose value is an element of Z, Q, R, C,
+        Z/mZ, GF(p^n), an algebraic number, a polynomial over Z, Q, 
+        Z/mZ, GF(p^n), a number field, over R or C, a rational 
+        function, a matrix or a vector over all these structures or 
+        an elliptic curve or a point of an elliptic curve over Q, 
+        Z/pZ (where p is a prime), GF(2^n) or a number field.
+        
+        puto displays the internal representation of A on the screen.  
+        X is assigned the value of A.
+        
+
+        Example 1: (correct)
+
+                puto(x/y + (z^2 + z + 12) + (1/7*x^3))
+
+
+        Example 2: (correct)
+
+                puto(EC(NF(1), 2))

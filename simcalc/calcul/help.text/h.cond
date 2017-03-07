@@ -1,0 +1,41 @@
+                               * * * * * * *
+                               *   cond    *
+                               * * * * * * *
+
+        "conductor"
+        SYNTAX: X = cond(E)
+
+        E is an expression whose value is an elliptic curve over Q
+        or a quadratic number field.
+
+        If E is an elliptic curve over Q, X is assigned the conductor 
+        of the global minimal model of E.
+        Otherwise, X is assigned the norm of the conductor.
+        In both cases, the factorization of the conductor is displayed.
+
+        You can use nfon in order to compute the factorization of the
+        conductor of an elliptic curve over Q over the quadratic number 
+        field, specified by curnf. In this case X is assigned the norm.
+
+        If the factorization is over Q, the factors and exponents are
+        stored in AV (see "? avfunc"). If the conductor has its prime
+        factorization over Q p1^e1 * ... * pN^eN in increasing order,
+        then AV[0]=p1, AV[1]=e1, ..., AV[2*N-2]=pN, AV[2*N-1]=eN.
+        
+        For the representation of ideals in quadratic number fields,
+        please see "?fact".
+
+
+        Example 1: (correct)
+
+                cond(EC(8, 9))
+
+
+        Example 2: (correct)
+
+                cond(EC(3^4, 3^6))
+
+
+        Example 3: (correct)
+
+                cond(EC(NF(A), NF(2*A-1))

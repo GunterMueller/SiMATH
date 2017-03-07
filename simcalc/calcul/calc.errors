@@ -1,0 +1,827 @@
+123456789012345678901234567890123456789012345678901234
+_ERR_NR_000 1
+Illegal key!
+_ERR_NR_001 1
+Incorrect use of ')', ']' or '}'!
+_ERR_NR_002 1
+Incorrect use of '(', '[' or '{'!
+_ERR_NR_003 1
+Illegal argument list!
+_ERR_NR_004 1
+Variable name missing!
+_ERR_NR_005 1
+Illegal variable name!
+_ERR_NR_006 1
+Incorrect use of '='!
+_ERR_NR_007 1
+Variable name too long!
+_ERR_NR_008 1
+Too many '='!
+_ERR_NR_009 1
+[ ] only implemented for numbers!
+_ERR_NR_010 1
+Division by zero!
+_ERR_NR_011 1
+The exponent must be an element of Z, Q or R!
+_ERR_NR_012 2
+The exponents of polynomials and rational functions
+must be integers!
+_ERR_NR_013 1
+in factorization algorithm!
+_ERR_NR_014 1
+fact requires a nonzero parameter!
+_ERR_NR_015 1
+Illegal parameter!
+_ERR_NR_016 1
+phi only defined for positive integers!
+_ERR_NR_017 1
+jacsym requires 2 parameters!
+_ERR_NR_018 1
+Parameters of jacsym must be integers!
+_ERR_NR_019 1
+The argument must be a positive integer!
+_ERR_NR_020 1
+The second argument must be 0, 1 or 2!
+_ERR_NR_021 1
+Argument of log2 must be a positive integer or rational!
+_ERR_NR_022 2
+Argument of tofl must be an element of Z, Q, R or 
+a polynomial over these structures!
+_ERR_NR_023 2
+':' only defined for integers and polynomials over Z,
+Q, Z/mZ, number fields or Galois-fields!
+_ERR_NR_024 1
+sgn only defined for integers, rationals and reals!
+_ERR_NR_025 2
+sqrt only defined for numbers and elements of Z/mZ 
+or C!
+_ERR_NR_026 1
+Incorrect use of mod!
+_ERR_NR_027 1
+Too many parameters!
+_ERR_NR_028 1
+Exponent overflow!
+_ERR_NR_029 1
+DIGITS must be a positive integer!
+_ERR_NR_030 1
+DIGITS is too large!
+_ERR_NR_031 1
+The variable store can't hold more than 100 variables!
+_ERR_NR_032 1
+No assignment of a value!
+_ERR_NR_033 1
+Values not identical!
+_ERR_NR_034 1
+Incorrect use of %s!
+_ERR_NR_035 2
+The number specifying the resultant algorithm must
+be 1, 2, 3 or 4!
+_ERR_NR_036 1
+resul must be computed with respect to a variable!
+_ERR_NR_037 2
+resul only defined for polynomials over Z, Z/pZ or
+Galois-fields with single characteristic!
+_ERR_NR_038 1
+Division of points on elliptic curves is not allowed!
+_ERR_NR_039 2
+The number specifying the discriminant algorithm must
+be 1, 2, 3 or 4!
+_ERR_NR_040 1
+disc must be computed with respect to a variable!
+_ERR_NR_041 1
+disc only defined for polynomials over Z or Z/pZ!
+_ERR_NR_042 2
+ord needs an element of Z and an integer greater
+than 1 or an element of Z/nZ!
+_ERR_NR_043 1
+pfact only defined for polynomials over Z or Q!
+_ERR_NR_044 1
+eival requires 2 parameters!
+_ERR_NR_045 2
+Elliptic curves and their points must be defined over
+the same field!
+_ERR_NR_046 1
+Modulus must be a prime!
+_ERR_NR_047 2
+eival only defined for square matrices over Z, Q,
+Z/pZ and Galois-fields!
+_ERR_NR_048 2
+Points on elliptic curves must be of the form:
+PT(x/z^2,y/z^3)!
+_ERR_NR_049 2
+The arguments must be positive single precision 
+numbers!
+_ERR_NR_050 2
+The argument must be a positive single precision
+number!
+_ERR_NR_051 1
+deriv only allowed with respect to variables!
+_ERR_NR_052 1
+First argument must be a vector!
+_ERR_NR_053 1
+coef only implemented for polynomials!
+_ERR_NR_054 1
+The exponent must be an integer!
+_ERR_NR_055 1
+The basis must be an integer or a rational number!
+_ERR_NR_056 1
+prfunc only defined with respect to variables!
+_ERR_NR_057 1
+sort only implemented for polynomials!
+_ERR_NR_058 3
+Second argument must be a single precision number
+greater than 1 and less than the length of the 
+vector!
+_ERR_NR_059 2
+mval only defined for nonzero integers or nonzero
+rational numbers!
+_ERR_NR_060 1
+First argument must be a positive integer!
+_ERR_NR_061 1
+First argument must be a matrix!
+_ERR_NR_062 3
+Second argument must be a single precision number
+greater than 1 and less than the length of the
+columns of the matrix!
+_ERR_NR_063 1
+The arguments must be integers!
+_ERR_NR_064 1
+The arguments must be nonnegative!
+_ERR_NR_065 3
+Third argument must be a single precision number
+greater than 1 and less than the length of the
+rows of the matrix!
+_ERR_NR_066 1
+All intermediate results must be polynomials!
+_ERR_NR_067 1
+Incorrect matrix or vector!
+_ERR_NR_068 1
+Missing entry in a matrix or a vector!
+_ERR_NR_069 1
+Rows have different lengths!
+_ERR_NR_070 2
+First argument must be an ellipic curve or
+a point on an elliptic curve!
+_ERR_NR_071 1
+Illegal operation!
+_ERR_NR_072 1
+Incorrect dimensions!
+_ERR_NR_073 1
+The exponents of matrices must be integers!
+_ERR_NR_074 1
+det only defined for square matrices!
+_ERR_NR_075 1
+Exponentiation only defined for square matrices!
+_ERR_NR_076 1
+Inverse only defined for regular matrices!
+_ERR_NR_077 4
+Matrices, vectors, elliptic curves, points on
+elliptic curves, real and complex numbers or 
+polynomials over real and complex numbers are
+not allowed as entries of matrices and vectors!
+_ERR_NR_078 1
+transp only defined for matrices!
+_ERR_NR_079 2
+The characteristic polynomial must be computed with
+respect to a variable!
+_ERR_NR_080 1
+chpol only defined for square matrices!
+_ERR_NR_081 2
+The variable of the characteristic polynomial must
+not occur in the matrix!
+_ERR_NR_082 1
+chpol requires 2 parameters!
+_ERR_NR_083 2
+deriv only defined for polynomials and rational
+functions!
+_ERR_NR_084 4
+fact only defined for elements of Z or Q, polynomials
+over Z or Q, rational functions over Q, univariate
+polynomials over Z/pZ, number fields or over GF(p^n) 
+and elements of quadratic number fields!
+_ERR_NR_085 2
+The points must be either in affine or in projective 
+representation!
+_ERR_NR_086 1
+floor only defined for numbers!
+_ERR_NR_087 2
+in counting points on elliptic curve!
+Please try again!
+_ERR_NR_088 1
+The second and the third argument must be 0 or 1!
+_ERR_NR_089 3
+elform only defined for nonzero matrices over Z or
+over univariate polynomials over Z, Q or Z/pZ (where 
+p is a prime)!
+_ERR_NR_090 1
+Not enough memory space!
+_ERR_NR_091 4
+linequ only implemented for matrices and vectors over
+Z, Q, Z/pZ (where p is a prime), number fields,
+Galois-fields, polynomials over Z or Q or rational 
+functions!
+_ERR_NR_092 1
+linequ only defined for nonzero matrices!
+_ERR_NR_093 1
+in eigenvalue computation!
+_ERR_NR_094 1
+scalar only defined for vectors of the same length!
+_ERR_NR_095 2
+Current elliptic curve must be defined over Q or over
+an quadratic number field!
+_ERR_NR_096 1
+The second parameter must be -1 or 1!
+_ERR_NR_097 2
+herm only defined for regular square matrices 
+over Z!
+_ERR_NR_098 1
+Incorrect position!
+_ERR_NR_099 5
+sfp only implemented for integers, rationals, 
+univariate polynomials over Z, Q, Z/pZ (where p is
+a prime) or univariate monic polynomials over Galois-
+fields or number fields or univariate rational 
+functions over Q!
+_ERR_NR_100 1
+pfact only implemented for univariate polynomials!
+_ERR_NR_101 1
+Too many files opened!
+_ERR_NR_102 1
+Can't open %s!
+_ERR_NR_103 1
+File %s not opened!
+_ERR_NR_104 1
+Can't read from file!
+_ERR_NR_105 1
+Incorrect number of coefficients!
+_ERR_NR_106 1
+The specified curve is singular!
+_ERR_NR_107 2
+Elliptic curves only implemented over Q, Z/pZ,
+number fields and Galois-fields in characteristic 2!
+_ERR_NR_108 2
+A point on an elliptic curve must be in affine or
+projective representation!
+_ERR_NR_109 2
+Points of elliptic curves only defined over Q, Z/pZ,
+number fields and Galois-fields in characteristic 2!
+_ERR_NR_110 1
+curec requires an elliptic curve!
+_ERR_NR_111 1
+Current elliptic curve not specified!
+_ERR_NR_112 1
+Point is not on the current elliptic curve!
+_ERR_NR_113 1
+tav** only defined for elliptic curves!
+_ERR_NR_114 1
+discec only defined for elliptic curves!
+_ERR_NR_115 1
+jinv only defined for elliptic curves!
+_ERR_NR_116 1
+prtoaf only defined for projective points!
+_ERR_NR_117 1
+aftopr only defined for affine points!
+_ERR_NR_118 2
+areptsli only defined for points on an elliptic
+curve over Q or over quadratic number fields!
+_ERR_NR_119 1
+Second argument must be 1, 2, 3, 4 or 6!
+_ERR_NR_120 1
+First argument must be an elliptic curve!
+_ERR_NR_121 1
+Second argument must be 0 or 1!
+_ERR_NR_122 2
+This function is only defined for elements of Z, 
+Q, R, C or quadratic number fields!
+_ERR_NR_123 2
+The denominators of the coefficients of the 
+polynomial must be units in the current modulus!
+_ERR_NR_124 3
+r, s, t, u must be elements of the field over which
+the elliptic curve or the point is defined! 
+u must be nonzero!
+_ERR_NR_125 1
+First argument must be a point on an elliptic curve!
+_ERR_NR_126 1
+Point is not on the elliptic curve!
+_ERR_NR_127 2
+Points can only be multiplied or divided with single 
+precision numbers!
+_ERR_NR_128 1
+Second argument must be 1, 2 or 3!
+_ERR_NR_129 1
+minim only defined for elliptic curves over Q!
+_ERR_NR_130 2
+minim only defined for elliptic curves with 
+coefficients in Z!
+_ERR_NR_131 2
+cond only defined for elliptic curves over Q and
+quadratic number fields!
+_ERR_NR_132 2
+If the point is in affine representation, the
+second argument must be 1 or 2!
+_ERR_NR_133 2
+Second argument must be an elliptic curve over Q or
+quadratic number fields!
+_ERR_NR_134 1
+in Tate's algorithm!
+_ERR_NR_135 2
+Argument of fltoi must be an element of Z, R or a
+polynomial over these structures!
+_ERR_NR_136 2
+A transformation in an element of Z or a polynomial
+over Z is not possible!
+_ERR_NR_137 1
+Index of AV too large!
+_ERR_NR_138 2
+%s has not a value and cannot be used as variable
+name!
+_ERR_NR_139 2
+%s has not a value and no polynomial substitution
+is possible!
+_ERR_NR_140 1
+Moduli must be coprime!
+_ERR_NR_141 2
+intcoef only defined for elliptic curves over Q and 
+quadratic number fields.
+_ERR_NR_142 1
+LINELN must be a positive single precision number!
+_ERR_NR_143 1
+Elliptic curve not minimal!
+_ERR_NR_144 1
+Multiplicative reduction!
+_ERR_NR_145 1
+Additive reduction!
+_ERR_NR_146 1
+putGF2bit only implemented for Galois-field elements!
+_ERR_NR_147 1
+Moduli must be positive!
+_ERR_NR_148 1
+sort only defined with respect to variables!
+_ERR_NR_149 2
+The elliptic curve has no point of order 2, so applying
+2-descent via 2-isogeny is not possible!
+_ERR_NR_150 1
+root only implemented for numbers!
+_ERR_NR_151 1
+ln only defined for positive numbers!
+_ERR_NR_152 1
+exp only defined for numbers!
+_ERR_NR_153 1
+Modulus must be 2!
+_ERR_NR_154 1
+Illegal argument!
+_ERR_NR_155 1
+This function is only defined for elliptic curves over Q!
+_ERR_NR_156 2
+The parameter of curmod must be an integer greater 
+than 1!
+_ERR_NR_157 3
+MOD only defined for integers, rationals, polynomials,
+matrices or vectors over these structures, elliptic 
+curves or points on elliptic curves over Q!
+_ERR_NR_158 1
+Current modulus not specified!
+_ERR_NR_159 1
+The sign cannot be computed!
+_ERR_NR_160 2
+Rational functions not defined over R, C, Z/mZ, 
+Galois-fields and number fields!
+_ERR_NR_161 3
+The second parameter of curnf must be a univariate 
+irreducible polynomial of degree > 1 in the specified
+variable!
+_ERR_NR_162 3
+NF only defined for integers, rationals, polynomials,
+matrices or vectors over these structures, elliptic
+curves or points on elliptic curves over Q!
+_ERR_NR_163 1
+Current number field not specified!
+_ERR_NR_164 1
+The arguments must be nonnegative integers!
+_ERR_NR_165 1
+MOD and GF not defined in number fields!
+_ERR_NR_166 2
+The arguments of mam2 must be integers between 
+0 and 2^(n+1)-1, where n is the first argument.
+_ERR_NR_167 1
+Second parameter must be 1, 2 or 3!
+_ERR_NR_168 1
+Second parameter must be a unit!
+_ERR_NR_169 1
+Matrix singular or not invertible!
+_ERR_NR_170 1
+Rational functions not defined over number fields!
+_ERR_NR_171 2
+The exponents of elements of Z/mZ or C must be integers 
+or rational numbers of the form a/(2^n)!
+_ERR_NR_172 1
+The exponents of algebraic numbers must be integers!
+_ERR_NR_173 2
+Polynomial and coefficients must be defined over the
+same field!
+_ERR_NR_174 2
+Short Weierstrass normal form can only be computed in
+characteristic > 3!
+_ERR_NR_175 1
+Quadratic nonresidue!
+_ERR_NR_176 1
+In Z/mZ only (2^n)th roots can be computed!
+_ERR_NR_177 2
+The second argument must be a variable of the 
+polynomial in the first argument!
+_ERR_NR_178 1
+during computation of gcd, egcd or lcm!
+_ERR_NR_179 1
+in resultant algorithm!
+_ERR_NR_180 2
+gcd, egcd and lcm of polynomials over Z/mZ only 
+defined for prime moduli!
+_ERR_NR_181 2
+gcd, egcd and lcm not defined in Z/mZ, number fields 
+and Galois-fields!
+_ERR_NR_182 1
+Second argument must be a polynomial!
+_ERR_NR_183 1
+deg only defined for polynomials!
+_ERR_NR_184 1
+Second argument must be a variable!
+_ERR_NR_185 1
+The second parameter must be 0,1,2 or 3!
+_ERR_NR_186 2
+elog only defined for a point on an elliptic curve 
+over Q!
+_ERR_NR_187 2
+This function is only defined for elliptic curves over
+Q or quadratic number fields!
+_ERR_NR_188 1
+The parameter of declaw must be a prime!
+_ERR_NR_189 2
+The unit group can only be computed in quadratic 
+number fields!
+_ERR_NR_190 1
+The fundamental unit cannot be computed!
+_ERR_NR_191 1
+The Neron-Tate height of that point can't be computed!
+_ERR_NR_192 2
+The polynomial specifying the current number field 
+must be monic!
+_ERR_NR_193 1
+Reduction not defined!
+_ERR_NR_194 1
+The first argument must be a polynomial over Z!
+_ERR_NR_195 2
+If m >= 2^30, roots in Z/mZ can only be computed if m
+is a prime!
+_ERR_NR_196 2
+linequ over Z/mZ only implemented for prime single
+precision moduli!
+_ERR_NR_197 1
+The first argument must be a variable!
+_ERR_NR_198 1
+The class number of the quadratic field must be 1!
+_ERR_NR_199 3
+Factorization of polynomials over Z/pZ or 
+Galois-fields only implemented for univariate 
+polynomials!
+_ERR_NR_200 1
+Real exponents only defined for nonnegative numbers!
+_ERR_NR_201 2
+aval only defined for nonzero integers or nonzero
+rational numbers!
+_ERR_NR_202 1
+chcoef only implemented for polynomials!
+_ERR_NR_203 2
+aval only defined for nonzero integers or nonzero
+rational numbers!
+_ERR_NR_204 3
+red only defined for elliptic curves with 
+coefficients whose denominators are relatively
+prime to the prime number!
+_ERR_NR_205 2
+taalg only defined for elliptic curves with 
+coefficients in Z!
+_ERR_NR_206 2
+tors only defined for elliptic curves with 
+coefficients in Z!
+_ERR_NR_207 3
+np only defined for elliptic curves with 
+coefficients whose denominators are relatively
+prime to the prime number! 
+_ERR_NR_208 1
+in ecrsign!
+_ERR_NR_209 2
+The second argument must not be greater than 
+the first!
+_ERR_NR_210 2
+The discriminant of the quadratic number field
+must be a single precision number!
+_ERR_NR_211 1
+Incorrect type of coefficients!
+_ERR_NR_212 1
+Argument too large!
+_ERR_NR_213 2
+This function is only defined for elliptic curves over
+Q or real quadratic number fields with class number 1!
+_ERR_NR_214 1
+Illegal integration variable!
+_ERR_NR_215 2
+The second argument of jacsym must be a positive 
+odd integer!
+_ERR_NR_216 1 
+Arguments of jacsym must be relatively prime!
+_ERR_NR_217 2
+The second and the third argument must be single 
+precision numbers n>1, j>2 with n+2>j!
+_ERR_NR_218 1
+ceil only defined for numbers!
+_ERR_NR_219 1
+Illegal variable!
+_ERR_NR_220 3
+nthei, ntpair and whei are only defined for 
+points on elliptic curves over Q or over 
+quadratic number fields!
+_ERR_NR_221 2
+during computation of the value of the L-series
+or the derivation of the L-series at s=1!
+_ERR_NR_222 1
+Modulus must be a positive integer!
+_ERR_NR_223 2
+This function is only defined for elements of Z, 
+Q, R or C!
+_ERR_NR_224 1
+First argument must be a polynomial!
+_ERR_NR_225 2
+The exponents of elements of Galois-fields must 
+be integers!
+_ERR_NR_226 2
+Limits of integration must be elements of Z or Q, 
+polynomials over Z or Q or rational functions!
+_ERR_NR_227 1
+%s is a keyword!
+_ERR_NR_228 1
+%s is a function!
+_ERR_NR_229 1
+%s is used recursively!
+_ERR_NR_230 2
+%s must be a polynomial, a rational function or a
+matrix or a vector over these structures!
+_ERR_NR_231 1
+%s has no parameter!
+_ERR_NR_232 1
+Illegal number of arguments!
+_ERR_NR_233 1
+%r not defined in Z/%iZ!
+_ERR_NR_234 1
+'/' not defined for vectors!
+_ERR_NR_235 1
+'^' not defined for vectors!
+_ERR_NR_236 2
+'^' not defined for elliptic curves and points on
+elliptic curves! 
+_ERR_NR_237 1
+Exponent too large!
+_ERR_NR_238 1
+Numerator of the exponent too large!
+_ERR_NR_239 1
+Denominator of the exponent too large!
+_ERR_NR_240 1
+2nd root MOD( %i ) is quadratic nonresidue!
+_ERR_NR_241 1
+%ith root MOD( %i ) is quadratic nonresidue!
+_ERR_NR_242 1
+Polynomial not defined over Z/%iZ!
+_ERR_NR_243 1
+Matrix not defined over Z/%iZ!
+_ERR_NR_244 1
+Vector not defined over Z/%iZ!
+_ERR_NR_245 1
+Illegal modulus!
+_ERR_NR_246 1
+Illegal first argument!
+_ERR_NR_247 2
+in Shanks' algorithm!
+Please try again!
+_ERR_NR_248 1
+%s is already used!
+_ERR_NR_249 1
+Illegal variable %s!
+_ERR_NR_250 1
+Illegal value %s!
+_ERR_NR_251 2
+Even roots can only be computed for nonnegative 
+numbers!
+_ERR_NR_252 2
+Factorial only implemented for nonnegative single
+precision numbers!
+_ERR_NR_253 1
+Illegal input!
+_ERR_NR_254 1
+Illegal beginning!
+_ERR_NR_255 1
+';' can only be used at the end of an expression!
+_ERR_NR_256 1
+Please use \"scalar\"!
+_ERR_NR_257 1
+The characteristic must be 2!
+_ERR_NR_258 1
+in ecrbasemwg!
+_ERR_NR_259 1
+in ecrregulator!
+_ERR_NR_260 1
+Current Galois-field not specified!
+_ERR_NR_261 1
+in ecrordtsg!
+_ERR_NR_262 5 
+GF only defined for integers, rationals, Z/pZ, 
+polynomials over Z, Q or Z/pZ, for matrices or 
+vectors over these structures, elliptic curves in long
+Weierstrass normal form or points on elliptic curves 
+over Q or Z/2Z!
+_ERR_NR_263 2
+The characteristic must be a single precision 
+prime number!
+_ERR_NR_264 1
+The first or the second argument must be a variable!
+_ERR_NR_265 3
+The third argument of curgf must be a single precision
+number >1 or a univariate monic irreducible polynomial
+over Z or Z/pZ of degree >1 in the specified variable!
+_ERR_NR_266 2
+The modulus specified by curmod must be the same as 
+the characteristic of the specified Galois-field!
+_ERR_NR_267 2
+Short Weierstrass normal form in characteristic 2 not
+possible!
+_ERR_NR_268 1
+during rank computation!
+_ERR_NR_269 2
+Not enough memory space to create table!
+Please try again!
+_ERR_NR_270 3
+Order of starting point which is generated at random 
+too small!
+Please try again!
+_ERR_NR_271 3
+Order of EC( GF(2^n) ) not uniquely determinated by 
+the order %i of the starting point which is generated 
+at random! Please try again!
+_ERR_NR_272 2
+max and min only defined for integers, rationals, reals
+and current modulus!
+_ERR_NR_273 3
+The second argument of curgf2bit must be a univariate
+irreducible polynomial over Z/2Z of degree >1 in the
+specified variable in the special bit representation!
+_ERR_NR_274 2
+fp only defined for elliptic curves over Z/pZ ( where
+p is a prime ) or GF(2^n)!
+_ERR_NR_275 2
+%% is not defined in the readline-version. Please use the
+history commands C-P or C-N!
+_ERR_NR_276 1
+Table in Shanks' algorithm too large!
+_ERR_NR_277 5
+The third argument of npfe must be a single precision
+number n (which is devided by the degree of the current
+Galois-field) or a univariate monic irreducible polynomial
+over Z or Z/2Z of degree n (which is devided by the degree
+of the current Galois-field)!
+_ERR_NR_278 1
+The current number field must be a quadratic number field!
+_ERR_NR_279 1
+The prime must be greater than 3!
+_ERR_NR_280 1
+The given number of points is not in the Hasse interval!
+_ERR_NR_281 1
+Class number exceeds 10000!
+_ERR_NR_282 1
+The corresponding norm equation cannot be solved!
+_ERR_NR_283 2
+&& and || only defined for numbers, elements of Z/mZ, 
+algebraic numbers or Galois-field elements!
+_ERR_NR_284 2
+<, <=, >, >= only defined for integers, rationals, reals 
+and current modulus!
+_ERR_NR_290 1
+First or second argument must be an integer!
+_ERR_NR_291 2
+An assignment to the variable used in curnf is not 
+allowed!
+_ERR_NR_292 2
+An assignment to the variable used in curgf is not 
+allowed!
+_ERR_NR_293 2
+%s is a variable of a polynomial and therefore must not 
+be used as a variable name!
+_ERR_NR_294 2
+%s is a variable of one of the polynomials of a matrix 
+and therefore must not be used as a variable name!
+_ERR_NR_295 2
+%s is a variable of one of the polynomials of a vector
+and therefore must not be used as a variable name!
+_ERR_NR_296 1
+in finding integral points!
+_ERR_NR_297 1
+HEIGHTBOUND must be a nonnegative number <= 2^999!
+_ERR_NR_298 1
+The argument must be a nonnegative integer!
+_ERR_NR_300 1
+File not opened!
+_ERR_NR_301 1
+It makes no sense to use owon or owoff in loops!
+_ERR_NR_302 1
+staton and statoff cannot be used in loops!
+_ERR_NR_303 1
+Illegal file name!
+_ERR_NR_304 2
+Trigonometric and hyperbolic functions are only
+defined over Z, Q or R!
+_ERR_NR_305 1
+The function is not defined for this value!
+_ERR_NR_306 1
+OUTPUTDIG must be a nonnegative integer < DIGITS!
+_ERR_NR_307 1
+Incorrect index of arrays!
+_ERR_NR_308 1
+Arrays are not allowed for variable names!
+_ERR_NR_309 1
+The argument must be an integer!
+_ERR_NR_310 1
+Incorrect use of "!
+_ERR_NR_311 5
+Illegal keywords for print are: ; _ ? & !
+avoff, avon, break, continue, decl, exit, fclose, 
+fopen, for, fread, if, loglist, logoff, logon, 
+nfoff, nfon, openf, owoff, owon, ppoff, ppon, print, 
+quit, return, statoff, staton, vardel, while!
+_ERR_NR_312 1
+Incorrect function name!
+_ERR_NR_313 1
+Incorrect declaration!
+_ERR_NR_314 1
+The variable store can't hold more than 300 variables!
+_ERR_NR_315 1
+The function store can't hold more than 50 functions!
+_ERR_NR_316 1
+Redeclaration of variables!
+_ERR_NR_317 2
+The local variable store can't hold more than %i 
+variables!
+_ERR_NR_318 2
+local is a function and is only allowed at the 
+beginning of functions!
+_ERR_NR_319 1
+return is only allowed in functions!
+_ERR_NR_320 2
+Local variables cannot be used as variables of 
+polynomials!
+_ERR_NR_321 3
+f1root needs a univariate polynomial over Z and a 
+prime number or a univariate polynomial over Z/pZ 
+or a univariate polynomial over GF(p^n)!
+_ERR_NR_322 3
+rk only defined for matrices over Z, Q, GF(p^n),
+number fields, polynomials over Z or Q or rational
+functions over Q!
+_ERR_NR_323 2
+Primitive roots exist only in Z/mZ with m=1, m=2, m=4,
+m=p^n or m=2*p^n for p prime > 2, n positive integer!
+_ERR_NR_324 2
+Either the first argument or the current modulus 
+must be a single precision prime!
+_ERR_NR_325 1
+Second or third argument must be a positive integer > 1!
+_ERR_NR_326 3
+In Z/pZ, the last argument must be 0 or 3 for p!=2,
+and 0 or an odd single precision number >1 for p=2!
+The last argument must be less than the degree+1!
+_ERR_NR_327 3
+froot needs a univariate polynomial over Z and a prime 
+number or a univariate polynomial over Z/pZ or a 
+univariate polynomial over GF(p^n) or Z, Q or R!
+_ERR_NR_328 2
+Either the first argument or the current modulus must 
+be a prime number!
+_ERR_NR_329 2
+The recursion depth DEPTH must be a positive
+single precision number!
+_ERR_NR_330 1
+Recursion depth exceeds DEPTH!
+_ERR_NR_331 1
+The matrix must be a square matrix!
+_ERR_NR_332 1
+Current elliptic curve must have coefficients in Z!
+_ERR_NR_333 1
+First argument must be a power of an odd prime!
+_ERR_NR_334 2
+Second argument must be a positive integer which
+divides phi(first argument)!
+_ERR_NR_335 2
+egcd only implemented for integers or univariate 
+polynomials over Z/pZ, GF(p^n) or number fields!
+_ERR_NR_336 2
+The basic coefficients of the polynomials must be
+units in the moduli!
+_ERR_NR_337 1
+First argument must be a single precision number!

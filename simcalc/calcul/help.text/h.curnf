@@ -1,0 +1,30 @@
+                               * * * * * * *
+                               *   curnf   *
+                               * * * * * * *
+
+        "current number field"
+        SYNTAX: X = curnf(Y,P)
+
+        Y is a variable.
+        P is an expression whose value is a univariate irreducible 
+        polynomial of degree greater than 1 in the variable Y.
+
+        curnf specifies the current number field K = Q(al) where al
+        is a root of P, i.e. K is isomorphic to Q[Y]/(P(Y)).
+        All algebraic numbers are considered as elements of this 
+        field K. They are entered and displayed by the symbol 'NF'
+        as polynomials in the variable Y.
+        P is stored in the variable curNumberField.
+        X is assigned the value of P.
+
+
+        Example 1: (correct)
+
+                P = curnf(A, A^6 + A^3 + 3*A + 2)
+
+
+        Example 2: (incorrect)
+
+                curnf(Y, Y^6 + Y^3 + 3*Y + 3)
+
+_ERR_NR_161

@@ -1,0 +1,171 @@
+
+
+
+			Documentation of unnest
+			-----------------------
+
+UNNEST:
+-------
+
+	The simply unnester tool to nested function calls.
+	( especially to SIMATH )
+
+INVOCATION:
+-----------
+
+	unnest [-typeprefix string1] [-typeprefix string2] [file1] [file2]
+
+	string1:	prefix string for temporary type names
+	(def. val.):	___temptype
+
+	string2:	prefix string for temporary variable names
+	(def. val.):	___tempvar
+
+	file1:		input file name
+	(def. val.):	the standard input stream
+
+	file2:		output file name
+	(def. val.):	the standard output stream
+
+Unnest will read the file 'file1', process it, and write the processed file
+to 'file2'. Under the process, unnest will look for specially marked
+expressions in the input file, it will unnest them by using temporary variables
+and temporary types ( if you need, otherwise the only type will be the type
+int; according to SIMATH's philosophy ). And finally it will place the needed
+variable declarations and 'init( ... );' instructions automatically at the
+place where you need.
+
+INPUT FILE MODIFICATION:
+------------------------
+
+You need to make some modification in the input file, in order to use
+unnest. The concept: you have to mark blocks containing marked expressions
+to unnest. All temporary variables used in a block will be declared and
+inited at the beginig of the block. You can declare many blocks in file and
+many expressions in a block. But it is not allowed to construct block-expr.
+hierarchy with depth more than 1 level. It is not allowed to make overlapped
+expression or blocks. An expression can contain one or more line. Within an
+expression you have to mark every function call what you want to unnest. All
+lines which are not in an expression will be copied to the output without
+modification.
+
+That's all. After these modifications in the source you can use the
+'preprocessor' unnest.
+
+NEW SYNTACTICAL ELEMENTS:
+-------------------------
+
+@@{{@@ : Marks the beginig of a new BLOCK.
+
+@@}}@@ : Marks the end of an opened BLOCK.
+
+@@{@@  : Marks the begining of a new EXPRESSION.
+
+@@}@@  : Marks the end of an opened EXPRESSION.
+
+@@}{@@ : Marks the end of an opened EXPRESSION and begining of a new one.
+
+You have to place these markers at the begining of a new line.
+
+@@   : 	Marks a function call which is needed to unnest, but it is not needed
+	to replace the function call itself with a temporary variable.
+
+@@xx :	Marks a function call which is needed to unnest, and it is needed to
+	replace the function call with a temporary variable of type xx.
+	Whereas xx are two digits. The @@00 is reserved for variables of
+	type int. These temporary variables will be declared as int,
+	automatically. If you use only int functions you will be able to use
+	the output of unnest as the input of SIMATH without modification.
+	If you use other typecodes than 00, you will have to insert at the
+	beginig of the program lines like these:
+
+	typedef list ___temptype1;
+	typedef obj ___temptype2;
+
+	Or you have to write these lines to a commonly used include file,
+	and you have to insert the line
+
+	#include "filename"
+
+	to include typedefs.
+
+@@@  :	Equivalent with @@00 .
+
+You have to use the last three markers before the function name immediately.
+
+NOTE:
+-----
+
+Warning !
+
+Unnest is not a user-safe tool: there are no a lot of error handling in it.
+So, if you want to get a big core file you can. You must use unnest in
+foolish-style. But if you do not want to get a core file you must use unnest
+according to the syntactical restrictions.
+
+CONTACT:
+--------
+
+Questions, bugs, ... 	==> nagypal@prime.math.klte.hu
+
+
+AN EXAMPLE:
+-----------
+
+INPUT:
+
+int func1( int param1, int param2, int param3 )
+{
+	int retval;
+@@{{@@
+	bind( param1, param2, param3 );
+	init( retval );
+
+	other lines...
+
+@@{@@
+	retval = @@iprod( 5, @@@iprod( @@@isum( param2, param3 ),
+		@@@isum( param2, param3 ) ) ) +
+		@@iprod( @@@isum( param1, param2 ), @@@isum( param3, param1 ) );
+@@}@@
+
+	other lines...
+
+@@}}@@
+	return retval;
+}
+
+INVOCATION:
+
+unnest -typeprefix tempt -varprefix tempv example
+
+OUTPUT:
+
+int func1( int param1, int param2, int param3 )
+{
+	int retval;
+
+int tempv0_1, tempv0_2, tempv0_3;
+
+init( tempv0_1, tempv0_2, tempv0_3 );
+
+	bind( param1, param2, param3 );
+	init( retval );
+
+	other lines...
+
+	tempv0_1 = isum( param2, param3 );
+	tempv0_2 = isum( param2, param3 );
+	tempv0_1 = iprod( tempv0_1,
+		tempv0_2 );
+	tempv0_2 = isum( param1, param2 );
+	tempv0_3 = isum( param3, param1 );
+	retval = iprod( 5, tempv0_1 ) +
+		iprod( tempv0_2, tempv0_3 );
+
+	other lines...
+
+	return retval;
+}
+
+This is ready to compile with SIMATH.

@@ -1,0 +1,26 @@
+                               * * * * * * *
+                               *  ispprime *
+                               * * * * * * *
+
+        "is pseudoprime ?"
+        SYNTAX: X = isprime(a)
+
+        a is an expression whose value is a positive integer. 
+
+        ispprime decides if a is pseudoprime and displays the 
+        following message:
+        - a is pseudoprime      
+          (a passed several Miller-Rabin pseudoprimality tests.)
+        X=1 if a is a pseudoprime; X=0 else.
+
+
+        Example 1: (correct)
+
+                p = ispprime( 6220506277488749 )
+
+
+        Example 2: (incorrect)
+
+                ispprime( -34523454 )
+
+_ERR_NR_019             

@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *    min    *
+                               * * * * * * *
+
+        "minimum"
+        SYNTAX: X = min(A1, A2, ..., An)
+
+        A1, ..., An are expressions whose values are elements in Z, Q,
+        R, or the current modulus, n >= 2.
+
+        X is assigned the minimum of A1, ..., An.
+
+
+        Example 1: (correct)
+
+                min((2*5-75), 234 + 23, 2/3)
+
+
+        Example 2: (incorrect)
+
+                min(2/3,MOD(3))
+
+_ERR_NR_272

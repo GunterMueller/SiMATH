@@ -1,0 +1,38 @@
+                               * * * * * * *
+                               *   curmod  *
+                               * * * * * * *
+
+        "current modulus"
+        SYNTAX: X = curmod(m)
+
+        m is an expression whose value is an integer greater 
+        than 1.
+
+        curmod specifies the current modulus m. Elements of the
+        residue class ring Z/mZ are entered and displayed by the
+        symbol 'MOD'. For more information please type "? MOD".
+        m is stored in the variable curModulus.
+        X is assigned the value of m.
+
+        Remarks: 
+        1) If the current modulus p is changed using the function
+           curmod, curves over Z/pZ which would be singular over 
+           the new modulus are transformed into elliptic curves 
+           over Q. 
+        2) If the current modulus p is changed using the function
+           curmod and the new modulus q is not a prime, elliptic 
+           curves and points on elliptic curves over Z/pZ are 
+           transformed into elliptic curves and points over Q.
+           Warning: If q > 2^30, the primality of q is not tested.
+        
+
+        Example 1: (correct)
+
+                curmod(17)
+
+
+        Example 2: (incorrect)
+
+                curmod(x^3 + 4)
+
+_ERR_NR_156

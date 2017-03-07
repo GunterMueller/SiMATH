@@ -1,0 +1,173 @@
+                               * * * * * * *
+                               *    help   *
+                               * * * * * * *
+
+        If you use the readline-version of simcalc, please use the GNU
+        readline commands for line editing.
+
+        DESCRIPTION
+
+        The SIMATH calculator computes the value of expressions over Z,
+        Q, R, C, Z/mZ, GF(p^n), number fields, polynomials over Z, Q, 
+        Z/mZ, GF(p^n), number fields, R and C, rational functions, 
+        matrices and vectors over all these structures.
+
+        Moreover, simcalc contains functions for elliptic curves over 
+        Q, Z/pZ (where p is a prime), GF(2^n) or number fields.
+
+        In polynomials, rational functions and matrices and vectors, 
+        the variables can be substituted by an arbitrary expression 
+        (see "? subst").
+
+        simcalc computes the value of boolean expressions containing 
+        the operators ==, !=, <, <=, >, >=, && and ||.
+
+        The loop constructions while, dowhile, for, forstep, forprime 
+        and the if-statement make simcalc programmable 
+        (see "? progfunc").
+        The user of simcalc himself can define functions which may be 
+        evaluated in usual syntax (see "? decl").
+
+
+        USING simcalc
+
+        Predefinitions for simcalc are read out of the file
+        .simcalcrc in the current working directory if there exists
+        such a file, or in the home directory.
+        
+        At the simcalc prompt ">" enter your commands in one of the
+        following ways:
+                "variable = expression"  
+        or   
+                "expression" 
+
+        In the first case, the value of the expression is assigned to
+        the specified variable, and in the second case, it is assigned 
+        to the system variable "@". "@"is always assigned the last 
+        result that has not been assigned to another variable (see 
+        "? sysvar").
+
+        A variable name consists of less than 21 alphanumerical
+        characters or can be an array of the form name[index],
+        where index is an expression, whose value is a nonnegative
+        integer less than 100000.
+
+        All variables (especially the system variable "@") can be used
+        in expressions.
+
+        If besides the return value further results are computed by
+        a function, these results are stored in the auxiliary array AV.
+        The values in AV can be recalled for other computations
+        (see "? avfunc").
+
+        In order to suppress the output of the result of an expression, 
+        the expression must be terminated by ';'.
+
+        You may enter more than one expression in one single command 
+        line separating them by '_' or ';'. If an expression ends with
+        '_', its output is displayed, if it ends with ';', its output 
+        is suppressed.
+
+        You can interrupt a process by typing "CTRL/C".
+
+        The shell command "com" can be executed during a simcalc session
+        by typing "$ com", e.g. "$ ls". 
+        By typing "!", you can branch to a subshell.
+        By typing "&", the introductary screen of simcalc will appear.
+
+        The command "LINELN = s", where s is a positive single precision 
+        number, changes the line length of the output to s characters.
+        The default value is LINELN=79.
+
+        Terminate simcalc by "CTRL/D", "exit" or "quit".
+
+
+        UTILITIES
+
+        Information about functions
+
+                                
+         "? func"               lists all functions together with a 
+                                short description.
+
+         "? cfunc"              lists all functions for complex numbers
+                                together with a short description.
+
+         "? ecfunc"             lists all functions for elliptic curves 
+                                and their points together with a short 
+                                description.
+
+         "? flfunc"             lists all functions for floating point 
+                                numbers together with a short description.
+        
+         "? gffunc"             lists all functions for Galois-fields
+                                together with a short description.
+
+         "? ifunc"              lists all functions for Z together with 
+                                a short description.
+
+         "? mfunc"              lists all functions for matrices together 
+                                with a short description.
+
+         "? modfunc"            lists all functions for Z/mZ together 
+                                with a short description.
+
+         "? nffunc"             lists all functions for number fields 
+                                together with a short description.
+
+         "? pfunc"              lists all functions for polynomials 
+                                together with a short description.
+
+         "? progfunc"           lists all constructions which make
+                                simcalc programmable together with a 
+                                short description.
+
+         "? rfunc"              lists all functions for Q together with 
+                                a short description.
+
+         "? vfunc"              lists all functions for vectors together 
+                                with a short description.
+
+         "? f"                  displays detailed information about the
+                                function f.
+
+
+        Information about variables
+
+         "? var1, ..., varN"    lists the variables var1, ..., varN and 
+                                their values.
+
+         "? *xyz*"              lists all variables containing the 
+                                pattern "xyz" together with their values.
+
+         "??"                   lists all variables and their values.
+
+
+        Auxiliary commands
+
+         "? avfunc"             displays information about the
+                                auxiliary variable AV.
+
+         "? file"
+         "? fload"
+         "? fopen"
+         "? openf"
+         "? fread"
+         "? fclose"             displays information on how to read 
+                                strings from files.
+
+         "? log"                displays information on how to use the 
+                                logging facility.
+
+         "? ow"                 displays information on how to work 
+                                with the overwrite protection.
+
+         "? stat"               displays information on how to obtain 
+                                statistical messages.
+
+         "? vardel"             displays information on how to delete 
+                                variables .
+
+         "? $"                  displays information on how to enter 
+                                shell commands and how to branch to a 
+                                subshell.

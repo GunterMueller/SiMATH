@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *   tavb6   *
+                               * * * * * * *
+
+        "Tate's value b6"
+        SYNTAX: X = tavb6(E)
+
+        E is an expression whose value is an elliptic curve over Q,
+        Z/pZ (where p is a prime), GF(2^n) or a number field.
+
+        X is assigned Tate's value b6.
+
+
+        Example 1: (correct)
+
+                tavb6(EC(8, 9))
+
+
+        Example 2: (incorrect)
+
+                tavb6(x + 4)
+                
+_ERR_NR_113

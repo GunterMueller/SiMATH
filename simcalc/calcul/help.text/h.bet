@@ -1,0 +1,20 @@
+                               * * * * * * *
+                               *    [ ]    *
+                               * * * * * * *
+
+        "absolute value"
+
+        [ ] computes the absolute value. It can be used for
+        expressions whose values are elements of Z, Q, R and C.
+        
+
+        Example 1: (correct)
+
+                [lcm(76, 34) - 2*(-23)]
+
+
+        Example 2: (incorrect)
+
+                [x^2 + y*z]
+
+_ERR_NR_009

@@ -1,0 +1,48 @@
+                               * * * * * * * * *
+                               *    jacsym     *
+                               * * * * * * * * *
+
+        "Jacobi symbol"
+        SYNTAX: X = jacsym(A, B)
+
+        A, B are expressions whose values are integers with the
+        following properties:
+                - A is an expression whose value is an integer.
+                - B is an expression whose value is a positive 
+                  odd integer.
+                - The values of A and B must be relatively prime.
+
+        X is assigned the Jacobi symbol (A / B).
+
+
+        Example 1: (correct)
+
+                jacsym(2 * 7 * 11 * 13, 15)
+
+
+        Example 2: (incorrect)
+
+                jacsym(a1, a2, a3)
+                
+_ERR_NR_017
+
+
+        Example 3: (incorrect)
+
+                jacsym(2/3, 15)
+
+_ERR_NR_018
+
+
+        Example 4: (incorrect)
+
+                jacsym(3, 2)
+
+_ERR_NR_215
+
+
+        Example 5: (incorrect)
+
+                jacsym(15, 3)
+
+_ERR_NR_216

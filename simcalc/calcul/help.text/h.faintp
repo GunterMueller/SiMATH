@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *   faintp  *
+                               * * * * * * *
+
+        "finding all integral points"
+        SYNTAX: X = faintp(E)
+
+        E is an expression whose value is an elliptic curve over Q.
+        
+        All integral points (modulo negation) of E are computed and 
+        displayed on the screen, along with their representation as 
+        linear combination of a torsion point and the basis points 
+        of E. 
+        X is assigned any integral point of E.
+
+        The integral points of E are stored in AV (see "?avfunc").
+
+        For HEIGHTBOUND see ? ecfunc.
+        
+        Example 1: (correct)
+                
+                faintp( EC( 1, 0, 0, 1, 2 ) )  
+

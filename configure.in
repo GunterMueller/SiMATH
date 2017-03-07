@@ -1,0 +1,427 @@
+dnl *** Process this file with autoconf to produce a configure script. ***
+
+AC_INIT(bin/CCC.c)
+
+dnl If smext.tar exist, expand it.
+if test -e smext.tar; then
+	echo " found smext.tar"
+	tar xf smext.tar
+fi
+
+dnl We call AC_CANONICAL_HOST first, because some parts of the configuration
+dnl depend on the host type. Linux systems running on PPro hardware behave
+dnl strange. If AC_CANONICAL_HOST succeeds, the variables $host_vendor,
+dnl $host_cpu, $host_os and $host will be defined according to the system.
+
+AC_CANONICAL_HOST
+
+if (echo "testing\c"; echo 1,2,3) | grep c > /dev/null 
+then 
+	ECHO_MINUS_N=true
+else
+	ECHO_MINUS_N=false
+fi
+
+dnl Checks for programs. Starting with version 4.0, SIMATH requires gcc.
+dnl This is subject to change in a later release where we might start using
+dnl native compilers again.  The variables listed below define some defaults.
+
+AR_PROG=ar
+CC=gcc
+CFLAGS_LOCAL=
+CFLAGS_BIN=-O
+CFLAGS_SOURCES=-O
+EMACS_PROG=emacs
+LS_PROG=ls
+PAGE_PROG=more
+RANLIB_PROG=ranlib
+RANLIB_PROG_MAKE=ranlib
+VI_PROG=vi
+XDVI_PROG=xdvi
+ROFF_MAN_PROG=groff
+ROFF_MAN_FLAGS="-C -man -Tascii"
+AC_PROG_CPP
+
+dnl This is list of the supported operating systems. On systems not listed
+dnl here, the above defaults (AR_PROG=ar, CC=cc, CFLAGS_BIN=, etc.) will be
+dnl used. The same variable on both sides of the equality sign means that
+dnl we use the default. Notice that the following settings are not really
+dnl required. This simply supplies a list of operating systems on which
+dnl SIMATH is known to run.
+
+if test "$host_vendor" = sun; then
+	CC=$CC
+	CFLAGS_LOCAL=$CFLAGS_LOCAL
+	CFLAGS_BIN=$CFLAGS_BIN
+	CFLAGS_SOURCES=$CFLAGS_SOURCES
+	EMACS_PROG=$EMACS_PROG
+	PAGE_PROG=$PAGE_PROG
+	VI_PROG=$VI_PROG
+fi
+if test "$host_vendor" = hp; then
+	CC=$CC
+	CFLAGS_LOCAL=$CFLAGS_LOCAL
+	CFLAGS_BIN=$CFLAGS_BIN
+	CFLAGS_SOURCES=$CFLAGS_SOURCES
+	EMACS_PROG=$EMACS_PROG
+	PAGE_PROG=$PAGE_PROG
+	VI_PROG=$VI_PROG
+fi
+if test "$host_vendor" = sgi; then
+	CC=$CC
+	CFLAGS_LOCAL=$CFLAGS_LOCAL
+	CFLAGS_BIN=$CFLAGS_BIN
+	CFLAGS_SOURCES=$CFLAGS_SOURCES
+	EMACS_PROG=$EMACS_PROG
+	PAGE_PROG=$PAGE_PROG
+	VI_PROG=$VI_PROG
+fi
+if test "$host_os" = linux; then
+	CC=$CC
+	CFLAGS_LOCAL=$CFLAGS_LOCAL
+	CFLAGS_BIN=$CFLAGS_BIN
+	CFLAGS_SOURCES=$CFLAGS_SOURCES
+	EMACS_PROG=$EMACS_PROG
+	PAGE_PROG=$PAGE_PROG
+	VI_PROG=$VI_PROG
+fi
+
+dnl We display some of the results.
+
+echo setting CC to \"$CC\"
+echo setting CFLAGS_SOURCES to \"$CFLAGS_SOURCES\"
+echo setting CFLAGS_BIN to \"$CFLAGS_BIN\"
+
+dnl These will be useful in future development.
+
+AC_AIX
+AC_MINIX
+
+dnl We check for some programs required during the installation of SIMATH.
+dnl AC_PROG_INSTALL sets the shell variable INSTALL. 
+
+AC_PROG_INSTALL
+
+dnl Here we define RL_INCLUDE and RL_FLAGS.
+
+RL_INCLUDE="-I`pwd`/readline-2.0"
+RL_FLAGS="-L`pwd`/readline-2.0 -lreadline"
+AC_DEFINE(USE_READLINE)
+
+dnl Again we display some of the results.
+
+echo setting RL_INCLUDE to \"$RL_INCLUDE\"
+echo setting RL_FLAGS to \"$RL_FLAGS\"
+
+AC_PROG_LEX
+if test "$LEXLIB" = ""; then
+	echo "COULD NOT DETERMINE THE LOCATION OF THE "lex" (or "flex") LIBRARY."
+	echo "Please edit ./Makefile.flags and set the macro LEXLIB according to your"
+	echo "platform. If you installed libfl.a in a nonstandard place, e.g in"
+	echo "	/usr/local/lib/flex/libfl.a"
+	echo "set"
+	echo "	LEXLIB=-L/usr/local/lib/flex -lfl."
+	echo "If you don't have "lex" (or "flex") please install "flex" (available on"
+	echo "many ftp servers) and rerun the configure script."
+	echo "PRESS <RET> TO CONTINUE"
+	read a
+fi
+
+dnl Here we check for ln -s.
+
+AC_PROG_LN_S
+
+dnl Checks for header files.
+
+AC_HEADER_TIME
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_CHECK_HEADERS(fcntl.h malloc.h sgtty.h strings.h sys/file.h sys/ioctl.h sys/time.h termio.h time.h unistd.h varargs.h)
+
+AC_TRY_COMPILE(
+[
+#include <stdio.h>
+#include <signal.h>
+],
+[
+void (*fktco)();
+signal(SIGEMT, fktco);
+],
+[echo "checking for SIGEMT... yes"; AC_DEFINE(HAVE_SIGEMT)],
+[echo "checking for SIGEMT... no"]
+)
+
+AC_TRY_COMPILE(
+[
+#include <stdio.h>
+#include <signal.h>
+],
+[
+void (*fktco)();
+signal(SIGSYS, fktco);
+],
+[echo "checking for SIGSYS... yes"; AC_DEFINE(HAVE_SIGSYS)],
+[echo "checking for SIGSYS... no"]
+)
+
+AC_TRY_COMPILE(
+[
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+],
+[
+FILE random();
+],
+[echo "checking for declaration of random()... no"],
+[echo "checking for declaration of random() in math.h ... yes"; AC_DEFINE(RANDOM_IN_MATH_H)]
+)
+
+AC_TRY_COMPILE(
+[
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+],
+[
+FILE srandom();
+],
+[echo "checking for declaration of srandom()... no"],
+[echo "checking for declaration of srandom()... yes"; AC_DEFINE(SRANDOM_IN_MATH_H)]
+)
+
+AC_TRY_COMPILE(
+[
+#include <stdio.h>
+#include <math.h>
+],
+[
+FILE initstate();
+],
+[echo "checking for declaration of initstate()... no"],
+[echo "checking for declaration of initstate()... yes"; AC_DEFINE(INITSTATE_IN_MATH_H)]
+)
+
+AC_TRY_COMPILE(
+[
+#include <stdio.h>
+#include <math.h>
+],
+[
+FILE setstate();
+],
+[echo "checking for declaration of setstate()... no"],
+[echo "checking for declaration of setstate()... yes"; AC_DEFINE(SETSTATE_IN_MATH_H)]
+)
+
+AC_C_CONST
+AC_STRUCT_TM
+
+dnl Checks for library functions and declarations of functions.
+
+AC_CHECK_LIB(termcap, tgetent, TERMLIB=-ltermcap)
+AC_CHECK_LIB(curses, tgetent, TERMLIB=-lcurses)
+AC_CHECK_LIB(m, log2, AC_DEFINE(HAVE_LOG2))
+AC_CHECK_FUNC(random, AC_DEFINE(HAVE_RANDOM))
+
+dnl Checks for types.
+
+AC_TYPE_SIGNAL
+AC_TYPE_SIZE_T
+AC_CHECK_SIZEOF(char, 1)
+AC_CHECK_SIZEOF(short, 2)
+AC_CHECK_SIZEOF(int, 4)
+AC_CHECK_SIZEOF(long, 4)
+AC_CHECK_SIZEOF(long long, 8)
+AC_CHECK_SIZEOF(void *, 4)
+AC_CHECK_SIZEOF(float, 4)
+AC_CHECK_SIZEOF(double, 8)
+
+dnl Checks for programs used in SM. We perform these tests here because
+dnl they depend on the hosttype. 
+
+AC_PATH_PROG(AR_PATH, $AR_PROG)
+
+CC_PATH=
+CC_PRE_PATH=
+AC_PATH_PROG(GCC_PATH, gcc)
+AC_PATH_PROG(GCC_PRE_PATH, gcc)
+CC_PATH=$GCC_PATH
+CC_PRE_PATH=$GCC_PRE_PATH
+
+dnl We run the C preprocessor of gcc with the flags -E -P. (For most native
+dnl compilers, -P is probably sufficient.
+
+CC_PRE_FLAGS="-E -P"
+
+dnl Why don't you use AC_PROG_CPP?
+
+dnl Here we check for as. (I don't know whether it is needed or not.)
+
+AC_PATH_PROG(AS, as)
+
+dnl Some programs might not be available on all systems. If a program isn't
+dnl found on a given system, we set the (nonexistent) path to this program
+dnl to "null".
+
+AC_PATH_PROG(EMACS_PATH, $EMACS_PROG)
+AC_PATH_PROG(LS_PATH, $LS_PROG)
+AC_PATH_PROG(PAGE_PATH, $PAGE_PROG)
+AC_PATH_PROG(RANLIB_PATH, $RANLIB_PROG)
+AC_PATH_PROG(VI_PATH, $VI_PROG)
+AC_PATH_PROG(XDVI_PATH, $XDVI_PROG)
+AC_PATH_PROG(ROFF_MAN_PATH, $ROFF_MAN_PROG)
+
+if test "$prefix" = NONE; then
+	prefix=/usr/local
+fi
+
+if test "$EMACS_PATH" = ""; then
+	EMACS_PATH=$prefix/simath/bin/unknown-cmd
+fi
+if test "$RANLIB_PATH" = ""; then
+	RANLIB_PATH=$prefix/simath/bin/unknown-cmd
+	RANLIB_PROG_MAKE=:
+fi
+if test "$XDVI_PATH" = ""; then
+	XDVI_PATH=$prefix/simath/bin/unknown-cmd
+fi
+if test "$ROFF_MAN_PATH" = ""; then
+	ROFF_MAN_PROG=nroff
+	ROFF_MAN_FLAGS=-man
+fi
+
+dnl The test for the SIMATH extension library. If we find the SIMATH extension
+dnl library we define HAVE_SM_EXT in smconfig.h and we add the -l_smext flag
+dnl to Makefile.flags and to SM.cmds. The compilation and installation of
+dnl the library itself should be done depending on its existence and should
+dnl be handled by the toplevel Makefile and the Makefile in the sources
+dnl subdirectory.
+
+SM_EXT=""
+if test "$ECHO_MINUS_N" = "true"
+then
+	echo -n "checking for SIMATH extension library..."
+else
+	echo "checking for SIMATH extension library...\c"
+fi
+if test -d sources/smext; then
+	echo " found sources/smext"
+	AC_DEFINE(HAVE_SM_EXT)
+	SM_EXT=true
+else
+	echo " no"
+fi
+
+dnl The test for the SIMATH C++ extensions. If we find the C++ library we
+dnl define the symbol HAVE_SM_CXX in smconfig.h. This symbol is currently
+dnl unused.
+
+SM_CXX=""
+if test "$ECHO_MINUS_N" = "true"
+then
+	echo -n "checking for SIMATH C++ extensions..."
+else
+	echo "checking for SIMATH C++ extensions...\c"
+fi
+if test -d smplus; then
+	echo " found smplus"
+	AC_DEFINE(HAVE_SM_CXX)
+	SM_CXX=true
+else
+	echo "no"
+fi
+
+# We extract the SIMATH version number from smconfig.h.in. (In case someone
+# needs this.)
+
+dnl SM_VERSION=`cat smconfig.h.in | sed -e '1,/SIMATH-Version/D' | head -1`
+SM_VERSION=`awk '/SIMATH-Version/{getline;print;exit}' smconfig.h.in`
+
+dnl Output of the configuration.
+
+AC_CONFIG_HEADER(smconfig.h)
+
+AC_SUBST(ECHO_MINUS_N)
+AC_SUBST(AR_PATH)
+AC_SUBST(AR_PROG)
+AC_SUBST(CC)
+AC_SUBST(CC_PATH)
+AC_SUBST(CC_PRE_FLAGS)
+AC_SUBST(CC_PRE_PATH)
+AC_SUBST(CFLAGS_LOCAL)
+AC_SUBST(CFLAGS_BIN)
+AC_SUBST(CFLAGS_SOURCES)
+AC_SUBST(EMACS_PATH)
+AC_SUBST(EMACS_PROG)
+AC_SUBST(LS_PATH)
+AC_SUBST(LS_PROG)
+AC_SUBST(PAGE_PATH)
+AC_SUBST(PAGE_PROG)
+AC_SUBST(RANLIB_PATH)
+AC_SUBST(RANLIB_PROG)
+AC_SUBST(RANLIB_PROG_MAKE)
+AC_SUBST(RL_FLAGS)
+AC_SUBST(RL_INCLUDE)
+AC_SUBST(TERMLIB)
+AC_SUBST(VI_PATH)
+AC_SUBST(VI_PROG)
+AC_SUBST(XDVI_PATH)
+AC_SUBST(XDVI_PROG)
+AC_SUBST(ROFF_MAN_PROG)
+AC_SUBST(ROFF_MAN_FLAGS)
+AC_SUBST(host)
+AC_SUBST(host_cpu)
+AC_SUBST(host_os)
+AC_SUBST(host_vendor)
+AC_SUBST(prefix)
+
+AC_OUTPUT(Makefile.flags hosttype compile_readline SM.cmds ./bin/smman ./bin/smsrc ./bin/xsrc)
+
+dnl If $SM_EXT is set true, then we add the -l_smext flag to Makefile.flags
+dnl and SM.cmds "by hand". (I.e. by explicitely running sed.) There might
+dnl be better methods for this.
+
+if test "$SM_EXT" = "true"; then
+	echo s%-l_kern%-l_kern -l_smext% > sedscript
+	echo "adding \"-l_smext\" to SM.cmds"
+	sed -f sedscript ./SM.cmds > SM.cmds.sed
+	mv -f SM.cmds.sed SM.cmds	
+	echo "adding \"-l_smext\" to Makefile.flags"
+	sed -f sedscript ./Makefile.flags > Makefile.flags.sed
+	mv -f Makefile.flags.sed Makefile.flags	
+fi
+
+dnl If $SM_CXX is set true, then we add the -l_smplus flag to Makefile.flags
+dnl and SM.cmds "by hand". Currently the is commented out until the C++
+dnl extensions come to a stable status.
+
+dnl if test "$SM_CXX" = "true"; then
+dnl 	echo s%-l_kern%-l_smplus -l_kern% > sedscript
+dnl 	echo "adding \"-l_smplus\" to SM.cmds"
+dnl	sed -f sedscript ./SM.cmds > SM.cmds.sed
+dnl	mv -f SM.cmds.sed SM.cmds	
+dnl	echo "adding \"-l_smplus\" to Makefile.flags"
+dnl	sed -f sedscript ./Makefile.flags > Makefile.flags.sed
+dnl	mv -f Makefile.flags.sed Makefile.flags	
+dnl fi
+
+dnl Finally, we set SM_HOME in smconfig.h to $prefix. This has to be done
+dnl "by hand" because AC_OUTPUT(smconfig.h) and AC_CONFIG_HEADER(smconfig.h)
+dnl both refer to the same file ./smconfig.h.in. Probably, there are better
+dnl methods.
+
+echo s%\@prefix\@%$prefix% > sedscript
+sed -f sedscript ./smconfig.h > smconfig.h.sed
+mv -f smconfig.h.sed smconfig.h
+rm -f sedscript
+
+echo "	"
+echo "After ./configure has finished do the following:"
+echo "  1. Edit the file ./smconfig.h and set MAX_BLOCK_NUMBER according to"
+echo "the main memory of your system. Follow the instructions in"
+echo "./smconfig.h".
+echo "  2. Type \"make\" in the directory where you ran the configure script."
+echo "	"
+

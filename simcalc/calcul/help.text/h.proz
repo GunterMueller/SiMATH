@@ -1,0 +1,22 @@
+                               * * * * * * *
+                               *     %%    *
+                               * * * * * * *
+
+        "command line history"
+        
+        '%%' is only available in the non-readline-version.
+
+        The last 10 command lines are available using the following
+        '%%'-commands:
+
+        '%%?'           displays the last 10 command lines.
+
+        '%%i'           displays the command line with number i 
+                        (0 <= i <= 9). 
+                        This line can be edited.
+
+        '%%'            displays the last command line.
+                        This line can be edited.
+                        ('%%' is equivalent to '%%0'.)
+
+        '%%'-commands are not possible in sequences and loops.

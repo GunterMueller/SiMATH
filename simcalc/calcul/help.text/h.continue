@@ -1,0 +1,9 @@
+                               * * * * * * *
+                               * continue  *
+                               * * * * * * *
+
+        In loops, "continue" causes the next run of the surrounding 
+        loop. In while- and dowhile-loops, the boolean expression is
+        evaluated. In for-, forstep- and forprime-loops, the
+        reinitialisation is done.
+        Outside, it has no effect.

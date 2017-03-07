@@ -1,0 +1,48 @@
+The number theoretic system SIMATH is written in C, being developed
+for research purpose by the SIMATH development group of Prof. Dr.
+NAKAMULA, Ken at Tokyo Metropolitan University (TMU), Japan.  The
+development is being partially supported by the Siemens AG, BRD.
+
+Up to now we are running SIMATH on the following platforms:
+	on Sun workstations under SunOS 4.0.3 and SunOS 4.1.x
+	on HP 9000 series 700 under HP-UX 10.20
+	on SGI computers under IRIX 5.2
+	on PCs under different Linux kernels
+	on HP AlphaServer under HP Tru64 UNIX
+These are the machines we use for the development of SIMATH.  It
+should not be so difficult to port SIMATH to other operating systems.
+If you are using a different machine (and/or operating system), you
+can (and you should) try to install SIMATH.  If you are successful,
+please let us know.  If you had to change some of the SIMATH source
+files, please inform us of the changes to be made.
+
+If you have any problems or suggestions, please contact us by mail:
+	SIMATH development Group
+	Prof. Dr. NAKAMULA, Ken
+	Department of Mathematics, Tokyo Metropolitan University
+	Minami Osawa 1-1, Hachioji Tokyo, 192-0397 Japan
+or by e-mail:
+	mail@simath.info
+or by phone:
+	+81-(0)426-77-2471
+
+We have set up a mailing list to discuss several problems related to
+the number theoretic system SIMATH among the users of the system.
+Send an email to
+	simath-user-request@tnt.math.metro-u.ac.jp
+including the line
+	info
+in the message of the mail in order to get information on the mailing
+list, and include the line
+	subscribe
+in order to join the mailing list for discussing anything related to
+SIMATH.
+
+The latest version of SIMATH may be obtained from
+	ftp://simath.math.metro-u.ac.jp/simath/latest/
+by anonymous ftp.
+
+    The installation procedure is explained in INSTALLATION file.
+    *************************************************************
+	   The copyright notice is found in COPYRIGHT file.
+	   ************************************************

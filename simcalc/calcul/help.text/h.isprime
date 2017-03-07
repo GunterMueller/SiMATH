@@ -1,0 +1,35 @@
+                               * * * * * * *
+                               *  isprime  *
+                               * * * * * * *
+
+        "is prime ?"
+        SYNTAX: X = isprime(a)
+
+        a is an expression whose value is a positive integer. 
+
+        isprime decides if a is prime and displays the 
+        following messages:
+        - a is pseudoprime      
+          (a passed several Miller-Rabin pseudoprimality tests.)
+        - a is prime (a-1)
+          (The primality of a was proved by factoring a-1.)
+        - a is prime    h(-d)=r
+          (The primality of a was proved by factoring the
+           point order of an elliptic curve over Z/aZ which has
+           complex multiplication in the ring of integers of
+           the imaginary quadratic number field Q(sqrt(-d)).
+           The class number of Q(sqrt(-d)) is r.) 
+        X=1 if a is a prime; X=0 if a is not a prime; X=(-1) if
+        a is a pseudoprime.
+
+
+        Example 1: (correct)
+
+                p = isprime( 6220506277488749 )
+
+
+        Example 2: (incorrect)
+
+                isprime( -34523454 )
+
+_ERR_NR_019             

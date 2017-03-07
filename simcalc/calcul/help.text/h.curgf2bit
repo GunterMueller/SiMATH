@@ -1,0 +1,45 @@
+                               * * * * * * *
+                               * curgf2bit *
+                               * * * * * * *
+
+        "current Galois-field over characteristic 2, special bit
+         representation"
+        SYNTAX: X = curgf2bit(A,S)
+
+        A is a variable.
+        S is a sequence of 0 and 1.
+        S is interpreted as the coefficients of a polynomial Q over
+        Z/2Z in the variable A. (For example the sequence 100101 stands
+        for the polynomial A^5 + A^2 + 1.)
+        Q must be an irreducible polynomial of degree greater than 1.
+
+        X is assigned the value of Q.
+        X is stored in the variable curGaloisField.
+
+        curgf2bit specifies the current Galois-field GF(2^n) = Z/2Z(al)
+        where al is a root of X.
+        If it is possible, the user is asked if he wants to embed the
+        variables over the old Galois-field in the new one. Then all
+        structures over the old Galois-field are isomorphically 
+        embedded in the new one. Otherwise those elements are 
+        considered such as they are as elements of the recently 
+        specified Galois-field GF(2^n).
+        They are entered and displayed by the symbol 'GF' as 
+        polynomials in the variable A. They can also be entered by the
+        symbol 'GF2bit'.
+
+        If p = 2 and the user is embedding elliptic curves, of which he 
+        knows the number of points, over the old Galois-field into the
+        new one, he can get the number of points over the new one.
+
+
+        Example 1: (correct)
+
+                X = curgf2bit(A, 1110101 )
+
+        
+        Example 2: (incorrect)
+
+                curgf2bit(A, A^5+A^2+1 )
+
+_ERR_NR_015

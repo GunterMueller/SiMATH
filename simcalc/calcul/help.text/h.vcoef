@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *   vcoef   *
+                               * * * * * * *
+
+        "vector coefficient"
+        SYNTAX: X = vcoef(V, l)
+
+        V is an expression whose value is a vector of length n.
+        l is a positive integer, 0 < l <= n.
+
+        X is assigned the l-th coefficient of V.
+
+
+        Example 1: (correct)
+
+                vcoef({NF(A),3,z^2-NF(A^3)}, 3)
+
+
+        Example 2: (incorrect)
+
+                vcoef({1,2,3}, 4)
+
+_ERR_NR_058

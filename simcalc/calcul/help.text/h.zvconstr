@@ -1,0 +1,15 @@
+                           * * * * * * *
+                           *  zvconstr *
+                           * * * * * * *
+
+        "zero vector construction"
+        SYNTAX: X = zvconstr(n)
+
+        n is a positive integer.
+
+        X is assigned the zero vector of length n.
+
+
+        Example 1: (correct)
+
+                zvconstr(4)

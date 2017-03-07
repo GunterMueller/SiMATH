@@ -1,0 +1,16 @@
+                               * * * * * * *
+                               *   real    *
+                               * * * * * * *
+
+        "real part"
+        SYNTAX: X = real(Z)
+
+        Z is an expression whose value is an integer, a rational,
+        a real or complex number.
+
+        X is assigned the value of the real part of Z = X + Y * i.
+
+
+        Example 1: (correct)
+
+                real(3.6 + 6 * i)

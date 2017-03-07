@@ -1,0 +1,18 @@
+                               * * * * * * *
+                               *   puthex  *
+                               * * * * * * *
+
+        "put integer, hexadecimal representation"
+        SYNTAX: M = puthex(N)
+
+        N is an integer.
+        puthex displays a sequence of 0,1,...,9,A,B,C,D,E,F 
+        interpreted as the hexadecimal representation of N.
+
+        M is assigned N.
+
+
+        Example 1: (correct)
+
+                puthex( 12345 )
+

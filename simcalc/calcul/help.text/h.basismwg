@@ -1,0 +1,21 @@
+                               * * * * * * *
+                               *  basismwg *
+                               * * * * * * *
+
+        "basis of the Mordell-Weil group"
+        SYNTAX: X = basismwg(E)
+
+        E is an expression whose value is an elliptic curve over Q.
+        
+        The basis of the Mordell-Weil group is computed and displayed
+        on the screen. 
+        X is assigned the rank of the Mordell-Weil group of E.
+        If the rank is greater than 0, the basis points are stored
+        in AV (see "? avfunc").
+
+        For HEIGHTBOUND see ? ecfunc.
+
+        Example 1: (correct)
+                
+                basismwg( EC( 1, 0, 0, 1, 2 ) )  
+

@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *   jinv    *
+                               * * * * * * *
+
+        "j- invariant"
+        SYNTAX: X = jinv(E)
+
+        E is an expression whose value is an elliptic curve over Q,
+        Z/pZ (where p is a prime), GF(2^n) or a number field.
+
+        X is assigned the j-invariant of E.
+
+
+        Example 1: (correct)
+
+                jinv(EC(8, 9))
+
+
+        Example 2: (incorrect)
+
+                jinv(123 + 4)
+
+_ERR_NR_115

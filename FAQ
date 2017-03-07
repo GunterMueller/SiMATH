@@ -1,0 +1,29 @@
+Frequently Asked Questions
+==========================
+
+* Linux
+* Tru64
+
+Linux
+-----
+Some versions of SuSE linux do not ship with libtermcap.a.  This
+causes linker errors to included readline library (though they appear
+to the user at the linking stage of simcalc) .  A solution is to
+simply symbolic link:
+ # ln -s libncurses.a libtermcap.a
+.
+Another solution is to edit the Makefile in the readline-2.0
+subdirectory, but it is not recommended beacause the problem will
+appear again when the user is going to install the newer version of
+SIMATH.
+
+
+Tru64
+-----
+Simcalc may output a message like "Unaligned access pid=1234 ...".
+It is avoidable with typing following command before the user runs
+simcalc:
+ % uac p noprint
+.
+
+$$

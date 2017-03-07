@@ -1,0 +1,29 @@
+                       * * * * * * * * * * *
+                       *   arcsin, arccos  *
+                       *   arctan, arccot  *
+                       * * * * * * * * * * *
+
+        "arcussinus, arcuscosinus, arcustangens, arcuscotangens"
+        SYNTAX: X = arcsin(A)
+                X = arccos(A)
+                X = arctan(A)
+                X = arccot(A)
+
+        A is an expression whose value is an integer, a rational
+        or a floating point number.
+
+        X is assigned the value of the trigonometric function at A.
+
+        For X = arcsin(A) or X = arccos(A), |A| must be <= 1.
+
+
+        Example 1: (correct)
+
+                arctan(1/4)
+
+
+        Example 2: (incorrect)
+
+                arcsin(2)
+
+_ERR_NR_305

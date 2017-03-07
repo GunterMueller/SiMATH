@@ -1,0 +1,27 @@
+                               * * * * * * *
+                               *    &&     *
+                               * * * * * * *
+
+        "and"
+
+        "&&" is an operator which operates on two elements of Z, Q, R,
+        C, elements of Z/mZ, algebraic numbers or Galois-field 
+        elements: "el1 && el2".
+        If el1 = 0 or el2 = 0 , "&&" returns 0, else "&&" returns 1.
+
+
+        Example 1: (correct)
+
+                log2(123/45) && gcd(24, 76)
+
+
+        Example 2: (correct)
+
+                MOD(5) && NF(A)
+
+
+        Example 3: (incorrect)
+
+                5 + x && x^2 + 1/y
+
+_ERR_NR_283             

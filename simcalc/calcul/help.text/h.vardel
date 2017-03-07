@@ -1,0 +1,22 @@
+                               * * * * * * *
+                               *  vardel   *
+                               * * * * * * *
+
+        "delete variables"
+
+        Variables can be deleted using the command "vardel".
+
+        "vardel" displays the following message:
+                Abort with CTRL/D
+                variables:
+
+        If you type 'CTRL/D' now, no variable is deleted.
+
+        Delete variables by entering their names. 
+        You may use the wildcard '*'.
+
+        Use the '?'-commands to get a list of your variables.
+
+        Remark: The system variable '@' cannot be deleted.
+
+        Deleting variables is not possible in sequences and loops. 

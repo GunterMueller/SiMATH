@@ -1,0 +1,34 @@
+CC_CMD @CC@
+CC_PATH @CC_PATH@
+CPP_CMD @CC@ @CC_PRE_FLAGS@
+CPP_PATH @CC_PRE_PATH@
+CCC_CMD CCC
+CCC_PATH @prefix@/simath/bin/CCC
+LPR_CMD dr
+LPR_PATH @prefix@/simath/bin/dr
+SM_PREV3_CMD preV3_1.x
+SM_PREV3_PATH @prefix@/simath/bin/preV3_1.x
+SM_PRE_CMD preproc.x 
+SM_PRE_PATH @prefix@/simath/bin/preproc.x
+AR_CMD @AR_PROG@
+AR_PATH @AR_PATH@
+LS_CMD @LS_PROG@
+LS_PATH @LS_PATH@
+EMACS_CMD @EMACS_PROG@
+EMACS_PATH @EMACS_PATH@
+VI_CMD @VI_PROG@
+VI_PATH @VI_PATH@
+PAGE_CMD @PAGE_PROG@
+PAGE_PATH @PAGE_PATH@
+RANLIB_CMD @RANLIB_PROG@
+RANLIB_PATH @RANLIB_PATH@
+CPPFLAGS -I. -I@prefix@/simath/include
+CFLAGS @CFLAGS_SOURCES@
+LDPATH -L@prefix@/simath/lib
+LDFLAGS -l_kern -l_ec4 -l_arith4 -l_pol4 -l_matr3 -l_ec3 -l_arith3 -l_pol3 -l_matr2 -l_ec2 -l_arith2 -l_pol2 -l_matr1 -l_pol1 -l_ec1 -l_arith1 -l_list -lm
+XDVI_CMD @XDVI_PROG@
+XDVI_PATH @XDVI_PATH@
+XDVIFLAGS -s 3 -paper 15x20cm  -xoffset -0cm -yoffset -0cm -margins -0cm
+ROFF_CMD @ROFF_MAN_PROG@
+ROFF_FLAGS @ROFF_MAN_FLAGS@
+PAGE_ROFF_FLAGS -s -f

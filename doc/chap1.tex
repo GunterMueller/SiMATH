@@ -1,0 +1,222 @@
+% \documentstyle[11pt]{book1}
+% \setlength{\voffset}{-2cm}
+% \oddsidemargin0.5cm   \evensidemargin0.5cm
+% \parindent0pt
+% \textwidth 6.0in \textheight 21.8cm
+% \input texdefs.tex
+% \begin{document}
+% \pagestyle{plain}
+% \setcounter{chapter}{0} % one less than the intended chapter number
+
+\chapter{Introduction to  SIMATH}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%                               %%%%
+%%%%       c h p 1 1 . t e x       %%%%
+%%%%                               %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introducing SIMATH}\index{SIMATH} 
+SIMATH, that is {\em SInix--MATHematik\/}, is a computer algebra 
+system focusing mainly on {\em algebraic number theory\/}.  
+It is being developed at Tokyo Metropolitan University (TMU), Japan.
+System development started on SINIX PCs and
+up to now, we are running SIMATH on
+\begin{itemize}
+\item{} HP 9000 series 700 under HP-UX 9.0x and HP-UX 10.x
+\item{} SGI machines under IRIX 5.3
+\item{} Sun SPARCstation under SunOS 4.1.1
+\item{} PCs under Linux 1.x and 2.x
+\item{} hp AlphaServer under Tru64 UNIX
+\end{itemize}
+It should not be difficult to compile and run SIMATH on most UNIX
+platforms. For example, SIMATH is known to run on SPARCstations under
+Solaris 2.x and Intel based PCs under FreeBSD 4.x
+
+\newpage
+
+{\bf How does SIMATH differ from other systems ?}\index{SIMATH}  
+
+The difference between SIMATH and most other systems lies essentially in 
+\begin{itemize}
+\item the main area of application: {\em algebraic number theory\/}.
+\item the concept of the system: SIMATH is {\em a transparent system\/} which means that all sources are part of the system so the user can adapt existing general algorithms
+to specific problems and integrate her/his own algorithms at any point within the system.
+\item the programming language: SIMATH is written in C; likewise, the user works in C.
+      SIMATH functions are integrated into a C-program simply by function calls.
+\end{itemize}
+SIMATH may also be accessed via the interactive calculator {\em simcalc\/} which features
+\begin{itemize}
+\item many of the existing SIMATH algorithms,
+\item comprehensive error checking,
+\item detailed ``help facilities''. 
+\end{itemize}
+This makes {\em simcalc\/} particularly suitable for a quick calculation on the side and
+users with little programming experience.
+
+  We have set up a mailing list for the users of the number theoretic 
+system SIMATH. 
+If you want to subscribe to this list send e-mail to
+\begin{center}
+simath-user-request@tnt.math.metro-u.ac.jp
+\end{center}
+and include the line 
+\begin{center}
+subscribe
+\end{center}
+in the body of your mail. The purpose of the list is to announce new versions 
+of SIMATH and to discuss anything which is related to SIMATH and of public 
+interest.
+
+  The latest version of SIMATH may be obtained by anonymous ftp from
+simath.math.metro-u.ac.jp (133.86.76.12) in the directory /simath/latest. 
+For more information about the installation of SIMATH see \S 1.3.
+
+If you have any questions or problems, please contact the following address:
+\begin{center}
+\begin{tabular}{ll}
+SIMATH development Group & \\
+Prof. Dr. Ken Nakamula &   \\
+Department of Mathematics, & \\
+Tokyo Metropolitan University & \\
+Postcode 192-0397 & \\
+Minami-Osawa 1-1, Hachioji-shi Tokyo, JAPAN & \\
+& \\
+e-mail: mail@simath.info &\\
+Phone: +81-(0)426-77-2471
+\end{tabular}
+\end{center}  
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%                               %%%%
+%%%%       c h p 1 2 . t e x       %%%%
+%%%%                               %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The logical structure of SIMATH}\index{SIMATH}
+
+The following diagram illustrates the structure of the system.
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+& & \\
+\fbox{\fbox{simcalc}} & \fbox{\fbox{
+\begin{tabular}{c}
+       number theory \\
+       package
+       \end{tabular}}} & \fbox{\fbox{
+\begin{tabular}{c}
+        user \\
+        applications    
+        \end{tabular}}} \\
+& & \\
+\hline
+\multicolumn{3}{c}{~} \\
+\hline
+& & \\
+& \fbox{\B\quad elliptic curves\quad\B} & \\ 
+& & \\ \cline {2-2} 
+& & \\
+& \fbox{\begin{tabular}{c}
+            algebraic \\        
+            number \\    
+            fields 
+        \end{tabular}}
+  \fbox{\begin{tabular}{c}
+            algebraic \\        
+            function \\    
+            fields 
+        \end{tabular}} & \\
+& & \\
+& & \\
+\fbox{\fbox{\begin{tabular}{c}
+                matrices \\
+                and \\
+                vectors
+            \end{tabular}}} & 
+      \fbox{\fbox{arithmetic}} &
+      \fbox{\fbox{polynomials}} \\
+& & \\
+& & \\
+& \fbox{$\Z$}\ \ \fbox{$\Q$}\ \ \fbox{$\R$}\ \ \fbox{$\C$}\ \ 
+ \fbox{$\Z/m\Z$}\ \ \fbox{$\Fq$} \fbox{$\Qp$} & \\
+& & \\
+\hline
+\multicolumn{3}{|c|}{~} \\
+\multicolumn{3}{|c|}{\fbox{\fbox{basic system}}} \\
+\multicolumn{3}{|c|}{~} \\
+\hline
+\multicolumn{3}{|c|}{~} \\
+\multicolumn{3}{|c|}{\fbox{\fbox{programming language C}}} \\
+\multicolumn{3}{|c|}{~} \\
+\hline
+\multicolumn{3}{c}{~} \\
+\hline
+\multicolumn{3}{|c|}{~} \\
+\multicolumn{3}{|c|}{\fbox{\fbox{Shell}}} \\
+\multicolumn{3}{|c|}{~} \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage  \noindent 
+SIMATH consists of 
+\begin{itemize}
+\item an {\em interface\/} between the operating system and SIMATH;
+\item the {\em programming language} C;
+\item the {\em basic\/} system which consists of 
+modified input/output functions, and a {\em list\/} system with an 
+automatic {\em garbage collector\/} and dynamic memory administration;
+\item a {\em multiple precision arithmetic\/} package for computations over 
+$\Z$, $\Q$, $\R$, $\C$, $\Z/m\Z$, $\Qp$, finite fields, and global 
+fields, i.e. algebraic number fields and function fields;
+\item a {\em polynomial\/} package for computations with polynomials in any number
+of unknowns over any of the structures contained in the arithmetic package;
+\item a {\em matrix--vector\/} package for matrix/vector computations over the structures
+contained in the arithmetic package and over polynomial rings;
+\item an {\em elliptic curves\/} package with elliptic-curve-specific functions over
+the rational numbers, prime fields, finite fields of characteristic 2 and 
+algebraic number fields;
+\item the interactive SIMATH calculator {\em simcalc\/}.
+\end{itemize}
+The {\em number theory\/} package contains higher algorithms for algebraic number
+theory such as 
+\begin{itemize}
+\item integral bases, extension of valuations, and the decomposition 
+law for number fields and congruence function fields;
+\item for quadratic congruence function fields: regulators, unit groups,
+divisor and ideal class number, and generators and type of isomorphism of the
+ideal class group and the zero class group;
+\item conductor, minimal model, and an algorithm for finding the rank and a basis
+of an elliptic curve over rational numbers, as well as Tate's algorithm over the
+rational numbers and quadratic number fields;
+\item combined Schoof-Shanks algorithm for counting points on elliptic curves
+over prime fields and finite fields of characteristic 2;
+\item an algorithm for constructing elliptic curves with a given number of points
+over a given prime field;
+\item LLL-algorithm.
+\end{itemize}
+
+The system libraries each consist of a package of functions which
+-- except for some internal initialization and managing procedures -- 
+can be integrated into any C pro\-gram by a simple function call.
+
+\section{The installation of SIMATH}\index{SIMATH} 
+
+The SIMATH system is installed by Makefiles and shell scripts. You will need 
+about 50 MB disk space while compiling SIMATH. 
+On all platforms the GNU readline library will 
+be used in simcalc. This has many advantages such as emacs style command line 
+editing and function name completion. Starting with Version 3.10.3, the 
+readline library is part of the SIMATH distribution (see ./readline-2.0) and 
+compiled automatically. 
+
+  The latest version of SIMATH\index{SIMATH} and more information about installing the 
+system may be obtained by anonymous ftp from simath.math.metro-u.ac.jp 
+(133.86.76.12) in the directory /simath/latest.
+
+% \end{document}

@@ -1,0 +1,49 @@
+                               * * * * * * *
+                               *     -     *
+                               * * * * * * *
+
+        "subtraction"
+
+        "-" is the operator for the subtraction of elements of Z, Q, 
+        R, C, Z/mZ, GF(p^n), algebraic numbers, polynomials over Z, Q, 
+        Z/mZ, GF(p^n), number fields, R or C, rational functions, 
+        matrices and vectors over all these structures and points on 
+        the current elliptic curve.
+
+        The operands may be either variables or expressions of the 
+        same type or of different type.
+
+
+        Example 1: (correct)
+
+                (log2(123/45) - gcd(24, 76)) + 17896785235
+
+
+        Example 2: (correct)
+
+                MOD(27348927 - 234729) - MOD(234)
+
+
+        Example 3: (correct)
+
+                f = x/y - (z^2 - z - 12) - (1/7*x^3)
+
+
+        Example 4: (correct)
+
+                {{1, 2, 3} {1, 2, 4}} - {{x, y, 1} {1/2*x, y/3, 1}}
+
+
+        Example 5: (correct)
+
+                {1, 2, 3} - {x, y, 1}
+
+
+        Example 6: (correct)
+
+                {1/x, 2, 3/z} - {x/(x^2 - x*y -1/2), y, 1}
+
+
+        Example 7: (correct)
+
+                O - PT(0, 3)

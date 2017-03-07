@@ -1,0 +1,8 @@
+# This file is modified automatically by the configure script. It is used
+# to determine the cpu and the operation system of the current host,
+# since some minor parts of SIMATH depend on the architecture.
+
+host_vendor=	unknown
+host_cpu=	x86_64
+host_os=	linux-gnu
+host=		x86_64-unknown-linux-gnu

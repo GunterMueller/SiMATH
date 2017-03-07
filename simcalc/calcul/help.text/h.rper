@@ -1,0 +1,16 @@
+                               * * * * * * *
+                               *   rper    *
+                               * * * * * * *
+
+        "real period of an elliptic curve"
+        SYNTAX: X = rper(E)
+
+        E is an expression whose value is an elliptic curve over Q.
+        
+        X is assigned the real period of E.
+
+        
+        Example 1: (correct)
+                
+                rper( EC( 1, 0, 0, 1, 2 ) )     
+

@@ -1,0 +1,3179 @@
+% \documentstyle[11pt]{book1}
+% \setlength{\voffset}{-2cm}
+% \oddsidemargin0.5cm   \evensidemargin0.5cm
+% \parindent0pt
+% \textwidth 6.0in \textheight 21.8cm
+% \input texdefs.tex
+% \begin{document}
+% \pagestyle{plain}
+% \setcounter{chapter}{3} % one less than the intended chapter number
+
+\chapter{The SIMATH system}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 4 1 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The base system}\index{simath-system/base system}
+\subsection{Overview}
+The base system contains mainly routines for list programming, administration,
+searching, and sorting.
+
+The workspace is implemented by ``singly linked lists'' which
+are administrated by the garbage collector {\bf gc()}. It is dynamically
+created during program execution; the workspace is enlarged whenever there
+are not enough free memory cells available. Information on the size of the
+workspace is displayed at the end of program execution.
+
+The global variable {\bf SP\_MAX}\index{global variable/SP_MAX} limits the maximal expansion of the workspace,
+but does not actually reduce nor enlarge it. If you want to change the size of
+the workspace, call the function {\bf setspace()} with the desired number of
+memory cells (see the on-line documentation on {\bf setspace()}). You can 
+reinitialize the complete workspace by {\bf gcreinit()}.
+
+\subsection{Data Types}
+The data type {\bf list} represents an empty list or a list of finitely
+many objects. An object (data type {\bf obj}) is either a list or an
+atom. An atom (data type {\bf atom}) is an integer with absolute value
+smaller than {\bf BASIS}. All other SIMATH data types are built from
+those three basic types. General advice on the ``usage'' of SIMATH data types
+can be found in \S 3.3.
+
+\newpage
+
+\subsection{Representing lists}
+{\bf \ldots in input and output}
+
+Lists are represented as an opening parenthesis followed by a sequence of objects, separated by a comma 
+or blanks, and a closing parenthesis. For example, the following representations are valid:
+\begin{tabbing}
+         12345678901234567890\= \kill  
+         \>  (0,   8, -15)\\
+         \>       ()\\
+         \>       (0 (10 11) 2    3)
+\end{tabbing}     
+(The symbol () represents the empty list.)
+
+\leer 
+{\bf \ldots in source programs}
+
+The functions {\bf list1(),  list2(), \ldots, list6()} create lists having 1, 2, \ldots, 6 objects
+respectively. For lists with more than six objects, use the function {\bf lconc()} to concatenate two
+lists or {\bf lcomp()} to add an element to a list (see \S 4.1.5). The empty list is represented by the
+SIMATH constant {\bf \_0}.
+
+\leer 
+{\bf \ldots in the memory}
+
+A variable of type {\bf list} is implemented as a pointer to the first object in the list. Objects
+are implemented as cells from the workspace.  A cell consists of two parts: a pointer to the next object in the
+list (reductum) and the actual data which is either an atom or a pointer to the first object in a sublist.
+The system internally differentiates between pointers and atoms.
+
+\newpage
+
+{\bf Example.}
+Let L be the list (0 (10 11) 2 3). Pointers are represented by arrows. {\bf \_0} marks the end of a list
+since the reductum, at this point, is the empty list.
+
+\input pict1.tex
+
+\subsection{The memory administration}
+At this point, we make some remarks to explain the role played by the global parameters in the internal
+memory administration. The SIMATH programmer can claim some control from the system over the memory
+administration by changing the value of certain global parameters (see \S 3.7).  However, we strongly recommend
+to beginners to stay with the default values until they gain some programming experience.
+
+The dynamic list administration is done automatically by the garbage collector ({\bf gc()}); global parameters
+{\bf GC\_$*$} (see \S 3.7) refer to the garbage collector.
+
+\newpage
+
+The workspace is divided into blocks of size {\bf BL\_SIZE}.\index{global variable/BL_SIZE} The actual number of those blocks is given by
+{\bf BL\_NR}.\index{global variable/BL_NR}
+
+The workspace memory is enlarged if
+\begin{enumerate}
+\item
+the garbage collector cannot deliver the number of cells required by the running program. In this case, another block
+of cells is added to the workspace. At the beginning of a program execution, the workspace consists of
+no block, i.e.\/ {\bf BL\_NR} $ = 0$. If {\bf BL\_NR} exceeds the limit {\bf BL\_NR\_MAX},\index{global variable/BL_NR_MAX} the program 
+will exit and a message will be displayed on your screen.
+\item
+the function {\bf setspace()} is invoked; the required number of memory cells is passed as a parameter to
+{\bf setspace()}. This can be done at any point within the program though {\bf setspace()} is usually used
+at the beginning if you know that more than one block will be required during the computation.
+No more than {\bf BL\_NR\_MAX} blocks will be used. (See the on-line documentation on {\bf setspace()}.)
+\end{enumerate}
+
+The default values of {\bf BL\_NR\_MAX} and {\bf BL\_SIZE} depend on the size of your machine's main memory;
+{\bf BL\_NR\_MAX} $*$ {\bf BL\_SIZE} $*$ {\bf sizeof(CELL)} should not exceed that size. Use the global
+variable {\bf SP\_MAX}\index{global variable/SP_MAX} to limit the size of the workspace: at the beginning of the program, let {\bf SP\_MAX}
+be the maximum number of cells by which the workspace is allowed to expand. (Reasonable values are between
+{\bf BL\_SIZE} and {\bf BL\_NR\_MAX} $*$ {\bf BL\_SIZE}.) Since the allocation is done blockwise, the actual
+memory size may exceed {\bf SP\_MAX} by a small amount.
+
+Although the functions {\bf gc()}, {\bf gcfree()}, {\bf gccpr()}, 
+{\bf gcreinit()}, and {\bf setspace()} allow handling of the memory management,
+the explicit call of these functions is not recommended in normal use.
+
+\newpage
+
+\subsection{The list functions}
+Here is a detailed description of the most important list functions. For each function, we also give an
+example and a short description of related functions.
+
+\leer
+\begin{center} ``list of 1 object'' \end{center}
+{\bf list list1(o)\index{list1()}\\
+obj o;}\\[2ex]
+A list of one object is returned.
+
+\begin{verbatim}
+Example:         list L;
+                 L = list1(7);             /* L = (7)     */
+                 L = list1(list1(2));      /* L = ((2)) */
+\end{verbatim}
+
+Some related functions:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf list2(), list3(), list4(), list5(), list6()} for creating lists of respectively
+2, 3, 4, 5, and 6 objects.\index{list2()}\index{list3()}\index{list4()}
+\index{list5()}\index{list6()}\end{itemize}
+
+\leer
+\begin{center} ``list composition'' \end{center}
+{\bf list lcomp(o, L)\index{lcomb()}\\   
+obj o;\\
+list L;}\\[2ex]
+The list composition of the object {\bf o} and the list {\bf L} is returned.
+
+\begin{verbatim}
+Example:         list L, L1;
+                 L  = list2(2, 3);
+                 L1 = lcomp(7, L);      /* L1 = (7,2,3) */
+\end{verbatim}
+
+Some related functions:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf lcomp2(), lcomp3(), lcomp4(), lcomp5(), lcomp6()} for the composition of
+        respectively 2, 3, 4, 5, and 6 objects and a list.
+\item[] {\bf lsuffix()}\index{lsuffix()} for the composition of a list and an object.
+\index{lcomp2()}\index{lcomp3()}\index{lcomp4()}\index{lcomp5()}\index{lcomp6()}\end{itemize}
+
+\newpage
+
+\begin{center}
+    ``list first'' 
+\end{center}
+
+{\bf obj lfirst(L)\index{lfirst()}\\
+list L;}\\[2ex]
+The first object in the list {\bf L} is returned.\\
+({\bf L} must consist of at least one object!)
+
+\begin{verbatim}
+Example:         list L;
+                 obj a;
+                 L = list3(2, 3, 5);
+                 a = lfirst(L);         /* a = 2 */
+\end{verbatim}
+
+Some related functions:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf lsecond(), lthird(), lfourth(), lfifth(), lsixth()}\index{lsecond()}\index{lthird()}\index{lfourth()}\index{lfifth()}\index{lsixth()} to get respectively the second,
+third, fourth, fifth, and sixth object in a list; the list must consist of at least as many objects
+as the position of the object to be retrieved.
+\item[] {\bf lelt()}, a general object retrieval function.\index{lelt()}
+\end{itemize}
+
+\leer
+\begin{center} ``list reductum'' \end{center}
+{\bf list lred(L)\index{lred()}\\
+list L;}\\[2ex]
+The reductum of the list {\bf L} is returned, i.e. the pointer to the second object in {\bf L}.
+Any subsequent change to the reductum (as {\bf lsfirst(), lconc()} etc.) will appear in {\bf L}.\\
+({\bf L} must consist of at least one object!)
+
+\begin{verbatim}
+Example:         list L, M;
+                 L = list3(2, 7, 13);
+                 M = lred(L);             /* M = (7,13) */
+\end{verbatim}
+
+Some related functions:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf lred2(), lred3(), lred4(), lred5(), lred6()}\index{lred2()}\index{lred3()}\index{lred4()}\index{lred5()}\index{lred6()} to get respectively the second, third, fourth,
+fifth, and sixth reductum of a list; the list must consist of at least as many objects as the
+number of the reductum to be returned.
+\item[] {\bf lreduct()},\index{lreduct()} a general list reductum function.
+\item[] {\bf llast()}\index{llast()} which returns a {\bf list} made of the last object of the input list. {\bf llast()} does not return the element as the functions {\bf lfirst(), lsecond()} etc.
+\end{itemize}
+
+\newpage
+
+\begin{center} ``list set first'' \end{center}
+{\bf obj lsfirst(L, o)\index{lsfirst()}\\
+list L;\\
+obj o;}\\[2ex]
+The first object in the list {\bf L} is replaced by the object {\bf o}; {\bf o} is returned.\\
+({\bf L} must consist of at least one object!)
+
+\begin{verbatim}
+Example:         list L;
+                 obj a;
+                 L = list4(2, 3, 5, 7);
+                 a = lsfirst(L, 1);       /* L = (1,3,5,7) */
+                                          /* a = 1         */
+\end{verbatim}
+
+Some related function:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf leset()}\index{leset()}, a general function to replace any element in a list.
+\end{itemize}
+
+\newpage
+
+\begin{center} ``list set reductum'' \end{center}
+{\bf list lsred(L, L1)\index{lsred()}\\
+list L, L1;}\\[2ex]
+The reductum of the list {\bf L} is replaced by the list {\bf L1}; {\bf L} is changed
+and {\bf L1} is returned.\\
+({\bf L} must consist of at least one object!)
+
+\begin{verbatim}
+Example:         list L, L1, L2;
+                 L  = list3(1, 3, 5);
+                 L1 = list4(2, 3, 4, 5);
+\end{verbatim}
+
+\vspace*{1.5cm}
+\input pict2a.tex
+
+\begin{verbatim}
+                 L2 = lsred(L, L1);       /* L  = (1,2,3,4,5) */
+                                          /* L2 = (2,3,4,5)   */
+\end{verbatim}
+
+\vspace*{6.5cm}
+\input pict2b.tex
+
+\newpage
+
+\begin{center} ``list inverse'' \end{center}
+{\bf list linv(L)\index{linv()}\\
+list L;}\\[2ex]
+The inverse of the list {\bf L} is returned; {\bf L} will point to the last object of the inverted list.
+
+\begin{verbatim}
+Example:         list L, M;
+                 L = list4(0, (10, 11), 2, 3);
+\end{verbatim}
+
+\vspace*{6cm}
+\input pict3.tex
+
+\leer
+\begin{verbatim}
+                 M = linv(L);             /* M = (3, 2, (10, 11), 0) */
+                                          /* L = (0)                 */
+\end{verbatim}
+
+\vspace*{6.5cm}
+\input pict4.tex
+
+Some related function:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf lcinv()}\index{lcinv()} which returns the inverse of a copy of the input list.
+\end{itemize}
+
+\newpage
+
+\begin{center}  ``list concatenation'' \end{center}
+{\bf list lconc(L1, L2)\index{lconc()}\\
+list L1, L2;}\\[2ex]
+The concatenation of the lists {\bf L1} and {\bf L2} is returned; {\bf L1} is changed.
+
+\begin{verbatim}
+Example:         list L, L1, L2;
+                 L1 = list2(1, 2);
+                 L2 = list2(4, 5);
+\end{verbatim}
+
+\vspace*{8cm}
+\input pict5.tex
+
+\newpage
+
+\begin{verbatim}
+                 L = lconc(L1, L2);       /* L = (1, 2, 4, 5) */
+\end{verbatim}
+
+\vspace*{9.5cm}
+\input pict6.tex
+
+Some related function:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf llconc()} which returns the concatenation of all the sublists in a list of lists.
+\end{itemize}
+
+\leer
+\begin{center} ``list constructive concatenation'' \end{center}
+{\bf list lcconc(L1, L2)\index{lcconc()}\\
+list L1, L2;}\\[2ex]
+The constructive concatenation of the lists {\bf L1} and {\bf L2} is returned, i.e. {\bf L2} is appended
+to a copy of {\bf L1} so that both {\bf L1} and {\bf L2} remain unchanged.
+
+\begin{verbatim}
+Example:         list L, L1, L2;
+                 L1 = list2(1, 2);
+                 L2 = list2(4, 5);
+                 L  = lcconc(L1, L2);     /* L  = (1,2,4,5) */
+                                          /* L1 = (1,2)    */
+                                          /* L2 = (4,5)    */
+\end{verbatim}
+
+\newpage
+
+\begin{center} ``list element delete'' \end{center}
+{\bf obj ledel(*L, n)\index{ledel}\\
+list *L;\\
+single n;}\\[2ex]
+The {\bf n}th element of the list {\bf L} is deleted from {\bf L} and returned.\\
+({\bf L} must consist of at least {\bf n} elements!)
+
+\begin{verbatim}
+Example:         list L;
+                 obj a;
+                 L = list4(2, 3, 5, 7);
+                 a = ledel(&L, 3);        /* L = (2,3,7) */
+                                          /* a = 5       */
+\end{verbatim}
+
+Some related function:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf lecdel()}\index{lecdel} to delete an element from a copy of the input list.
+\end{itemize}
+
+\leer
+\begin{center} ``list element insert'' \end{center}
+{\bf list leins(L, k, o)\index{leins}\\
+list L;\\
+single k;\\
+obj o;}\\[2ex]
+The object {\bf o} is inserted in the list {\bf L} after the {\bf k}th element; the changed list is
+returned.\\
+({\bf L} must consist of at least {\bf k} elements!)
+
+\begin{verbatim}
+Example:         list L, L1;
+                 obj a;
+                 L  = list4(2, 3, 5, 7);
+                 a  = 4;
+                 L1 = leins(L, 2, a);     /* L1 = (2,3,4,5,7) */
+                                          /* L  = (2,3,4,5,7) */
+\end{verbatim}
+
+Some related functions:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf lecins()}\index{lecins()} to insert an object in a copy of the input list.
+\item[] {\bf leins2()}\index{leins2()} to insert an object in the second position of a list.
+\item[] {\bf lsins()}\index{lsins()} to insert an object of type {\bf single} at the appropriate position in an ordered
+list of elements of type {\bf single}.
+\end{itemize}
+
+\leer
+\begin{center} ``list of single precision bubble merge sort'' \end{center}
+{\bf list lsbmsort(L)\index{lsbmsort()}\\
+list L;}\\[2ex]
+The ordered list of elements of type {\bf single} is returned; {\bf L} is changed.
+(This routine is to be used on large lists!)
+
+\begin{verbatim}
+Example:        list L, L1;
+                L  = list4(7, 3, 5, 2);
+                L1 = lsbmsort(L);       /*  L1 = (2,3,5,7) */
+\end{verbatim}
+
+Some related function:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf lsbsort()}\index{lsbsort()} to sort small to medium lists of elements of type {\bf single}.
+\end{itemize}
+
+\leer
+\begin{center} ``list search'' \end{center}
+{\bf single lsrch(o, L)\index{lsrch()}\\
+obj o;\\
+list L;}\\[2ex]
+{\bf lsrch()} returns the position number of the first encountered element of the list
+{\bf L} which matches the object {\bf o}; if {\bf o} is not in the list, the function
+returns 0.\\
+({\bf L} must consist of at least one object!)
+
+\begin{verbatim}
+Example:         list L;
+                 obj a;
+                 single n;
+                 L = list4(2, 3, 5, 7);
+                 a = 5;
+                 n = lsrch(a, L);         /* n = 3 */
+
+\end{verbatim}
+
+Some related function:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf lmemb()}\index{lmemb()} to test if an object belongs to a list or not.
+\end{itemize}
+
+\newpage
+
+\begin{center} ``set union'' \end{center}
+{\bf list sunion(L1, L2)\index{sunion()}\\
+list L1, L2;}\\[2ex]
+The ordered set union of the lists {\bf L1} and {\bf L2} is returned; {\bf L1} and {\bf L2} must be ordered
+lists of elements of type {\bf single}. (The input lists remain unchanged.)
+
+\begin{verbatim}
+Example:         list L, L1, L2;
+                 L1 = list2(3, 4);
+                 L2 = list3(2, 3, 5);
+                 L  = sunion(L1, L2);     /* L = (2,3,4,5) */
+\end{verbatim}
+
+Some related function:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf usunion() }\index{usunion()}which returns the unordered set union of two lists.
+\end{itemize}
+
+\leer
+\begin{center} ``set intersection'' \end{center}
+{\bf list sinter(L1, L2)\index{sinter()}\\
+list L1, L2;}\\[2ex]
+The ordered set intersection of the lists {\bf L1} and {\bf L2}
+is returned; {\bf L1} and {\bf L2} must be ordered lists of elements
+of type {\bf single}. (The input lists remain unchanged.)
+
+\begin{verbatim}
+Example:         list L, L1, L2;
+                 L1 = list2(3, 4);
+                 L2 = list3(2, 3, 5);
+                 L  = sinter(L1, L2);     /* L = (3) */
+\end{verbatim}
+
+Some related function:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf usinter()}\index{usinter()} which returns the unordered set
+intersection of two lists.
+\end{itemize}
+
+\newpage
+
+\begin{center} ``set difference'' \end{center}
+{\bf list sdiff(L1, L2)\index{sdiff()}\\
+list L1, L2;}\\[2ex]
+The ordered set difference of the lists {\bf L1} and {\bf L2} is
+returned, i.e. the ordered list of elements of {\bf L1} which
+are not in {\bf L2}; {\bf L1} and {\bf L2} must be ordered lists of
+elements of type {\bf single}. (The input lists remain unchanged.)
+
+\begin{verbatim}
+Example:         list L, L1, L2;
+                 L1 = list3(3, 4, 6);
+                 L2 = list3(2, 3, 5); 
+                 L  = sdiff(L1, L2);      /* L = (4,6) */
+\end{verbatim}
+
+Some related functions:
+%\vspace*{-3ex}
+
+\begin{itemize}
+\item[] {\bf usdiff()}\index{usdiff()} which returns the unordered set difference
+of two lists.
+\item[] {\bf ussdiff()}\index{ussdiff()} which returns the unordered set symmetrical
+difference of two lists.
+\end{itemize}
+
+\leer\leer
+Those were only the most important list functions of the base system. SIMATH contains
+many more functions for I/O of lists, testing lists, permuting, and rotating list
+elements, merging, and comparing two lists, getting the size and length of a list,
+manipulating objects and atoms, etc. You will find a detailed description of all
+the base system functions in the on-line documentation or by the SM keyword
+index.
+
+\newpage
+
+{\bf Note:}\\[2ex]
+The list functions try to use as few new memory cells as possible from the workspace. Whenever
+possible, try to obtain the desired results by manipulating cell pointers; try to understand the effects
+of manipulating pointers on the list contents from the following two examples.
+
+\begin{center}
+      \begin{tabular}{p{3in}p{2.15in}} 
+            {SIMATH instructions}         & {effect}\\
+                                          & \\ 
+            {\bf L1 = list2(1, 2);}       & \\
+            {\bf L2 = list2(4, 5);}       & \\
+            {\bf L\hsb = lconc(L1, L2);}  & L\hsr = (1,2,4,5)\\
+                                          & L1 = (1,2,4,5)\\
+                                          & L2 = (4,5)\\
+                                          & \\ 
+            {\bf lsfirst(L1, 0);}         & L\hsr = (0,2,4,5)\\
+                                          & L1 = (0,2,4,5)\\
+                                          & L2 = (4,5)\\
+                                          & \\ 
+            {\bf lsfirst(L2, 3);}         & L\hsr = (0,2,3,5)\\
+                                          & L1 = (0,2,3,5)\\
+                                          & L2 = (3,5)\\
+                                          & \\ & \\ & \\ & \\ & \\ & \\
+            {\bf L1 = list2(1, 2);}       & \\
+            {\bf L2 = list2(4, 5);}       & \\
+            {\bf L\hsb = lcconc(L1, L2);} & L\hsr = (1,2,4,5)\\
+                                          & L1 = (1,2)\\
+                                          & L2 = (4,5)\\
+                                          & \\ 
+            {\bf lsfirst(L1, 0);}         & L\hsr = (1,2,4,5)\\
+                                          & L1 = (0,2)\\
+                                          & L2 = (4,5)\\
+                                          & \\ 
+            {\bf lsfirst(L2, 3);}         & L\hsr = (1,2,3,5)\\
+                                          & L1 = (0,2)\\
+                                          & L2 = (3,5)
+      \end {tabular}
+\end{center}
+
+\newpage  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 4 2 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The arithmetic package}
+\subsection{Overview}
+The arithmetic package contains algorithms for computing over the integers $\Z$,
+the rational numbers $\Q,$ the finite rings $\Z/m\Z$, the finite fields
+(Galois fields)  $\Fq$ (especially finite fields of characteristic 2),
+$p$-adic number fields $\Qp$, the real numbers $\R$, the complex numbers $\C$,
+algebraic number fields, and function fields. Functions for basic arithmetic as 
+well as higher algorithms are available (e.g. gcd and lcm, chinese remainder 
+theorem, prime number testing, factorizing in $\Z$, discriminants, norm, and 
+trace of number fields, etc.).
+
+\subsection{Data types}
+The arithmetic package supports the data types {\bf single, int, rat, floating, 
+complex, gfel, gf2el, nfel, pfel, rfunc}, and {\bf afunc} (overview in \S 3.3); 
+they  will be explained in detail in the next section.  
+
+Integers of type {\bf int} are ``multiple-precision'' integers.  They are not subject to any
+size limitations (as long as they do not exceed the capacity of the memory).
+
+Integer variables which, during program execution, have absolute value smaller than
+\newline {\bf BASIS}, (e.g.\/ index variables) should be declared as {\bf single}
+to ``lighten'' memory administration by reducing the number of references in the
+SIMATH stack; this is particularly important for recursive functions.
+
+\subsection{Internal representation}
+
+{\bf Large integers}
+\leer 
+Every integer $n \in \Z$ has a unique representation as a sum
+\begin{tabbing}
+     1234567890123456789012345\= \kill
+     \> ${\displaystyle  n = \sum_{i=0}^{k}\  a_i\cdot \mbox{\bf BASIS}^i} $\\
+\end{tabbing}
+\begin{tabbing}
+      1234567890123456789012345\= \kill
+      with  \> $ k \geq 0,\ \  a_i\ \in\ \Z,\ \  |a_i| < \mbox{\bf BASIS}$,\\
+       \> $a_i = 0$\ \  or\ \  sign$\ a_i = $ sign$\ n$,\\
+       \> $a_k \not= 0$\ \  if\ \   $k > 0$.
+\end{tabbing}
+
+Internally, the $a_i$'s are implemented as {\bf atoms}.  If $ k=0$,
+then $n$ is represented by the {\bf atom} $a_0$, otherwise by the 
+{\bf list} $(a_0, a_1, \ldots, a_k)$.
+
+Large integers have the type designation {\bf int}.
+
+\newpage
+
+{\bf Residue class rings}
+\leer  
+The elements of a residue class ring
+\begin{center}
+                        $ \Z/m\Z$\ \  ($m \in \Z,\ m > 0$)
+\end{center}
+are represented by elements of the smallest positive residue system
+\begin{center}
+                         \{$0, 1, \ldots, m-1$\}.
+\end{center}
+The functions dealing with residue class rings are called ``mo\-du\-lar integer \ldots'',
+or ``modular single \ldots'' for single precision moduli $m$.
+
+When computing in $\Z/m\Z$, the programmer must make sure that the integer representations
+are within the prescribed residue system.
+
+Elements of residue class rings have no special type designation. They
+should be declared as {\bf single} or {\bf int} depending on the size
+of the modulus.
+
+\leer
+{\bf Rational numbers}
+\leer 
+For the rational number $r \not= 0$, let $r = m/n$ be the unique representation as a fraction,
+with coprime integers $m$ and $n$,  $n>0$. Then {\bf $r$} is represented by the list {\bf ($ m, n$)}.
+
+The rational number $0$ is represented by the {\bf atom} $0$. 
+
+Rational numbers have the type designation {\bf rat}.
+
+\leer
+{\bf Real numbers}
+\leer
+A real number $f \not= 0$ has the form
+$$
+          f \ = \ (\overbrace{\sum_{i=0}^k a_i\ \mbox{\bf BASIS}{\/}^i}^{mantissa})
+          \cdot \mbox{\bf BASIS}^{\overbrace{e}^{exponent}} 
+$$\\
+with  $ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  k\geq 0,\ 
+a_i,e \in \Z$  \ and\  $  |a_i|,|e| < \mbox{\bf BASIS},$\\ 
+$_{~}$ 
+$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  a_i = 0 $ 
+or sign $a_i = $ sign $f$.
+
+The uniqueness of this representation is assured by requiring that $a_k \not= 0$ and
+$a_0 \not= 0$.\ $f$ is then represented by the list 
+$$
+          (\underbrace{e}_{exponent},\underbrace{a_0,\ a_1,\ \ldots,\  
+          a_k}_{k+1\ mantissa\ digits})\ .
+$$
+
+\newpage
+
+The maximum length of the list used to represent the mantissa of a real number is given
+by the global variable {\bf FL\_EPS}\index{global variable/FL_EPS} (see \S 3.7). By default, real numbers have the representation
+$$
+          (\underbrace{e}_{exponent}, \underbrace{a_0,\ a_1, \ldots, a_k}_{k+1\ mantissa\ digits})\ , 
+$$
+with $k + 1 \leq$ {\bf FL\_EPS} $ + 1 = 6$.
+
+Exceptions: in some functions, the return value will be computed as precisely as possible
+independently of {\bf FL\_EPS}; i.e. the return value will have as many mantissa digits as
+the input value. This is the case, for example, for the negation of a real number or the
+addition of $0$.
+
+You may, of course, change the default precision of 6 mantissa digits by setting the variable
+{\bf FL\_EPS} to the desired value. (See also the on-line documentation on {\bf flinit()}.)
+
+In general, the following error estimate for a real number $x$ represented by $f$ (i.e.
+approximated) is valid
+$$
+       \left|\frac{x-f}{x} \right| \leq \frac{1}{2}\ \mbox{\bf BASIS}{\/}^{1-{\rm \bf FL\_EPS}}. 
+$$
+During a computation, if the exponent is greater than or equal to {\bf BASIS} (``overflow''),
+then program execution will be terminated with the message ``floating point overflow''. You can
+prevent this by using the function {\bf flerr()} (see on-line documentation on {\bf flerr()}).
+If the exponent is less than or equal to $-${\bf BASIS} (``underflow''), the real number will be
+interpreted as $0$. Otherwise, you will always obtain a value which satisfies the estimate above.
+If necessary, computations within a SIMATH function will be done with greater precision
+(i.e. with more than {\bf FL\_EPS} mantissa digits).
+
+The real number $0$ is represented by the {\bf atom} $0$.
+
+Real numbers have the type designation {\bf floating}.
+
+\leer
+{\bf Complex numbers}
+\leer 
+A complex number $z \not= 0$ has the form $z=f+ig$ 
+with real numbers $f$ and $g$. $i=\sqrt{-1}$ is the complex unit.
+Then {\bf $z$} is represented by the list {\bf ($ f, g$)}.
+
+Complex numbers have the type designation {\bf complex}.
+
+\leer
+{\bf Galois fields}
+\leer 
+Let {\bf $p$} be a single precision prime and {\bf $n$} a positive 
+single precision integer. Let {\bf $g(X)$} be an irreducible,
+monic polynomial over $\Z/p\Z$ of degree $n$.
+
+For computations in the Galois field $\mbox{Gf}(p^n)$, we consider 
+the isomorphic field
+$$ 
+       \Z/p\Z [X]\ \mbox{\hspace*{3pt}{\bf /}\hspace*{3pt}}\ (g(X) \cdot \Z/p\Z [X]).
+$$ 
+Its elements are represented by polynomials over $\Z/p\Z$ of degree
+smaller than $n$, i.e.\/ by the elements of the reduced residue system
+modulo $g(X)$.
+
+When computing in a Galois field you must create a so called
+arithmetic list {\bf AL} 
+and if necessary, an irreducible monic polynomial {\bf $g(X)$},
+using the function  
+$$
+\mbox{{\bf gfsalgen()}} 
+$$ 
+({\em Galois field with single characteristic arithmetic list generator}).
+Functions computing in Galois fields require {\bf AL} as a parameter 
+(see the on-line documentation on Galois fields functions).
+
+The Galois field element $0$ is represented by the {\bf atom} $0$.
+
+An element of $\mbox{Gf}(p^n)$ has the type designation {\bf gfel} (Galois field element).
+
+\leer
+{\bf Galois fields of characteristic 2}
+\leer 
+Let {\bf $g(X)$} be any given irreducible monic polynomial over $\Z/2\Z$ of degree $n$.
+Then there exists an isomorphism
+$$ 
+\mbox{Gf}(2^n) \cong \Z/2\Z [X]\ \mbox{\hspace*{3pt}{\bf /}\hspace*{3pt}}\ (g(X) \cdot \Z/2\Z [X]) .
+$$
+Elements of $\mbox{Gf}(2^n)$ are represented by polynomials of degree smaller than $n$ over $\Z/2\Z$,
+i.e. by the elements of the reduced residue system modulo $g(X)$.
+Let {\bf $p(X)$} be a polynomial of degree $m < n$ 
+representing the element $b \in \mbox{Gf}(2^n)$, $b \neq 0$, i.e.\/
+$$
+p(X)\ =\ \sum_{i=0}^m\ c_i X^i
+$$ 
+with $c_i=0$ or $1$, for $0\leq i < m$, and $c_m=1$.
+Since each coefficient of $p(X)$ is either $0$ or $1$, $p(X)$ is internally 
+represented in bit notation, as a list of singles
+$$ 
+(m,\ a_k,\ a_{k-1},\ \ldots,\ a_1,\ a_0)
+$$
+with   
+$$ 
+1 \leq k = \lfloor {\  \frac{m}{30} \ }
+\rfloor,\  a_i \in \N_0,\  |a_i| < {\bf \rm BASIS}
+$$
+ and
+\begin{eqnarray*}
+a_0&=&c_{29} 2^{29} + c_{28} 2^{28} + \ \ldots \ + c_1 2^1 + c_0 2^0\\
+a_1&=&c_{59} 2^{29} + c_{58} 2^{28} + \ \ldots \ + c_{31} 2^1 + c_{30} 2^0\\
+& \vdots \\
+a_k&=&c_{30k+29} 2^{29} + c_{30k+28} 2^{28} + \ \ldots
+\ + c_{30k+1} 2^1 + c_{30k}  2^0.
+\end{eqnarray*}
+Each $a_j$ $(0 \leq j \leq k)$ is a single precision number, i.e.\ a $32$-bit 
+word with the first $2$ bits used for list administration. The last $30$ bits
+contain $30$ coefficients of the polynomial $p(X)$.
+The monic irreducible polynomial $g(X)$ is also represented in 
+special bit notation\footnote{ Similar to the special bit notation of 
+polynomials over \Zklein$/2$\Zklein\ there exist also matrices over \Zklein$/2$\Zklein\ in special 
+bit notation. See the documentation of {\bf mamstomam2()}}.
+
+There are routines that convert a polynomial into bit representation ({\bf udpm2tosb()})\index{udpm2tosb()}
+and vice versa ({\bf gf2eltoudpm2()}).\index{gf2eltoudpm2()} See also the on-line documentation on {\bf getgf2el()}
+and {\bf putgf2el()} for input and output. 
+
+The $0$ element of $\mbox{Gf}(2^n)$ is represented by the {\bf atom} $0$.
+
+Elements of $\mbox{Gf}(2^n)$ has the type designation {\bf gf2el} (Galois field of characteristic 2 element).
+
+\newpage
+\leer
+{\bf Algebraic number fields}
+\leer 
+The algebraic number field $K = \Q(\alpha)$ is uniquely determined (up to isomorphism)
+by the minimal polynomial {\bf $f(X)$} of {\bf $\alpha$}. In SIMATH functions, the number
+field {\bf $K$} is always specified by the polynomial {\bf $f(X)$}.
+
+For computations in {\bf $K$}, we consider the isomorphic residue class field 
+$$
+\Q[X]\ \mbox{\hspace*{3pt}{\bf /}\hspace*{3pt}}\  f(X) \cdot \Q[X]\ .
+$$ 
+The elements of $K$ correspond to polynomials over $\Q$ of degree smaller than
+the degree of $f$, i.e.\/ to the elements of the reduced residue system modulo {\bf $f$}.
+
+Let $g(X)$ be a polynomial representing an element $b \in K^*$, $n$ the common denominator of
+the coefficients of $g(X)$, and $G$ the list representation of $n\cdot g(X)$ as a dense polynomial
+over the integers (see \S 4.3.3). Then the algebraic number $b$ is represented by the list
+($n$, $G$).
+
+The algebraic number $0$ is represented by the {\bf atom} $0$.
+
+Algebraic numbers have the type designation {\bf nfel} (number field element).
+
+\leer
+{\bf {\it p\/}\/--adic numbers}
+\leer
+Let $p$ be a single precision prime.
+Each element $a\not=0$ of the $p$\/--adic field {\bf $\Qfett_p$} 
+has a unique $p$\/--adic series expansion of the form
+$$
+a\ =\ \sum_{i=v_p(a)}^{\infty} a_i p^i,
+$$
+with $ a_i \in \Z ,\ 0 \leq a_i < p \mbox{ and } a_{v_p(a)} \neq 0.$
+(Here, $v_p$ stands for the additive, normalized $p$\/--adic valuation 
+on $\Qp$.)
+Since infinite (non-periodic) series cannot be represented on computers,
+the elements of $\Q_p$ have to be approximated. For any given $d \in \Z$ 
+$$
+a' = \sum_{i=v_p(a)}^{d} a_i p^i
+$$
+is called the approximation of $a$ to degree $d$. Thus 
+$$ 
+v_p(a-a') \geq\ d.
+$$
+If $d < v_p(a)$, $a'$ is the empty sum, thus $a'=0$. 
+If $d\geq v_p(a)$, $a'$ is represented by the list
+$$ 
+     (d,\ v_p(a) ,\ \underbrace{a_{v_p(a)},\ \ldots,\ 
+            a_d}_{d+1-v_p(a)\ places}). 
+$$
+The $p$\/--adic number $0$ is represented by the {\bf atom} $0$.
+
+$p$\/--adic numbers have the type designation {\bf pfel} ($p$\/--adic field element).
+
+\newpage
+\leer
+{\bf Rational functions}
+\leer  
+Currently, rational functions are implemented over the prime field $\Z/p\Z$
+and over the rationals.
+
+Let $K = \Q(X)$ or $\Z/p\Z(X)$ (the rational function field of transcendence degree $1$ over
+$\Z/p\Z$), and $F \in K^*$. Then $F$ has the unique representation $F = f_1/f_2$ with coprime
+polynomials $f_1,\  f_2 \in \Z[X]$ or $\Z/p\Z[X]$ respectively. $F$ is represented by the list
+$(f_1,\ f_2)$.
+
+The zero function is represented by the {\bf atom} $0$.
+
+Rational functions have the type designation {\bf rfunc}.
+
+\subsection{The arithmetic functions}\index{arithmethic functions}
+For each data type supported by the arithmetic package, there are functions to perform
+basic arithmetic operations, tests, and comparisons. There are also utility functions for 
+input/output from and to a file, the terminal or a string, and functions for
+conversion from one data type to another if this is possible. Furthermore, there are
+functions to perform operations specific to the different data types such as
+factorization for integers, chinese remainder theorem for modular integers, etc.
+
+It would be impossible to give an exhaustive list of the arithmetic functions here.
+Instead, we shall give a short description of the basic arithmetic functions for each data
+type described in \S 4.2.3, and the name of some related functions. A detailed
+description of every arithmetic function contained in this package can be found
+in the on-line documentation or by the SM keyword index. 
+
+Note: If you want to list all SIMATH functions, which do a special operation
+(for example all functions, which add SIMATH objects), you can search for
+those functions with the SM keyword index (e.g. by searching for ``sum'').
+
+\newpage
+
+Here are some important functions for basic arithmetic operations. The conditions
+on the input parameters depend on the data types; we refer you to the on-line documentation
+for more details.
+
+\leer
+\begin{center} ``sum'' \end{center}
+\index{arithmetic functions/sum}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+int isum(A, B) & rat rsum(A, B) & floating flsum(A, B)\\
+int A, B;      & rat A, B;      & floating A, B;\\
+&&\\
+int misum(M, A, B) & nfel nfsum(F, A, B) & pfel pfsum(p, A, B)\\
+int M, A, B;       & pol F;              & single p;\\
+                   & nfel A, B;          & pfel A, B;\\
+&&\\
+rfunc rfrsum(r, A, B) & gf2el gf2sum(G, A, B) & gfel gfssum(p, AL, A, B)\\
+single r;             & obj G;                & single p;\\
+rfunc A, B;           & gf2el A, B;           & list AL;\\
+                      &                       & gfel A, B;\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return {\bf A $+$ B}.
+
+Some related functions:\hspace*{0.7em}
+{\bf csum(), mssum(), nfssum(), qnfisum(), qnfsum(), \\
+rfmsp1sum()}.
+
+\begin{center} ``difference'' \end{center}
+\index{arithmetic functions/difference}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+int idif(A, B) & rat rdif(A, B) & floating fldif(A, B)\\
+int A, B;      & rat A, B;      & floating A, B;\\
+&&\\
+int midif(M, A, B) & nfel nfdif(F, A, B) & pfel pfdif(p, A, B)\\
+int M, A, B;       & pol F;              & single p;\\
+                   & nfel A, B;          & pfel A, B;\\
+&&\\
+rfunc rfrdif(r, A, B) & gf2el gf2dif(G, A, B) & gfel gfsdif(p, AL, A, B)\\
+single r;             & obj G;                & single p;\\
+rfunc A, B;           & gf2el A, B;           & list AL;\\
+                      &                       & gfel A, B;\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return {\bf A $-$ B}.
+
+Some related functions:\hspace*{0.7em}
+{\bf cdif(), iqnfdif(), msdif(), nfsdif(), qnfdif(), qnfidif(), \\
+rfmsp1dif(), rqnfdif()}.
+
+\newpage
+
+\leer
+\begin{center} ``additive inverse (negation)'' \end{center}
+\index{arithmetic functions/additive invers}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+int ineg(A) & rat rneg(A) & floating flneg(A)\\
+int A;      & rat A;      & floating A;\\
+&&\\
+int mineg(M, A) & nfel nfneg(F, A) & pfel pfneg(p, A)\\
+int M, A;       & pol F;           & single p;\\
+                & nfel A;          & pfel A;\\
+&&\\
+rfunc rfrneg(r, A) & gf2el gf2neg(G, A) & gfel gfsneg(p, AL, A)\\
+single r;          & obj G;             & single p;\\
+rfunc A;           & gf2el A;           & list AL;\\
+                   &                    & gfel A;\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return $-\mbox{\bf A}$.
+
+Some related functions:\hspace*{0.7em}
+{\bf cneg(), msneg(), nfsneg(), qnfneg(), rfmsp1neg()}.
+
+\begin{center} ``product'' \end{center}
+\index{arithmetic functions/product}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+int iprod(A, B) & rat rprod(A, B) & floating flprod(A, B)\\
+int A, B;      & rat A, B;      & floating A, B;\\
+&&\\
+int miprod(M, A, B) & nfel nfprod(F, A, B) & pfel pfprod(p, A, B)\\
+int M, A, B;       & pol F;              & single p;\\
+                   & nfel A, B;          & pfel A, B;\\
+&&\\
+rfunc rfrprod(r, A, B) & gf2el gf2prod(G, A, B) & gfel gfsprod(p, AL, A, B)\\
+single r;             & obj G;                & single p;\\
+rfunc A, B;           & gf2el A, B;           & list AL;\\
+                      &                       & gfel A, B;\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return {\bf A $*$ B}.
+
+Some related functions:\hspace*{0.7em}
+{\bf cprod(), gf2prodAL(), i22prod(), ifelprod(), ip2prod(), iprod\_lo(), isprod(),
+liprod(), liprodoe(), msprod(), nfeliprod(), nfelrprod(), \\
+nfsprod(), pfeliprod(), pfelrprod(),
+pfpprod(), qnfidprod(), qnfiprod(), \\
+qnfprod(), qnfrprod(), rfmsp1prod(), rp2(), sprod(),
+sxprod(), gf2squ(), \\
+gf2squAL(), qnfidsquare(), qnfsquare(), sxsqu()}.
+
+\newpage
+
+\leer
+\begin{center} ``exponentiation'' \end{center}
+\index{arithmetic functions/exponentiation}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+int iexp(A, n) & rat rexp(A, n) & floating flsexp(A, n)\\
+int A;         & rat A;         & floating A;\\
+single n;      & single n;      & single n;\\
+&&\\
+int miexp(M, A, n) & nfel nfexp(F, A, n) & pfel pfexp(p, A, n)\\
+int M, A, n:       & pol F;              & single p, n;\\
+                   & nfel A;             & pfel A;\\
+                   & single n;           & \\
+&&\\
+gf2el gf2exp(G, A, n) & gfel gfsexp(p, AL, A, n) &\\
+obj G;                & single p, n;             &\\
+gf2el A;              & list AL;                 &\\
+single n;             & gfel A;                  &\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return $\mbox{\bf A}^{\mbox{\bf n}}$.
+
+Some related functions:\hspace*{0.7em}
+{\bf csexp(), flpow(), miexp\_lo(), msexp(), qnfexp(), \\
+qnfidexp(), sexp()}.
+
+\begin{center} ``quotient'' \end{center}
+\index{arithmetic functions/quotient}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+int iquot(A, B) & rat rquot(A, B) & floating flquot(A, B)\\
+int A, B;      & rat A, B;      & floating A, B;\\
+&&\\
+int miquot(M, A, B) & nfel nfquot(F, A, B) & pfel pfquot(p, A, B)\\
+int M, A, B;       & pol F;              & single p;\\
+                   & nfel A, B;          & pfel A, B;\\
+&&\\
+rfunc rfrquot(r, A, B) & gf2el gf2quot(G, A, B) & gfel gfsquot(p, AL, A, B)\\
+single r;             & obj G;                & single p;\\
+rfunc A, B;           & gf2el A, B;           & list AL;\\
+                      &                       & gfel A, B;\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return {\bf A $/$ B}.
+
+Some related functions:\hspace*{0.7em}
+{\bf cquot(), flqrem(), flsquot(), ip2quot(), iqnfquot(), \\
+iqrem(), iqrem\_lo(), irem(),
+irshift(), isqrem(), isquot(), isrem(), msquot(), nfelmodi(), nfsquot(), qnfiquot(), 
+qnfquot(), qnfrquot(), rfmsp1quot(), \\
+rqnfquot(), sqrem()}.
+
+\newpage
+
+\leer
+\begin{center} ``inverse'' \end{center}
+\index{arithmetic functions/inverse}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+rat rinv(A) & int miinv(M, A) & nfel nfinv(F, A)\\
+rat A;      & int M, A;       & pol F;\\
+            &                 & nfel A;\\
+&&\\
+pfel pfinv(p, A) & rfunc rfrinv(r, A) &\\
+single p;        & single r;          &\\
+pfel A;          & rfunc A;           &\\
+&&\\
+gf2el gf2inv(G, A) & gfel gfsinv(p, AL, A) &\\
+obj G;             & single p;             &\\
+gf2el A;           & list AL;              &\\
+                   & gfel A;               &\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return $\mbox{\bf A}^{-1}$.
+
+Some related functions:\hspace*{0.7em}
+
+{\bf miinv\_lo(), msinv(), nfsinv(), qnfinv(), rfmsp1inv()}.
+
+\begin{center} ``square root'' \end{center}
+\index{arithmetic functions/square root}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+int isqrt(A) & int misqrt(n, A) & floating flsqrt(A)\\
+int A;       & int A, n;        & floating A;\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return $\sqrt{\mbox{\bf A}}$.
+
+Some related functions:\hspace*{0.7em}
+{\bf csqrt(), iroot(), isqrt\_lo(), miproot(), mipsqrt(), \\
+misqrtas(), misqrtsrch(), mppsqrt(), mpsqrt(), nf3sqrt(), ssqrt()}.
+
+\leer\leer
+There are many other arithmetic functions which were not described here
+since they are defined only for some data types. Among those are functions
+to get the sign of a variable or the numerator or denominator of a rational
+number, and functions to compute the Jacobi-symbol, least common multiple,
+maximum or minimum of numbers; please refer to the on-line documentation
+or the SM keyword index 
+for more details. The next category of functions perform tests and comparisons
+on the input.
+
+\newpage
+
+\leer\leer
+\begin{center} is... \end{center}
+\index{arithmetic functions/is...}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+single isint(A) & single israt(A) & single isfloat(A)\\
+obj A;          & obj A;          & obj A;\\
+&&\\
+single ismi(m, A) & single isnfel(F, A) & single ispfel(p, A)\\
+obj m, A;         & pol F;              & single p;\\
+                  & nfel A;             & obj A;\\
+&&\\
+single isrfr(r, A) & single isgf2el(G, A) & single isgfsel(p, AL, A)\\
+obj r, A;          & obj G, A;            & single p;\\
+                   &                      & list AL;\\
+                   &                      & obj A;\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return 1 if
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+A $\in \Z$ & A $\in \Qfett$ & A $\in \R$\\
+&&\\
+A $\in \Z/\mbox{m}\Z$ & A $\in \mbox{Nf}_{\mbox{F}}$ & A $\in \Qfett_{\mbox{p}}$\\
+&&\\
+A $\in F(\Qfett)$ & A $\in \mbox{Gf}_{\mbox{G}}(2^n)$ & A $\in \mbox{Gf}_{\mbox{G}}(\mbox{p}^{\mbox{n}})$\\[1.5ex]
+\end{tabular} }
+\end{center}
+respectively; 0 otherwise.
+
+Some related functions:\hspace*{0.7em}
+{\bf isgf2impsb(), isgfsal(), isms(), isnfels(), isqnfiel(), \\
+isqnfint(), isqnfrat(),
+isrfmsp1(), islistgf2(), islistgfs(), islisti(), islistmi(), \\
+islistms(), islistnns(), islists()}.
+
+\begin{center} ``comparison'' \end{center}
+\index{arithmetic functions/comparison}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+single icomp(A, B) & single rcomp(A, B) & single flcomp(A, B)\\
+int A, B;          & rat A, B;          & floating A, B;\\[1.5ex]
+\end{tabular} }
+\end{center}
+
+These functions return 1 if {\bf A} $>$ {\bf B}, 0 if {\bf A} $=$ {\bf B}, and $-1$ if
+{\bf A} $<$ {\bf B}.
+
+Some related functions:\hspace*{0.7em}
+{\bf ccomp(), qnfelcomp(), qnfidcomp()}.
+
+
+\leer\leer
+
+\newpage
+
+There are, of course, more tests and comparisons which can be performed on the
+different data types. Some of the properties which can be tested are even/odd,
+and if a variable is a square, a unit, or equivalent to the value for unity
+associated with its data type; as usual, we refer you to the on-line
+documentation or the SM keyword index for details. Here is a table of some 
+useful functions specific
+to some data types; we give only the name of the functions related to a
+function category and data type.
+
+\leer
+\begin{center}
+\begin{tabular}{|p{1.0in}|p{0.7in}|p{3.5in}|}
+\hline &&\\[-1.3ex]
+Function type  &
+data \newline
+type &
+function names\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+rounding \newline
+truncating &
+int \newline
+rat \newline
+floating &
+{\bf inearesttor, itrunc} \newline
+{\bf rceil, rfloor} \newline
+{\bf flfloor, flround} \\[1.5ex]
+\hline &&\\[-1.3ex]
+
+absolute \newline
+value &
+int \newline
+rat \newline
+floating \newline
+complex &
+{\bf iabs, sabs} \newline
+{\bf rabs} \newline
+{\bf flabs} \newline
+{\bf cabsv} \\[1.5ex]
+\hline &&\\[-1.3ex]
+
+greatest com- \newline
+mon divisor &
+int &
+{\bf iegcd, igcd, igcdcf, igcd\_lo, ihegcd, segcd, sgcd}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+logarithm &
+int \newline
+rat \newline
+floating &
+{\bf ilog2, ilog10, slog2} \newline
+{\bf rlog2} \newline
+{\bf fllog} \\[1.5ex]
+\hline &&\\[-1.3ex]
+
+Trigonometric \newline
+functions &
+floating &
+{\bf flcos, flsin, fltrig}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+factorization &
+int &
+{\bf ifact, ifact60,ifactcfe, ifactlf, ifactpp, sfact}\\
+& nfel &
+{\bf qnfielpifact, qnfpifact}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+primality \newline
+testing &
+int &
+{\bf iecpt, iftpt, igkapt, isipprime, isiprime, \newline
+isiprimemsg,isispprime, ispt, issprime}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+chinese \newline
+remaindering &
+$\Z/m\Z$ &
+{\bf micra, micran, milcra, miscra, mscra, mscran, mslcra}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+norm &
+nfel &
+{\bf nfnorm, qnfnorm}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+trace &
+nfel &
+{\bf nftrace, qnftrace}\\[1.5ex]
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+\begin{center}
+\begin{tabular}{|p{1.1in}|p{0.7in}|p{3.5in}|}
+\hline &&\\[-1.3ex]
+Function type  &
+data \newline
+type &
+function names\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+discriminant &
+nfel &
+{\bf nffielddiscr, qnfdisc}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+decomposition \newline
+law &
+nfel &
+{\bf nfipdeclaw, nfspdeclaw}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+class number &
+nfel &
+{\bf abnfrelcl, abnfrelclmp}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+homomorphism &
+$\Z/m\Z$ &
+{\bf mihom, mihoms, mitos, mshom,\newline
+mshoms} \\
+& nfel &
+{\bf qnfpihom}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+valuation &
+int \newline
+rat \newline
+nfel \newline
+pfel &
+{\bf iaval, iavalint, imp2d, intpp, intppint} \newline
+{\bf raval, ravalint} \newline
+{\bf qnfaval, nfextofpadic} \newline
+{\bf pfaval}\\[1.5ex]
+\hline &&\\[-1.3ex]
+
+field \newline
+embedding &
+gf2el \newline
+gfel &
+{\bf gf2efe, gf2ies} \newline
+{\bf gfsefe, gfsalgenies}\\[1.5ex]
+\hline
+\end{tabular}
+\end{center}
+
+\leer\leer
+Finally, the arithmetic package contains functions to get random integers,
+prime integers or Galois-field elements, and data type conversion
+routines, for example:
+{\bf
+\begin{center}
+\begin{tabular}{|p{1.0in}|p{2.5in}|}
+\hline &\\[-1.3ex]
+From &
+to\\[1.5ex]
+\hline &\\[-1.3ex]
+int & rat, floating, complex, nfel, pfel\\
+floating & rat, complex\\
+rat & floating, complex, $\Z/m\Z$, nfel, \newline
+      pfel, rfunc\\
+nfel & {\rm polynomial, matrix row}\\
+gf2el & gfsel, {\rm polynomial}\\
+gfsel & gf2el\\[1.5ex]
+\hline
+\end{tabular}
+\end{center} }
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 4 3 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The polynomial package}
+\subsection{Overview}
+SIMATH contains also functions for polynomial arithmetic over $\Z$, $\Q$, $\R$,
+$\C$, $\Z/m\Z$, $\F_{p^n}$, $\F_{2^n}$, $\Qp$, and algebraic number fields. Higher algorithms for
+factorizing and computing Gr\"obner bases are also included in the package.
+
+Furthermore, utility functions for convenient input/output to and from files
+or the terminal, and conversion to and from the different internal polynomial
+representations are available.
+
+\subsection{Convenient input/output}
+\index{polynomials/input-output}
+The input routines read a polynomial as a sum of monomials; the symbol \# indicates the
+end of the polynomial. (Detailed information about the input format can be found in the
+on-line documentation of the respective input routines. See also the example
+program {\bf m\_polynomials\_io.S} in {\bf /usr/local/simath/examples/} {\bf basics/}.)
+Either symbol \^\ or $**$ can
+be used for the exponent; valid input data are
+\samepage{
+\begin{verbatim}
+            27 X^5 Y1 - X Y1^3 Y2^3 + 9 X Y2^2  #
+            20X**5Y1-X Y1**3Y2**3+9Y2**2X+7X**5Y1#
+            27*X^5*Y1^1*Y2^0 - 1*X^1*Y1^3*Y2^3 + 9*X^1*Y1^0*Y2^2 #
+\end{verbatim}}
+The output routines use the first form above to display polynomials.
+
+\subsection{Internal representation}
+\index{polynomials/internal representation}
+When developing algorithms, one should always use the most appropriate 
+internal list representation for polynomials. For this purpose, the
+SIMATH system offers a distributive representation and two recursive representations, namely the recursive sparse and the recursive dense representation.
+
+In general, SIMATH programs use the recursive sparse representation; the input routines return 
+the sparse representation of polynomials. The name of a function dealing with polynomials
+indicates if a different representation is required as a parameter to the function.
+
+Polynomials in zero variables are considered as elements of the coefficient ring.
+
+The zero polynomial is represented by the {\bf atom} $0$.
+
+Polynomials have the type designation {\bf pol}.
+
+\newpage
+
+{\bf The recursive sparse representation} 
+\index{polynomials/recursive sparse representation}
+\index{recursiv sparse representation}
+\leer
+Let $R_i$ be a polynomial ring in $i$ variables, $i\geq 0$,
+over the commutative ring $R$. For $n>0$ consider $R_n$ as a 
+polynomial ring in one variable over $R_{n-1}$
+$$ 
+R_n\ =\ R[X_1,\ldots,X_n]\ =\ R_{n-1}[X_n].
+$$ 
+Then a polynomial $p \in R_n$, $p\not=0$, has the form 
+$$
+p = p(X_1,\ldots,X_n) = \sum_{i=1}^k p_i(X_1,\ldots, X_{n-1})X_n^{e_i}
+$$ 
+with $k \leq \deg(p)+1$, $p_i \in R_{n-1}$, $p_i \neq 0$, and decreasing exponents
+$$ 
+e_1 > e_2 > \ldots > e_k \geq 0.
+$$ 
+Then the list
+$$ 
+p^{(sp)} := (e_1, p_1^{(sp)}, \ldots,e_k, p_k^{(sp)}) 
+$$ 
+is the sparse representation of the polynomial $p$.
+
+Example: the polynomial 
+\begin{displaymath}
+            p(X,Y) =  27 X^5 Y - X Y^3 + Y^3 + 9 X Y^2
+                   =  (-X^1 + X^0) Y^3 + (9 X^1) Y^2 + (27 X^5) Y
+\end{displaymath} 
+has the sparse representation
+$$
+       p^{(sp)}  =  (3, (1,-1,0,1), 2, (1,9), 1, (5,27)).
+$$
+
+{\bf The recursive dense representation}
+\index{polynomials/recursive dense representation}
+\index{recursive dense representation}
+\leer 
+The polynomial $p \in R_n$ has the form
+$$ 
+      p(X_1,\ldots,X_n)\ =\ \sum_{j=0}^{d}\ q_j(X_1,\ldots,X_{n-1})X_n^j, 
+$$ 
+where $d=\deg(p)$ and $q_j \in R_{n-1}$. Then the list 
+$$  
+      p^{(dns)}\ =\ (d, q_d^{(dns)},q_{d-1}^{(dns)},\ldots,q_0^{(dns)})
+$$ 
+is the dense representation of the polynomial $p$.
+
+Example: the polynomial 
+\begin{eqnarray*} 
+            p(X,Y) & = & (-X^1+0X^0) Y^3 + (9X^1+0X^0) Y^2\\
+                   &   & {}+ (27X^5+0X^4+0X^3+0X^2+0X^1+0X^0) Y^1 + 0Y^0
+\end{eqnarray*} 
+has the dense representation 
+$$         
+      p^{(dns)} =  (3, (1,-1,0), (1,9,0), (5,27,0,0,0,0,0), 0).
+$$
+
+\newpage
+
+{\bf The distributive representation}
+\index{polynomials/distributive representation}
+\index{distributive representation}
+\leer 
+Let 
+$$ 
+     p(X_1,\ldots,X_n) = \sum_{i=1}^k\ m_i(X_1,\ldots,X_n) 
+$$ 
+be the sum of monomials $m_i$ over $R_n$, $m_i\not=0$, with 
+$$ 
+     m_i(X_1,\ldots,X_n)\ =\ c_i\ X_n^{e_{i,n}}X_{n-1}^{e_{i,n-1}}
+     \ldots X_1^{e_{i,1}}, \quad  c_i \in  R,\ c_i\not=0,
+$$ 
+so that the exponent--tuples
+$$ 
+e_i\ =\ (e_{i,n}, e_{i,n-1}, \ldots, e_{i,1}) \hspace*{1cm} 1 \leq i \leq k
+$$ 
+are lexicographically ordered, i.e.\
+$$ 
+         e_i > e_j  \mbox{ for }  i<j.
+$$ 
+Then the list
+$$ 
+      p^{(di)}\  =\ (c_1 , e_1 , c_2 , e_2 , \ldots, c_k , e_k).
+$$ 
+is the distributive representation of the polynomial $p$.
+
+Example: the polynomial
+\begin{displaymath} 
+            p(X,Y) =  - X Y^3 + Y^3 + 9 X Y^2 + 27 X^5 Y
+\end{displaymath} 
+has the distributive representation 
+$$
+       p^{(di)}\  =\  (-1, (3,1), 1, (3,0), 9, (2,1), 27, (1,5))
+$$
+
+\newpage
+
+\subsection{The polynomial functions}
+
+As with the arithmetic package, it would be impossible to give an exhaustive
+list of all the functions included in this package. We shall give a short
+description of the basic polynomial arithmetic functions, some useful and
+interesting functions particular to polynomials and functions to test
+polynomials as well as the name of some related functions. A detailed 
+description of all the polynomial functions can be found in the on-line 
+documentation and by the SM keyword index.
+
+The following notation is used for the different representations
+\begin{itemize}
+\item[p] polynomial in recursive sparse representation
+\item[dp] polynomial in recursive dense representation
+\item[dip] polynomial in distributive representation
+\item[up] univariate polynomial
+\item[udp] univariate dense polynomial
+\end{itemize}
+
+Here are some important polynomial arithmetic functions. The conditions on
+the input par\-ameters depend on the polynomial representation and data type;
+we refer you to the on-line documentation or the SM keyword index for more 
+details.
+
+\leer
+\begin{center} ``polynomial sum'' \end{center}
+\index{polynomial functions/polynomial sum}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+pol pisum(r,P,Q)   & pol prsum(r,P,Q)   & pol pmisum(r,m,P,Q)\\
+                     &                      & pol dpmisum(r,m,P,Q)\\
+pol dipisum(r,P,Q) & pol diprsum(r,P,Q) &\\
+pol udpisum(P,Q)    & pol udprsum(P,Q)    & pol udpmisum(m,P,Q)\\
+&&\\
+pol pnfsum(r,F,P,Q)   & pol ppfsum(r,p,P,Q) &\\
+pol dipnfsum(r,F,P,Q) &                 & pol diprfrsum(r1,r2,P,Q)\\
+                       & pol udppfsum(p,P,Q)  &\\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single r1, r2, r, p;\newline
+    int m;\newline
+    pol F, P, Q;}
+
+These functions return {\bf P $+$ Q}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  cdprfmsp1sum(), cdprsum(), dipgfssum(), dipmipsum(), \\
+dipmspsum(), dippisum(),dpmssum(), pgf2sum(), pgfssum(), pmssum(), \\
+prfmsp1sum(), udpmssum()}.
+
+The functions for polynomial difference ({\bf *dif}) and polynomial product
+({\bf *prod}) are analogous to those for polynomial sum. See the keyword
+index for more details.
+\index{polynomial functions/difference}
+\index{polynomial functions/product}
+
+\newpage
+
+% \begin{center} ``polynomial difference'' \end{center}
+% \begin{center}
+% {\bf
+% \begin{tabular}{lll}
+% pol pidif(r, P, Q)   & pol prdif(r, P, Q)   & pol pmidif(r, m, P, Q)\\
+%                &                          & pol dpmidif(r, m, P, Q)\\
+% pol dipidif(r, P, Q) & pol diprdif(r, P, Q) &\\
+% pol udpidif(P, Q)    & pol udprdif(P, Q)    & pol udpmidif(m, P, Q)\\
+% &&\\
+% pol pnfdif(r, F, P, Q)   & pol ppfdif(r, p, P, Q) &\\
+% pol dipnfdif(r, F, P, Q) &                     & pol diprfrdif(r1, r2, P, Q)\\
+%                                       & pol udppfdif(p, P, Q)  &\\
+% &&\\
+% \end{tabular} }
+% \end{center}
+% \parbox[t]{2.5in}{with the following parameters type}
+% \parbox[t]{3.0in}{\bf single r1, r2, r, p;\\
+%                                     int m;\\
+%                               pol F, P, Q;}
+%
+% These functions return {\bf P $-$ Q}.
+%
+% Some related functions:\hspace*{0.7em}
+% {\bf  dipgfsdif(), dipmipdif(), dipmspdif(), dippidif(), \\
+% dpmsdif(), pgf2dif(), pgfsdif(), pmsdif(), prfmsp1dif(), udpmsdif()}.
+
+\begin{center} ``polynomial additive inverse (negation)'' \end{center}
+\index{polynomial functions/polynomial additive inverse (negation)}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+pol pineg(r, P)   & pol prneg(r, P)   & pol pmineg(r, m, P)  \\
+                  &                   & pol dpmineg(r, m, P) \\
+pol dipineg(r, P) & pol diprneg(r, P) &\\
+pol udpineg(P)    & pol udprneg(P)    & pol udpmineg(m, P)   \\
+&&\\
+pol pnfneg(r, F, P)   & pol ppfneg(r, p, P) &\\
+pol dipnfneg(r, F, P) &                     & pol diprfrneg(r1, r2, P)\\
+                      & pol udppfneg(p, P)  &\\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{\bf single r1, r2, r, p;\\
+                      int m;\\
+                      pol F, P;}
+
+These functions return {\bf $-$P}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  dipgfsneg(), dipmipneg(), dipmspneg(), dippineg(), \\
+dpmsneg(), pgf2neg(), pgfsneg(), pmsneg(), prfmsp1neg(), udpmsneg()}.
+
+% \newpage
+
+% \begin{center} ``polynomial product'' \end{center}
+% \begin{center}
+% {\bf
+% \begin{tabular}{lll}
+% pol piprod(r,P,Q)   & pol prprod(r,P,Q)   & pol pmiprod(r,m,P,Q)\\
+% &                       & pol dpmiprod(r,m,P,Q)\\
+% pol dipiprod(r,P,Q) & pol diprprod(r,P,Q) &\\
+% pol udpiprod(P,Q)    & pol udprprod(P,Q)    & pol udpmiprod(m,P,Q)\\
+% &&\\
+% pol pnfprod(r,F,P,Q)   & pol ppfprod(r,p,P,Q)   &\\
+% pol dipnfprod(r,F,P,Q) &                        & pol diprfrprod(r1,r2,P,Q)\\
+% & pol udppfprod(p,P,Q)    &\\
+% \end{tabular} }
+% \end{center}
+% \parbox[t]{2.5in}{with the following parameters type}
+% \parbox[t]{3.0in}{\bf single r1, r2, r, p;\\
+% int m;\\
+% pol F, P, Q;}
+%
+% These functions return {\bf P $*$ Q}.
+%
+% Some related functions:\hspace*{0.7em}
+% {\bf  dipgfsprod(), dipmipprod(), dipmspprod(), dippiprod(), \\
+% dpmsprod(), pgf2prod(), pgfsprod(), pimidprod(), pitrprod(), pmiupmiprod(), \\
+% pmsprod(), pmsupmsprod(), ppmvprod(), prfmsp1prod(), udpmsprod()}.
+ 
+\begin{center} ``polynomial exponentiation'' \end{center}
+\index{polynomial functions/exponentiation}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+pol piexp(r, P, n)   & pol prexp(r, P, n) & pol pmiexp(r, m, P, n)\\
+&&\\
+pol pnfexp(r, F, P, n) & pol ppfexp(r, p, P, n) &\\
+                       & pol udppfexp(p, P, n)  &\\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{\bf single r, p, n;\\
+                      int m;\\
+                      pol F, P;}
+
+These functions return {\bf $\mbox{P}^{\mbox{n}}$}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  pgf2exp(), pgfsexp(), pmsexp(), upmimpexp()}.
+
+\newpage
+
+\begin{center} ``polynomial quotient'' \end{center}
+\index{polynomial functions/quotient}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+pol piquot(r, P, Q) & pol prquot(r, P, Q) & pol pmiquot(r, m, P, Q)\\
+                    &                     & pol udpmiquot(m, P, Q)\\
+&&\\
+pol pnfquot(r, F, P, Q) &&\\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{\bf single r, p;\\
+                      int m;\\
+                      pol F, P, Q;}
+
+These functions return {\bf P~$/$~Q}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  cdprfmsp1upq(), pgf2qrem(), pgf2quot(), pgfsqrem(), pgfsquot(), pipsrem(), piqrem(), 
+pirem(), pmimidqrem(), pmipsrem(), \\
+pmiqrem(), pmirem(), 
+pmiupmiquot(), pmspsrem(), pmsqrem(), pmsquot(), pmsrem(), pmsupmsquot(), 
+pnfqrem(), pnfrem(), ppmvquot(), ppvquot(), \\
+prfmsp1qrem(), prqrem(), prrem(), 
+udpipsrem(), udpmiqrem(), udpmirem(), udpmsqrem(), udpmsquot(), udpmsrem(), 
+udprqrem(), upmimprem(), \\
+upmirem(), upmsmprem(), upmsrem()}.
+
+\leer\leer
+There are many other polynomial arithmetic functions which were not described
+here. Please refer to the on-line documentation for more details. 
+
+Next are Groebner bases functions.
+
+\begin{center} ``Groebner basis'' \end{center}
+\index{polynomial functions/Groebner basis}
+\index{Groebner basis}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+list dipigb (r, PL) & list diprgb (r, PL) & list dipmipgb (r, p, PL)\\
+list dipnfgb (r, F, PL) & list diprfrgb (r1, r2, PL) & \\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{\bf single r, r1, r2;\\
+                      int p;\\
+                      pol F;\\
+                      list PL;}
+
+These functions return the Groebner basis of the polynomial list {\bf PL}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  dipgfsgb(), dipmspgb(), dippigb(), diprfrgb() }.
+
+\leer\leer
+There are also functions for Groebner bases augmentation and recursion, and,
+for polynomials in polynomial rings, functions to compute (reduced) comprehensive
+Groebner bases and Groebner tests. See also the examples in  \\
+{\bf /usr/local/simath/examples/advanced/Groebner\_basis/}.
+
+\newpage
+
+What follows are functions which perform tests on their arguments.
+
+\begin{center} is... \end{center}
+\index{polynomial functions/is...}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+single ispi(r, P)  & single ispr(r, P)  & single ispmi(r, m, P)\\
+single isdpi(r, P) & single isdpr(r, P) & single isdpmi(r, m, P)\\
+&&\\
+single isdppf(r, p, P) &&\\ 
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{\bf single r, p;\\
+                      int m;\\
+                      pol P;}
+
+These functions return 1 if
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+P $\in \Z$[X] & P $\in \Qfett$[X] & P $\in \Z/\mbox{m}\Z$[X]\\
+&&\\
+P $\in \Qfett_{\mbox{p}}$[X] &&\\
+\end{tabular} }
+\end{center}
+respectively; 0 otherwise.
+
+Some related functions:\hspace*{0.7em}
+{\bf  ispgf2(), ispgfs(), isdpms(), ispms()}.
+
+\leer\leer
+You can also test if a polynomial is equivalent to one, irreducible,
+squarefree, a unit, monomial, etc.; as usual, we refer you to the on-line
+documentation or the SM keyword index for details. Here is a table of some 
+useful functions specific to some types of polynomials; we give only the name 
+of the functions related to a function category.
+
+\leer
+\begin{center}
+\begin{tabular}{|p{1.1in}|p{4.0in}|}
+\hline &\\[-1.3ex]
+Function type  &
+function names\\[1.5ex]
+\hline &\\[-1.3ex]
+
+degree &
+{\bf diptdg, ptdegree, }\newline
+{\bf pdegree, pdegreesv} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+derivation &
+{\bf pcderiv, pflderiv, pgf2deriv, pgfsderiv, pideriv, \newline
+        pmideriv, pmsderiv,  pnfderiv, ppfderiv, prderiv, \newline
+        prfmsp1deriv, udpmideriv, udpmsderiv, } \newline
+{\bf pcderivsv, pflderivsv, pgf2derivsv, pgfsderivsv, \newline
+        piderivsv, pmiderivsv, pmsderivsv, pnfderivsv, \newline
+        ppfderivsv, prderivsv } \\[1.5ex]
+\hline 
+\end{tabular}
+\end{center}
+
+\newpage
+
+\leer
+\begin{center}
+\begin{tabular}{|p{1.1in}|p{4.0in}|}
+\hline &\\[-1.3ex]
+Function type  &
+function names\\[1.5ex]
+\hline &\\[-1.3ex]
+
+content & 
+{\bf dipicp, dippicp, pgfsucont, picont, picontpp, piicont, \newline
+        pmiucont, pmsucont, pnfcont, pnfcontpp, \newline
+        udpicontpp }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+discriminant & 
+{\bf pidiscr, pidiscrhank, pmidiscr, pmidiscrhank, \newline
+        pmsdiscr, upireddiscc, upprmsp1disc, \newline
+        upprmsp1redd }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+resultant & 
+{\bf pgfsres, piresbez, pirescoll, pirescspec, piressylv, \newline
+        pmires, pmirescoll, pmsres, pmsrescoll, pprmsp1ress, \newline
+        upiresulc, upmires, upmiresulc, upmsres, \newline
+        upmsresulc, upprmsp1ress }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+greatest com- \newline
+mon divisor & 
+{\bf pigcdcf, pmigcdcf, pmsgcdcf, pnfgcdcf, upmigcd, \newline
+        upmsgcd, upgf2gcd, upgfsgcd, upmigcd, upmsgcd, upnfgcd, uprfmsp1egcd }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+chinese \newline
+remaindering & 
+{\bf picra, picran }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+homomorphism & 
+{\bf cdprfmsp1mh, cdprzmodhom, pimidhom }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+factorization & 
+{\bf pifact, pisfact, pnffact, pnfsfact, spifact, spnffact, upgf2bofact, 
+        upgf2ddfact, upgf2nfact, upgf2sfact, \newline
+        upgfsbfact, upgfsbfzm, upgfsbofact, upgfscfact, \newline
+        upgfsddfact, upgfsrelpfac, upgfssfact, upifact, \newline
+        upm2cfact, upmibfact, upmibfzm, upmibofact, \newline
+        upmicfact, upmiddfact, upmirelpfact, upmisfact, \newline
+        upmsbfact, upmsbfzm, upmscfact,
+        upmsddfact, \newline
+        upmsrelpfact, upmssfact, upnffact, upnfsfact, \newline
+        uprfact, uspiapf, uspifact, uspnffact, uspprmsp1apf }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+squarefree part & 
+{\bf upgf2sfp, upgfssfp, upisfp, upmisfp, upmssfp, upnfsfp }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+root finding & 
+{\bf udpflrf, udpirf, udprf, udprrf, upgfsrf, upmirf, upmsrf }\\[1.5ex]
+\hline 
+\end{tabular}
+\end{center}
+
+\newpage
+
+\leer
+\begin{center}
+\begin{tabular}{|p{1.1in}|p{4.0in}|}
+\hline &\\[-1.3ex]
+Function type  &
+function names\\[1.5ex]
+\hline &\\[-1.3ex]
+
+evaluation & 
+{\bf pceval, pfleval, pgf2eval, pgfseval, pgfsevalsv, pieval, pievalsv, 
+        pigf2evalfvs, pigfsevalfvs, pinfevalfvs, \newline
+        pmieval, pmievalsv, pmseval, pmsevalsv, pnfeval, \newline
+        pnfevalsv, ppfeval, ppfevalsv, preval, prevalsv, \newline
+        prnfevalfvs, upgf2eval, upinfeevals, upinfeval, \newline
+        upinfseval, upnfeval, upprmsp1afes, uprnfeval, \newline
+        uprnfseval }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+field embedding & 
+{\bf pgf2efe, pgfsefe }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+substitution & 
+{\bf pisubst, pisubstsv, pmisubst, pmisubstsv, pmssubst, pmssubstsv, ppfsubst,
+        ppfsubstsv, prsubst, prsubstsv }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+translation & 
+{\bf pitrans, pitransav, pmitrans, pmitransav, pmstrans, pmstransav, pnftrans, pnftransav, ppftrans, \newline
+ppftransav, prtrans, prtransav }\\[1.5ex]
+\hline 
+\end{tabular}
+\end{center}
+
+\leer
+
+The polynomial package contains also some functions, which need specific
+variable lists. For more information on variable lists, see the on-line 
+documentation of {\bf fgetvl()} or use the SM keyword index and search for
+``variable'' and ``list''.
+
+\leer
+
+Finally, the polynomial package contains functions to change the order of
+variables, transform a constant into polynomial, for converting from one
+representation to another and from one polynomial type to another (see
+table).
+
+\leer
+
+{\bf
+\begin{center}
+\begin{tabular}{|p{1.0in}|p{2.5in}|}
+\hline &\\[-1.3ex]
+From &
+to\\[1.5ex]
+\hline &\\[-1.3ex]
+$\Z[X]$ & $\Z/m\Z[X], \Qfett[X],$ Nf$[X], \R[X], \C[X]$,\newline
+          $\Qfett_p[X], \Qfett(X)$\\
+$\Qfett[X]$ & $\Z/m\Z[X]$, Nf$[X], \R[X], \C[X]$, \newline
+          $\Qfett_p[X], \Qfett(X)$\\
+Nf$[X]$ & $\Qfett[X],$ Gf$[X] $\\
+$\mbox{Gf}(2^{\mbox{n}})[X]$ & $\mbox{Gf}(\mbox{p}^{\mbox{n}})[X]$ \\
+$\mbox{Gf}(\mbox{p}^{\mbox{n}})[X]$ & $\mbox{Gf}(2^{\mbox{n}})[X]$ \\ [1.5ex]
+\hline &\\[-1.3ex]
+\hline &\\[-1.3ex]
+dp & p \\
+dip &p \\
+p & dp, dip \\[1.5ex]
+\hline
+\end{tabular}
+\end{center} }
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 4 4 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The matrix/vector package}
+\subsection{Overview}
+This package contains functions for matrix and vector computations
+over $\Z$, $\Q$, $\Z/m\Z$, $\Fq$, polynomial rings, number fields, and rational
+function fields.
+
+There are arithmetic functions for addition, multiplication, etc., input/output
+functions, functions for data type conversion and higher algorithms to compute the Hermite
+normal form, characteristic polynomial, determinant, etc. of a matrix; the scalar product,
+length, etc. of vectors.
+
+\subsection{Internal representation}
+\index{vector}
+\index{vector/internal representation}
+{\bf Vector}
+\leer
+A vector $V$ of dimension $n>0$ over a structure $S$ is represented as a list
+$$
+     V = (a_1, \ldots, a_n), \quad  a_1,\ldots,a_n \in S\ . 
+$$
+The zero vector is {\em not\/} represented by the {\bf atom} $0$; it has the form 
+$$
+      (\underbrace{0,\ldots,0}_{n\ times}) \ .
+$$
+Vectors have the type designation {\bf vec}.
+
+\leer
+{\bf Matrix}
+\index{matrix}
+\index{matrix/internal representation}
+\leer
+The rows of an $m \times n$ matrix $M=(a_{ij})$ over $S$ are implemented as vectors
+$$
+   Z_i = (a_{i1}, \ldots, a_{in}),\quad i = 1,\ldots,m\ .
+$$
+Then the matrix $M$ is represented by the list of its row vectors
+$$
+               M = (Z_1, \ldots, Z_m)\ .
+$$ 
+
+Example: the list $M =$((1 2 3) (4 5 6)) represents the matrix 
+$$
+M = 
+      \left(
+         \begin{array}{ccc}
+            1 & 2 & 3 \\
+            4 & 5 & 6 
+         \end{array}
+      \right)\ .
+$$
+
+\newpage
+
+The zero matrix \index{zero matrix} is {\em not\/} represented by the {\bf atom} $0$; it has the list
+representation
+$$
+(\underbrace{ (\underbrace{ 0,\ldots,0}_{n\ times}),\ldots,(\underbrace{0,\ldots,0}_{n\ times}) }_{m\ times})
+$$
+
+There is a special bit representation for matrices over $\Z/2\Z$\index{matrix/over Z/2Z/internal bit representation}. Such a matrix is represented as a list
+$$
+        (n, r_1,\ldots, r_m),
+$$
+where $n$ is the number of the columns (a positive single precision number) and
+the $r_i$'s are 
+represented by lists of singles with llength($r_i$)$ = \frac{n}{30}+1$.
+
+For example: The matrix
+$$ 
+        \left(\begin{array}{ccc} 
+                1 & 1 & 1 \\
+                1 & 0 & 1 \\
+                0 & 1 & 1 \\
+                0 & 0 & 1 
+        \end{array}\right)
+$$ 
+is represented by the list
+$$
+        (3, (7), (5), (3), (1)).
+$$
+SIMATH functions which use the special bit notation of a matrix ober $\Z/2\Z$
+all begin with {\bf mam2}. There do not exist vectors over $\Z/2\Z$ in special
+bit representation. Use $1\times n$ matrices instead.
+
+Matrices have the type designation {\bf matrix}.
+
+\subsection{The matrix/vector functions}
+Here again, it would be impossible to list all the functions included in this
+package. We shall give a short description of the basic matrix/vector 
+arithmetic functions, some useful and interesting functions particular to
+matrices/vectors and functions to test matrices/vectors as well as the name
+of the related functions. A detailed description of all the matrix/vector
+functions can be found in the on-line documentation and the SM keyword index.
+
+Here are some important matrix arithmetic functions. The conditions on the 
+input parameters depend on the data types and the representation; we refer
+you to the on-line documentation or the SM keyword index for more details.
+
+\leer
+\begin{center} ``matrix sum'' \end{center}
+\index{matrix function/sum}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+matrix maisum(M, N)   & matrix marsum(M, N)   \\
+matrix mamisum(m, M, N)&  matrix manfsum(F, M, N) \\
+&\\
+matrix mapisum(r, M, N)   & matrix maprsum(r, M, N) \\
+matrix mapmisum(r, m, M, N) & matrix mapnfsum(r, F, M, N) \\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single r;\newline
+    int m;\newline
+    pol F;\newline
+    matrix M, N;}
+
+These functions return {\bf M $+$ N}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  magf2sum(), magfssum(), mam2sum(), mamssum(), \\
+manfssum(), mapgf2sum(), mapgfssum(), mapmssum(), marfmsp1sum(), \\
+marfrsum(), masum()}.
+
+The functions for matrix difference ({\bf *dif})\index{matrix function/difference} and matrix product
+({\bf *prod})\index{matrix function/product} are analogous to those for matrix sum. See the keyword
+index for more details.
+
+
+% \begin{center} ``matrix difference'' \end{center}
+% \begin{center}
+% {\bf
+% \begin{tabular}{ll}
+% matrix maidif(M, N)   & matrix mardif(M, N)   \\
+% matrix mamidif(m, M, N) & matrix manfdif(F, M, N) \\
+% &\\
+% matrix mapidif(r, M, N)   & matrix maprdif(r, M, N) \\
+% matrix mapmidif(r, m, M, N) &  matrix mapnfdif(r, F, M, N) \\
+% \end{tabular} }
+% \end{center}
+% \parbox[t]{2.5in}{with the following parameters type}
+% \parbox[t]{3.0in}{
+% \bf single r;\newline
+%     int m;\newline
+%     pol F;\newline
+%     matrix M, N;}
+% 
+% These functions return {\bf M $-$ N}.
+% 
+% Some related functions:\hspace*{0.7em}
+% {\bf  magf2dif(), magfsdif(), mamsdif(), manfsdif(), \\
+% mapgf2dif(), 
+%       mapgfsdif(), mapmsdif(), marfmsp1dif(), marfrdif(), madif()}.
+
+% \newpage
+
+\leer
+\begin{center} ``matrix additive inverse (negation)'' \end{center}
+\index{matrix function/additive inverse (negation)}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+matrix maineg(M)   & matrix marneg(M)   \\
+matrix mamineg(m, M)&  matrix manfneg(F, M) \\
+&\\
+matrix mapineg(r, M)   & matrix maprneg(r, M) \\
+matrix mapmineg(r, m, M) & matrix mapnfneg(r, F, M) \\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single r;\newline
+    int m;\newline
+    pol F;\newline
+    matrix M;}
+
+These functions return {\bf $-$M}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  magf2neg(), magfsneg(), mamsneg(), manfsneg(), \\
+mapgf2neg(), mapgfsneg(), 
+mapmsneg(), marfmsp1neg(), marfrneg(), maneg()}.
+
+% \begin{center} ``matrix product'' \end{center}
+% \begin{center}
+% {\bf
+% \begin{tabular}{ll}
+% matrix maiprod(M, N)   & matrix marprod(M, N)   \\
+% matrix mamiprod(m, M, N) & matrix manfprod(F, M, N) \\
+% &\\
+% matrix mapiprod(r, M, N)   & matrix maprprod(r, M, N) \\
+% matrix mapmiprod(r, m, M, N) &  matrix mapnfprod(r, F, M, N) \\
+% \end{tabular} }
+% \end{center}
+% \parbox[t]{2.5in}{with the following parameters type}
+% \parbox[t]{3.0in}{
+% \bf single r;\newline
+%     int m;\newline
+%     pol F;\newline
+%     matrix M, N;}
+% 
+% These functions return {\bf M $*$ N}.
+% 
+% Some related functions:\hspace*{0.7em}
+% {\bf  magf2prod(), magfsprod(), mam2prod(), mamsprod(), \newline
+%       manfsprod(), mapgf2prod(), mapgfsprod(), mapmsprod(), marfmsp1prod(), \\
+% marfrprod(), maprod()}.
+
+\newpage
+
+\leer
+\begin{center} ``matrix exponentiation'' \end{center}
+\index{matrix function/exponentiation}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+matrix maiexp(M, n)   & matrix marexp(M, n)   \\
+matrix mamiexp(m, M, n)&  matrix manfexp(F, M, n) \\
+&\\
+matrix mapiexp(r, M, n)   & matrix maprexp(r, M, n) \\
+matrix mapmiexp(r, m, M, n) & matrix mapnfexp(r, F, M, n) \\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single r, n;\newline
+    int m;\newline
+    pol F;\newline
+    matrix M;}
+
+These functions return $\mbox{\bf M}^{\mbox{\bf n}}$.
+
+Some related functions:\hspace*{0.7em}
+{\bf  magf2exp(), magfsexp(), mam2exp(), mamsexp(), \\
+manfsexp(), mapgf2exp(), mapgfsexp(), mapmsexp(), marfmsp1exp(), \\
+marfrexp()}.
+
+
+\leer
+\begin{center} ``matrix inverse'' \end{center}
+\index{matrix function/inverse}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+matrix maiinv(M)   & matrix marinv(M)   \\
+matrix mamiinv(m, M)&  matrix manfinv(F, M) \\
+&\\
+matrix mapiinv(r, M)   & matrix maprinv(r, M) \\
+matrix mapmiinv(r, m, M) & matrix mapnfinv(r, F, M) \\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single r;\newline
+    int m;\newline
+    pol F;\newline
+    matrix M;}
+
+These functions return $\mbox{\bf M}^{-1}$.
+
+Some related functions:\hspace*{0.7em}
+{\bf  magf2inv(), magfsinv(), mam2inv(), mamsinv(), \\
+manfsinv(), mapgf2inv(), mapgfsinv(), mapmsinv(), marfmsp1inv(), marfrinv()}.
+
+
+\newpage
+
+\leer
+Here are some important vector arithmetic functions. The conditions on the 
+input parameters depend on the data types and the representation; we refer
+you to the on-line documentation or the SM keyword index for more details.
+
+\leer
+\begin{center} ``vector sum'' \end{center}
+\index{vector functions/sum}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+vec vecisum(U, V)   & vec vecrsum(U, V)   \\
+vec vecmisum(m, U, V)&  vec vecnfsum(F, U, V) \\
+&\\
+vec vecpisum(r, U, V)   & vec vecprsum(r, U, V) \\
+vec vecpmisum(r, m, U, V) & vec vecpnfsum(r, F, U, V) \\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single r;\newline
+    int m;\newline
+    pol F;\newline
+    vec U, V;}
+
+These functions return {\bf U $+$ V}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  vecgf2sum(), vecgfssum(), vecmssum(), vecnfssum(), \newline
+        vecpgf2sum(), vecpgfssum(), vecpmssum(), vecrfmsp1sum(), vecrfrsum(), \\
+vecsum()}.
+
+The functions for vector difference ({\bf *dif})\index{vector functions/difference} are analogous to those for vector sum. See the keyword
+index for more details.
+
+% \begin{center} ``vector difference'' \end{center}
+% \begin{center}
+% {\bf
+% \begin{tabular}{ll}
+% vec vecidif(U, V)   & vec vecrdif(U, V)   \\
+% vec vecmidif(m, U, V) & vec vecnfdif(F, U, V) \\
+% &\\
+% vec vecpidif(r, U, V)   & vec vecprdif(r, U, V) \\
+% vec vecpmidif(r, m, U, V) &  vec vecpnfdif(r, F, U, V) \\
+% \end{tabular} }
+% \end{center}
+% \parbox[t]{2.5in}{with the following parameters type}
+% \parbox[t]{3.0in}{
+% \bf single r;\newline
+%     int m;\newline
+%     pol F;\newline
+%     vec U, V;}
+% 
+% These functions return {\bf U $-$ V}.
+% 
+% Some related functions:\hspace*{0.7em}
+% {\bf  vecgf2dif(), vecgfsdif(), vecmsdif(), vecnfsdif(), \\
+% vecpgf2dif(), vecpgfsdif(), vecpmsdif(), vecrfmsp1dif(), vecrfrdif()}.
+
+% \newpage
+
+
+\begin{center} ``vector additive inverse (negation)'' \end{center}
+\index{vector functions/additive inverse (negation)}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+vec vecineg(V)   & vec vecrneg(V)   \\
+vec vecmineg(m, V)&  vec vecnfneg(F, V) \\
+&\\
+vec vecpineg(r, V)   & vec vecprneg(r, V) \\
+vec vecpmineg(r, m, V) & vec vecpnfneg(r, F, V) \\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single r;\newline
+    int m;\newline
+    pol F;\newline
+    vec V;}
+
+These functions return {\bf $-$V}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  vecgf2neg(), vecgfsneg(), vecmsneg(), vecnfsneg(), \\
+vecpgf2neg(), vecpgfsneg(), vecpmsneg(), vecrfmsp1neg(), vecrfrneg(), \\
+vecneg()}.
+
+\newpage
+
+\begin{center} ``vector scalar product'' \end{center}
+\index{vector functions/scalar product}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+int vecisprod(U, V)   & rat vecrsprod(U, V)   \\
+int vecmisprod(m, U, V) & nfel vecnfsprod(F, U, V) \\
+&\\
+pol vecpisprod(r, U, V)   & pol vecprsprod(r, U, V) \\
+pol vecpmisprod(r, m, U, V) &  pol vpnfsprod(r, F, U, V) \\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single r;\newline
+    int m;\newline
+    pol F;\newline
+    vec U, V;}
+
+These functions return the {\bf scalar product} $<\mbox{\bf U}, \mbox{\bf V}>$.
+
+Some related functions:\hspace*{0.7em}
+{\bf  vecgf2sprod(), vecgfssprod(), vecmssprod(), \\
+vecnfssprod(),
+        vecpgf2sprod(), vecpmssprod(), vecrfmsp1sprod(), \\
+vecrfrsprod(), vpgfssprod()}.
+
+
+%\newpage
+
+\leer
+Here is the matrix vector multiplication function. The conditions on the 
+input parameters depend on the data types and the representation; we refer
+you to the on-line documentation or the SM keyword index for more details.
+
+\leer
+\begin{center} ``matrix vector multiplication'' \end{center}
+\index{matrix vector multiplication}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+vec maivecmul(M, V)   & vec marvecmul(M, V)   \\
+vec mamivecmul(m, M, V) & vec manfvecmul(F, M, V) \\
+&\\
+vec mapivecmul(r, M, V)   & vec maprvecmul(r, M, V) \\
+vec mapmivecmul(r, m, M, V) &  vec mapnfvecmul(r, F, M, V) \\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single r;\newline
+    int m;\newline
+    pol F;\newline
+    matrix M;\newline
+    vec V;}
+
+These functions return {\bf M $*$ V}.
+
+Some related functions:\hspace*{0.7em}
+{\bf  magf2vecmul(), magfsvecmul(), mamsvecmul(), \\
+manfsvecmul(), mapgfsvecmul(), mapmsvecmul(), marfmsp1vmul(), \\
+marfrvecmul(), mavecmul()}.
+
+\leer
+
+\newpage
+
+The next category of functions perform tests on the input.
+
+\begin{center} is... \end{center}
+\index{matrix function/is...}
+\index{vector functions/is...}
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+single ismai(M)  & single ismar(M)  & single ismami(m, M)\\
+single ismapi(r, M) & single ismapr(r, M) & single ismapmi(r, m, M)\\
+&&\\
+single isveci(V)  & single isvecr(V)  & single isvecms(n, V)\\
+single isvecpi(r, V) & single isvecpr(r, V) & single isvecpms(r, n, V)\\
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{\bf single r, n;\\
+                      int m;\\
+                      matrix M;\\
+                      vec V;}
+
+These functions return 1 if
+\begin{center}
+{\bf
+\begin{tabular}{lll}
+M over $\Z$ & M over $\Qfett$ & M over $\Z/\mbox{m}\Z$\\
+M over $\Z[X]$ & M over $\Qfett[X]$ & M over $\Z/\mbox{m}\Z[X]$\\
+&&\\
+V over $\Z$ & V over $\Qfett$ & V over $\Z/\mbox{n}\Z$\\
+V over $\Z[X]$ & V over $\Qfett[X]$ & V over $\Z/\mbox{n}\Z[X]$\\
+\end{tabular} }
+\end{center}
+respectively; 0 otherwise.
+
+Some related functions:\hspace*{0.7em}
+{\bf  isma(), isma\_(), ismadp(), ismadpi(), ismadpms(), \\
+ismadpr(), ismaeqel(), ismagf2(), ismagfs(), ismams(), ismanf(), ismanfs(), \\
+ismap(), ismapgf2(), 
+        ismapgfs(),
+        ismapms(), ismarfmsp1(), ismarfr(), ismas(),
+
+isvec(), isvec\_(), isvecdp(), isvecdpi(), isvecdpms(), isvecdpr(), isvecgf2(),\\
+ isvecgfs(), isvecms(), isvecnf(), isvecnfs(), isvecp(), isvecpgf2(), isvecpgfs(), \\
+isvecrfmsp1(), isvecrfr()}.
+
+\leer\leer
+You can also test if a matrix or a vector is the zero matrix or the zero vector;
+as usual, we refer you to the on-line
+documentation or the SM keyword index for details. 
+
+\newpage
+
+Here is a table of some 
+useful functions specific to some types of matrices/vectors; we give only the 
+name of the functions related to a function category.
+
+\leer
+\begin{center}
+\begin{tabular}{|p{1.1in}|p{4.0in}|}
+\hline &\\[-1.3ex]
+Function type  &
+function names\\[1.5ex]
+\hline &\\[-1.3ex]
+
+characteristic \newline
+polynomial &
+{\bf machpol, magf2chpol, magfschpol, maichpol, \newline
+mamichpol, mamschpol, manfchpol,
+mapgf2chpol, mapgfschpol, mapichpol, mapmichpol, mapmschpol, mapnfchpol,
+maprchpol, marchpol, marfrchpol} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+eigenvalues &
+{\bf magf2evifcp, magfsevifcp, maiev, maievifcp, mamiev, mamievifcp, mamsev,
+        mamsevifcp, marev, marevifcp} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+determinant & 
+{\bf mafldet, magf2det, magfsdet, maidet, mamidet, \newline
+mamsdet, manfdet, manfsdet,
+mapgf2det, mapgfsdet, mapidet, mapmidet, mapmsdet, mapnfdet, maprdet, mardet,
+marfmsp1det, marfrdet} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+rank & 
+{\bf magf2rk, magfsrk, manfrk, manfsrk, marfmsp1rk, marfrrk, marrk} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+trace & 
+{\bf magf2trace, magfstrace, maitrace, mamitrace, \newline
+mamstrace, manftrace, 
+mapgf2trace, mapgfstrace, mapitrace, mapmitrace, mapmstrace, mapnftrace,
+maprtrace, marfrtrace, martrace }\\[1.5ex]
+\hline &\\[-1.3ex]
+
+transpose & 
+{\bf mactransp, mam2transp, matransp} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+construction & 
+{\bf cdmarfmsp1id, cdmarid, maconsdiag, maconszero, magf2cons1, magfscons1, 
+maicons1, mam2conszero, mam2um, mamicons1, mamscons1, manfcons1, \newline
+mabfscons1, 
+mapgf2cons1, mapgfscons1, mapicons1, mapmicons1, mapmscons1, mapnfcons1, 
+maprcons1, marcons1, marfmsp1c1, marfrcons1} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+delete & 
+{\bf madel1rc, madelsc, madelsr, madelsrc} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+embedding & 
+{\bf magf2efe, magfsefe, mapgf2efe, mapgfsefe} \newline
+{\bf vecgf2efe, vecgfsefe, vecpgf2efe, vecpgfsefe} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+elementary \newline
+divisor form & 
+{\bf maiedfcf, maupmipedfcf, maupmspedfcf, maupredfcf} \\[4.8ex]
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+\begin{center}
+\begin{tabular}{|p{1.1in}|p{4.0in}|}
+\hline &\\[-1.3ex]
+Function type  &
+function names\\[1.5ex]
+\hline &\\[-1.3ex]
+
+Hermite \newline
+normal form & 
+{\bf cdmarfmsp1hr, cdmarhermred, maiherm, \newline
+maihermltne, maihermltpe, \newline
+maihermspec, maupmshermsp} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+LLL reduction & 
+{\bf mailllred, marlllred} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+null space basis & 
+{\bf magfsnsb, mam2gnsb, mam2nsb, maminsb, \newline
+mamsnsb, manfnsb, manfsnsb, marfmsp1nsb, \newline
+marfrnsb, marnsb} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+solution of a \newline
+system of \newline
+linear equations & 
+{\bf magfsssle, mamiclanssle, mamilanssle, mamiliftssle, mamsssle, manfssle,
+manfsssle, marfmsp1ssle, \newline
+marfrssle, marssle} \\[1.5ex]
+\hline &\\[-1.3ex]
+
+linear \newline
+combination & 
+{\bf vecgfslc, vecilc, vecmilc, vecmslc, vecnflc, \newline
+vecnfslc, vecpgfslc, vecpilc, vecpmilc, vecpmslc, \newline
+vecpnflc, vecprlc, vecrfmsp1lc, vecrfrlc, vecrlc } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+unimodular \newline
+transformation & 
+{\bf veciunimtr, vecupmsunimt} \\[4.8ex]
+\hline
+\end{tabular}
+\end{center}
+
+\leer
+
+Finally, the matrix/vector package contains functions to converting from one
+data type to another (see table for some examples).
+
+\leer
+
+{\bf
+\begin{center}
+\begin{tabular}{|p{1.5in}|p{3.5in}|}
+\hline &\\[-1.3ex]
+From matrix over&
+to matrix over\\[1.5ex]
+\hline &\\[-1.3ex]
+$\Z$ & $\Z/m\Z, \Qfett,$ Nf, $\mbox{Gf}(2^{\mbox{n}})$, $\mbox{Gf}(\mbox{p}^{\mbox{n}})$, $\Z[X]$ \\
+$\Qfett$ & $\Z/m\Z$, Nf, $\Qfett[X]$\\
+Nf$[X]$ & $\Qfett[X],$ \\
+$\mbox{Gf}(2^{\mbox{n}})$ & $\mbox{Gf}(\mbox{p}^{\mbox{n}})$ \\
+$\mbox{Gf}(\mbox{p}^{\mbox{n}})$ & $\mbox{Gf}(2^{\mbox{n}})$ \\ [1.5ex]
+\hline &\\[-1.3ex]
+$\Z[X]$ & $\Z/m\Z[X], \Qfett[X],$ Nf$[X]$, $\Qfett(X)$ \\
+$\Qfett[X]$ & $\Z/m\Z[X]$, Nf$[X]$\\ [1.5ex]
+\hline
+\end{tabular}
+\end{center} }
+
+
+
+\newpage
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 4 5 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The elliptic curves package}
+\subsection{Overview}
+SIMATH contains many programs for elliptic curves over the rational
+numbers, over prime fields, over finite fields of characteristic $2$ and
+over algebraic number fields. The higher algorithms included in this
+package are for example the algorithms of Manin and Cremona for
+computing the basis of the Mordell Weil group over $\Q$. For elliptic
+curves over $\Q$ and over quadratic number fields we have an efficient
+internal representation.
+
+\subsection{Internal representation}
+\index{elliptic curve}
+\index{elliptic curve/internal representation}
+An elliptic curve over a field $K$ can be given in the long Weierstrass normal
+form
+$$
+        Y^2 + a_1 X Y + a_3 Y = X^3 + a_2 X^2 + a_4 X + a_6
+$$
+with coefficients $a_1,\ldots,a_6\in K$. For elliptic curves over finite
+fields or over number fields of degree $>2$, there is no special internal
+representation; all functions for those curves require the coefficients 
+$a_1,\ldots,a_6$ as arguments.
+
+{\bf Elliptic curves over $\Q$ and quadratic number fields} 
+
+For the initialization of an elliptic curve 
+$$
+        Y^2 + a_1 X Y + a_3 Y = X^3 + a_2 X^2 + a_4 X + a_6
+$$
+over $\Q$ or over a quadratic number field $K=\Q(\sqrt{D})$, use the function 
+{\bf ecrinit()} or \\
+{\bf ecqnfinit()} with the parameters $a_1,\ldots, a_6$ in $\Q$ 
+or in $K$. They return a list of lists
+$$
+             L = (L_1\  L_2\  L_3\  L_4) \quad \mbox{ for } \Q
+$$
+or
+$$
+             L = (L_1\  L_2\  L_3\  L_4\  L_5) \quad \mbox{ for } K,
+$$ 
+which is the internal representation of the elliptic curve. The lists
+$L_1, \ldots, L_5$ contain the following data:
+
+\newpage
+
+For an elliptic curve $E$ over $\Q$ in long Weierstrass normal form:
+\begin{center}
+      \begin{tabular}{|p{0.3in}|p{5.2in}|} 
+\hline & \\[-1.3ex]
+List & data \\[1.5ex]
+\hline &\\[-1.3ex]
+$L_1$ & contains the data of the actual model of E. Functions which 
+         use or change this data begin with {\bf ecrac} for \newline
+         e(lliptic) c(urve over) r(ational numbers), a(ctual) c(urve) \\[1.5ex]
+\hline & \\[-1.3ex]
+$L_2$ & contains the data of the isomorphic minimal model of restricted type, i.e. the
+         coefficients $a_1,\ldots, a_6$ of the Weierstrass form are the 
+         integral coefficients of a global minimal model for E over
+         $\Q$ with $a_1, a_3 \in \{0, 1\}$ and $a_2 \in \{-1, 0, 1\}$. Functions
+         which use or change this data begin with {\bf ecimin} for \newline
+         e(lliptic) c(urve with) i(nteger coefficients,) min(imal model) \\[1.5ex]
+\hline & \\[-1.3ex]
+$L_3$ & contains the data of an isomorphic model in short Weierstrass normal form (sWNF).
+        If the model in $L_2$ is already in sWNF, then we use the coefficients
+        $a_4$ and $a_6$ from the list $L_2$. Otherwise, we transform the curve
+        in an equation of the form 
+        $$
+             Y^2 = X^3 - 27 c_4 X - 54 c_6
+        $$ 
+        with $c_4, c_6$ from the list $L_{13}$. Functions which use or change this data 
+        begin with {\bf ecisnf} for \newline    
+        e(lliptic) c(urve with) i(nteger coefficients,) s(hort) n(ormal) f(orm)\\[1.5ex]
+\hline & \\[-1.3ex]
+$L_4$ & contains the invariants of E which are independent on the special 
+        model. Functions which use or change this data begin with {\bf ecrinv} for \newline
+        e(lliptic) c(urve over) r(ational numbers,) inv(ariants of the curve)\\[1.5ex]
+\hline  
+\end{tabular}
+\end{center}
+
+In detail, the lists $L_1,\ldots, L_4$ are of the following form:
+\[L_1 = (L_{11}\  L_{12}\  L_{13}\  L_{14}\  L_{15}\  L_{16}\  L_{17})\]
+where \\
+$L_{11} = (a_1\  a_2\  a_3\  a_4\ a_6)$ are the coefficients of the actual model
+of $E/\Q$, \\ 
+$L_{12} = (b_2\  b_4\  b_6\  b_8)$ and \\
+$L_{13} = (c_4\  c_6)$ are the Tate values for the actual model, \\
+$L_{14} = (D\  FD)$ are the discriminant $D$ and the factorization $FD$ of $D$;
+$FD=(p_1\ e_1\ \ldots)$ with $D=p_1^{e_1}p_2^{e_2}\ldots$, \\
+$L_{15} = (TP\  GT)$ contains a list with all torsion points of the actual model 
+($TP$) and a list of the generators of the torsion group of the actual model
+($GT$), \\
+$L_{16} = (BTm\  BTs)$ are the parameters of the birational transformation from the actual model
+to the minimal model ($BTm=(r_{rm}\ s_{rm}\ t_{rm}\ u_{rm})$) and from the actual model to the model in sWNF 
+($BTs=(r_{rs}\ s_{rs}\ t_{rs}\ u_{rs})$), \\
+$L_{17} = Br=(P_1\ \ldots\ P_r)$ is a list of basis points of the Mordell Weil group of the actual model $E/\Q$ with their N\'eron Tate heights.
+\newpage
+\[L_2 = (L_{21}\  L_{22}\  L_{23}\  L_{24}\  L_{25}\  L_{26}\  L_{27})\]
+where \\
+$L_{21} = (a_1m\  a_2m\  a_3m\  a_4m\ a_6m)$ are the coefficients of the 
+minimal model of restricted type, \\
+$L_{22} = (b_2m\  b_4m\  b_6m\  b_8m)$, \\
+$L_{23} = (c_4m\  c_6m)$, \\
+$L_{24} = (Dm\  FDm\  dwnm)$, \\
+$L_{25} = (TPm\  GTm)$, \\
+$L_{26} = (BTmr\  BTms)$, and \\
+$L_{27} = Bm$ are analogous to the lists 
+$L_{12}, \ldots, L_{17}$ with the minimal model instead of actual model. The 
+only difference is that the transformation parameters are from the minimal
+model to the actual model ($BTmr$) and from the minimal model to the model
+in sWNF ($BTms$). $dwnm$ in list $L_{24}$ is the difference between the 
+Weil height and the N\'{e}ron Tate height on the minimal model of $E/\Q$.
+%\newline
+\[L_3 = (L_{31}\  L_{32}\  L_{33}\  L_{34}\  L_{35}\  L_{36}\  L_{37}\  L_{38})\]
+where \\
+$L_{31} = (a_4s\ a_6s)$ are the coefficients of the model in sWNF of $E$, \\
+$L_{32} = (b_2s\  b_4s\  b_6s\  b_8s)$, \\
+$L_{33} = (c_4s\  c_6s)$, \\
+$L_{34} = (Ds\  FDs\  dwns)$, \\
+$L_{35} = (TPs\  GTs)$, \\
+$L_{36} = (BTsr\  BTsm)$, and \\
+$L_{37} = Bs$ are analogous to the lists 
+$L_{22}, \ldots, L_{27}$ with a model in short Weierstrass form instead of the
+actual model. As above, the
+only difference is that the transformation parameters are from the model in
+sWNF to the actual model ($BTsr$) and from the model in sWNF to the minimal
+model ($BTsm$). \\
+$L_{38} = (prec\ RRs)$ with the list $RRs = (e_1)$ or $RRs = (e_1\ e_2\ e_3)$ of the real roots of the polynomial $x^3+a_4s\cdot x+a_6s$ and the precision (FLEPS =) $prec$, that was used for their computation. If there are three real roots, they are ordered by $e_1<e_2<e_3$.
+%\newline
+\[L_4 = (L_{41}\  L_{42}\  L_{43}\  L_{44}\  L_{45}\  L_{46})\]
+where \\
+$L_{41} = (j\  Fdj)$ are the $j$-invariant ($j$) and the factorization of the
+denominator of $j$ ($Fdj$), \\
+$L_{42} = (N\  FN\  Nrt\  Lcp)$ are the conductor $N$ of $E/\Q$, the 
+factorization of the conductor ($FN$), the prime numbers, where $E$ has bad
+reduction together with their reduction type ($Nrt$) and the $c_p$-values $Lcp$, \\
+$L_{43} = (oT\  ST)$ are the order ($oT$) and the structure ($ST$) of the 
+torsion group of $E/\Q$,\\
+$L_{44} = (C\  r\  Lr\  R\  TS\  \chi\ l_1)$ are the sign of the functional equation
+($C$), the rank of $E/\Q$ ($r$), the value of the r-th derivation of the 
+L-series at $1$ ($Lr$), the regulator of $E/\Q$ ($R$), the order of the
+Tate Shafarevic group ($TS$), the characteristic polynomial of the 
+regulatormatrix ($\chi$) and the least eigenvalue of the regulatormatrix ($l_1$),\newpage
+$L_{45} = (pw_1\  w_1\  pw_2\  w_2\  p\tau\  \tau)$ are the real period ($w_1$)\ (computed with precision FLEPS = $pw_1$), the complex period
+($w_2$) \ (computed with precision FLEPS = $pw_2$) and $\tau = \pm \frac{w_1}{w_2}$\ (computed with precision FLEPS = $p\tau$), such that Im$(\tau)>0$, \\
+$L_{46} = (Nnth\  b_2'\  b_4'\  b_6'\  b_8')$ are some constants which are used
+during the computation of the archimedean local N\'{e}ron Tate height.
+\newline
+For an elliptic curve $E$ over $K=\Q(\sqrt{D})$, given in long Weierstrass normal form:
+\begin{center}
+      \begin{tabular}{|p{0.3in}|p{5.2in}|} 
+\hline & \\[-1.3ex]
+List & data \\[1.5ex]
+\hline &\\[-1.3ex]
+$L_1$ & contains the data of the actual model of E. Functions which 
+         use or change this data begin with {\bf ecqnfac} for \newline
+         e(lliptic) c(urve over) q(uadratic) n(umber) f(ield), a(ctual) c(urve)\\[1.5ex]
+\hline & \\[-1.3ex]
+$L_2$ & If a global minimal model of E exists over $K$, then 
+         $L_2$ contains the data of the global minimal model of restricted
+         type, i.e. the coefficients $a_1,\ldots, a_6$ of the Weierstrass form 
+         are the integral coefficients of a global minimal model for the curve 
+         over $K$ with $a_1, a_3 \in \{0, 1\}$ if the extension of $2$ in $K$ 
+         is split or ramified, $a_1, a_3 \in \{a+b\omega| a,b\in \{0,1\}\}$ if
+         the extension of $2$ in $K$ is inert and $a_2 \in \{-1, 0, 1\}$, if the
+         extension of $3$ in $K$ is split or ramified, 
+         $a_2 \in \{a+b\omega | a,b\in \{-1,0,1\}\}$ if the extension of $3$ in
+         $K$ is inert. $\{1, \omega\}$ is an integral basis of the number field
+         $K$, i.e. $\omega = \sqrt{D}$ if $D\equiv 2,3 ($mod $4)$ and 
+         $\omega = \frac{1+\sqrt{D}}{2}$ if $D\equiv 1 ($mod $4)$. \newline
+         If there exists no minimal model for E over $K$, then $L_2$
+         contains lists $(P_i, \pi_i, d_i, LP_i)$ where $P_i$ is a list
+         which represents a prime ideal which extends a prime number $p$ and 
+         where the curve over $K$ has bad reduction; $\pi_i$ is a uniformizing
+         parameter for $P_i$; $d_i$ encodes the decomposition law of $p$ and
+         $LP_i$ contains the data of the minimal model at $P_i$ of restricted 
+         type. \newline
+         Functions which use or change this data begin with {\bf ecqnfmin} for \newline
+         e(lliptic) c(urve over) q(uadratic n(umber) f(ield), min(imal model) \\[1.5ex]
+\hline & \\[-1.3ex]
+$L_3$ & contains the data of a model in short Weierstrass normal form (sWNF).
+        If there exists a global minimal model for $E/K$, then we take the
+        sWNF as in the case of an elliptic curve over $\Q$. If there exists
+        no global minimal model, then we use the local minimal model for the
+        first prime ideal $P_i$ in $L_2$ to find the sWNF as above. \newline
+        Functions which use or change this data begin with {\bf ecqnfsnf} for \newline
+        e(lliptic) c(urve over) q(uadratic n(umber) f(ield), s(hort) n(ormal) 
+        f(orm) \\[1.5ex]
+\hline & \\[-1.3ex]
+$L_4$ & contains the invariants of E which are independent on the special 
+        model. Functions which use or change this data begin with {\bf ecqnfinv} for \newline
+        e(lliptic) c(urve over) q(uadratic n(umber) f(ield), inv(ariants of the curve) \\[1.5ex]
+\hline & \\[-1.3ex]
+$L_5$ & contains the data of the quadratic number field.  \\[1.5ex]
+\hline
+\end{tabular}
+\end{center}
+\newpage
+In detail, the lists $L_1,\ldots,L_5$ are of the following form:
+\leer
+$$
+        L_1 = (L_{11}\  L_{12}\  L_{13}\  L_{14}\  L_{15}\  L_{16}\  L_{17})
+$$
+where \\
+$L_{11} = (a_1\  a_2\  a_3\  a_4\ a_6)$ are the coefficients of the actual model
+of $E/\Q$, \\ 
+$L_{12} = (b_2\  b_4\  b_6\  b_8)$ and \\
+$L_{13} = (c_4\  c_6)$ are the Tate 
+values for the actual model, \\
+$L_{14} = (D\  FD\ ND\ FND)$ are the discriminant $D$, the factorization 
+of $D$ in prime ideals ($FD$), the norm of $D$ ($ND$) and the factorization of 
+the norm ($FND$), \\ 
+$L_{15} = (TP\  GT)$ contains a list with all torsion points of the actual model 
+($TP$) and a list of the generators of the torsion group of the actual model
+($GT$), \\
+$L_{16} = (BTm\  BTs)$ or $L_{16} = ((BTm_1\ \ldots BTm_k)\  BTs)$ 
+are the parameters of the birational transformation from the actual model
+to the minimal model ($BTm$) or to the $P_i$ minimal model ($BTm_i$) and from 
+the actual model to the model in sWNF ($BTs$), \\
+$L_{17} = B$ is a list of the basis of the Mordell Weil group of the actual 
+model $E/K$.
+\leer
+If there exists a global minimal model for $E/K$:
+$$
+        L_2 = (L_{21}\  L_{22}\  L_{23}\  L_{24}\  L_{25}\  L_{26}\  L_{27})
+$$
+where \\
+$L_{21} = (a_1m\  a_2m\  a_3m\  a_4m\ a_6m)$ are the coefficients of the 
+minimal model of restricted type, \\
+$L_{22} = (b_2m\  b_4m\  b_6m\  b_8m)$, \\
+$L_{23} = (c_4m\  c_6m)$, \\
+$L_{24} = (Dm\  FDm)$, \\
+$L_{25} = (TPm\  GTm)$, \\
+$L_{26} = (BTmr\  BTms)$, and \\
+$L_{27} = Bm$ are analogous to the lists 
+$L_{12}, \ldots, L_{17}$ with the minimal model instead of actual model. The 
+only difference is that the transformation parameters are from the minimal
+model to the actual model ($BTmr$) and from the minimal model to the model
+in sWNF ($BTms$). 
+\leer
+If there exists no global minimal model, then 
+$$
+        L_2 = ((P_1\  LP_1)\ ...\ (P_k\  LP_k))
+$$
+where the $P_i$ are prime ideals and the $LP_i$ are lists of an analogous
+form as the list $L_2$ for a global minimal model.
+\leer
+$$
+        L_3 = (L_{31}\  L_{32}\  L_{33}\  L_{34}\  L_{35}\  L_{36}\  L_{37})
+$$
+where \\
+$L_{31} = (a_4s\ a_6s)$ are the coefficients of the model in sWNF of $E$, \\
+$L_{32} = (b_2s\  b_4s\  b_6s\  b_8s)$, \\
+$L_{33} = (c_4s\  c_6s)$, \\
+$L_{34} = (Ds\  FDs)$, \\
+$L_{35} = (TPs\  GTs)$, \\
+$L_{36} = (BTsr\  BTsm)$, and \\
+$L_{37} = Bs$ are analogous to the lists 
+$L_{22}, \ldots, L_{27}$ with a model in short Weierstrass normal form instead 
+of the actual model. As above, the 
+only difference is that the transformation parameters are from the model in
+sWNF to the actual model ($BTsr$) and from the model in sWNF to the minimal
+model ($BTsm$). 
+\leer
+$$
+        L_4 = (L_{41}\  L_{42}\  L_{43}\  L_{44}\  L_{45})
+$$
+where \\
+$L_{41} = (j\  Fdj)$ are the $j$-invariant ($j$) and the factorization of the
+denominator of $j$ in prime ideals ($Fdj$), \\
+$L_{42} = (N\  FN\  NN\ Nrt\  Lcp)$ are the conductor $N$ of $E/K$, the 
+factorization of the conductor in prime ideals ($FN$), the ideal norm of $N$ 
+($NN$), the prime ideals, where $E$ has bad reduction together with their reduction type ($Nrt$) and the $c_p$-values $Lcp$, \\
+$L_{43} = (oT\  ST)$ are the order ($oT$) and the structure ($ST$) of the 
+torsion group of $E/K$,\\
+$L_{44} = (C\  r\  Lr\  R\  TS)$ are the sign of the functional equation
+($C$), the rank of $E/K$ ($r$), the value of the r-th derivation of the 
+L-series at $1$ ($Lr$), the regulator of $E/K$ ($R$) and the order of the
+Tate Shafarevic group ($TS$), \\
+$L_{45} = (w)$ is the real period.
+\leer
+$$
+        L_5 = (D\ d_4)
+$$
+where \\
+$D$ is the discriminant of the field $K$ and 
+$d_4 = \left\{\begin{array}{ll}
+                1 & \mbox{if } D \equiv 1\; ({\rm mod}\: 4) \\
+                0 & \mbox{else.} 
+        \end{array}\right.$
+
+{\bf Points on elliptic curves}
+
+Points on elliptic curves are represented in coordinates
+$$
+        (x\ y\ z).
+$$
+For $z\not= 0$, this list represents the point 
+$$
+        \left(\frac{x}{z^2}\ \frac{y}{z^3}\right).
+$$
+The point at infinity is represented by the list
+$$
+        (0\ 1\ 0).
+$$
+
+\newpage
+
+
+\subsection{The functions for elliptic curves}
+
+As with the packages described above, it would be impossible to give an 
+exhaustive list of all the functions included in this package. We shall give a 
+short description of the basic arithmetic functions for points on elliptic 
+curves, some useful and interesting functions particular to elliptic curves and 
+functions to test points or elliptic curves as well as the name of some related 
+functions. A detailed description of all the elliptic curve functions can be 
+found in the on-line documentation and by the SM keyword index.
+
+Here are some important arithmetic functions for points on elliptic curves. The 
+conditions on the input par\-ameters depend on the data type;
+we refer you to the on-line documentation or the SM keyword index for more 
+details.
+
+\leer
+\begin{center} ``sum of points'' \end{center}
+\index{elliptic curve functions/sum of points}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+list eciminsum(E, P, Q)   & list ecisnfsum(E, P, Q)   \\
+list ecracsum(E, P, Q)  &  \\
+list ecmpsum(p, $a_1$, $a_2$, $a_3$, $a_4$, $a_6$, P, Q)   & list ecmpsnfsum(p, $a_4$, $a_6$, P, Q)   
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf int p, $a_1$, $a_2$, $a_3$, $a_4$, $a_6$;\newline
+    list E, P, Q;}
+
+These functions return {\bf P $+$ Q}.
+
+Some related functions:\hspace*{0.7em}
+{\bf ecgf2sum(), ecnfsnfsum(), ecnfsum()}.
+
+\leer\leer
+\begin{center} ``difference of points'' \end{center}
+\index{elliptic curve functions/difference of points}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+list ecimindif(E, P, Q)   & list ecisnfdif(E, P, Q)   \\
+list ecracdif(E, P, Q)  &  
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf list E, P, Q;}
+
+These functions return {\bf P $-$ Q}.
+
+\newpage
+
+\leer\leer
+\begin{center} ``inverse of points (negation)'' \end{center}
+\index{elliptic curve functions/inverse of points (negation)}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+list eciminneg(E, P)   & list ecisnfneg(E, P)   \\
+list ecracneg(E, P)  &  \\
+list ecmpneg(p, $a_1$, $a_2$, $a_3$, $a_4$, $a_6$, P)   & list ecmpsnfneg(p, $a_4$, $a_6$, P)   
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf int p, $a_1$, $a_2$, $a_3$, $a_4$, $a_6$;\newline
+    list E, P;}
+
+These functions return {\bf $-$ P}.
+
+Some related functions:\hspace*{0.7em}
+{\bf ecgf2neg(), ecnfsnfneg(), ecnfneg()}.
+
+\leer\leer
+\begin{center} ``multiplication map'' \end{center}
+\index{elliptic curve functions/multiplication map}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+list eciminmul(E, P, n)   & list ecisnfmul(E, P, n)   \\
+list ecracmul(E, P, n)  &  \\
+list ecmpmul(p, $a_1$, $a_2$, $a_3$, $a_4$, $a_6$, n, P)   & list ecmpsnfmul(p, $a_4$, $a_6$, n, P)   
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf single n;\newline
+    int p, $a_1$, $a_2$, $a_3$, $a_4$, $a_6$;\newline
+    list E, P;}
+
+These functions return {\bf n$*$ P}.
+
+Some related functions:\hspace*{0.7em}
+{\bf ecgf2mul(), ecnfmul(), ecnfsnfmul()}.
+
+
+\leer\leer
+What follows are functions which perform tests on their arguments.
+There are also 
+functions which test if a given point is a torsion point, if a list of points
+is linearly independent, etc. Please see the on-line documentation of the
+functions listed below.
+
+
+\begin{center} is... \end{center}
+\index{elliptic curve functions/is...}
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+single isponecimin(E, P) & single isponecisnf(E, P) \\
+single isponecrac(E, P) & 
+\end{tabular} }
+\end{center}
+\parbox[t]{2.5in}{with the following parameters type}
+\parbox[t]{3.0in}{
+\bf list E, P;}
+
+These functions return 1 if the point {\bf P} is a point on the specific  
+elliptic curve {\bf E}; 0 otherwise.
+
+Some related functions:\hspace*{0.7em}
+{\bf iseciminlpld(), isecimintorp(), isineciminpl(), ispecrpai(), \newline
+isppecgf2eq(), isppecgf2pai(), isppecmpeq(), isppecmppai(), isppecnfeq(),
+\\
+isppecnfpai()}.
+
+\newpage
+
+Here is a table of some useful functions specific to elliptic curves; we give 
+only the name of the functions related to a function category.
+
+\leer
+\begin{center}
+\begin{tabular}{|p{1.1in}|p{4.0in}|}
+\hline &\\[-1.3ex]
+Function type  &
+function names\\[1.5ex]
+\hline &\\[-1.3ex]
+
+discriminant &
+{\bf ecgf2disc, ecimindisc, ecisnfdisc, ecmpdisc, \newline
+        ecmpsnfdisc, ecnfdisc, ecnfsnfdisc, ecqnfacdisc, \newline
+        ecracdisc } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+j-invariant &
+{\bf ecgf2jinv, ecmpjinv, ecmpsnfjinv, ecnfjinv, \newline
+        ecnfsnfjinv, ecqnfjinv, ecrjinv } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+Tate's values &
+{\bf ecgf2tavb6, ecgf2tavb8, ecgf2tavc6, ecitavalb, \newline
+        ecitavalc, ecmptavb6, ecmptavb8, ecmptavc6, \newline
+        ecnftavb6, ecnftavb8, ecnftavc6, ecqnfacb2, \newline
+        ecqnfacb4, ecqnfacb6, ecqnfacb8, ecqnfacc4, \newline
+        ecqnfacc6, ecrtavalb, ecrtavalc } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+Tate's algorithm &
+{\bf ecimintate, ecitatealg, ecqnftatealg } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+reduction type &
+{\bf eciminbrtmp, eciminmrtmp, eciminrt, ecqnflistrt, \newline
+        ecrrt } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+conductor &
+{\bf ecqnfcond, ecqnflcond, ecqnfncond, ecqnfpifcond, \newline
+        ecrcond, ecrfcond } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+regulator &
+{\bf eciminreg, ecrregulator, ecqnfreg } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+sign &
+{\bf ecrsign } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+L-series &
+{\bf ecrclser, ecrfelser, ecrlser, ecrlserfd, ecrlserhd, \newline
+        ecrlserrkd } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+rank &
+{\bf ecrrank, ecrrank2d, ecrrankbsd, ecrrankg2d, \newline
+        ecrqnf1rank } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+basis &
+{\bf eciminbmwg, ecisnfbmwg, ecracbmwg, ecrmaninalg } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+integral points &
+{\bf ecimeqsaSip, eciminsaip, ecisnfsaip, ecisnfsaipub, \newline
+        ecracsaip } \\[1.5ex]
+\hline 
+\end{tabular}
+\end{center}
+
+\newpage
+
+\leer
+\begin{center}
+\begin{tabular}{|p{1.1in}|p{4.0in}|}
+\hline &\\[-1.3ex]
+Function type  &
+function names\\[1.5ex]
+\hline &\\[-1.3ex]
+
+torsion group &
+{\bf ecimintorgr, ecisnftorgr, ecractorgr } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+number of points &
+{\bf ecgf2npfe, ecmspnp, ecmspsnfnp } \\[1.5ex]
+\hline &\\[-1.3ex]
+
+height &
+{\bf eciminlhaav, eciminlhnaav, eciminnetahem, \newline
+        ecracweilhe, ecqnflhaav, ecqnflhnaav, \newline
+        ecqnfnetahe, ecqnfnetapa, ecqnfwehe } \\[1.5ex]
+\hline 
+\end{tabular}
+\end{center}
+
+\leer\leer
+
+Finally, the elliptic curve package contains functions which perform birational 
+transformation with given transformation parameters and birational 
+transformation from one model to another (see table).
+
+\leer
+
+{\bf
+\begin{center}
+\begin{tabular}{|p{2.0in}|p{1.7in}|}
+\hline &\\[-1.3ex]
+From &
+to\\[1.5ex]
+\hline &\\[-1.3ex]
+actual model & minimal model \newline
+               model in sWNF \\
+            & \\
+minimal model & actual model \newline
+                model in sWNF \\
+            & \\
+model in short Weierstrass \newline
+normal form (sWNF) & actual model \newline
+                minimal model \\[1.5ex]
+\hline
+\end{tabular}
+\end{center} }
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%   c h p 4 6 . t e x   %%%%%%%
+%%%%%%%                       %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The NON-SIMATH package}
+\index{NON-SIMATH package}
+To increase the performance of basic arithmetic operations, SIMATH includes 
+some packages, which do not use the SIMATH list system. These packages are
+\begin{itemize}
+\item The {\bf Essen} arithmetic package\index{Essen arithmetic} 
+        for positive integers. See the
+        documentation of 
+        {\bf Earith()} for details.
+\item The {\bf P2-arithmetic} package\index{P2-arithmetic} together with the
+        {\bf G2-arithmetic} package\index{G2-arithmetic} 
+        for the computation with polynomials over \Z/2\Z{} and Galois fields
+        of characteristic 2.
+        See the documentation of {\bf G2arith()} and {\bf P2arith()} 
+        for details.
+\item The {\bf Heidelberg} arithmetic\index{Heidelberg arithmetic} package for         integers. See the
+        on-line documentation of {\bf HDiadd(), HDiutil(), HDimul()} etc.
+\item The {\bf Papanikolaou}\index{Papanikolaou} floating point package. See           the documentation
+        for {\bf PAFadd()} etc. in the on-line documentation or look for
+        Papanikolaou in the keyword index.
+\end{itemize}
+A comfortable way to use functions of the Heidelberg and Papanikolaou 
+package with SIMATH variables is given by the functions {\bf iHDfu(), flPAFfu()}
+and {\bf fltrig()}.
+
+% \end{document}
+

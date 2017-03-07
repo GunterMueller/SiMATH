@@ -1,0 +1,47 @@
+                                * * * * * * *
+                                *   vfunc   *
+                                * * * * * * *
+
+        Vectors are entered in the following way: 
+                "{a1, ... ,an}", n>0.
+
+        The following functions are available for vectors:
+
+        +           denom       mtoi        scalar  
+        -           elsubst     nftopol     vcoef
+        *           gftopol     num         zvconstr 
+        ==          mod         puto
+        !=
+
+
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        '=='                    equal;
+
+        '!='                    not equal;
+
+        'denom'                 denominator;
+
+        'elsubst'               element substitution in matrices or vectors;
+
+        'gftopol'               Galois-field to polynomial;
+
+        'mod'                   module homomorphism;
+
+        'mtoi'                  modular to integer;
+
+        'nftopol'               number field to polynomial;
+
+        'num'                   numerator;
+
+        'puto'                  display internal representation;
+
+        'scalar'                euclidian scalar product;
+
+        'vcoef'                 vector coefficient;
+
+        'zvconstr'              zero vector construction.

@@ -1,0 +1,2 @@
+#!/bin/sh
+echo "SM: command not available on this system"

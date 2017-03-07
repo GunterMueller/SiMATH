@@ -1,0 +1,42 @@
+                                * * * * * * *
+                                *  progfunc *
+                                * * * * * * *
+
+        The variable DEPTH determines the recursion depth of user-defined
+        functions. By default, DEPTH = 30. In order to adjust this 
+        value to s, where s is a positive single precision number, please
+        type "DEPTH = s". The recursion depth of user-defined functions
+        will not exceed DEPTH.
+        The following constructions make simcalc programmable:
+
+        break          for            local          while 
+        continue       forprime       prod          
+        decl           forstep        return
+        dowhile        if             sum
+
+
+        'break'         means   break;
+
+        'continue'              continue;
+
+        'decl'                  declaration of functions;
+
+        'dowhile'               dowhile-loop;
+
+        'for'                   for-loop;
+
+        'forprime'              forprime-loop;
+
+        'forstep'               forstep-loop;
+
+        'if'                    if-statement;
+
+        'local'                 local variable declaration;
+
+        'prod'                  product;
+
+        'return'                return;
+
+        'sum'                   sum;
+        
+        'while'                 while-loop;

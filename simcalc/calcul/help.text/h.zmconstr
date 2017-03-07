@@ -1,0 +1,15 @@
+                           * * * * * * *
+                           *  zmconstr *
+                           * * * * * * *
+
+        "zero matrix construction"
+        SYNTAX: X = zmconstr(m, n)
+
+        m, n are positive integers.
+
+        X is assigned the mxn - zero matrix.
+
+
+        Example 1: (correct)
+
+                zmconstr(3,4)

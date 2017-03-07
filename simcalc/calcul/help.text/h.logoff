@@ -1,0 +1,21 @@
+                               * * * * * * *
+                               *    log    *
+                               * * * * * * *
+
+        simcalc is able to send all terminal output to a log file as 
+        well as to the screen using the following commands:
+
+        "logon"         
+        "logon()"       closes the current log file and enables
+                        logging to the file ___LOG.
+
+        "logon(NAME)"   closes the current log file and enables
+                        logging to the file NAME.
+
+        "logoff"        
+        "logoff()"      closes the current log file.
+
+        "loglist"       displays the current log file.
+
+        Displaying the current log file is not possible in sequences
+        and loops.

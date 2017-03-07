@@ -1,0 +1,133 @@
+                                * * * * * * *
+                                *   ifunc   *
+                                * * * * * * *
+
+        The following functions are available for integers:
+
+        +        ==        aval         ispprime  min          putb
+        -        !=        binom        isprime   mod          putbits 
+        *        <         ceil         isqrt     mval         puthex 
+        :        <=        chinrem      jacsym    ord          puto
+        ^        >         classnum     lcm       pconstr      putoct
+        /        >=        egcd         ln        pfact        root
+        !        &&        exp          log2      pgen         sfp
+        [ ]      ||        fact         log10     phi          sgn 
+                           floor        max       ppconstr     sqrt
+                           fltoi        mex       proot        tofl
+                           gcd
+    
+                            
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        ':'                     (integer part of) quotient;
+
+        '^'                     exponentiation;
+
+        '/'                     division;
+
+        '!'                     factorial;
+
+        '[ ]'                   absolute value;
+
+        '=='                    equal;
+
+        '!='                    not equal;
+
+        '<'                     less;
+
+        '<='                    less or equal;
+
+        '>'                     greater;
+
+        '>='                    greater or equal;
+
+        '&&'                    and;
+
+        '||'                    or;
+
+        'aval'                  additive m-adic value;
+
+        'binom'                 binomial coefficient;
+
+        'ceil'                  smallest integer greater or equal;
+
+        'chinrem'               chinese remainder algorithm;
+
+        'classnum'              class number;
+
+        'egcd'                  extended greatest common divisor;
+
+        'exp'                   exponential function;
+
+        'fact'                  factorization;
+
+        'floor'                 greatest integer less or equal;
+
+        'fltoi'                 floating points to integers;
+
+        'gcd'                   greatest common divisor;
+ 
+        'ispprime'              is pseudoprime ? ;
+ 
+        'isprime'               is prime ? ;
+ 
+        'isqrt'                 integral part of square root;
+
+        'jacsym'                Jacobi symbol;
+
+        'lcm'                   least common multiple;
+
+        'ln'                    natural logarithm;
+
+        'log2'                  integer part of the logarithm, base 2;
+
+        'log10'                 1 + integer part of the logarithm,
+                                base 10;
+
+        'max'                   maximum;
+
+        'mex'                   exponentiation in Z/mZ;
+
+        'min'                   minimum;
+
+        'mod'                   module homomorphism;
+
+        'mval'                  multiplicative m-adic value;
+
+        'ord'                   order;
+
+        'pconstr'               prime construction;
+
+        'pfact'                 factorization modulo prime;
+
+        'pgen'                  prime generator;
+
+        'phi'                   Eulerian phi-function;
+
+        'ppconstr'              pseudo prime construction;
+
+        'proot'                 primitive root;
+
+        'putb'                  put bit representation;
+
+        'putbits'               display bit representation;
+        
+        'puthex'                put hexadecimal representation;
+
+        'puto'                  display internal representation;
+
+        'putoct'                put octal representation;
+
+        'root'                  root;
+
+        'sfp'                   squarefree part;
+
+        'sgn'                   sign;
+
+        'sqrt'                  square root;
+
+        'tofl'                  to floating points.

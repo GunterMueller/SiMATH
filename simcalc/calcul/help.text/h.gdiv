@@ -1,0 +1,21 @@
+                               * * * * * * *
+                               *     :     *
+                               * * * * * * *
+
+        "(integer part of) quotient"
+
+        ":" is the operator for the quotient of elements of Z and
+        polynomials over Z, Q, Z/pZ (where p is a prime), GF(p^n) or a 
+        number field.
+
+        Warning: If p > 2^30, the primality of p is not tested.
+
+
+        Example 1: (correct)
+
+                4821764827342:100
+
+
+        Example 2: (correct)
+
+                MOD(x + z + 23) : MOD(x)

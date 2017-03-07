@@ -1,0 +1,12 @@
+Let's use c-mode
+================
+
+It is better to unify our style, and we coose c-mode of emacs.
+
+Please write the following lines in your .emacs file.
+
+(setq auto-mode-alist
+      (cons '("\\.S$" . c-mode) auto-mode-alist))
+
+
+$Id: c-mode.en.txt,v 1.1 2002/05/23 14:41:08 tetsushi Exp $

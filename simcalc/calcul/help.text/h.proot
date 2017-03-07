@@ -1,0 +1,30 @@
+                         * * * * * * *
+                         *   proot   *
+                         * * * * * * *
+
+        "primitive root"
+        SYNTAX: X = proot(m)
+                X = proot()
+
+        m is a positive integer or the current modulus.
+        In the second case, m is the current modulus.
+
+        X is assigned a primitive root of Z/mZ, if there exists one, 
+        that is if
+               m=1, m=2, m=4
+        or     m=p^n, m=2*p^n    with p prime > 2, n positive integer.
+
+
+        Example 1: (correct)
+
+                proot(250)
+
+
+        Example 2: (correct)
+
+                proot(curModulus)
+
+
+        Example 3: (correct)
+
+                proot()

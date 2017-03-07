@@ -1,0 +1,41 @@
+                               * * * * * * *
+                               *   denom   *
+                               * * * * * * *
+
+        "denominator"
+        SYNTAX: X = denom(A)
+
+        A is an expression whose value is an integer or a rational 
+        number, a polynomial over Z or Q, a rational function or a 
+        matrix or a vector over these structures.
+
+        If A is a rational number or a rational function, X is assigned
+        the denominator of A.
+        If A is a polynomial over Q, X is assigned the least common
+        denominator of all polynomial coefficients.
+        If A is a matrix or a vector, X is assigned the least common
+        denominator of all entries.
+        If A is an element of Z, a polynomial over Z, a matrix or a
+        vector over these structures, then X is assigned 1.
+
+
+        Example 1: (correct)
+
+                denom(x^4 + 7 * x^2 + 2)
+
+
+        Example 2: (correct)
+
+                denom((x^3 + 6*x^2 + x + 9)/(y + 1))
+
+
+        Example 3: (correct)
+
+                denom({{x/y, 1/7, 3} {0, 2, 2/21} {1/(y*z), x + y, 3}})
+
+
+        Example 4: (incorrect)
+
+                denom(MOD( 3123123 ))
+
+_ERR_NR_154

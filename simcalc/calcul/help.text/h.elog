@@ -1,0 +1,18 @@
+                               * * * * * * *
+                               *    elog   *
+                               * * * * * * *
+
+        "ellitpic logarithm"
+        SYNTAX: X = elog(P)
+
+        P is an expression whose value is a point on the current
+        elliptic curve. The current elliptic curve as well as the
+        point P must be defined over Q.
+
+        X is assigned the elliptic logarithm of the point P.
+
+
+        Example 1: (correct)
+
+                elog(PT(0, 3, 1))
+

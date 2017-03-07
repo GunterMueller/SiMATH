@@ -1,0 +1,32 @@
+                               * * * * * * *
+                               *    AV     *
+                               * * * * * * *
+
+
+        "avoff"        disables the storage of additional results in AV.
+        "avon"         enables the storage of additional results in AV.
+        By default, it is enabled.
+
+        If a function computes beside the return value further results,
+        they are stored in the system array AV. 
+        AV is an array of at most 100 places. If there are more 
+        additional results, only the first 100 ones are stored in AV.
+
+        It is not allowed to assign a value explicitly to 'AV' or 
+        'AV[i]'. 
+        The values in AV can be used in other computations by the
+        variable 'AV[i]' and the values in AV can be seen by the
+        command "? AV*".
+
+        In the following functions additional results are stored in AV;
+        for detailed information, please see "? <functionname>":
+
+        basismwg            eival               minim
+        chinrem             elform              pconstr
+        cond                fact                pfact
+        declaw              faintp              pgen
+        discnf              froot               ppconstr
+        ecgnp               intbas              prim
+        ecinf               intcoef             swnf
+        ecnpscf             linequ              tors
+        egcd

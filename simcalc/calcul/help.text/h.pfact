@@ -1,0 +1,55 @@
+                               * * * * * * *
+                               *   pfact   *
+                               * * * * * * *
+
+        "factorization modulo prime"
+        SYNTAX: X=pfact(p, A)
+
+        p is an expression whose value is a prime.
+        A is an expression whose value is a univariate polynomial over 
+        Z or Q.
+        
+        pfact computes the factorization of A mod p. 
+        X is the prime factor of A mod p with greatest degree.
+
+        If A is polynomial with its factorization mod p of the form
+        c * p1^e1 * ... * pN^eN, then AV[0]=c, AV[1]=p1, AV[2]=e1, ...,
+        AV[2*N-1]=pN, AV[2*N]=eN. (See "?avfunc".)
+
+        Warning: If p > 2^30, the primality of p is not tested.
+
+
+        Example 1: (correct)
+
+                pfact(3, x^2 + 2*x + 1)
+
+
+        Example 2: (correct)
+
+                pfact(3, x^2 + 1/7*x + 1/5)
+
+
+        Example 3: (correct)
+
+                pfact(1073741827, (x + 1)^20 + 1)
+ 
+
+        Example 4: (incorrect)
+
+                pfact(4, x^2)
+
+_ERR_NR_046
+
+
+        Example 5: (incorrect)
+
+                pfact(3, x*y)
+                                
+_ERR_NR_100
+
+
+        Example 6: (incorrect)
+                
+                pfact(5, x/(x + 1))
+                
+_ERR_NR_043

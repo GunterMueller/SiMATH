@@ -1,0 +1,8 @@
+Installation hints: 
+
+(1) Type 'make' in order to obtain an executable program unnest. 
+(2) move this program to an apropriate directory e.g. by typing
+    mv ./unnest /usr/local/bin
+(3) Read the documentation on how to use unnest.  
+
+The program unnest has been originally designed by Paul Nagy. 

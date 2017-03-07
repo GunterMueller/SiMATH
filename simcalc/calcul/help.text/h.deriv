@@ -1,0 +1,30 @@
+                               * * * * * * *
+                               *   deriv   *
+                               * * * * * * *
+
+        "derivation"
+        SYNTAX: X = deriv(P, X1, X2, ..., Xn)
+
+        P is an expression whose value is either a polynomial over 
+        Z, Q, Z/mZ, GF(p^t), a number field, over R or C, or a rational
+        function. 
+        X1, ..., Xn are variables, n>0.
+
+        X is assigned the derivative of P with respect to X1, ..., Xn.
+
+
+        Example 1: (correct)
+
+                deriv(x + y, v)
+
+
+        Example 2: (incorrect)
+
+                deriv(x^2 + x + 1, x^2)
+
+_ERR_NR_051
+
+ 
+        Example 3: (correct)
+
+                deriv(MOD(x^3 + 4*x*y + y^2 + 1/3), x, x)

@@ -1,0 +1,109 @@
+#!/bin/sh
+#
+#  FILE  : smman
+#  AUTHOR: M.Pfeifer / E.Herrmann
+#  DATE  : 970411.
+#
+#  DESCRIPTION: smman locates a SIMATH-function and extracts 
+#               the description 
+#
+#
+
+ECHO_T=false
+
+SM_HOME=/usr/local/simath
+SM_SOURCES=$SM_HOME/sources
+SM_CUT_COMMAND=$SM_HOME/bin/cut_doc
+SM_VERSION=SIMATH-4.6
+SM_MAN_DIR=/tmp/SM_DOC_$2
+MANPATH=$SM_MAN_DIR/man
+export MANPATH
+
+MAN_FCN=`basename $1 .S`
+
+MAN_FILE=""
+
+# First we check the current working directory.
+
+if test -f ./$MAN_FCN.S
+then
+	MAN_FILE="./$MAN_FCN.S"
+fi
+
+# If we cannot find the source file in the current working directory we
+# try to find it in the SIMATH sources directory.
+
+if test "$MAN_FILE" = ""
+then
+	for file in `ls $SM_SOURCES`
+	do
+		if test -s $SM_SOURCES/$file/$MAN_FCN.S
+		then
+		MAN_FILE="$SM_SOURCES/$file/$MAN_FCN.S";
+	fi
+	done
+fi
+
+# In this case there is no matching function.
+
+if test "$MAN_FILE" = ""
+then       
+        if test "$ECHO_T" = "true"
+        then                                   
+           echo -n "smman: could not locate $MAN_FCN.S..."
+           echo " aborting"
+           exit 1
+        else               
+           echo "smman: could not locate $MAN_FCN.S...\c"
+           echo " aborting"
+           exit 1                                                      
+        fi                                       
+fi
+
+echo "smman: extracting manual pages from"
+echo "	$MAN_FILE..."
+
+# /tmp should be world-writable. We create the directories we need.
+
+for TMP_DIR in /tmp/SM_DOC_$2 \
+	       /tmp/SM_DOC_$2/man \
+	       /tmp/SM_DOC_$2/man/man3
+do
+	if test -s $TMP_DIR
+	then
+		if test -f $TMP_DIR
+		then
+                if "$ECHO_T" = "true"
+                then
+                   echo -n "smman: \`$TMP_DIR\' is a regular file..."
+                   echo " aborting."
+                   exit 1
+                else
+                   echo "smman: \`$TMP_DIR\' is a regular file...\c"
+                   echo " aborting."
+                   exit 1
+                fi
+                fi
+	else
+		mkdir $TMP_DIR
+	fi
+done
+
+cat $MAN_FILE | $SM_CUT_COMMAND M > $SM_MAN_DIR/man/man3/$MAN_FCN.3tmp
+
+if test -s $SM_MAN_DIR/man/man3/$MAN_FCN.3tmp
+then
+	echo ".TH $MAN_FCN \"\" \"Local\" $SM_VERSION \"\"" > $SM_MAN_DIR/man/man3/$MAN_FCN.3
+	cat $SM_MAN_DIR/man/man3/$MAN_FCN.3tmp >> $SM_MAN_DIR/man/man3/$MAN_FCN.3
+	rm -f $SM_MAN_DIR/man/man3/$MAN_FCN.3tmp
+
+	man  $MAN_FCN 
+	rm -rf $SM_MAN_DIR
+else
+
+cat $MAN_FILE | $SM_CUT_COMMAND C > $SM_MAN_DIR/man/$MAN_FCN.txt
+
+	more $SM_MAN_DIR/man/$MAN_FCN.txt
+        rm -rf $SM_MAN_DIR
+
+fi

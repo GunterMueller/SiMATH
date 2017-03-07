@@ -1,0 +1,39 @@
+  This directory contains some SIMATH main programs in the two
+subdirectories "basics" and "advanced". If you are not yet familiar
+with SIMATH, you should first look at the sources in the directory
+"basics".  The examples you will find there are supposed to help you
+write your own SIMATH programs.
+
+  The names of the main programs end with ".S". The easiest way of
+compiling these programs is to use "CCC" in the directory
+"$SM_HOME/bin" ("$SM_HOME" denotes the directory where SIMATH has been
+installed on your machine). You can compile the program "<name>.S"
+simply by typing
+	"$SM_HOME/bin/CCC <name>".
+This will produce an executable file named "<name>.x" in your current
+working directory. (This method will not work for the file
+"basics/m_kant_simath.S", since "CCC" doesn't know the required headers
+and libraries used in the computer algebra package KANT.)
+
+  You may also compile the main programs using "$SM_HOME/bin/SM". In
+order to do this you will have to enter
+	#shell#		$SM_HOME/bin/SM 	<RET>
+	<		N			<RET>
+	file name:	<name>			<RET>
+	<		c			<RET>
+	<               R			<RET>
+The last 'R' in this sequence of commands starts the program "<name>.x"
+in your current working directory (cf. the description of "SM" in the
+SIMATH manual).
+
+  If you have installed the KANT computer algebra package and
+"$SM_HOME/bin/SM" has been compiled according to your installation of
+KANT, you will be able to compile "basics/m_kant_simath.S" using "SM".
+("basics/m_kant_simath.S" actually uses two computer algebra systems,
+SIMATH and KANT.)
+
+  In the next versions of SIMATH we will give you more examples of more
+topics. But if you have any questions right now, please feel free to
+contact
+	simath@math.uni-sb.de.
+We will try to help you.

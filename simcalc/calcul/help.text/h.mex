@@ -1,0 +1,42 @@
+                               * * * * * * *
+                               *    mex    *
+                               * * * * * * *
+
+        "modular exponentiation"
+        SYNTAX: X = mex(M, A, N)
+
+        M is an expression whose value is a positive integer.
+        A is an expression whose value is an integer or a rational 
+        number whose denominator is relatively prime to M.
+        N is an expression whose value is an integer.
+
+        X is assigned (A^N) mod M.
+
+        "mex(M, A, N)" is much faster than (A^N) mod M.
+        "mex(M, A, N)" is equivalent to "curmod(M) _ MOD(A)^N".
+
+
+        Example 1: (correct)
+
+                mex(17, 12, 100)
+
+
+        Example 2: (incorrect)
+                
+                mex(3, x + 2, 4)
+                        
+_ERR_NR_055
+
+
+        Example 3: (incorrect)
+
+                mex(4/3, 3, 5)
+                
+_ERR_NR_222
+
+
+        Example 4: (incorrect)
+
+                mex(6, 456, -4/3)
+                
+_ERR_NR_054

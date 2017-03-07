@@ -1,0 +1,26 @@
+                           * * * * * * *
+                           *  return   *
+                           * * * * * * *
+
+        "return"
+        SYNTAX: return(A)
+
+        A is any simcalc expression which has a value.
+
+        return can only be used in user-defined functions.
+        It terminates the function and returns the value of A
+        as the value of that function.
+        return(A) is a stand-alone function which cannot be used
+        in expressions like X=return(A) or 3+return(A)-5.
+        
+        
+        Example 1: (correct)
+
+                decl(f(a)=return(a*(a-1)/2))
+
+
+        Example 2: (incorrect)
+
+                return(a1)
+                
+_ERR_NR_319

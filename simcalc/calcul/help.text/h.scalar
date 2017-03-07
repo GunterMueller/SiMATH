@@ -1,0 +1,25 @@
+                                * * * * * * *
+                                *   scalar  *
+                                * * * * * * *
+
+        "scalar product"
+        SYNTAX: X = scalar(v1,v2)
+
+        v1 and v2 are vectors of the same length over Z, Q, Z/mZ, 
+        GF(p^n) (where p is a prime), over a number field, over 
+        polynomials over these structures or over rational functions.
+
+        The euclidian scalar product <v1, v2> of v1 and v2 is assigned
+        to X.
+
+
+        Example 1: (correct)
+
+                scalar({1/x, 2, 3}, {x/(y + 1), y, 1/2})
+
+
+        Example 2: (incorrect)
+
+                scalar({1, 2}, {1})
+                
+_ERR_NR_094

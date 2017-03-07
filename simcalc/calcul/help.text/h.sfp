@@ -1,0 +1,28 @@
+                               * * * * * * *
+                               *    sfp    *
+                               * * * * * * *
+
+        "squarefree part"
+        SYNTAX: X = sfp(A)
+
+        A is an expression whose value is an element of Z, Q, a univariate
+        polynomial over Z, Q or Z/pZ (where p is a prime), a univariate
+        monic polynomial over number fields or Galois-fields, or a univariate 
+        rational function over Q.
+
+        You can use nfon in order to compute the squarefree part of
+        univariate polynomials over Z or Q over the number field, 
+        specified by curnf. 
+        
+        X is assigned the squarefree part of A.
+
+
+        Example 1: (correct)
+
+                sfp(-280)
+
+
+        Example 2: (correct)
+
+                sfp(2/3*x)
+                

@@ -1,0 +1,22 @@
+/*M
+.SH NAME
+smin - single-precision minimum (MACRO)
+
+.SH SYNOPSIS
+.nf
+#include<_arith1.h>
+
+single smin(a,b)
+single a,b;
+
+.SH DESCRIPTION
+smin() returns the minimum of a and b,
+M*/
+/*H
+	Version 1       28.7.1986               R.Boeffgen
+	Version 2	18.11.94	Macro nur noch im Header definiert. MP
+   DATE smin          : 890501.941201
+H*/
+/*
+	For the definition of smin please refer to the header file _arith1.h.
+*/

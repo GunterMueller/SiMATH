@@ -1,0 +1,16 @@
+                               * * * * * * *
+                               *   imag    *
+                               * * * * * * *
+
+        "imaginary part"
+        SYNTAX: Y = imag(Z)
+
+        Z is an expression whose value is an integer, a rational,
+        a real or complex number.
+
+        Y is assigned the value of the imaginary part of Z = X + Y * i.
+
+
+        Example 1: (correct)
+
+                imag(3.6 + 6 * i)

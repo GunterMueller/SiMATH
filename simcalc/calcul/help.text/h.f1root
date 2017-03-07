@@ -1,0 +1,42 @@
+                         * * * * * * *
+                         *   f1root  *
+                         * * * * * * *
+
+        "finding one root"
+        SYNTAX: X = f1root(p,P)
+                X = f1root(Q)
+
+        p is an expression whose value is a prime.
+        In the first case, P is a univariate polynomial over Z.
+        In the second case, Q is a univariate polynomial over
+        Z/pZ, where p is a prime, or over GF(p^n).
+
+        In the first case, froot computes one root of P over Z/pZ. 
+        In the second case, froot computes one root of Q over Z/pZ
+        or over GF(p^n).
+        X is assigned this root of P (or Q), if there exists one.
+
+
+        Warning: If p > 2^30, the primality of p is not tested.
+
+
+        Example 1: (correct)
+
+                f1root(5,x^2+1)
+
+
+        Example 2: (correct)
+
+                f1root(MOD(x^3+2*x+1))
+
+
+        Example 3: (correct)
+
+                f1root(GF(A*x^3+x^2+A^4+3))
+
+
+        Example 4: (incorrect)
+
+                f1root(x^4-2)
+
+_ERR_NR_321

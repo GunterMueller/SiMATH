@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *   log10   *
+                               * * * * * * *
+
+        "logarithm, base 10"
+        SYNTAX: X = log10(A)
+
+        A is an expression whose value is an integer. 
+
+        X is assigned 1 + the integer part of the base 10 logarithm 
+        of A, i.e. the number of digits of A.
+
+
+        Example 1: (correct)
+
+                log10(71 * 2^(gcd(3, 12345)) + 4)
+
+
+        Example 2: (incorrect)
+
+                log2(120/7)
+                
+_ERR_NR_309

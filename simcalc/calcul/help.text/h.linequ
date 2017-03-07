@@ -1,0 +1,52 @@
+                                * * * * * * *
+                                *   linequ  *
+                                * * * * * * *
+
+        "linear equations"
+        SYNTAX: X = linequ(A, b)
+
+        A is a nonzero (m x n) - matrix.
+        b is a vector of length m.
+
+        A and b are defined over Z or Q, over polynomials over Z or 
+        Q, over rational functions over Q, over Z/pZ, over GF(p^n) 
+        (where p is a single precision prime number) or over a number 
+        field.
+
+        linequ solves the system 
+                      (*)   A * X = b
+        of linear equations over Q, rational functions, Z/pZ, GF(p^n) 
+        or a number field, respectively:
+        If (*) is uniquely solvable, the solution is assigned to X.
+        If (*) is unsolvable, a message is displayed.
+        If (*) is not uniquely solvable, a basis of the null space
+        is displayed and a special solution of (*) is assigned to X.
+
+        In the third case the vectors of the null space are stored in
+        AV (see "?avfunc").
+
+
+        Example 1: (correct)
+
+                linequ({{1 ,2} {3, 4}}, {2 ,1})
+
+
+        Example 2: (correct)
+
+                linequ({{1, 0} {3, 0}}, {1, 1})
+
+                The system is unsolvable over Q!
+
+
+        Example 3: (incorrect)
+
+                linequ({{1, 2} {3, 4}}, {1, 2, 3})
+
+_ERR_NR_072
+
+
+        Example 4: (incorrect)
+
+                linequ({{0, 0} {0, 0}}, {0, 1})
+
+_ERR_NR_092

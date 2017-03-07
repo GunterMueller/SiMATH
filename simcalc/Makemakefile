@@ -1,0 +1,82 @@
+#!/bin/sh
+
+LIB=`pwd`
+LIB=`basename $PWD`
+
+if [ -e Makemakefile ]
+then
+        echo "Makemakefile: cannot run in current directory $PWD"
+        echo "Makemakefile: Makefile unchanged"
+        exit
+fi
+
+echo "Makemakefile: generating Makefile for $LIB ..."
+
+rm -f Makefile
+rm -f List
+
+for file in *.S
+do
+	if head -10 $file | grep MACRO > /dev/null
+	then
+		echo "Makemakefile: skipping $file ..."
+	else
+		echo "Makemakefile: appending $file ..."
+		echo $file >> List
+	fi
+done
+
+echo "include ../../Makefile.flags" 			>> Makefile
+echo ""							>> Makefile
+echo ""							>> Makefile
+echo "all: \\" 						>> Makefile
+
+for file in `cat List`
+do
+	echo "	`basename $file .S`.o \\"		>> Makefile
+done
+
+echo "	ranlib"						>> Makefile
+
+echo ""							>> Makefile
+echo ""							>> Makefile
+echo "clean:"						>> Makefile
+echo "	rm -f *~"					>> Makefile
+
+for file in `cat List`
+do
+	echo "	rm -f `basename $file .S`.o"		>> Makefile
+done
+
+echo ""							>> Makefile
+echo ""							>> Makefile
+
+echo "veryclean: clean"					>> Makefile
+echo "	rm -f ../lib/lib$LIB.a"			>> Makefile
+
+echo ""							>> Makefile
+echo ""							>> Makefile
+
+for file in `cat List`
+do
+	sfile=$file
+	pfile=`basename $file .S`.P
+	cfile=`basename $file .S`.c
+	ofile=`basename $file .S`.o
+	echo ""						>> Makefile
+	echo "$ofile: \\"				>> Makefile
+	echo "	$sfile"					>> Makefile
+        echo "	../../bin/preV3_1.x $sfile $pfile"	>> Makefile
+        echo "	../../bin/preproc.x $pfile $cfile"	>> Makefile
+        echo "	\$(CC) \$(CFLAGS_SIMCALC) \$(CPPFLAGS_SIMCALC) -c -o $ofile $cfile" \
+							>> Makefile
+	echo "	rm -f $cfile $pfile"			>> Makefile
+	echo "	ar rv ../lib/lib$LIB.a $ofile"	>> Makefile
+done
+
+echo ""							>> Makefile
+echo "ranlib:"						>> Makefile
+echo "	- ranlib ../lib/lib$LIB.a"			>> Makefile
+
+rm -f List
+

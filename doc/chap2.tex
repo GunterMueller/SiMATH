@@ -1,0 +1,1015 @@
+% \documentstyle[11pt]{book1}
+% \setlength{\voffset}{-2cm}
+% \oddsidemargin0.5cm   \evensidemargin0.5cm
+% \parindent0pt
+% \textwidth 6.0in \textheight 21.8cm
+% \input texdefs.tex
+% \begin{document}
+% \pagestyle{plain}
+% \setcounter{chapter}{1} % one less than the intended chapter number
+
+\chapter{The Interface}
+
+The SIMATH system uses a special {\em interface\/}\index{interface} to its libraries
+permitting single-letter commands for editing, compiling, and printing of
+SIMATH programs.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%                               %%%%
+%%%%       c h p 2 1 . t e x       %%%%
+%%%%                               %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Starting SIMATH}
+From your system shell type the command
+\footnote{We use {\bf \%} as the standard prompt symbol.}
+\leer
+{\tt \% {\bf SM}\/  \care} \index{SM}
+\leer
+SIMATH's introductory screen will appear followed by
+the five-line menu of SIMATH commands and the SIMATH prompt symbol $<$ on
+the last line (see p.~\pageref{SMintro}). SIMATH is now ready to receive your command.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%                               %%%%
+%%%%       c h p 2 2 . t e x       %%%%
+%%%%                               %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Example session}
+We now give an example of a SIMATH session to show how the interface works.
+For now, we shall restrict the examples to C programs. Later we will develop
+actual SIMATH programs. We 
+will create two C functions, {\bf gcd()} and {\bf lcm()}, then use these in a 
+short program, the {\bf main()} function.
+
+Note: SIMATH files are not necessarily located under {\bf /usr/local/simath}.
+Any directory can be chosen upon installation, for example 
+{\bf /usr/simath}. Here, we use \\
+{\bf /usr/local/simath} as the default directory.
+For this session, we assume that the file {\bf .SM.default} does not exist
+(see \S 2.4.1).
+
+\newpage
+
+We now begin by executing SM
+\leer
+{\tt\% {\bf SM} \care} 
+\label{SMintro}
+\begin{verbatim}
+
+
+                         **************************           
+                         *                        *           
+                         *      S I M A T H       *           
+                         *                        *           
+                         **************************           
+
+
+
+                      Version 4.6 started at 11:34:17
+
+
+
+ no source library
+ no object library
+ no file name
+
+   (N)AME:     (e,E)dit     (p)re        (o)bj        (c)omp       (C)comp 
+   object:     (a)r name    (d)ir        ar(+)obj     ar(-)obj     (r)anlib
+  USR-SRC:     (A)R NAME    (D)IR        AR(*)SRC     AR(_)SRC     (S)ELECT
+   SM-SRC:     E(X)TRACT    (~,@,.)                                        
+          (!)  ($)  (?)     (P)RINT      (H)ELP       (R)UN        (Q)UIT  
+
+<
+\end{verbatim}
+
+\leer
+SIMATH commands are abbreviated and listed in a five-line menu.  For each command, it suffices
+to type a single letter (given in parenthesis) followed by the RETURN key (except for \$).
+
+Type {\bf N}\index{N} at the prompt to name the first C function to be created.
+\leer
+{\tt $<$ {\bf N} \care \\
+file name:{\bf gcd} \care\\
+$<$}
+\leer
+All input must be followed by RETURN. Typing errors can be corrected by
+using the BACKSPACE and/or the DELETE key (depending on your machine).
+
+\newpage
+
+Invoke an editor (either with {\bf e} or with {\bf E}; see \S 2.4.1) and
+type in the following program; it will automatically be saved  under
+the name {\bf gcd.S}.
+\leer
+{\tt $<$ {\bf e} \care}\index{e}
+\begin{verbatim}
+#include <_simath.h>
+
+int             gcd(a, b)
+    int             a, b;
+{
+    int             c;
+    
+    if (a < b) 
+      {c = a; a = b; b = c;}
+    
+    while (b != 0) 
+      {c = a % b; a = b; b = c;}
+    
+    return (a);
+}
+\end{verbatim}
+$<$   
+\leer
+Type {\bf H} to display the SIMATH menu (if necessary).
+\leer
+{\tt $<$ {\bf H} \care} \index{H}
+\begin{verbatim}
+ no source library
+ no object library
+ current file name:      gcd
+
+
+   (N)AME:     (e,E)dit     (p)re        (o)bj        (c)omp       (C)comp 
+   object:     (a)r name    (d)ir        ar(+)obj     ar(-)obj     (r)anlib
+  USR-SRC:     (A)R NAME    (D)IR        AR(*)SRC     AR(_)SRC     (S)ELECT
+   SM-SRC:     E(X)TRACT    (~,@,.)                                        
+          (!)  ($)  (?)     (P)RINT      (H)ELP       (R)UN        (Q)UIT  
+<
+\end{verbatim}
+
+We now want to create  an {\em object module library\/} which can archive
+our compiled subroutines and make them available to the linker for later use.  
+(Notice that all the libraries you create will be located in 
+{\bf /usr/local/simath/lib.})
+{\tt
+\begin{tabbing}
+1234567890123456\=23456123\=\kill
+$<$ {\bf a} \care \index{a} \\
+object library:\>/usr/local/simath/lib/lib$*$.a,\\
+                  \>$*$ = {\bf example  \care }\\
+$<$ \>   
+\end{tabbing} }
+
+The library libexample.a, in the directory {\bf /usr/local/simath/lib}, is now
+the working library for SIMATH. We compile the program {\bf gcd.S} to
+the object module {\bf gcd.o}. A {\em preprocessor\/} creates a temporary file
+{\bf gcd.c} and passes it to the C compiler.
+
+{\tt $<$ {\bf o}\index{o} \care}
+\begin{verbatim}
+ SM preprocessor started at  11:48:57
+
+ SM preprocessor terminated correctly at  11:48:58
+
+ Compiler started at  11:48:58
+
+ Compiler terminated correctly at  11:49:03
+\end{verbatim}
+
+If the compiler reports an error, edit the program, using {\bf e} or {\bf E},
+to make the necessary corrections.
+
+We now add the object module gcd.o to the library.
+\leer
+{\tt $<$ {\bf +}\index{+} \care}
+\begin{verbatim}
+ar: creating /usr/local/simath/lib/libexample.a
+ `ar r /usr/local/simath/lib/libexample.a gcd.o' done
+\end{verbatim}
+$<$
+\leer
+If the library {\bf libexample.a} already exists, only the line
+\begin{verbatim}
+ `ar r /usr/local/simath/lib/libexample.a gcd.o' done
+\end{verbatim}
+will appear on your screen. If the file gcd.o is already in
+the library, you will get the following message on your screen:
+\begin{verbatim}
+SM: `gcd' already exists in `/usr/local/simath/lib/libexample.a'
+
+ rw-r--r-- 431/42 164 Sep 2 09:13 1996 gcd.o
+
+overwrite? (y/n)
+\end{verbatim}
+You must decide if you want to overwrite the existing file or not.
+
+\newpage
+
+Now use the commands {\bf N} (new file name: lcm), 
+{\bf e, o, +} to create a second C function.
+
+\begin{verbatim}
+#include <_simath.h>
+
+int             lcm(a, b)
+    int             a, b;
+{
+    int             c;
+
+    /* Result zero */
+    if (a == 0 || b == 0)
+        c = 0;
+    else
+    {
+        /* General case */
+        a = abs(a); b = abs(b); c = a / gcd(a, b);
+
+        /* if result representable */
+        if (~(1 << 31) / b >= c)
+            c *= b;
+
+        /* Replacement value if result too large */
+        else
+            c = -1;
+    }
+    return (c);
+}
+\end{verbatim}
+If you need help, enter {\bf H}. The commands referring to your current module
+library are listed on the second line of the menu. Before we turn to the main program,
+we will run {\bf ranlib} and look at the contents of our object module library.
+
+\label{NOTEranlib}
+Note: On many machines it is not necessary to apply the {\bf ranlib} command to a library.
+The command on the menu calls the corresponding (inoperative) command.
+\leer
+{\tt $<$ {\bf r}\index{r} \care}
+\begin{verbatim}
+`ranlib /usr/local/simath/lib/libexample.a' done
+\end{verbatim}
+
+\newpage
+
+Let us look at the library contents.
+\leer
+{\tt $<$ {\bf d}\index{d} \care}
+\begin{verbatim}
+(rw-r--r--431/42     34 Sep 2 11:57 1996 __.SYMDEF)
+ rw-r--r--431/42    164 Sep 2 11:51 1996 gcd.o
+ rw-r--r--431/42    332 Sep 2 11:57 1996 lcm.o
+\end{verbatim}
+The file {\tt \_\_.SYMDEF} is the table of contents of our library created by
+the {\bf ranlib} command.
+
+We now come to the main program.
+\leer
+{\tt $<$ {\bf N} \care \\
+current file name : lcm\\
+new file  name \ \ \ \ : {\bf mainp}\\
+$<$ {\bf e} \care }
+
+\begin{verbatim}
+#include <_simath.h>
+
+main()
+{
+    int             a, b, c;
+    char            as[11], bs[11];
+
+    printf("\nEnter the numbers: \na = ");
+    while (gets(as) == NULL)
+        printf("Reading error \na = ");
+    printf("b = ");
+    while (gets(bs) == NULL)
+        printf("Reading error \nb = ");
+
+    /* converting the strings to numbers */
+    a = atoi(as);
+    b = atoi(bs);
+
+    /* lcm */
+    if ((c = lcm(a, b)) == -1)
+        printf("Result is too large\n");
+    else
+        printf("lcm( %d, %d ) = %d\n", a, b, c);
+}
+
+\end{verbatim}
+
+\newpage
+
+Compile and link the program {\bf mainp.S} with the command
+\leer
+{\tt $<$ {\bf c}\index{c} \care }
+\begin{verbatim}
+ SM preprocessor started at  12:02:42
+
+ SM preprocessor terminated correctly at  12:02:43
+
+ Compiler started at  12:02:43
+
+ Compiler terminated correctly at  12:03:03
+\end{verbatim}
+The linker uses the modules from the library {\bf libexample.a}. If the compiler
+or the linker reports an error, edit the main program, using {\bf e} or {\bf E}, to
+make the necessary corrections.
+The {\bf executable program} is now stored under the name 
+{\bf mainp.x}.  Type {\bf R} to run it. Here is an example.
+\leer
+{\tt
+$<$ {\bf R}\index{R} \care \\
+RUN "mainp" \\[1.0eM]
+Enter the numbers:\\
+a = {\bf 55 \care}\\
+b = {\bf 22 \care}\\
+lcm( 55, 22 ) = 110
+}
+\begin{verbatim} 
+***   # GCs: 1        GC time: 0.00 s      # collected cells: 0        *** 
+***   # blocks: 1     block size: 16383    # free cells:      16376    ***  
+***   total CPU time: 0.03 s                                           ***   
+\end{verbatim}
+$<$
+\leer
+At the end of the execution, we automatically get information about memory
+administration
+\begin{itemize}
+\item number of garbage collections ({\tt \# GCs}),
+\item total time (in seconds) spent garbage collecting ({\tt GC time}),
+\item total number of memory cells collected during garbage collection \\
+      ({\tt \# collected cells}),
+\item number of memory blocks used for the computation ({\tt \# blocks}),
+\item size (in cells) of one block ({\tt block size}),
+\item number of free memory cells ({\tt \# free cells}),
+\end{itemize}
+and the total computation time (in seconds) ({\tt total CPU time}), including
+the time spent for memory administration.
+
+A second test: type in {\bf R} once again.
+\leer
+{\tt
+$<$ {\bf R} \care \\
+RUN "mainp"\\[1.0eM]
+Enter the numbers:\\
+a = {\bf 44444 \care}\\
+b = {\bf 10000000 \care}\\
+Result is too large
+}
+\begin{verbatim}
+***   # GCs: 1        GC time: 0.00 s      # collected cells: 0        *** 
+***   # blocks: 1     block size: 16383    # free cells:      16376    ***  
+***   total CPU time: 0.03 s                                           ***   
+\end{verbatim}
+$<$
+\leer
+The result exceeds the maximum representable number in C, $2^{31}-1$.
+Enter {\bf Q} to end the SIMATH session.
+\leer
+{\tt $<$ {\bf Q}\index{Q} \care}
+\begin{verbatim}
+
+
+                SM terminated at 12:06:47 
+
+%
+\end{verbatim}
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%                               %%%%
+%%%%       c h p 2 3 . t e x       %%%%
+%%%%                               %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Description of SIMATH commands}
+
+\subsection{Overview}
+The SIMATH commands are listed in a five-line menu.  Execution of those
+commands necessitates only typing the symbol in parenthesis followed by the RETURN
+key (except for {\bf \$}). All input is done in {\em buffered\/} mode, i.e. typing
+errors can be corrected by using the BACKSPACE and/or DELETE key.
+
+Whenever a SIMATH command requires the input of a file (or library) name, the last
+name given as input for that SIMATH command will be shown on your screen as the
+current file (or library) name (see \S 2.3, {\bf mainp} function example). You must
+either hit the RETURN key to keep the current name or enter a new name (in which
+case the current name will be overwritten by the new name).
+
+Note: At the beginning of a SIMATH session, the names of the source library, object 
+library, and program defined by the last {\bf A}, {\bf a}, and {\bf N} commands of
+the previous session will automatically be read in from the file {\bf .SM.default};
+they are shown on your screen in the introductory lines.  If the file {\bf .SM.default}
+does not exist or if there is no preinstallation, the following lines will appear on 
+your screen
+\leer
+{\tt
+no source library\\  
+no object library\\
+no file name
+}
+\leer
+At the end of a SIMATH session, the names last preinstalled with the {\bf A}, {\bf a},
+and {\bf N} commands will be written into the file {\bf .SM.default} in the directory
+from which SIMATH was started (if you have writing permission).
+
+Next is a short description of the SIMATH commands. A detailed description of each command
+will be given in the following sections.
+
+\newpage
+\begin{tabular}{lcl}\index{commands}
+Command         & Input          & \ Description \\
+\cline{1-3}\\
+NAME            & N              & \ enter program name \\
+edit            & e              & \ start editor (see note below) \\
+Edit            & E              & \ start editor (see note below) \\
+pre             & p              & \ start preprocessor \\
+obj             & o              & \ create object module \\
+comp            & c              & \ compile and link executable program \\
+Comp            & C              & \ compile and link executable program in the background \\
+ar name         & a              & \ enter module library name \\
+dir             & d              & \ list contents of the module library \\
+ar$+$obj        & $+$            & \ archive object module into the module library\\
+ar$-$obj        & $-$            & \ remove object module from the module library \\
+ranlib          & r              & \ supply module library with table of contents \\
+AR NAME         & A              & \ enter source library name \\
+DIR             & D              & \ list contents of the source library \\
+AR$*$SRC        & $*$            & \ archive source file into the source library\\
+AR$\_$SRC       & $\_$           & \ remove source file from the source library \\
+EXTRACT         & X              & \ extracts the sources of a SIMATH-function
+to the current \\  
+                &                & \ working directory. The function-name must be defined by
+'N'. \\
+SELECT          & S              & \ copy source file from the usr-source library to the
+                                    current \\
+                &               & \ working directory \\
+!               & !               & \ branch into a subshell \\
+\$              & \$              & \ execute a SHELL command \\
+?               & ?               & \ look up keywords \\
+$\tilde{\ }$, @ & $\tilde{\ }$, @ & \ look up on-line documentation \\
+.               & .               & \ look up short description \\
+PRINT           & P               & \ print source file \\
+HELP            & H               & \ display menu \\
+RUN             & R               & \ run program \\
+QUIT            & Q               & \ end SIMATH session
+\end{tabular}
+\leer
+\leer
+Note: {\bf e} usually calls vi and {\bf E} emacs, but this depends on your
+installation (see installation instructions).
+
+\newpage
+
+\subsection{Menu-line 1:\ \ Editing and compiling programs}                      
+Note: ``similar shell commands'' refer to standard UNIX commands; they may differ
+from your machine's shell commands.
+\leer
+\menurowone
+\begin{tabular}{p{1.1in}p{4.4in}}
+(N)AME:  & Enter program name\\
+         & \\ 
+Key      & $<$ {\bf N} \care\index{N}\\
+         & file name: {\bf pname} \care\\   
+         & $<$\\
+         & \\ 
+or       & $<$ {\bf N} \care\\
+         & current file name: pnameold\\
+         & new file name:\ \ \ \ \ \,{\bf pname} \care\\
+         & $<$\\ 
+         & \\ 
+Function & {\bf pname} is the new preinstalled program, i.e. the new current
+           program to be worked on. If only the {\mbox RETURN} key is hit,
+           the current file {\bf pnameold} remains valid.\\
+         & \\ 
+Remark   & Suffixes are used internally to differentiate between
+           the SM source \\
+         & file {\bf pname.S}, the SM preprocessor versions {\bf pname.P} and \\
+         & {\bf pname.c},
+           the C preprocessor version {\bf pname.i}, 
+           the object module {\bf pname.o}, the list of compiler errors {\bf pname$\_$CC}
+           (when compiling in the background), and the executable program {\bf pname.x}.
+\end{tabular}
+
+\menurowone
+\begin{tabular}{p{1.1in}p{4.4in}}
+(e)dit        & Start editor\\
+              & \\ 
+Key           & $<$ {\bf e} \care\index{e}\\
+              & \\ 
+Function      & The preinstalled file is edited using the editor corresponding to
+                {\bf e}, usually vi (see note \S 2.4.1).\\
+              & \\
+similar       & \\
+shell command & {\bf \% vi pname.S } \care
+\end{tabular}
+
+\newpage
+
+\menurowone
+\begin{tabular}{p{1.1in}p{4.4in}}
+(E)dit        & Start editor\\
+              & \\
+Key           & $<$ {\bf E} \care\index{E}\\
+              & \\    
+Function      & The preinstalled file is edited using the editor corresponding to
+                {\bf E}, usually emacs (see note \S 2.4.1).\\
+              & \\
+similar       & \\
+shell command & {\bf \% emacs pname.S } \care
+\end{tabular}
+
+\menurowone
+\begin{tabular}{p{1.1in}p{4.4in}}
+(p)re         & Start preprocessor\\
+              & \\ 
+Key           & $<$ {\bf p} \care\index{p}\\
+              & \\ 
+Function      & The SIMATH preprocessors and C preprocessor are run with the preinstalled file {\bf pname.S}
+                as input. The SIMATH preprocessor creates the temporary files {\bf pname.P} and
+                {\bf pname.c}. {\bf pname.c}, the C program equivalent of {\bf pname.S}, is then
+                passed to the C preprocessor which creates the file {\bf pname.i}.\\
+               & \\ 
+similar        & \\
+shell command  & {\bf \% cc -P -I. -I/usr/local/simath/include pname.c \care}\\
+               & \\ 
+Remark         & {\bf (p)re} is meant to be used mainly as a debugging tool.
+\end{tabular}
+
+\menurowone
+\begin{tabular}{p{1.1in}p{4.4in}} 
+(o)bj         & Create object module\\
+              & \\  
+Key           & $<$ {\bf o} \care\index{o}\\
+              & \\ 
+Function      & The C compiler compiles the file {\bf pname.c} to the object module 
+                {\bf pname.o} after the SM preprocessors have been run automatically. Any compiling
+                error will appear on your screen; use the {\bf e} or {\bf E} command to
+                correct the error(s) in {\bf pname.S}.\\
+              & \\ 
+similar       & \\
+shell command & {\bf \% cc -O -I. -I/usr/local/simath/include -c pname.c \care}
+\end{tabular}
+
+\newpage
+
+\menurowone
+\begin{tabular}{p{1.1in}p{4.4in}} 
+(c)omp        & Compile and link an executable program\\
+              & \\ 
+Key           & $<$ {\bf c} \care\index{c}\\
+              & \\
+Function      & The C compiler creates an executable program {\bf pname.x} from 
+                {\bf pname.S} where {\bf pname.S} must contain exactly one 
+                main function.  The SM preprocessors are run automatically. Required
+                modules from C and/or SIMATH libraries are linked automatically;
+                any preinstalled, user-defined module library (see command \\
+              & {\bf (a)r name})
+                has priority over the system libraries. Any compiling or linking error will
+                be shown on your screen; use the {\bf e} or {\bf E} command to correct
+                them.\\
+              & \\ 
+similar       & {\bf \% cc  -O -I. -I/usr/local/simath/include} \\
+shell command & \ \ \ {\bf -L/usr/local/simath/lib [-lexample] -lkern -lec4 \ldots}\\
+              & \ \ \ {\bf -llist -lm -ltermcap -s -o pname.x pname.c \care}\\
+              & \\
+Remark        & see remark for (C)omp
+\end{tabular}
+
+\newpage
+
+\menurowone
+\begin{tabular}{p{1.1in}p{4.4in}} 
+(C)omp   & Compile in the background\\
+         & \\ 
+Key      & $<$ {\bf C} \care\index{C}\\
+         & Confirm with RETURN or enter additional module libraries
+           {\bf ar1 ar2 \ldots}; {\bf ar1} will be linked first followed
+           by {\bf ar2 \ldots}\ .\\
+         & {\bf : [ar1 \ldots]\ \ \care}\\
+         & \\
+Function & This is the same function as {\bf (c)omp} except that everything
+           runs in the background. Optional, additional module libraries
+           {\bf ar1 \ldots} have priority over system libraries during linking
+           ({\bf ar$*$} stands for {\bf /usr/local/simath/lib/libar$*$.a}); uppermost
+           priority is still given to the preinstalled, user-defined module library
+           (see command {\bf (a)r name}).\newline
+           Compiling or linking errors will be listed in the file {\bf pname\_CC};
+           use the {\bf e} or {\bf E} command to correct them.\\
+         & \\
+Remark   & In order to save space, the {\bf c} and {\bf C} commands
+           automatically execute a {\bf strip} command (i.e the linker {\bf ld} is run
+           with the -s option) which removes the symbol table and relocation bits
+           ordinarily attached to the output of the assembler and linker. If you want
+           to use a debugger, use the corresponding shell commands\\
+         & {\bf c:\ \ \ \% CCC pname [ar1 ar2 \ldots] \ \ \ \ \ \ \care}\\
+         & {\bf C:\ \ \% CCC pname [ar1 ar2 \ldots] \& \ \ \ \care}\\
+         & where {\bf ar$*$}  stands for {\bf /usr/local/simath/lib/libar$*$.a}.
+           The libraries {\bf ar1}, {\bf ar2} \ldots will take precedence over
+           the system libraries during linking.
+\end{tabular}
+
+\newpage
+ 
+\subsection{Menu-line 2:\ \  Archiving object modules}
+
+\menurowtwo
+\begin{tabular}{p{1.1in}p{4.4in}} 
+(a)r name & Enter module library name\\
+          & \\ 
+Key       & $<$ {\bf a} \care\index{a}\\
+          & object library: /usr/local/simath/lib/lib$*$.a,\\
+          & \hspace*{75pt} $*$ = {\bf lname} \care\\ 
+          & $<$\\
+          & \\
+or        & $<$ {\bf a} \care\\
+          & current object library: /usr/local/simath/lib/liblnameold.a\\
+          & new object library: \ \ \ \ /usr/local/simath/lib/lib$*$.a ,\\
+          & \hspace*{113pt} $*$ = {\bf lname} \care\\
+          & $<$ \\  
+          & \\ 
+Function  & {\bf liblname.a} is the new preinstalled object module library, i.e.
+            your own object module library to be used with highest priority by
+            the linker; it is located in the directory {\bf /usr/local/simath/lib}. 
+            If only the RETURN key is hit, the current object library {\bf liblnameold.a}
+            will remain valid.\\
+          & \\
+Remark    & If you no longer need your preinstalled module library, type in
+            {\bf .}  for {\bf lname} to cancel the preinstallation.
+\end{tabular}
+
+\menurowtwo
+\begin{tabular}{p{1.1in}p{4.4in}}
+(d)ir         & List contents of the module library\\
+              & \\ 
+Key           & $<$ {\bf d} \care\index{d}\\
+              & \\ 
+Function      & The files contained in the preinstalled object module library 
+                are listed; additional information such as file attributes, file size,
+                and date of creation are also given.\\
+              & \\
+similar       & \\
+shell command & {\bf \% ar tv /usr/local/simath/lib/liblname.a $|$ page -d \care}\\
+              & \\
+Remark        & If there is no preinstalled library or if the library does not
+                exist yet, an error message will appear on your screen.
+\end{tabular}
+
+\newpage
+
+\menurowtwo
+\begin{tabular}{p{1.1in}p{4.4in}}
+ar(+)obj       & Archive object module\\
+               & \\ 
+Key            & $<$ {\bf +} \care\index{+}\\
+               & \\ 
+Function       & The object module {\bf pname.o}, created from the preinstalled
+                 pro\-gram {\bf pname.S} by the command {\bf o}, is added
+                 to the preinstalled object module library and deleted from the
+                 current working directory.\\
+               & If the preinstalled library does not exist, it will be created.\\ 
+               & If {\bf pname.o} already exists in the library, the user will be asked
+                 whether or not to replace the {\bf pname.o} already in the library 
+                 by the {\bf pname.o} from the current working directory.\\
+               & If {\bf pname.o} does not exists, an error message will appear on your
+                 screen.\\
+               & \\
+       similar & {\bf \% ar r /usr/local/simath/lib/liblname.a pname.o \care}\\
+shell commands & {\bf \% rm pname.o  \care}\\ 
+               & \\
+Remarks        & If no library or program name is preinstalled or if an error occurs during
+                 archiving, an error message will be displayed on your screen and the module
+                 {\bf pname.o} will not be deleted from the current working directory.\\
+               & After successful archiving, the following message will be displayed on
+                 your screen:\\
+               & `ar r /usr/local/simath/lib/liblname.a pname.o' done\\
+\end{tabular}
+
+\newpage
+
+\menurowtwo
+\begin{tabular}{p{1.1in}p{4.4in}}
+ ar($-$)obj    & Remove object module from the library\\
+               & \\ 
+Key            &  $<$ {\bf $-$} \care\index{-}\\
+               & \\ 
+Function       & The object module {\bf pname.o}, created from the preinstalled
+                 pro\-gram {\bf pname.S} by the command {\bf o}, will be 
+	 	 removed from the preinstalled object module library.\\
+               & If {\bf pname.o} is not in the library, an error message will
+                 appear on your screen.\\
+               & \\
+   similar     & \\
+shell command  & {\bf \% ar d /usr/local/simath/lib/liblname.a pname.o \care}\\   
+               & \\ 
+Remarks        & If no library or program name is preinstalled or if an error occurs,
+                 an error message will be displayed on your screen.\\
+               & After successful execution, the following message will be displayed
+                 on your screen:\\
+               & `pname' deleted from `/usr/local/simath/lib/liblname.a'
+\end{tabular}
+\leer
+\menurowtwo
+\begin{tabular}{p{1.1in}p{4.4in}}
+(r)anlib       & Supply module library with table of contents\\
+               & \\ 
+Key            & $<$ {\bf r} \care\index{r}\\
+               & \\ 
+Function       & The preinstalled object module library will be supplied with a
+                 table of contents \_\_.SYMDEF. On many workstations, {\bf ranlib}
+                 is not necessary; the command {\bf r} has no effect (see note
+                 p.~\pageref{NOTEranlib}).\\
+similar        & \\
+shell command  & {\bf \% ranlib /usr/local/simath/lib/liblname.a \care}\\    
+               & \\ 
+Remarks        & If {\bf ranlib} is necessary on your machine, then
+                 you should run {\bf ranlib} again after any change to the
+                 object library in order to keep the table of contents for
+                 archive up to date; otherwise, you will get a warning from the
+                 linker when you use the {\bf c} or {\bf C} command.\\
+               & If no library is preinstalled or if an error occurs, an error message
+                 will be displayed on your screen.\\
+\end{tabular}
+  
+\newpage
+
+\subsection{Menu-line 3:\ \   Archiving source files}
+Lines 2 and 3 in the menu contain similar commands referring to object module
+libraries and source libraries respectively; the only difference is that you
+also have to press the Shift key for the commands in line 3.
+
+These SIMATH commands are meant to help you organize your program source files 
+into some meaningful order. You do not have to use them.
+\leer
+\menurowthree
+\begin{tabular}{p{1.1in}p{4.4in}}   
+(A)R NAME      & Enter source library name\\ 
+               & \\ 
+Key            & $<$ {\bf A} \care\index{A}\\
+               & source library: {\bf USR-SNAME \care}\\   
+               & $<$\\
+               & \\ 
+       or      & $<$ {\bf A} \care\\
+               & current source library: USR-SNAMEOLD\\
+               & new source library: \ \ \ \ {\bf USR-SNAME \care}\\ 
+               & \\ 
+Function       & {\bf USR-SNAME} is the new preinstalled source library, i.e. a library
+                 where you may archive your program source files; it is located in the
+                 working directory. If only the RETURN key is hit, the current source library
+                 {\bf USR-SNAMEOLD} will remain valid.\\
+               & \\  
+\end{tabular}
+
+\newpage
+
+\menurowthree
+\begin{tabular}{p{1.1in}p{4.4in}} 
+(D)IR          & List contents of the source library\\
+               & \\ 
+Key            & $<$ {\bf D} \care\index{D}\\
+               & \\ 
+Function       & The files contained in the preinstalled source library are listed;
+                 additional information such as file attributes, file size, and date
+                 of creation are also given.\\
+               & \\ 
+    similar    & \\
+ shell command & {\bf \% ar tv USR-SNAME $|$ page -d \care}\\
+               & \\ 
+Remark         & If there is no preinstalled library or if the library does not
+                 exist yet, an error message will appear on your screen.
+\end{tabular}
+
+\menurowthree
+\begin{tabular}{p{1.1in}p{4.4in}} 
+AR($*$)SRC     & Archive source file\\
+               & \\ 
+Key            & $<$ {\bf $*$} \care\index{*}\\ 
+               & \\ 
+Function       & The preinstalled file {\bf pname.S} is added to the preinstalled source
+                 library and deleted from the current working directory.\\
+               & If the preinstalled library does not exist, it will be created.\\
+               & If {\bf pname.S} already exists in the library, the user will be asked
+                 whether or not to replace the {\bf pname.S} already in the library by
+                 the {\bf pname.S} from the current working directory.\\
+               & If {\bf pname.S} does not exist, an error message will appear on your
+                 screen.\\
+               & \\ 
+       similar & {\bf \% ar r USR-SNAME pname.S \care}\\   
+shell commands & {\bf \% rm pname.S \care}\\    
+               & \\
+Remarks        & If no library or program name is preinstalled or if an error occurs during
+                 archiving, an error message will be displayed on your screen and the file
+                 {\bf pname.S} will not be deleted from the current working directory. \\
+               & After successful archiving, the following message will be displayed on
+                 your screen:\\
+               & `ar r USR-SNAME pname.S' done\\
+\end{tabular}
+
+\newpage
+
+\menurowthree
+\begin{tabular}{p{1.1in}p{4.4in}} 
+AR($\_$)SRC    & Remove source file from the library\\
+               & \\ 
+Key            & $<$ {\bf $\_$} \care\index{_}\\ 
+               & \\ 
+Function       & The preinstalled source file {\bf pname.S} will be removed from the
+                 preinstalled source library.\\
+               & If {\bf pname.S} is not in the library, an error message will appear
+                 on your screen.\\
+               & \\   
+    similar    & \\
+ shell command & {\bf \% ar d USR-SNAME pname.S \care}\\    
+               & \\ 
+Remarks        & If no library or program name is preinstalled or if an error occurs,
+                 an error message will be displayed on your screen.\\
+               & After successful execution, the following message will be displayed
+                 on your screen:\\
+               & `pname'\ deleted from `USR-SNAME'  
+\end{tabular}
+
+\menurowthree
+\begin{tabular}{p{1.1in}p{4.4in}}  
+SELECT         & Copy source file from the source library to the current directory\\
+               & \\ 
+Key            & $<$ {\bf S} \care\index{S}\\
+               & \\ 
+Function       & The preinstalled file  {\bf pname.S} will be copied from the preinstalled
+                 source library to the current working directory; {\bf pname.S} is not
+                 deleted from the library.\\
+               & If {\bf pname.S} already exists in the current directory, the user will
+                 be asked whether or not to replace the {\bf pname.S} already in the
+                 current directory by the {\bf pname.S} from the source library.\\
+               & If {\bf pname.S} is not in the library, an error message will appear
+                 on your screen.\\
+               & \\ 
+   similar     & \\
+ shell command & {\bf \% ar x USR-SNAME pname.S  \care}\\  
+               & \\
+Remarks        & If no library or program name is preinstalled or if an error occurs,
+                 an error message will be displayed on your screen.\\
+               & After successful execution, the following message will be displayed
+                 on your screen:\\
+               & `pname.S' extracted from `USR-SNAME'
+\end{tabular}
+  
+\newpage
+
+
+\subsection{Menu-line 4:\ \ SIMATH-sources commands}
+\menurowfour
+\begin{tabular}{p{1.1in}p{4.4in}}
+E(X)TRACT       & Extracts a SIMATH-function.\\
+                & \\
+Key             & $<$ {\bf X} \index{X} \\
+                & \\
+Function        & If you have defined a Name of a SIMATH-function with \\
+                & the command 'N', X will try to find this function in \\
+                & the SIMATH-source directory and copies it into the \\
+                & current working directory.
+\end{tabular}
+%
+\menurowfour
+\begin{tabular}{p{1.1in}p{4.4in}}
+($\tilde{\ }$,@,\,.)   & Look up on-line documentation\\
+                       & \\
+Key                    & $<$ {\bf $\tilde{\ }$} \index{$\tilde$}\care \ \ \ \ \ or \ \ \ \ \ $<$ {\bf @}
+                         \care\\
+                       & documentation of: {\bf xyz \care}\\
+                       & \\
+                       & $<$ {\bf .} \index{.}\care\\
+                       & short description of: {\bf xyz \care}\\
+                       & \\
+Function               & In the first two cases a detailed description of the
+                         SIMATH function {\bf xyz} is displayed. In the third
+                         case, the description is displayed in TeX format, if
+                         the SIMATH function does support a TeX documentation.
+                         If the description is longer than one page, type
+                         {\bf SPACE} to continue or {\bf q} to quit.
+
+                         If you use the command \ {\bf .}\ , the short
+                         description of the SIMATH function {\bf xyz} is
+                         displayed, i.e. the function name with parameters and
+                         the detailed function name.
+
+
+                         Note: the search is case sensitive, e.g {\bf Xyz} would
+                         not be found.\\
+                       & \\
+Remark                 & The tilde $\tilde{\ }$ serves as an escape character when a
+                         remote login, using {\bf rlogin}, is performed. In this
+                         case, SM might not accept $\tilde{\ }$; you should use
+                         @ instead.
+\end{tabular}
+
+\newpage
+
+\subsection{Menu-line 5:\ \ General commands}
+\menurowfive
+\begin{tabular}{p{1.1in}p{4.4in}}           
+(!)            & Branch into a subshell\\
+               & \\ 
+Key            & $<$ {\bf !} \index{!}\care\\
+               & \\ 
+Function       & Branch into a subshell, i.e. the shell program specified in your
+                 environment variable SHELL is invoked. You can work in the subshell
+                 without losing any information preinstalled in SM. To leave the
+                 subshell, type 'exit' or 'CTRL/D'.
+\end{tabular}
+
+\menurowfive
+\begin{tabular}{p{1.1in}p{4.4in}}           
+(\$)           & Execute a SHELL command\\
+               & \\ 
+Key            & $<$ {\bf \$ command \care}\index{$}\\    
+               & \\ 
+Function       & The shell command {\bf command} is executed; no need to
+                 branch into a subshell using {\bf !}.\\
+               & \\
+Remark         & The {\bf cd} command does not change your working directory.
+\end{tabular}
+
+\menurowfive
+\begin{tabular}{p{1.1in}p{4.4in}}           
+(?)            & Look up keywords\\
+               & \\ 
+Key            & $<$ {\bf ?} \index{?}\care\\
+               & \\ 
+Function       & With the SM keyword index, you can search for SIMATH functions
+                 which match (or match not) your keywords. 
+
+                 After entering the SM keyword index, type {\bf ?} for help.
+                 A key is an {\em egrep regular expression}. You can add a key 
+                 to the list ({\bf +}), remove a key ({\bf -}), change a key 
+                 ({\bf c/C}), or delete the entire list ({\bf 0}). The number 
+                 of keys is limited by 9. The list is printed by the command
+                 {\bf l/L}. 
+
+                 With the commands {\bf p/P, @/$\tilde{\ }$, s/S}
+                 you can print the matching SIMATH functions, print the
+                 documentation of a function or print the source code of a
+                 function, respectively. You can quit the keyword index to
+                 SM with {\bf q/Q}.
+                
+\end{tabular}
+
+\newpage
+
+\menurowfive
+\begin{tabular}{p{1.1in}p{4.4in}}           
+(P)RINT        & Print source file\\
+               & \\ 
+Key            & $<$ {\bf P} \index{P}\care\\
+               & \\
+Function       & {\bf /usr/local/simath/bin/dr} prints the file {\bf pname.S}.\\
+               & (By default, {\bf /usr/local/simath/bin/dr} contains two lines\\[1.5ex]
+               & \hspace*{2cm}\#!/bin/sh\\
+               & \hspace*{2cm}lpr \$ $*$\\[1.5ex]
+               & You should change it according to your needs.)\\
+               & \\
+ similar       & \\
+ shell command & {\bf \% /usr/local/simath/bin/dr pname.S\ \ \care}
+\end{tabular}
+\leer
+\menurowfive
+\begin{tabular}{p{1.1in}p{4.4in}}           
+(H)ELP         & Display menu\\
+               & \\ 
+Key            & $<$ {\bf H} \index{H}\care\\
+               & \\ 
+Function       & The menu of the SIMATH commands is displayed.
+\end{tabular}
+
+\menurowfive
+\begin{tabular}{p{1.1in}p{4.4in}}           
+(R)UN          & Run program\\
+               & \\ 
+Key            & $<$ {\bf R} \index{R} \care\\
+               & \\ 
+Function       & The executable program {\bf pname.x}, created from the preinstalled program
+                 {\bf pname.S} by the command {\bf c} or {\bf C} will be executed.\\
+               & \\
+   similar     & \\
+ shell command & {\bf \% pname.x \care}
+\end{tabular}
+\leer
+\menurowfive
+\begin{tabular}{p{1.1in}p{4.4in}}            
+(Q)UIT         & End SIMATH session\\
+               & \\ 
+Key            & $<$ {\bf Q} \index{Q}\care\\
+               & \\ 
+Function       & SM is terminated.
+\end {tabular}
+\leer 
+\leer 
+\leer 
+{Note}: In SM, you can enter several commands on one line, e.g.
+
+{\tt $<$ {\bf o + r} \care}
+
+instead of
+
+{\tt
+ $<$ {\bf o}\ \ \care\\
+ $<$ {\bf +} \care\\
+ $<$ {\bf r}\ \ \care} 
+
+\noindent
+Trial and error will tell you what can be entered on a single line !
+
+% \end{document}

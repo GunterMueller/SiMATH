@@ -1,0 +1,49 @@
+                               * * * * * * *
+                               *  chinrem  *
+                               * * * * * * *
+
+        "chinese remainder algorithm"
+        SYNTAX: X = chinrem(A1, M1, ..., An, Mn)
+
+        A1, ..., An are expressions whose values are integers or
+        polynomials over Z.
+        M1, ..., Mn are expressions whose values are positive 
+        relatively prime integers, n>0.
+
+        X is assigned a solution of the system of simultaneous
+        congruences
+                Y = Ai mod Mi, 1 <= i <= n.
+        This solution is unique modulo M = M1 * ... * Mn. 
+        M is also displayed on the screen and stored in AV 
+        (see "? avfunc").
+
+
+        Example 1: (correct)
+
+                chinrem(1, 2, 2, 3, 2, 5, 2, 7, -11, 97)
+
+
+        Example 2: (correct)
+
+                chinrem(x^2+z,2,3*x*z,5,4,7)
+
+
+        Example 3: (incorrect)
+
+                chinrem(1, 2, 1, 6)
+                
+_ERR_NR_140
+
+
+        Example 4: (incorrect)
+
+                chinrem(3, 5, 2, -3)
+
+_ERR_NR_147
+
+
+        Example 5: (incorrect)
+
+                chinrem(3*x+1, 5, 2, 7, 11)
+                
+_ERR_NR_034_chinrem_

@@ -1,0 +1,37 @@
+                               * * * * * * *
+                               *   aval    *
+                               * * * * * * *
+
+        "additive m-adic value"
+        SYNTAX: X = aval(m, A)
+
+        m is an expression whose value is a positive integer and A is an
+        expression whose value is a nonzero element of Z or Q.
+
+        X is assigned the additive m-adic value of A, i.e.:
+        If A is an integer, X is assigned the greatest integer >= 0 such
+        that m^X divides A.
+        If A is a rational number, X is assigned 
+                aval(m,num(A)) - aval(m,denom(A)).
+
+
+        Example 1: (correct)
+
+                erg = aval(7, 49)
+
+
+        Example 2: (correct)
+
+                aval(15, 45)
+
+
+        Example 3: (incorrect)
+
+                aval(5, x + 1)
+
+_ERR_NR_203
+
+
+        Example 4: (correct)
+
+                aval(3, 3/2)

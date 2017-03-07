@@ -1,0 +1,18 @@
+                               * * * * * * *
+                               *  eccoef   *
+                               * * * * * * *
+
+        "elliptic curve coefficient"
+        SYNTAX: X = eccoef(E, l)
+
+        E is an expression whose value is an elliptic curve of the form
+                E=EC( a_1, a_2, a_3, a_4, a_6 )
+        or      E=EC( a_4, a_6 ).
+        l is a positive integer whose value is 1, 2, 3, 4 or 6.
+
+        X is assigned the l-th coefficient a_l of E.
+
+
+        Example 1: (correct)
+
+                eccoef(EC(MOD(3),MOD(4),MOD(3),MOD(1),MOD(1)), 3)

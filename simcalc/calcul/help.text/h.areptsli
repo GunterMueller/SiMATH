@@ -1,0 +1,31 @@
+                               * * * * * * *
+                               * areptsli  *
+                               * * * * * * *
+
+        "are points linearly independent ?"
+        SYNTAX: X = areptsli(P1,...,Pn)
+
+        Pi are expressions whose values are points on the elliptic curve
+        specified by curec (n>=2). The points and the current elliptic
+        curve must be defined over Q or over a quadratic number field.
+
+        areptsli decides if the points P1,...,Pn are linearly independent
+        and returns the determinant of the matrix {{aij}} i,j=1,...,n
+        where aij = ntpair(Pi,Pj) is the Neron-Tate pairing of Pi and Pj.
+
+
+        Example 1: (correct)
+
+                areptsli(PT(0, 3),PT(1,2))
+
+
+        Example 2: (correct)
+
+                areptsli(PT(0,2),PT(1,5,NF(6+A)),PT(1/9,2/27))
+
+
+        Example 3: (incorrect)
+
+                areptsli(PT(1,1))
+
+_ERR_NR_003

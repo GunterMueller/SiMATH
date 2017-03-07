@@ -1,0 +1,8 @@
+  This directory contains various smaller main programs demonstrating
+some basic concepts of the SIMATH computer algebra system. If you are
+not yet familiar with SIMATH, you may play a little bit with these
+programs in order to get a feeling for these basic concepts.
+
+  Each program contains a short description of what it calculates, so
+it should be helpful for you to look at the sources of the programs
+before executing them.

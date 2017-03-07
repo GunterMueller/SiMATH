@@ -1,0 +1,32 @@
+                                * * * * * * *
+                                *    exp    *
+                                * * * * * * *
+
+        "exponential function"
+        SYNTAX: X = exp(R)
+
+        R is an expression whose values is a number in Z, Q, R or C.
+
+        X is assigned e^R.
+
+
+        Example 1: (correct)
+                
+                exp(3/4)
+
+
+        Example 2: (correct)
+
+                exp(1)
+
+
+        Example 3: (correct)
+
+                exp(23.28)
+
+
+        Example 4: (incorrect)
+
+                exp(x^3)
+
+_ERR_NR_152

@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *  prtoaf   *
+                               * * * * * * *
+
+        "projective to affine"
+        SYNTAX: X = prtoaf(P1)
+
+        P is an expression whose value is a projective point on an 
+        elliptic curve.
+
+        X is assigned the corresponding affine point.
+
+
+        Example 1: (correct)
+
+                prtoaf(PT(0, 3, 1))
+
+
+        Example 2: (incorrect)
+
+                prtoaf(O)
+                
+_ERR_NR_116

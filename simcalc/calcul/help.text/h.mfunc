@@ -1,0 +1,75 @@
+                                * * * * * * *
+                                *   mfunc   *
+                                * * * * * * *
+
+        Matrices are entered in the following way:
+        "{{a11, ... , a1m} {a21, ... , a2m} ... {an1, ... , anm}}"
+        n,m>0.
+
+        The following functions are available for matrices:
+
+        +           ==          chpol       gftopol      nftopol
+        -           !=          denom       herm         num
+        *                       det         linequ       puto
+        ^                       dmconstr    mcoef        rk
+        /                       eival       minor        trace
+                                elform      mod          transp
+                                elsubst     mtoi         zmconstr
+
+
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        '^'                     exponentiation;
+
+        '/'                     division;
+
+        '=='                    equal;
+
+        '!='                    not equal;
+
+        'chpol'                 characteristic polynomial;
+
+        'denom'                 denominator;
+
+        'det'                   determinant;
+
+        'dmconstr'              diagonal matrix construction;
+
+        'eival'                 eigenvalues and irreducible factors of the 
+                                characteristic polynomial;
+
+        'elform'                elementary divisor form and cofactors;
+
+        'elsubst'               element substitution in matrices or vectors;
+
+        'gftopol'               Galois-field to polynomial;
+
+        'herm'                  Hermite normal form;
+ 
+        'linequ'                solution of a system of linear equations;
+
+        'mcoef'                 matrix coefficient;
+
+        'minor'                 minor matrix;
+
+        'mod'                   module homomorphism;
+
+        'mtoi'                  modular to integer;
+
+        'nftopol'               number field to polynomial;
+
+        'num'                   numerator;
+
+        'puto'                  display internal representation;
+
+        'rk'                    rank;
+
+        'trace'                 trace;
+
+        'transp'                transpose;
+
+        'zmconstr'              zero matrix construction.

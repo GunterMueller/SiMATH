@@ -1,0 +1,35 @@
+                               * * * * * * *
+                               *    sqrt   *
+                               * * * * * * *
+
+        "square root"
+        SYNTAX: X = sqrt(A)
+
+        A is an expression whose value is an element of Z, Q, R or 
+        an element of C or Z/mZ. 
+        If m >= 2^30, m must be a prime, but this primality is not 
+        tested.
+
+        X is assigned the square root of A.
+
+
+        Example 1: (correct)
+
+                sqrt(4/3)
+
+
+        Example 2: (correct)
+
+                sqrt(0.23423)
+
+
+        Example 3: (correct)
+
+                sqrt(12 -(4 * 4))
+
+
+        Example 4: (incorrect)
+
+                sqrt(x*y + x2)
+                
+_ERR_NR_025

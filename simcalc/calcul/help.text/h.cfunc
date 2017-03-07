@@ -1,0 +1,59 @@
+                                * * * * * * *
+                                *   cfunc   *
+                                * * * * * * *
+
+        simcalc computes complex numbers and polynomials over complex
+        numbers with a precision of DIGITS digits. By default, 
+        DIGITS = 37. In order to adjust this precision to s digits, 
+        please type "DIGITS = s", where s is single precision number.
+        The variable OUTPUTDIG determines the output format. If
+        OUTPUTDIG = 0, the output is in scientific notation.
+        If OUTPUTDIG > 0, the output is in fixpoint notation with
+        OUTPUTDIG digits. By default, OUTPUTDIG = 0. In order to 
+        adjust this precision to s digits, please type "OUTPUTDIG = s", 
+        where s is a nonnegative single precision number < DIGITS.
+
+        Complex numbers are entered in the form x + y * i or x + y * I.
+
+        The following functions are available for complex numbers:
+
+        +           [ ]         conjug      real 
+        -           ==          exp         root
+        *           !=          imag        sqrt
+        ^           &&          puto        
+        /           ||                                  
+
+
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        '^'                     exponentiation;
+
+        '/'                     division;
+
+        '[ ]'                   absolute value;
+
+        '=='                    equal;
+
+        '!='                    not equal;
+
+        '&&'                    and;
+
+        '||'                    or;
+
+        'conjug'                complex conjugate;
+
+        'exp'                   exponential function;
+
+        'imag'                  imaginary part;
+
+        'puto'                  display internal representation;
+
+        'real'                  real part;
+
+        'root'                  root;
+
+        'sqrt'                  square root.

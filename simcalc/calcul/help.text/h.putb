@@ -1,0 +1,18 @@
+                               * * * * * * *
+                               *    putb   *
+                               * * * * * * *
+
+        "put integer, bit representation"
+        SYNTAX: M = putb(N)
+
+        N is an integer.
+        putb displays a sequence of 0 and 1, interpreted as the
+        bit representation of N.
+
+        M is assigned N.
+
+
+        Example 1: (correct)
+
+                putb( 12345 )
+

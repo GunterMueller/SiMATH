@@ -1,0 +1,5 @@
+The file named D_h contains the negative of discriminants of imaginary
+quadratic fields of class number h. Each file ends with a '0'.
+If you want to use number fields of higher (or lower) class number, change 
+the value contained in the file h_max to the desired magnitude. All files
+D_1,...,D_h_max must exist, otherwise an error message will be produced.

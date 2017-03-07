@@ -1,0 +1,63 @@
+                           * * * * * * *
+                           *    decl   *
+                           * * * * * * *
+
+        "declaration of user-defined functions"
+        SYNTAX: decl(F1,F2,...,Fn)
+        SYNTAX: Fi: fct(p1,...,pm)=seq
+                    fct()=seq
+
+        F1,...,Fn are functions of the syntax described above, n>=1.
+        fct is the name of the user-defined function, which may also 
+        be an array. p1,...,pm are variables, which are the 
+        parameters of fct, m>=1.
+        seq is a sequence of several expressions, separated by '_' or 
+        ';'. If an expression ends with '_', its output is displayed,
+        if it ends with ';', its output is suppressed. The sequence
+        must not be empty.
+
+        decl assigns the function Fi to the name fct. At the
+        moment of declaration, seq is not evaluated.
+
+        If local variables are used, the function local must be 
+        at the beginning of the user-defined function (see "?local").
+        The sequence may contain the function return (see "?return").
+
+        Global and local variables can be used in user-defined 
+        functions. If a value is assigned to a variable which is 
+        declared by local, then that local variable is used. If
+        the variable is not declared by local in this function, 
+        the value is assigned to the global variable.
+        There is no overwrite-protection for local variables 
+        in functions. At the end of a user-defined function,
+        the local variables are deleted.
+
+        Parameters are handled like local variables.
+        The parameters and variables are not declared with
+        a specification of the type.
+
+        The user-defined function is evaluated by the call
+        fct(A1,...,Am), fct(), X=fct(A1,...,Am) or X=fct(), 
+        respectively, where A1,...,Am are any simcalc expressions, 
+        whose values are assigned to p1,...,pm.
+
+        If a function is terminated by return(A), where A is a 
+        simcalc expression, the function returns the value of A.
+        Otherwise, no value is returned.
+        
+        
+        Example 1: (correct)
+
+                decl(ec[1](a)=local(E)_if(a==3,print("singular")_return(-1),)_E=EC(a,0,1,0,0);j=jinv(E)_tors(E,3)_return(rk(E)))
+
+
+
+        Example 2: (Evaluation)
+
+                for(a=0,10,ec[1](a))
+
+
+        Example 3: (correct)
+
+                decl(f1(a)=return(f2(a,a-1)), f2(a,b)=return(b*f3(a)),
+                     f3(c)=return(c!))

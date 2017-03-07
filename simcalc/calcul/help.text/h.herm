@@ -1,0 +1,37 @@
+                                * * * * * * *
+                                *    herm   *
+                                * * * * * * *
+
+        "Hermite normal form"
+        SYNTAX: X = herm(A, np)
+
+        A is a regular square matrix over Z.
+        np is 1 or -1.
+
+        X is assigned the Hermite normal form of A.
+        If np =  1, all entries below the diagonal are >= 0,
+        if np = -1, all entries below the diagonal are <= 0,
+
+
+        Example 1: (correct)
+
+                herm({{1, 2} {0, 1}}, 1)
+
+
+        Example 2: (correct)
+
+                herm({{1, 2} {0, 1}}, -1)
+
+
+        Example 3: (incorrect)
+
+                herm({{1, x} {y, 1}}, 1)
+
+_ERR_NR_097
+
+
+        Example 4: (incorrect)
+
+                herm({{1, 0} {1, 0}}, -2)
+
+_ERR_NR_096

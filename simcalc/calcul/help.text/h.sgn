@@ -1,0 +1,22 @@
+                               * * * * * * *
+                               *    sgn    *
+                               * * * * * * *
+
+        "sign"
+        SYNTAX: X = sgn(A)
+
+        A is an expression whose value is an element of Z, Q or R.
+
+        X is assigned the sign of A.
+
+
+        Example 1: (correct)
+
+                sgn(2^(2 : 3) - gcd(lcm(23, 15), 7 + 8 * 12) / 12)
+
+
+        Example 2: (incorrect)
+
+                sgn(x*y + 2)
+                
+_ERR_NR_024

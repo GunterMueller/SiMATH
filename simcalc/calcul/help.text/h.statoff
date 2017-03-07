@@ -1,0 +1,14 @@
+                               * * * * * * *
+                               *    stat   *
+                               * * * * * * *
+
+
+        "staton"        causes simcalc to display statistical 
+                        messages about time.
+                        
+        "statoff"       supresses these statistical messages.
+
+        staton and statoff cannot be used in loops. 
+        If simcalc is enabled to display statistical messages before
+        a loop, the total time of all computations in the loop are 
+        displayed.

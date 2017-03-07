@@ -1,0 +1,840 @@
+% \documentstyle[11pt]{book1}
+% \setlength{\voffset}{-2cm}
+% \oddsidemargin0.5cm   \evensidemargin0.5cm
+% \parindent0pt
+% \textwidth 6.0in \textheight 21.8cm
+% \input texdefs.tex
+% \begin{document}
+% \pagestyle{plain}
+% \setcounter{chapter}{2} % one less than the intended chapter number
+
+\chapter{Programming in SIMATH}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%   c h p 3 1 . t e x  %%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The extended programming language C}
+The programs of the SIMATH user and the internal functions of the 
+SIMATH system are, essentially, C programs. C was
+extended by adding
+\begin{itemize}
+\item {\bf include files} for the preprocessor (\S 3.2),
+\item {\bf data types} (\S 3.3),
+\item {\bf format arguments} to {\em printf\/} and {\em fprintf\/} for
+the new data types\\
+(see on-line documentation of printf and fprintf, e.g. with @(f)printf),
+\item {\bf functions}, collected in libraries (\S 3.6 and ch.~4),
+\item {\bf global parameters} (\S 3.7).
+x\end{itemize}
+There are some changes from standard C programs in the declaration and instruction
+parts of a function due to the new data types (\S 3.3).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%   c h p 3 2 . t e x  %%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\section{Include files in SIMATH}
+In order to develop SM programs, you must have the preprocessor instruction
+\begin{center}
+{\bf \# include $<$\_simath.h$>$}
+\end{center}
+before using SIMATH data types and SIMATH functions. {\bf \_simath.h} makes all of the include files of
+the SIMATH system and the include files of the C libraries which are required by SIMATH
+available.
+
+The include files of the SIMATH system contain
+\begin{itemize}
+\item {\em define} instructions for the implementation of 
+      {\em global constants\/},
+\item {\em macros\/} for the different program packages,
+\item {\em type definitions\/},
+\item declaration of {\em global parameters\/}.
+\end{itemize}
+The following C libraries are automatically included into any SM program via
+{\bf \_simath.h}:
+\begin{tabular}{ll} 
+$<$stdio.h$>$ &\\ 
+$<$setjmp.h$>$ &\\ 
+$<$ctype.h$>$ &\\
+$<$math.h$>$ &\\
+$<$sys/types.h$>$&\\
+$<$sys/times.h$>$&\\
+$<$sys/param.h$>$&\\
+$<$sys/stat.h$>$&.\\
+\end{tabular} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%   c h p 3 3 . t e x  %%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Data types in SIMATH}
+\index{data types in SIMATH}
+\subsection{C data types}
+\index{C data types}
+The data types of C remain valid in SIMATH.\\
+Exception: Instead of {\bf int}, integers with bounded 
+values have the type de\-sig\-nation {\bf single} ({\em single precision 
+integer\/}).
+
+Variables {\bf x} of type {\bf single} are bounded by
+$$ |x| < 2^{30} .$$
+Variables of type {\bf single} are subject to the same conditions, rules,
+and ap\-pli\-ca\-tions as variables of type {\bf int} in C. For reasons of program
+readability, the type modifiers {\bf short} and {\bf long} should be avoided.
+
+\subsection{Additional data types in SIMATH}
+\index{Additional data types in SIMATH}
+Here is a short description of each new data type and in which part of SIMATH
+it is defined.
+\leer
+\begin{tabular}{lll}
+Type & Description & Package\\
+\cline{1-3} \\
+{\bf CELL}\index{CELL}\footnotemark[1] & cell: structure (see \S 4.1.3) & Base\\
+{\bf PCELL}\index{PCELL}\footnotemark[1] & pointer to a cell & Base\\
+{\bf atom}\index{atom} & integer $x$ with $|x|<2^{30}$ & Base\\    
+{\bf obj}\index{obj} & object: atom or list & Base\\    
+{\bf list}\index{list} & pointer to a list of objects & Base\\    
+{\bf single}\index{list} & single precision integer ($x$ with $|x|<2^{30}$) & Arithmetic\\ 
+{\bf int}\index{int} & integer of arbitrary size & Arithmetic\\    
+{\bf rat}\index{rat} & rational number & Arithmetic\\    
+{\bf floating}\index{floating} & real number & Arithmetic\\
+{\bf complex}\index{complex} & complex number & Arithmetic\\
+{\bf gfel}\index{gfel} & element of a Galois field & Arithmetic\\    
+{\bf gf2el}\index{gf2el} & element of a Galois field of characteristic 2 & Arithmetic\\    
+{\bf nfel}\index{nfel} & element of a number field & Arithmetic\\
+{\bf pfel}\index{pfel} & $p$-adic number & Arithmetic\\    
+{\bf rfunc}\index{rfunc} & rational function & Arithmetic\\    
+{\bf afunc}\index{afunc} & algebraic function & Arithmetic\\
+{\bf pol}\index{pol} & polynomial & Polynomial\\    
+{\bf matrix}\index{matrix} & matrix & Matrix-vector\\    
+{\bf vec}\index{vec} & vector & Matrix-vector\\   
+\end{tabular}
+
+\footnotetext[1]{used only by the system}   
+
+Each new data type will be described in detail in chapter 4.
+
+\newpage
+\subsection{Definitions using SIMATH data types}
+\index{SIMATH-type variables, - definition rules}
+These are the rules per\-tai\-ning to variables of the type described in
+\S 3.3.2 (except for {\bf atom}); we will refer to those variables as
+``SIMATH-type'' variables. Ignoring these rules may lead to inconsistencies
+in the SIMATH memory administration. The rules apply analogously to any
+new type definitions introduced by {\bf typedef}.
+
+\begin{tabular}{rp{11.5cm}} 
+1. & The C instructions {\bf longjmp()}, {\bf setjmp()}, {\bf break}, 
+	{\bf continue}, and {\bf goto} should not be used within the scope of 
+	SIMATH-type variables.\\
+2. & SIMATH-type variables cannot be declared with the {\bf static} storage
+      class specifier. Exception: see the on-line documentation for {\bf globinit()}.\\
+3. &  SIMATH-type variables cannot be declared as an element of a {\bf union} definition.\\
+4. & SIMATH-type variables (of the same type) cannot be initialized simultaneously
+       (as is often done in C programs).\\
+\end{tabular}
+
+\subsection{The {\bf bind()} and {\bf init()} instructions}
+\index{bind()}\index{init()}
+The {\bf bind()} and {\bf init()} in\-struc\-tions are used between the declaration 
+and instruction parts of a main function or block to create
+a reference in the SIMATH stack for each SIMATH-type variable; variables which have
+no reference in the stack will be returned by the garbage collector to the list of
+available cells (thus their contents will be destroyed). These are {\em independent\/}
+instructions, i.e. they must be terminated by a semicolon and a line feed is not allowed
+within the instruction. {\bf init()} differs from {\bf bind()} in that it also initializes
+each parameter to its corresponding nil value.
+
+For any SIMATH function having SIMATH-type variables {\bf $x_1, ..., x_m$}
+as pa\-ra\-me\-ters and SIMATH-type variables {\bf $y_1, ..., y_n$} in the declaration
+part, we must use the instructions
+\begin{center}
+{\bf bind($x_1,...,x_m$);} \\
+{\bf init($y_1,...,y_n$);}
+\end{center}
+before the instruction part of the function. \\
+{\bf Note} that we do {\bf not} use {\bf init($x_1,...,x_m$)}
+since arguments used to call a function usually already have a value assigned to them!
+
+For a main function, all SIMATH-type global variables must be ``initialized'' by
+{\bf init()} or {\bf globinit()} before the instruction part.
+
+\newpage
+
+For structures, e.g.
+   {\tt
+    \begin{tabbing}
+    1234567890\=123456\=12345\=\kill
+    \>    typedef struct \{ \> \\
+    \> \>    char NAME; \\
+    \> \>    list L;    \\
+    \>   \} nlist; \> \\
+    \> \\   
+    \>    nlist S;   \> \\
+    \>    nlist *p = \&S; \> \\
+    \> \\   
+    \> \\   
+    \>    struct T \{ \> \\
+    \> \>   list A; \\
+    \> \>   nlist NL; \\
+    \>   \} 
+    \end{tabbing}  
+   }
+{\bf init()} and {\bf bind()} must be used for each component which is of
+SIMATH-type; e.g.
+   {\tt
+    \begin{tabbing}
+    1234567890\=123456\=12345\=\kill
+    \>  init(T.A, p-$>$L, T.NL.L);\> 
+    \end{tabbing}  
+   }
+
+For SIMATH-type arrays, e.g.
+   {\tt 
+    \begin{tabbing}
+    1234567890\=1234\=\kill
+    \>  pol PV[10];\\
+    \>  int IV[3][100];
+    \end{tabbing}
+   }
+{\bf init()} and {\bf bind()} must be used for each component; e.g.
+   {\tt 
+    \begin{tabbing}
+    1234567890\=1234\=\kill
+    \>  init(PV[0..9], IV[0..2][0..99]);  
+    \end{tabbing}
+   }
+
+The values in the square brackets must be constants or variables; e.g.
+   {\tt
+    \begin{tabbing}
+    1234567890\=123\=\kill
+    \>  up(n)\\
+    \>  single n;\\
+    \>  \{ \\
+    \>  \ \ \ \ \  int VEC[1000];\\
+    \>  \ \ \ \ \  init(VEC[0..n]);\\
+    \>  \ \ \ \ \ \ \ \ \ \ \vdots\\
+    \>  \}
+    \end{tabbing}
+   }
+
+\newpage
+
+In order not to overload the reference list of the SIMATH memory ad\-mi\-nistra\-tion,
+in some specific cases, {\bf init()} and {\bf bind()} can be called with
+single components of structures or partial areas of arrays:
+\begin{itemize}
+\item if you are sure that {\bf only} those components or array areas will
+      be used throughout the current computation,
+\item if you know that the other components or array areas have already been
+      ``bound'' or ``initialized'' in higher calling functions,
+\item for arrays of type {\bf int}, if only {\bf single} values will occur
+      in that array area throughout the current computation,
+\end{itemize}
+i.e. statements such as
+   {\tt
+    \begin{tabbing}
+    1234567890\=123\=\kill
+    \> init(PV[2], IV[2][20]);
+    \end{tabbing}
+   }
+and
+   {\tt
+    \begin{tabbing}
+    1234567890\=123\=\kill
+    \> init(IV[0..2][0..19], IV[0][20..99]);
+    \end{tabbing}
+   }
+are possible.
+
+When using {\bf bind()} and {\bf init()} on single components of an array, 
+pointer notation is allowed; e.g. one can write
+   {\tt 
+    \begin{tabbing}
+    1234567890\=123\=\kill
+    \>  init(*(PV+2), (*(IV+2))[20]);    
+    \end{tabbing}
+   }
+for
+   {\tt 
+    \begin{tabbing}
+    1234567890\=123\=\kill
+    \>  init(PV[2], IV[2][20]);    
+    \end{tabbing}
+   }
+
+
+Finally, for variables defined as a mixture of arrays and structure components,
+e.g.
+   {\tt
+    \begin{tabbing}
+    1234567890\=123456\=12345\=\kill
+    \>    typedef struct \{ \> \\
+    \> \>    list paar; \\
+    \> \>    list s;    \\
+    \>   \} feld[10]; \> \\
+    \> \\   
+    \>    feld str1;   \> \\
+    \> \\   
+    \> \\   
+    \>    struct name \{ \> \\
+    \> \>   feld strfeld; \\
+    \> \>   char lname[20]; \\
+    \>   \} 
+    \end{tabbing}  
+   }
+{\bf bind()} and {\bf init()} must be called as follows:
+   {\tt 
+    \begin{tabbing}
+    1234567890\=123\=\kill
+    \>  bind(str1[1..n].paar);\\
+    \>  init(name.strfeld[0].s);
+    \end{tabbing}
+   }
+``Binding'' and ``initializing'' whole array areas can be done only
+for the first component of a structure, i.e.
+   {\tt 
+    \begin{tabbing}
+    1234567890\=1234\=\kill
+    \>   init(name.strfeld[1..n].s);
+    \end{tabbing}
+   }
+is not allowed.
+
+Note: {\bf bind()} and {\bf init()} are interpreted by the SIMATH-preprocessor.
+To avoid the SIMATH-preprocessor you can use a combination of 
+{\bf Sbind()-Sfree()} or {\bf Sinit()-Sfree()}. See the documentations to
+these functions.
+
+\subsection{Computations with SIMATH data types}
+All operations which refer to SI\-MATH data types are im\-ple\-men\-ted using 
+SIMATH functions, i.e.\/ C operators must be replaced by the corresponding
+SIMATH functions. For example, the C instruction
+\begin{center} 
+{\bf  c = a $*$ b;}
+\end{center}
+for integers {\bf a}, {\bf b}, and {\bf c} must be replaced by
+\begin{center} 
+{\bf  c = iprod(a, b);}
+\end{center}
+in a SIMATH program.
+
+Note: In order to avoid strange behavior in your SIMATH programs, always
+be wary of nested function calls which return SIMATH-type results; see \S 3.5.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%   c h p 3 4 . t e x  %%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Example}
+We now give an example of a SIMATH program; we will modify the functions {\bf gcd()},
+{\bf lcm()} and {\bf mainp()} from \S 2.2. A detailed description of the modi\-fi\-ca\-tions
+will be given in chapter 4.
+
+Now change the file {\bf gcd.S} as follows:
+\begin{verbatim}
+#include <_simath.h>
+
+int             gcd(a, b)
+    int             a, b;
+{
+    /* declaration part */
+    int             c;
+
+    /* binding and initialization */
+    bind(a, b);
+    init(c);
+
+    /* instruction part */
+
+    if (icomp(a, b) < 0)
+      { c = a; a = b; b = c; }
+
+    while (b != 0)
+      { c = irem(a, b); a = b; b = c; }
+
+    return (a);
+}
+\end{verbatim}
+Some remarks about the modi\-fi\-ca\-tions: as mentioned in \S 3.2, we included
+the SIMATH system file {\bf $<$\_simath.h$>$}. We added the {\bf bind()} and
+{\bf init()} functions (as seen in \S 3.3.4) and the {\bf icomp()}  and  {\bf irem()}
+functions from the arithmetic package (described in \S 4.2.4 ). Note that equality
+comparison with zero can be carried out with the usual C operators, i.e. == and !=,
+independently of the data type (see \S 4.2).
+
+\newpage
+
+Now let us modify the file {\bf lcm.S}.
+\begin{verbatim} 
+#include <_simath.h>
+
+int             lcm(a, b)
+    int             a, b;
+{
+    /* declaration part */
+    int             c;
+
+    /* binding and initialization */
+    bind(a, b);
+    init(c);
+
+    /* result zero */
+    if (a == 0 || b == 0)
+        c = 0;
+    else
+    {
+        /* general case */
+        a = iabs(a);
+        b = iabs(b);
+
+        /* c = (a / gcd(a,b)) * b */
+        c = iprod(iquot(a, gcd(a, b)), b);
+    }
+    return (c);
+}
+\end{verbatim}  
+Some more remarks: here we added the SIMATH functions {\bf iabs()}, {\bf iprod()}, and
+{\bf iquot()} all from the arithmetic package. Note that this time we do not need
+to return a replacement value for non-representable results.
+
+\newpage
+ 
+Finally change {\bf mainp.S}.
+\begin{verbatim}
+#include <_simath.h>
+
+main()
+{
+    /* declaration part */
+    int             a, b;
+
+    /* binding and initialization */
+    init(a, b);
+
+    /* read the numbers */
+    printf("\nEnter the numbers: \na = ");
+    while ((a = geti()) == ERROR)
+        printf("Reading error \na = ");
+    printf("b = ");
+    while ((b = geti()) == ERROR)
+        printf("Reading error \nb = ");
+
+    /* lcm */
+    printf("lcm(%i, %i) = %i \n", a, b, lcm(a, b));
+}
+\end{verbatim} 
+Last remarks: since we are using the SIMATH function {\bf geti()} to read in
+the numbers, we do not need to change the symbol order to numbers as in
+\S 2.2. Note the use of the argument \%i in the {\bf printf()} command instead
+of \%d.
+
+Do not forget to compile and archive the modified {\bf gcd()} and {\bf lcm()}
+functions, and to compile and link the modified {\bf mainp()} function as 
+described in \S 2.2.
+
+Now carry out the computation in the example session of \S 2.2 which 
+printed an error message.
+\leer
+{\tt
+$<$ R \care \\
+RUN "mainp"\\[1.0eM]
+Enter the numbers:\\
+a = {\bf 44444 \care}\\
+b = {\bf 10000000 \care}\\
+lcm(44444, 10000000) = 111110000000
+}
+\begin{verbatim}
+***  # GCs: 1     GC time: 0.00 s    # collected cells: 0      ***    
+***  # blocks: 1  block size: 16383  # free cells:      16369  ***    
+***  total CPU time: 0.01 s                                    ***      
+\end{verbatim}
+$<$
+\leer
+As you can see, computing with large numbers is no problem in SIMATH.
+At the end of the program, memory administration information and
+computation time are given. In the above example, most of the time is used
+by the initialization of the SIMATH memory administration; only a small fraction
+of the time is used for the actual computation.
+
+In the directory {\bf /usr/local/simath/examples/basics/} you can find further
+examples of simple SIMATH-programs.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%   c h p 3 5 . t e x  %%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Nested function calls}
+In general, nested function calls are permitted in SIMATH. For example,
+for integers {\bf M}, {\bf N}, and {\bf P}, the assignment statement
+\begin{center}
+{\bf P = (M+7) $\cdot$ N}
+\end{center}
+is replaced by
+\begin{center}
+             {\bf P = iprod(isum(M,7), N)}.
+\end{center}
+
+Nested function calls will not cause any problems if at most one of 
+the parameters is a function or a macro.
+
+In the current SIMATH version, the nesting of functions which return SIMATH-type
+results (except for {\bf atom}) might cause inconsistencies in the dynamic memory
+administration. 
+%This problem occurs only if the automatic garbage collector
+%{\bf gc()} is started while the return value of a function  or a macro is evaluated.
+%An enlarged list store and a explicitly started {\bf gc()} may prevent this.
+%This limitation shall be removed in a later SIMATH version.
+
+In general, macros should never be called with a function or a macro as a parameter. 
+If you want to nest macros, you should check how the macros are expanded by the C
+compiler; use the {\bf (p)re} command (see \S 2.4.2) to see how the C preprocessor
+expands them.
+
+A tool which can help you to unnest nested function calls by automatically
+inserting temporary variables in a SIMATH source file is distributed with 
+the SIMATH package. See the directory packages/unnest/ for details.  
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%   c h p 3 6 . t e x  %%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Nomenclature of SIMATH functions}\index{nomenclature}
+In every SIMATH function, you will find a title containing a few keywords which briefly 
+describe what the function does, e.g.
+
+\begin{tabbing}
+     \ \ \ \ \ \ \ \ \ \   \=          {\bf integer product,}  \=\\
+     \>{\bf polynomial over modular singles resultant.} 
+\end{tabbing} 
+
+Suitable abbreviations of these titles have been chosen as function 
+names, e.g. for the examples above
+
+\begin{tabbing} 
+\ \ \ \ \ \ \ \ \ \  \= {\bf iprod(),} \= \\    
+\>{\bf pmsres().}
+\end{tabbing}
+
+Because of our strict nomenclature rules, you will know the most important function
+names after using the system for only a short time.
+
+As examples of those rules, here is a short list of function names and their application area.
+\leer
+\begin{tabular}{p{1.0in}p{1.3in}p{3.0in}}
+ Package     & Function name & Function application \\ \hline
+             &               &  \\
+ Base        & l\ldots       & list \\
+             & o\ldots       & object \\
+             & s\ldots       & set \\
+             & us\ldots      & unordered set \\
+             &               &  \\ 
+ Arithmetic  & cset\ldots    & characteristic set \\
+             & s\ldots       & single precision \\
+             & i\ldots       & integer \\
+             & s\ldots      & single-precision integer \\
+             & ms\ldots      & modular single \\
+             & mi\ldots      & modular integer \\
+             & r\ldots       & rational \\
+             & fl\ldots      & floating point number\\
+             & c\ldots       & complex number \\
+             & nf\ldots      & number field \\
+             & qnf\ldots     & quadratic number field \\
+             & gfs\ldots     & Galois field of single characteristic \\
+             & gf2\ldots     & Galois field of characteristic 2 \\
+             & pf\ldots      & $p$-adic field \\ 
+             & qff\ldots     & quadratic function field \\     
+             & rfmsp\ldots   & rational function over modular single primes \\
+             & rfr\ldots     & rational function over the rationals \\
+             & afmsp\ldots   & algebraic function over modular single primes
+\end{tabular}
+\newpage
+\begin{tabular}{p{1.0in}p{1.3in}p{3.0in}}
+ Package           & Function name & Function application \\ \hline
+                   &               & \\
+ Elliptic curves   & ec\ldots      & elliptic curve (general)\\
+                   & eci\ldots     & \ldots with integer coefficients\\
+                   & ecr\ldots     & \ldots over the rationals\\
+                   & ecnf\ldots    & \ldots over number field\\
+                   & ecqnf\ldots   & \ldots over quadratic number field\\
+                   & ecmp\ldots    & \ldots over modular primes\\
+                   & ecgf2\ldots   & \ldots over Galois field of characteristic 2\\
+                   &               & \\
+                   & ec$\ast$ac\ldots   & \ldots , actual model\\
+                   & ec$\ast$snf\ldots  & \ldots , short normal form\\
+                   & ec$\ast$min\ldots  & \ldots , minimal model\\
+                   &               & \\
+ Polynomial        & p\ldots       & polynomial (general)\\
+                   & pi\ldots      & \ldots over integers\\
+                   & pms\ldots     & \ldots over modular single\\
+                   & pmi\ldots     & \ldots over modular integer\\ 
+                   & pr\ldots      & \ldots over the rationals\\
+                   & pfl\ldots     & \ldots over floating point numbers\\
+                   & pc\ldots      & \ldots over complex numbers\\
+                   & pnf\ldots     & \ldots over number field\\
+                   & pgfs\ldots    & \ldots over Galois field of single characteristic\\
+                   & pgf2\ldots    & \ldots over Galois field of characteristic 2\\
+                   & ppf\ldots     & \ldots over p-adic field\\
+                   & prfmsp\ldots  & \ldots over rational functions over modular single primes \\
+                   &               & \\
+                   & dip\ldots     & distributive polynomial\\
+                   & dp\ldots      & dense polynomial\\
+
+                   & up\ldots      & univariate polynomial\\
+                   & udp\ldots     & univariate dense polynomial\\
+                   &               & \\
+ Matrix            & ma\ldots      & matrix (general) \\ 
+                   & mai\ldots     & \ldots with integer entries\\
+                   & mams\ldots    & \ldots with modular single entries\\
+                   & mami\ldots    & \ldots with modular integer entries\\
+                   & mam2\ldots    & \ldots with entries of $\Z/2\Z$ in special bit re\-pre\-sen\-ta\-tion\\
+                   & mar\ldots     & \ldots with rational entries\\
+                   & manf\ldots    & \ldots with number field entries\\
+                   & magfs\ldots   & \ldots with Galois field of single characteristic entries\\
+                   & magf2\ldots   & \ldots with Galois field of characteristic 2 entries
+\end{tabular}
+\newpage
+\begin{tabular}{p{1.0in}p{1.3in}p{3.0in}}
+ Package     & Function name & Function application \\ \hline
+                   &               & \\
+                   & maup\ldots    & matrix of univariate polynomials\\
+                   & map\,/\,mp\ldots & matrix of polynomials (general) \\ 
+
+                   & mapi\ldots    & \ldots over integers\\
+                   & mapms\ldots   & \ldots over modular single\\
+                   & mapmi\ldots   & \ldots over modular integer\\
+                   & mapr\ldots    & \ldots over the rationals\\
+                   & mapnf\ldots   & \ldots over number field\\
+                   & mapgfs\,/\,mpgfs\ldots & \ldots over Galois field of single characteristic\\
+                   & mapgf2\,/\,mpgf2\ldots & \ldots over Galois field of characteristic 2\\
+                   &               & \\
+                   & marfr\ldots   & \ldots of rational functions over the rationals\\
+                   & marfmsp\ldots & \ldots of rational functions over modular\newline single primes\\
+                   &               & \\
+ Vector            & vec\ldots     & vector (general)\\
+                   & veci\ldots    & \ldots with integer entries\\
+                   & vecms\ldots   & \ldots with modular integer entries\\
+                   & vecmi\ldots   & \ldots with modular single entries\\
+                   & vecr\ldots    & \ldots with rational entries\\
+                   & vecnf\ldots   & \ldots with number field entries\\
+                   & vecgfs\ldots  & \ldots with Galois field of single characteristic entries\\
+                   & vecgf2\ldots  & \ldots with Galois field of characteristic 2 entries \\
+                   &               & \\
+                   & vecup\ldots   & vector of univariate polynomials\\
+                   & vecp\,/\,vp\ldots & vector of polynomials (general) \\ 
+
+                   & vecpi\ldots   & \ldots over integers\\
+                   & vecpms\,/\,vpms\ldots & \ldots over modular single\\
+                   & vecpmi\,/\,vpmi\ldots & \ldots over modular integer\\
+                   & vecpr\ldots   & \ldots over the rationals\\
+                   & vecpnf\,/,vpnf\ldots & \ldots over number field\\
+                   & vecpgfs\,/\,vpgfs\ldots & \ldots over Galois field of single characteristic\\
+                   & vecpgf2\,/\,vpgf2\ldots & \ldots over Galois field of characteristic 2\\
+                   &               & \\
+                   & vecrfr\ldots  & \ldots of rational functions over the rationals\\
+                   & vecrfmsp\ldots & \ldots of rational functions over modular single primes\\
+\end{tabular}
+\leer
+\leer
+Input and output functions are adapted to the nomenclature in C.
+
+\begin{tabular}{p{1.3in}p{1.0in}p{3.0in}}
+      $_{~}$\                        & get\ldots & \\
+                                     & put\ldots & \\
+                                     & fget\ldots & \\
+                                     & fput\ldots \ \ \ & 
+\end{tabular}
+
+\newpage
+
+Functions which serve to test certain conditions of the data 
+(``is single precision?'', ``is integer?'') have the form
+
+\begin{tabular}{p{1.3in}p{1.0in}p{3.0in}}
+$_{~}$\                     & is.... & 
+\end{tabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%   c h p 3 7 . t e x  %%%%%%%
+%%%%%%%                      %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\flu{\begin{flushleft}}
+\def\ulf{\end{flushleft}}
+\def\xxnewline{ }
+\def\xxlinebreak{ }   
+\def\rg{\raggedright}      
+
+\section{Global parameters in SIMATH}\index{global parameters}
+Here is a list of all the parameters used in SIMATH; parameters required for
+programming in SIMATH and not mentioned here will be considered in detail in chapter 4.
+Some parameters have a default value (d), others an initial value (i) which is
+changed automatically by the system during program execution.
+
+The abbreviations B, A, E, P, and M (in the second column of the table) indicate
+in which package -- base, arithmetic, elliptic curves, polynomial, or matrix/vector -- 
+the parameters find their application.
+
+The third column ({\em owner\/}) indicates which parameters can be changed either
+auto\-ma\-tically by the system or by the user; constants are identified as such and cannot
+be changed.\\
+{\bf NOTE}: The default value of parameters ``owned'' by user(E) (E for Expert)
+should in NO CASE be changed by programmers with little or no programming experience.\\
+The last column gives a short description of each parameter.
+
+The system variable {\bf BL\_START[0]} points to the first of the memory blocks cur\-rent\-ly
+allocated for the program execution; we shall call it the current program ``workspace''.
+Within the workspace, {\bf AVAIL} points to the list of free memory cells.
+\leer
+\leer
+{\small{
+\begin{tabular}{p{1.65in}p{0.2in}|p{0.15in}|p{0.54in}|p{2.60in}} 
+{Parameter, value (d)/(i)} &     &      & owner         & description \\ \hline  
+                           &     &      &               & \\
+{\bf AVAIL} = \_0    & (i) & B  & system        & list of free memory cells;\\
+                           &     &      &               & \\ 
+{\bf BASIS} $=2^{30}$      & (d) & B    & constant      & base for list representation of large \newline numbers;\\
+                           &     &      &               & \\ 
+{\bf BLOG10} $=9$          & (d) & A    & constant      & internal use: $\log_{10}$ {\bf BASIS}\\
+                           &     &              &               & \\ 
+{\bf BLOG2} $=30$          & (d) & A    & constant      & internal use: $\log_2$ {\bf BASIS}\\
+                           &     &              &               & \\ 
+{\bf BL\_NR} $=0$          & (i) & B    & system        & number of blocks currently allocated to the workspace;\\
+                           &     &      &               & \\ 
+{\bf BL\_NR\_MAX}          & (d) & B    & user(E)       & maximum number of blocks which can be allocated to the
+                                                          workspace (the default value depends on your machine);
+can be changed by gcreinit();\\
+                           &     &              &               & \\ 
+{\bf BL\_SIZE} $=2^{14}-1$ & (d) & B    & user(E)       & number of cells in a memory block; can be \\
+                           &     &      &               & changed by gcreinit() (see on-line \\
+                           &     &      &               & documentation);
+\end{tabular}
+\newpage
+\begin{tabular}{p{1.65in}p{0.2in}|p{0.15in}|p{0.54in}|p{2.60in}} 
+{Parameter, default value} &     &      & owner         & description \\ \hline  
+                           &     &      &               & \\ 
+
+{\bf BL\_START[\ ]}        &     & B    & system        & vector containing the starting address of each block allocated
+                                                          to the workspace;\\
+                           &     &       &              & \\ 
+{\bf BSMALL} $=2^{15}$     & (d) & A    & constant      & internal use: multiplication of large in\-te\-gers; \\
+                           &     &      &               & \\  
+{\bf DECBAS} $=10^9$       & (d) & A    & constant      & decimal base for input and output of large numbers;\\
+                           &     &      &               & \\
+{\bf DIFF[481]}            & (d) & A    & constant      & differences between the units \newline  $a_i \pmod{2310}$, for $1009 \leq
+                                                          a_i \leq 3319$;\\
+                           &     &      &               & \\
+{\bf DUM} $=0$             & (i) & B    & system        & internal dummy 
+						variable: used as a par\-ameter 
+						in some macros;\\
+                           &     &      &               & \\
+{\bf ERROR} $=-2^{30}$     &     & B    & constant      & return value of SIMATH functions in case of error;\\
+                           &     &      &               & \\
+{\bf FL\_EPS} $=5$         & (d) & A    & user          & maximal list length of the mantissa of a floating point number;\\
+                           &     &      &               & \\
+{\bf FL\_JMP}              & (i) & A    & system        & internal variable for handling overflow of floating point numbers;\\  
+                           &     &      &               & \\
+{\bf FL\_LN2} $=0$    & (i) & A         & system        & internal variable for floating point arith\-me\-tic;\\
+                           &     &      &               & \\
+{\bf FL\_STZ} = {\bf ST\_INDEX}
+                           & (i) & A    & system        & internal variable for handling overflow of floating point numbers;\\
+                           &     &      &               & \\
+{\bf GC\_CC} $=0$          & (i) & B    & system        & counter: number of cells collected by the \newline
+                                                          garbage collector;\\
+                           &     &      &               & \\ 
+{\bf GC\_COUNT} $=0$       & (i) & B    & system        & counter: number of garbage collections;\\
+                           &     &      &               & \\
+{\bf GC\_MESS} $=0$        & (d) & B    & user          & messages from the garbage collector; \newline suppress = 0 / print = 1;\\
+                           &     &      &               & \\
+{\bf GC\_QUOTE} $=10$      & (d) & B    & user(E)       & If the percentage of 
+                free cells with respect to the size of the current workspace is 
+                less than 1/{\bf GC\_QUOTE}, the workspace is enlarged; 
+                if {\bf BL\_NR} $=$ {\bf BL\_NR\_MAX}, the garbage collector 
+                will terminate the program ex\-ecu\-tion; 
+\end{tabular}
+\newpage
+\begin{tabular}{p{1.65in}p{0.2in}|p{0.15in}|p{0.54in}|p{2.60in}} 
+{Parameter, default value} &     &      & owner         & description \\ \hline  
+                           &     &      &               & \\
+{\bf GC\_TEST} $=0$        & (d) & B    & user          & the garbage collector will perform some additional tests on the program's
+                                                          lists; \newline disable = 0 / enable = 1. This can be used as a debugging tool
+                                                          (see on-line documentation on {\bf islist()});\\
+                           &     &      &               & \\
+{\bf GC\_TIME} $=0$        & (i) & B    & system        & total CPU time required for all garbage \newline
+                                                          collections;\\
+                           &     &      &               & \\ 
+{\bf \_H\_BOUND} $=0.0$    & (i) & E    & user          & if \_H\_BOUND$>0.0$, 
+					it is used for the search for points in 
+					the algorithm of Manin as the upper 
+					limit for the Weil height of points on 
+					an elliptic curve over Q; 
+                        		if \_H\_BOUND$=0.0$, the algorithm 
+					searches for points with unlimited Weil 
+					height; for most computations 
+                        		\_H\_BOUND$=11.0$ is sufficient; \\
+                           &     &      &               & \\ 
+{\bf ITERMAX} $=500$       & (d) & P    & user          & maximal number of iteration steps: used in computation of the real and complex roots of a polynomial
+(udprf.S);\\
+                           &     &      &               & \\
+{\bf LIST\_GSP[51]}        & (d) & P    & constant      & list of the 50 largest single precision primes: used in polynomial
+                                                          factorization;\\  
+                           &     &      &               & \\
+{\bf LIST\_SP[169]}        & (d) & A    & constant      & list of all primes smaller than 1000: used in integer factorization;\\
+                           &     &      &               & \\ 
+{\bf LN\_SIZE} $=80$       & (d) & B    & user          & line length for output;\\
+                           &     &      &               & \\ 
+{\bf MADUMMY} $=0$         & (i) & M    & system        & internal dummy variable: used as a par\-ameter in some macros for matrix com\-pu\-ta\-tions; \\
+                           &     &      &               & \\ 
+{\bf MANUMMY} $=0$         & (i) & M    & system        & internal dummy variable: used as a par\-ameter in some macros for matrix com\-pu\-ta\-tions; \\
+                           &     &      &               & \\ 
+{\bf MARGIN} $=0$          &(d)  & B    & user          & left margin: column number where output should start;\\
+                           &     &      &               & \\ 
+{\bf NUM} $=0$             &(i)  & B    & system        & internal dummy variable: used as a par\-ameter in some macros;\\
+                           &     &      &               & \\ 
+{\bf POLDUMMY} $=0$        & (i) & P    & system        & internal dummy variable: used as a par\-ameter in some macros for polynomial com\-pu\-ta\-tions; 
+\end{tabular}
+\newpage
+\begin{tabular}{p{1.65in}p{0.2in}|p{0.15in}|p{0.54in}|p{2.60in}} 
+{Parameter, default value} &     &      & owner         & description \\ \hline  
+                           &     &      &               & \\ 
+{\bf RESTORE}              &     & B    & system        & internal dummy variable for the preprocessor: used with the return value
+                                                          of functions;\\
+                           &     &      &               & \\ 
+{\bf SEMIRAND}             &     & A    & user          & controls the behaviour of irand(); \\
+                           &     &      &               & \\
+{\bf SP\_MAX} = \newline{\mbox{\hspace{5pt}{\bf BL\_SIZE}}}\newline{\mbox{\hspace{40pt}$*$ {\bf BL\_NR\_MAX}}}
+                           & (d) & B    & user(E)          & maximum number of cells which can be allocated to the workspace of a
+                                                          running program; can be changed by gcreinit(); \\
+                           &     &      &               & \\ 
+{\bf STACK}                &     & B    & system        & pointer to the SIMATH stack of references;\\
+                           &     &      &               & \\ 
+{\bf ST\_INDEX } $=0$      & (i) & B    & system        & stack pointer to the last occupied position in the SIMATH stack;\\
+                           &     &      &               & \\ 
+{\bf ST\_SIZE} $=500$      & (d) & B    & user          & size of the SIMATH stack; can be changed via the {\bf setstack()} instruction;\\
+                           &     &      &               & \\
+{\bf \_0}                  &     & B    & constant      & empty list;
+\end{tabular} 
+}}
+
+% \end{document}

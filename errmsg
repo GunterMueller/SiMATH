@@ -1,0 +1,602 @@
+EA001   Eingabe nicht vom Typ atom.
+EA002   Fehler oder Dateiende in fgetcs.
+EA003   Eingabe nicht vom Typ list.
+EA004   Eingabe nicht vom Typ obj.
+EA005   Eingabe nicht vom Typ int.
+EA006   fgeti fehlerhaft.
+EA007   Eingabe nicht vom Typ single.
+EA008   fgetpms fehlerhaft.
+EA009   fgetpr fehlerhaft.
+EA010   Nenner gleich 0.
+EA011   Eingabe nicht vom Typ floating.     
+EA012   Wurzel aus -1 ist keine reelle Zahl.
+EA013   Pi ist noch nicht implementiert.
+EA014   Eingabe keine Liste rationaler Zahlen.
+EA015   Eingabe keine 0 oder 1.
+EA016   fgetoct fehlerhaft.
+EA017   fgethex fehlerhaft.
+
+EA100   Fehler in fstat
+EA101   putc fehlerhaft.
+EA102   fflush fehlerhaft.
+EA103   Arg1 nicht vom Typ atom.
+EA104   fputc fehlerhaft.
+EA105   fputs fehlerhaft.
+EA106   fputa fehlerhaft.
+EA107   fputi fehlerhaft.
+EA108   Ausgabefehler.
+EA109   Arg1 nicht vom Typ single.
+EA110   fprintf fehlerhaft.
+EA111   fputsi fehlerhaft.
+EA112   fputpms fehlerhaft.
+EA113   fputpr fehlerhaft.
+EA114   fputbi fehlerhaft.
+EA115   fputoct fehlerhaft.
+EA116   fputhex fehlerhaft.
+
+EA302   Fehler in sgetcs
+EA320   Fehler in unsgetcs
+
+B001    Arg1 ist keine Dateikennzahl zwischen 0 und _NFILE-1.
+B002    Arg2 ist keine Dateikennzahl zwischen 0 und _NFILE-1.
+
+A000    Fehler in Datei.
+A001    Arg1 keine Liste.
+A002    Arg2 keine Liste.
+A003    Argument keine Liste.
+A004    Fehler in der Standardeingabe-Datei.
+A005    Fehler in der Standardausgabe-Datei.
+A006    Argument keine Liste ganzer Zahlen.
+A007    Arg1 keine Liste ganzer Zahlen.
+A008    Arg keine Liste von Primzahlen.
+A009    Arg keine Primzahl-Exponenten-Liste.
+A010    Arg1 keine Liste rationaler Zahlen.
+
+A101    Arg1 kein single.
+A102    Arg2 kein single.
+A103    Arg3 kein single.
+A104    Arg1 muss >=0 sein.
+A105    Arg2 muss >=0 sein.
+A106    Es gilt nicht: Arg1 * Arg2 >= 0.
+A107    Es gilt nicht: Arg1 <= Arg2.
+A108    Argument kein single.
+A109    Ergebnis  betragsmaessig > 2^30.
+A110    Argument muss >=0 sein.
+A111    Argument muss > 0 sein.
+A112    Es muss gelten: 0 <= Argument <= 100000.
+A113    Argument zu gross (nicht genug Speicherplatz vorhanden).
+A114    Arg2 zu gross (nicht genug Speicherplatz vorhanden).
+A115    Arg1 nicht positiv.
+A116    Arg2 nicht positiv.
+A117    Es muss gelten: Arg1 + 2 * Arg2 <= BASIS.
+A118	Es muss gelten: 2. optionales Argument (imp) > 997.
+A119    Arg1 muss > 1 sein.
+A120	Arg8 kein single.     
+A121	( Arg2, Arg3 ) und ( Arg4, Arg5 ) liegen nicht auf der gleichen Kurve.
+A122    Es muss gelten: 1 <= Arg2 < 2^60.
+A123	Es muss gelten: 0 < Arg8 < Arg1.   
+A124    Arg3 muss > 1 sein.
+A125    Arg4 muss > 1 sein.
+A126    Es muss gelten: Arg3 = Listenlaenge von Arg1.
+A127    Es muss gelten: Arg4 = Listenlaenge von Arg2.
+
+A201    Arg1 kein integer.
+A202    Arg2 kein integer.
+A203    Arg1 kein single.
+A204    Arg2 kein single.
+A205    Arg3 kein single.
+A206    Arg4 kein single.
+A207    Arg1 nicht positiv.
+A208    Arg2 nicht positiv.
+A209    Argument kein integer.
+A210    Argument kein single.
+A211    Argument nicht positiv.
+A212    Argument muss >=0 sein.
+A213    Linearkombination nicht >=0.
+A214    ggT der Argumente > 1.
+A215    Der "Nenner" im Jakobi-Symbol ist gerade.
+A216    Arg2 muss ungleich 0 sein.
+A217    Arg2 muss >=0 sein.
+A218    Arg1 muss >=0 sein.
+A219    Arg3 kein integer.
+A220    Es muss gelten: 2 <= Arg2 <= Arg3 <= Arg1.
+A221    Es muss gelten: Arg1 hat keine Teiler in [13,Arg2[.
+A222    Arg3 keine Liste.
+A223    Es muss gelten: Arg1 >= 3.
+A224    Es muss gelten: Arg2 = Arg1 - 1.
+A225    Arg3 != aufsteigend sortierte Liste aller Primfaktoren von Arg2.
+A226    Es muss gelten: Arg1 hat keine Primteiler < 17.
+A227    Es muss gelten: 2 <= Arg2 <= Arg3 <= isqrt(Arg1).
+A228    Es muss gelten: Arg2 * Arg3 <= Arg1.
+A229    Es muss gelten: Argument ist aus [1,2^60[.
+A230    Argument ist nicht single-prim.
+A231    Argument ist nicht integer und ungleich Null.
+A232    Argument ist keine aufsteigend sortierte Liste.
+A233    Es muss gelten: Arg1 <= Arg2.
+A234    Es muss gelten: |Arg2| < Arg1.
+ 
+A401    Unzulaessiger Modul.
+A402    Arg2 ist kein zulaessiger Vertreter.
+A403    Arg3 ist kein zulaessiger Vertreter.
+A404    Arg1 kein single.
+A405    Arg2 kein integer.
+A406    Arg1 nicht positiv.
+A407    Arg2 kein single.
+A408    Arg3 kein single.
+A409    Arg4 kein single.
+A410    Arg5 kein single.
+A411    Arg2 nicht positiv.
+A412    Arg2 0 oder Nullteiler.
+A413    Arg3 0 oder Nullteiler.
+A414    Arg1 und Arg2 muessen teilerfremd sein.
+A415    Es muss gelten: Arg1 * Arg2 < BASIS.
+A416    Arg3 muss das Inverse zu Arg1 modulo Arg2 in Z/(Arg2)*Z sein.
+A417    Arg4 ist kein zulaessiger Vertreter.
+A418    Arg5 ist kein zulaessiger Vertreter.
+A419    Arg3 keine Liste.
+A420    Arg4 keine Liste.
+A421    Arg1 enthaelt unzulaessige Elemente.
+A422    Arg2 enthaelt unzulaessige Elemente.
+A423    Arg3 muss >= 0 sein.
+A424    Argument kein single.
+A425    Argument nicht positiv.
+A426    Arg2 keine Liste.
+A427    Arg3 keine Liste.
+A428    Listenlaenge von Arg1 unzulaessig.
+A429    Listenlaenge von Arg2 unzulaessig.
+
+A500    Arg1 kein single.
+A501    Arg1 kein integer.
+A502    Arg2 kein integer.
+A503    Arg1 nicht positiv.
+A504    Arg3 kein integer.
+A505    Arg2 kein zulaessiger Vertreter.
+A506    Arg3 kein zulaessiger Vertreter.
+A507    Arg3 keine Einheit.
+A508    Arg2 keine Einheit.
+A509    Arg2 kein single.
+A510    Arg2 nicht positiv.
+A511    Arg3 kein single.
+A512    Arg1 und Arg2 muessen teilerfremd sein.
+A513    Arg4 kein integer.
+A514    Arg5 kein single.
+A515    Arg4 kein zulaessiger Vertreter.
+A516    Arg5 kein zulaessiger Vertreter.
+A517    Arg3 muss das Inverse zu Arg1 modulo Arg2 in Z/(Arg2)*Z sein.
+A518    Arg5 kein integer.
+A519    Arg3 muss >= 0 sein.
+A520    Argument kein integer.
+A521    Argument nicht positiv.
+A522    Arg2 muss ungerade sein.
+A523    Arg4 keine Einheit.
+
+A601    Argument keine rationale Zahl.
+A602    Arg1 keine rationale Zahl.
+A603    Arg2 keine rationale Zahl.
+A604    Arg1 kein integer.
+A605    Arg2 kein integer.
+A606    Argument muss ungleich 0 sein.
+A607    Argument kein single.
+A608    Arg2 muss ungleich 0 sein.
+A609    Arg2 kein single.
+A610    Arg2 darf nicht negativ sein.
+
+A701    Argument kein Polynom in dense-Darstellung.
+A702    Argument kein Polynom in einer Variablen in dense-Darstellung.
+A703    Arg1 kein Polynom in einer Variablen in dense-Darstellung.
+A704    Arg2 kein Polynom in einer Variablen in dense-Darstellung.
+
+A750    Argument kein floating point.
+A751    Arg1 kein floating point.
+A752    Arg2 kein floating point.
+A753    Arg3 kein floating point.
+A754    Arg1 weder integer noch einelementige Liste mit single-Wert.
+A755    Arg3 ist ungleich 1.       
+A756    Es muss gelten:  -1 <  Arg < 1.
+A761    Arg1 muss ungleich 0 sein.
+A776    Wurzel aus -1 ist keine reelle Zahl.
+A777    Argument weder Ziffer noch e.
+
+A801    Arg1 kein object.
+A802    Arg2 kein object.
+A803    Argument keine Liste aus singles.
+A804    Listenelement nicht positiv.
+A808    Modul unzulaessig.
+A822    Arg2 unzulaessig.
+
+A900    Argument keine Liste
+A901    Arg1 keine Liste
+A902    Arg2 keine Liste
+A903    Arg1 keine rationale Zahl
+A904    Arg2 keine rationale Zahl
+A905    Arg3 keine rationale Zahl
+A906    Arg4 keine rationale Zahl
+A907    Arg5 keine rationale Zahl
+A908    Arg1 keine Liste rationaler Zahlen
+A909    Arg2 keine Liste rationaler Zahlen
+A910    Listenlaenge ungleich 3
+A911    Listenlaenge von Arg1 ungleich 3
+A912    Listenlaenge von Arg2 ungleich 3
+A913    Erstes Listenelement nicht rational
+A914    Zweites Listenelement nicht rational
+A915    Drittes Listenelement nicht rational
+A916    Keine Koeffizienten einer elliptische Kurve
+A917    Arg6 keine Liste
+A918    Listenlaenge von Arg6 ungleich 3
+A919    Arg6 keine Liste rationaler Zahlen
+A920    Arg3 keine Liste
+A921    Listenlaenge von Arg3 ungleich 3
+A922    Arg3 keine Liste rationaler Zahlen
+A923    Punkt kein Element der Kurve
+A924    Arg6 keine rationale Zahl
+A925    Arg7 keine rationale Zahl
+A926    Arg8 keine rationale Zahl
+A927    Arg9 keine rationale Zahl
+A928    Arg3 keine natuerliche Zahl
+A929    Arg6 keine natuerliche Zahl
+A930    Arg4 keine Liste
+A931    Listenlaenge von Arg4 ungleich 3
+A932    Arg4 keine Liste rationaler Zahlen
+A933    Arg7 keine Liste
+A934    Listenlaenge von Arg7 ungleich 3
+A935    Arg7 keine Liste rationaler Zahlen
+A936    Arg3 kein Element der Kurve
+A937    Arg4 kein Element der Kurve
+A938    Arg6 kein Element der Kurve
+A939    Arg7 kein Element der Kurve
+A940    Arg9 gleich 0
+
+
+
+
+FF001   Variablenanzahl unzulaessig.
+FF002   Variablenliste ist nicht korrekt.
+FF003   Argument kein Variablenname.
+FF004   Variablenname unzulaessig.
+FF012   Arg2 ist kein Polynom oder kein zulaessiges Polynom.
+FF013   Arg3 ist kein Polynom oder kein zulaessiges Polynom.
+FF022   Arg2 ist keine rationale Funktion.
+FF023   Arg3 ist keine rationale Funktion.
+FF025   Arg5 ist keine rationale Funktion.
+FF030   Unerlaubte Division durch 0.
+FF050   Unzulaessige Charakteristik.
+
+FF100   Fehler in Datei.
+FF101   Fehler beim Schreiben auf Datei.
+FF102   Fehler beim Lesen von Datei.
+
+GF000   Charakteristik unzulaessig.
+GF001   Koerpergrad unzulaessig.
+GF002   Arithmetikliste unzulaessig.
+GF003   Arg3 kein zulaessiges Koerperelement.
+GF004   Arg4 kein zulaessiges Koerperelement.
+GF005   Arg3 muss ungleich 0 sein.
+GF006   Arg4 muss ungleich 0 sein.
+GF007   Variablenliste unzulaessig.
+GF008   Polynom unzulaessig.
+GF009   Fehler in Datei.
+GF010   Fehler in der Standardeingabe-Datei.
+GF011   Fehler in der Standardausgabe-Datei.
+GF012   Arg3 nicht vom Typ obj.
+
+L000    Fehler in Datei.
+L001    Argument keine Liste.
+L002    Arg1 keine Liste.
+L003    Arg2 keine Liste.
+L004    Arg2 kein single.
+L005    Es muss gelten: Arg2 >=0.
+L006    Es muss gelten: Arg2 <= Listenlaenge.
+L007    Es muss gelten: Arg2 >=1.
+L008    Arg3 kein single.
+L009    Es muss gelten: Arg3 >=1.
+L010    Es muss gelten: Arg3 <= Listenlaenge.
+L011    Es muss gelten: Arg2 <= Arg3.
+L012    Die Liste darf nicht leer sein.
+L013    Arg1 kein single.
+L014    Die Liste darf nur aus einfachgenauen Zahlen bestehen.
+L015    Die Liste muss aufsteigend sortiert sein.
+L016    Arg1 darf nur aus einfachgenauen Zahlen bestehen.
+L017    Arg2 darf nur aus einfachgenauen Zahlen bestehen.
+L018    Arg1 muss aufsteigend sortiert sein.
+L019    Arg2 muss aufsteigend sortiert sein.
+L020    Arg3 keine Liste.
+L021    Arg4 keine Liste.
+L022    Arg5 keine Liste.
+L023    Arg6 keine Liste.
+L024    Arg7 keine Liste.
+L025    Argument muss aus mindestens 2 Objekten bestehen.
+L026    Argument muss aus mindestens 3 Objekten bestehen.
+L027    Argument muss aus mindestens 4 Objekten bestehen.
+L028    Argument muss aus mindestens 5 Objekten bestehen.
+L029    Argument muss aus mindestens 6 Objekten bestehen.
+L030    Arg1 darf nicht leer sein.
+L031    Arg1 kein atom.
+L032    Argument kein object.
+L033    Fehler in der Standardeingabe-Datei.
+L034    Fehler in der Standardausgabe-Datei.
+L035    Arg1 kein object.
+L036    Arg2 kein object.
+L037    Arg3 kein object.
+L038    Arg4 kein object.
+L039    Arg5 kein object.
+L040    Arg6 kein object.
+L041    Argument kein single.
+L042    Argument kein atom.
+L050    Die Listen sind nicht gleich lang.
+L051    Die Funktion ist fuer diese Argumente nicht definiert.
+
+L101    Arg1 keine Liste.
+L102    Arg2 keine Liste.
+L103    Arg1 darf nur aus einfachgenauen Zahlen bestehen.
+L104    Arg2 darf nur aus einfachgenauen Zahlen bestehen.
+L105    Arg1 muss aufsteigend sortiert sein.
+L106    Arg2 muss aufsteigend sortiert sein.
+
+L201    Arg1 keine Liste.
+L202    Arg2 keine Liste.
+
+L300    Argument kein nicht-negatives single.
+L311    Argument darf keine leere Liste sein.
+L312    Listenelement keine Liste oder leere Liste.
+L313    Es muss gelten: L(i) ist Reduktante von L(i+1).
+
+
+MA001   Arg1 kein single.
+MA002   Arg1 muss positiv sein.
+MA003   Arg2 keine Liste.
+MA004   Arg2 keine Liste von Polynomen vom Grad < Arg1 in einer Variablen.
+MA005   Arg2 kein single.
+MA006   Arg3 kein single.
+MA007   Arg4 kein Vektor mit Koeffizienten aus Z/mZ.
+MA008   Arg5 kein Vektor mit Koeffizienten aus Z/mZ.
+MA009   Arg4 und Arg5 Vektoren verschiedener Laenge.
+MA011   Arg1 unzulaessig als Parameter fuer Galoisfeld.
+MA012   Arg2 unzulaessig als Parameter fuer Galoisfeld.
+MA013   Arg3 kein Element aus GF(p^n).
+MA014   Arg4 kein Element aus GF(p^n).
+MA015   Arg5 keine Liste oder keine zul. Liste mit Elem. aus GF(p^n).
+MA016   Arg6 keine Liste oder keine zul. Liste mit Elem. aus GF(p^n).
+MA017   Arg5 und Arg6 Listen verschiedener Laenge.
+MA018   Arg2 kein Element aus Z/mZ.
+MA019   Arg3 kein Element aus Z/mZ.
+MA020   Arg2 kein Vektor mit Koeffizienten aus Z/mZ.
+MA021   Arg3 kein Vektor mit Koeffizienten aus Z/mZ.
+MA022   Arg2 und Arg3 Vektoren verschiedener Laenge.
+MA023   Arg3 keine Matrix oder keine zulaessige Matrix ueber GF(p^n).
+MA024   Arg3 keine Liste oder keine zulaessige Liste von Elementen aus GF(p^n).
+MA025   Arg4 keine Liste oder keine zulaessige Liste von Elementen aus GF(p^n).
+MA026   Arg3 und Arg4 Listen verschiedener Laenge.
+MA030   Arg2 keine Matrix ueber Z/mZ.
+MA050   Arg2 ist kein Vektor mit Koeffizienten aus Z.
+MA051   Arg2 ist kein Vektor mit Koeffizienten aus Q.
+MA052   Arg3 ist kein Vektor mit Koeffizienten aus Z/mZ.
+MA053   Arg3 ist kein Vektor mit Koeffizienten aus Z [x1,..,xr].
+MA054   Arg3 ist kein Vektor mit Koeffizienten aus Q [x1,..,xr].
+MA055   Arg4 ist kein Vektor mit Koeffizienten aus Z/mZ [x1,..,xr].
+MA060   Arg2 ist kein Vektor.
+MA070   Spaltenzahl der Matrix ungleich Laenge des Vektors
+MA071   Arg3 ist kein single.
+MA072   Arg4 ist kein single.
+MA073   Arg5 ist kein single.
+MA074   Arg6 ist kein single.
+MA075   Arg2 ausserhalb des erlaubten Bereichs
+MA076   Arg3 ausserhalb des erlaubten Bereichs
+
+MA080   Arg1 ist nicht vom Typ int.
+MA081   Arg3 ist nicht vom Typ int.
+MA083	Arg2 ist nicht vom Typ int.
+
+MA096   Arg2 ist keine Matrix von dense-Polynomen.
+MA097   Arg3 ist keine Matrix.
+MA098	Arg2 ist keine Matrix von Polynomen.
+MA099   Arg2 ist keine Matrix.
+
+MA100   Fehler im Aufbau der Matrix.
+MA101   Arg1 ist keine Matrix.
+MA102   Arg1 ist keine Matrix von ganzen Zahlen.
+MA103   Arg2 ist keine Matrix von ganzen Zahlen.
+MA104   Dimension von Arg1 ungleich Dimension von Arg2.
+MA105   Dimensionen passen nicht zusammen.
+MA106   Fehler oder Dateiende in fputmai.
+MA107   Argument ist keine Matrix von ganzen Zahlen.
+MA108   Argument ist keine quadratische Matrix.
+MA109   Matrix ist nicht invertierbar.
+MA110   Arg1 ist keine Matrix von rationalen Zahlen.
+MA111   Arg2 ist keine Matrix von rationalen Zahlen.
+MA112   Argument ist keine Matrix von rationalen Zahlen.
+MA120   fgetc fehlerhaft.
+MA121   fgetr fehlerhaft.
+MA122   fgeti fehlerhaft.
+MA123   fgetpi fehlerhaft.
+MA124   fgetlms fehlerhaft.
+MA125   fputc fehlerhaft.
+MA126   fputli fehlerhaft.
+MA127   fputlr fehlerhaft.
+MA128   fputpi fehlerhaft.
+MA130   1. Zeile hat Laenge 0.
+MA131   Unterschiedliche Zeilenlaengen.
+MA132   Fehlende fuehrende Klammer.
+MA133   Es muss fuer Arg1 gelten: 0<Arg1<BASIS.
+MA134   Es muss fuer Arg1 gelten: 0<=Arg1<BASIS.
+MA135   Es muss fuer Arg1 gelten: 0<Arg1<BASIS.
+MA136   Es muss fuer Arg2 gelten: 0<Arg2<BASIS.
+MA137   Es muss fuer Arg3 gelten: 0<=Arg3<=2.
+MA138   Es muss fuer Arg3 gelten: 0<Arg3<BASIS.
+MA139	Es muss fuer Arg3 gelten: 0<=Arg3<=5.
+MA140   Leere Matrix.
+MA141   Matrix ist die Nullmatrix.
+MA142	Es muss fuer Arg4 gelten: 0<=Arg4<=2.
+MA143	Es muss fuer Arg4 gelten: 0<=Arg4<=5.
+MA144	Es muss fuer Arg5 gelten: 0<=Arg5<=2.
+MA145	Es muss fuer Arg5 gelten: 0<=Arg5<=5.
+MA146	Es muss fuer Arg4 gelten: 0<Arg4<BASIS.
+MA147   Es muss fuer Arg2 gelten: 0<Arg2<=Anzahl der Zeilen  und  Arg2=Rang von M.
+MA150   Arg1 ist keine Matrix von Polynomen ueber Z.
+MA151   Arg2 ist keine Matrix von Polynomen ueber Z.
+MA152   Argument ist keine Matrix von Polynomen ueber Z.
+MA153	Arg1 ist keine Matrix von Polynomen in einer Variablen ueber Z.
+MA154   Arg1 ist keine Matrix von dense-Polynomen in einer Variablen ueber Z.
+MA160   Arg1 ist keine Matrix ueber Z/mZ.
+MA161   Arg2 ist keine Matrix ueber Z/mZ.
+MA162   Argument ist keine Matrix ueber Z/mZ.
+MA170   Arg1 ist keine Matrix von Polynomen ueber Q.
+MA171   Arg2 ist keine Matrix von Polynomen ueber Q.
+MA172   Argument ist keine Matrix von Polynomen ueber Q.
+MA182   Argument ist keine Matrix von einfachgenauen ganzen Zahlen.
+MA193   Arg3 ist keine Matrix ueber Z.
+MA194   Spaltenlaenge der 1. Matrix ungleich Spaltenlaenge der 2. Matrix
+MA195   Spaltenlaenge der 2. Matrix ungleich Spaltenlaenge der 3. Matrix
+MA196   2. Matrix Nullmatrix.
+MA200   Dateifehler.(ferror(pf) meldet true)
+MA201   Dateifehler.(ferror(stdout) meldet true)
+MA202   Dateifehler.(ferror(stin) meldet true)
+MA210   V ist keine Variablenliste.
+MA248	Arg3 ist kein Objekt.
+MA249   arg1 ist kein Objekt.
+MA250   arg2 ist kein Objekt.
+MA251   arg3 ist kein Objekt.
+MA252   arg4 ist kein Objekt.
+MA253	arg5 ist kein Objekt.
+MA254   arg6 ist kein Objekt.
+MA255   arg7 ist kein Objekt.
+MA256   arg8 ist kein Objekt.
+MA300   Variable anzahlargs hat nicht erlaubten Wert.
+
+MA402   Arg2 ist keine Matrix von Polynomen ueber Z.
+MA403   Arg3 ist keine Matrix von Polynomen ueber Z.
+MA413   Arg3 ist keine Matrix von Polynomen ueber Z/mZ.
+MA414   Arg4 ist keine Matrix von Polynomen ueber Z/mZ.
+MA452   Arg2 ist keine quadratische Matrix.
+MA460   Unzulaessige Variablenanzahl.
+MA461   Unzulaessiger Modul.
+
+MA470   Arg3 ist kein Polynom ueber Z.
+MA471   Arg3 ist kein Polynom ueber Q.
+MA475   Arg2 ist keine Matrix von Polynomen ueber Z oder Q.
+MA476   Arg3 ist keine Liste.
+
+NF000   Erzeugendes Polynom unzulaessig.
+NF001   Arg2 kein zulaessiges Koerperelement.
+NF002   Arg3 kein zulaessiges Koerperelement.
+NF003   Arg2 muss ungleich 0 sein.
+NF004   Arg3 muss ungleich 0 sein.
+NF005   Variablenliste unzulaessig.
+NF006   Fehler in Datei.
+NF007   Fehler in der Standardeingabe-Datei.
+NF008   Fehler in der Standardausgabe-Datei.
+NF009   Arg2 nicht vom Typ obj.
+
+P000    Fehler nicht identifizierbar.
+P001    Variablenanzahl unzulaessig.
+P002    Arg2 kein Polynom oder kein zulaessiges Polynom.
+P003    Arg3 kein Polynom oder kein zulaessiges Polynom.
+P004    Arg4 kein Polynom oder kein zulaessiges Polynom.
+P005    Arg5 kein Polynom oder kein zulaessiges Polynom.
+P006    Arg6 kein Polynom oder kein zulaessiges Polynom.
+P007    Arg7 kein Polynom oder kein zulaessiges Polynom.
+P008    Argument kein Polynom oder kein zulaessiges Polynom.
+P011    Unerlaubte Division durch Null.
+P012    Division unzulaessig.
+P013    Funktion fuer dieses Argument nicht definiert.
+P014    Ausgewaehlte Variable nicht zulaessig.
+P015    Variablenliste ist nicht korrekt.
+P016    Grad des Polynoms unzulaessig.
+P017    Polynom nicht normiert.
+P018    Polynom nicht quadratfrei.
+P019    Matrix hat nicht die geforderte Struktur.
+P020    Komponenten der Matrix unzulaessig.
+P023    Arg3 ist keine ganze Zahl.
+P024    Arg4 Argument ist keine ganze Zahl.
+P033    Arg3 Argument ist keine rationale Zahl.
+P034    Arg4 Argument ist keine rationale Zahl.
+P040    Modul unzulaessig.
+P044    Arg4 ist kein Element aus Z/mZ.
+P045    Arg5 Argument ist kein Element aus Z/mZ.
+P050    Die Anzahl zusaetzlicher Variablen ist unzulaessig.
+P051    Die Liste ist kein Gradvektor.
+P060    Exponent unzulaessig.
+P061    Das letzte Argument ist kein single.
+P062    Das letzte Argument ist nicht positiv.
+P063    Arg3 ist keine Liste.
+P064    Es sind nicht alle Bedingungen, die fuer Arg3 gelten muessen, erfuellt.
+P065    Das erste Element von Arg3 muss 1 sein.
+P066    Arg2 nicht im erlaubten Bereich.
+P073    Arg3 ist keine zulaessige Liste von ganzen Zahlen.
+P084    Arg4 ist keine zulaessige Liste von Elementen aus Z/mZ.
+P091    Arg1 ist keine Liste von singles.
+P092    Arg2 ist keine Liste von singles.
+P093    Arg3 ist keine Liste von singles.
+
+P100    Die Laengen der Listen sind nicht gleich.
+P101    Die erste Liste ist leer.
+P102    Die zweite Liste ist leer.
+P113    Arg3 ist keine zulaessige Liste von rationalen Zahlen.
+
+P120    Es muss fuer Arg3 gelten: 1 <= Arg3 <= Arg1 + 1.
+P121    Es muss fuer Arg3 gelten: 1 <= Arg3 <= Arg1.
+
+P200    Fehler in Datei.
+P201    Fehler beim Schreiben auf Datei.
+P211    Fehler beim Lesen von Datei.
+P212    Unerwartetes Polynomende.
+P213    Unerwartetes Zeichen gelesen.
+P214    Unbekannter Variablenname gelesen.
+P215    Exponent zu gross.
+P216    Exponent negativ.
+P220    Fehler bei Reservierung von Speicherplatz.
+P221    Fehler beim Schreiben in String.
+P230    Unzulaessige Variablenliste.
+P240    Argument kein Variablenname.
+P241    Variablenname unzulaessig.
+P242    Argument ist keine Liste von Variablenlisten.
+P243    Argument ist keine Liste von Polynomen.
+P244    Die Listen der Variablenlisten und Polynome sind nicht gleich lang.
+P300    Es gilt nicht: 2 * Arg3 < Arg2.
+P301    Arg2 ist keine positive Potenz des Primzahlmoduls.
+P302    Arg3 ist keine nicht-negative Potenz des Primzahlmoduls.
+P303    Arg3 ist keine Liste oder keine Liste von zulaessigen Polynomen.
+P304    Arg4 ist keine Liste oder keine Liste von zulaessigen Polynomen.
+P305    Arg5 ist keine Liste oder keine Liste von zulaessigen Polynomen.
+P306    Arg6 ist keine Liste oder keine Liste von zulaessigen Polynomen.
+P307    Arg4 ist keine ganze Zahl aus dem verlangten Bereich.
+P308    Arg2 ist keine Liste oder keine Liste von zulaessigen Polynomen.
+P311    Arg1 unzulaessig als Parameter fuer Galoisfeld.
+P312    Arg2 unzulaessig als Parameter fuer Galoisfeld.
+P313    Arg3 unzulaessig als Parameter fuer Galoisfeld.
+P315    Arg5 kein Element aus GF(p^n).
+P316    Arg6 kein Element aus GF(p^n).
+P317    Arg3 nicht aus GF(p^n).
+
+PF001   Fehler beim Lesen oder Dateiende.
+PF002   Fehler beim Schreiben.
+PF003   Leere Datei.
+PF004   Falsche Darstellung!
+
+V000    Leerer Vektor.
+V001    Vektorelement fehlerhaft.
+V002    Argument ist kein Vektor von ganzen Zahlen.
+V003    Argument ist kein Vektor von rationalen Zahlen.
+V004    Argument ist kein Vektor von Polynomen ueber Z.
+V005    Argument ist kein Vektor von Polynomen ueber Q.
+V006    Argument ist kein Vektor von Zahlen aus Z/mZ.
+V007    Argument ist kein Vektor von Polynomen ueber Z/mZ.
+V008    Vektoren haben unterschiedliche Laenge.
+V009    Arg1 ist nicht vom Typ int. 
+V010    Arg2 ist kein Vektor von ganzen Zahlen.
+V011    Arg2 ist kein Vektor von rationalen Zahlen.
+V012    Arg2 ist kein Vektor von Polynomen ueber Z.
+V013    Arg2 ist kein Vektor von Polynomen ueber Q.
+V014    Arg3 ist kein Polynom ueber Z.
+V015    Arg3 ist kein Polynom ueber Q.
+V016    Arg2 ist kein Vektor von Polynomen ueber Z oder Q.
+V017	Arg1 ist kein Vektor.
+V018	Arg2 ist kein Vektor.
+V019	Laenge des 1. Vektors ungleich der Laenge des 2. Vektors.
+V020	Arg1 ist kein Vektor von Polynomen in einer Variablen ueber Z.
+V021	Arg2 ist kein Vektor von Polynomen.
+V022    Arg1 ist kein Vektor von ganzen Zahlen.
+V023    Arg2 ist kein Vektor von ganzen Zahlen.
+V024    Es muss fuer Arg3 gelten: 0<i<=Laenge des 1. Vektors.
+V025    Arg3 ist kein Vektor.
+V026    Arg1 ist kein Vektor von dense-Polynomen in einer Variablen ueber Z.
+V027    Arg2 ist kein Vektor von dense-Polynomen.

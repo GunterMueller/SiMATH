@@ -1,0 +1,43 @@
+                                * * * * * * *
+                                *   chpol   *
+                                * * * * * * *
+
+        "characteristic polynomial"
+        SYNTAX: X = chpol(A, X1)
+
+        A is a square matrix over Z, Q, Z/mZ, GF(p^n) (where p is a
+        prime), number fields, polynomials over these structures or 
+        rational functions.
+        X1 is a variable not occuring in the matrix.
+
+        X is assigned the characteristic polynomial of the matrix 
+        A in the variable X1.
+
+
+        Example 1: (incorrect)
+
+                chpol({{x, y} {z, w}}, y)
+
+_ERR_NR_081
+
+
+        Example 2: (correct)
+
+                chpol({{1, 0} {0, NF(A)}}, x)
+
+
+        Example 3: (incorrect)
+
+                chpol({{x, 4711}}, y)
+
+_ERR_NR_080
+
+
+        Example 4: (correct)
+
+                chpol({{u/v, 0} {0, 1/y}}, x)
+
+
+        Example 5: (correct)
+
+                chpol({{GF(3*A^2+A),4}{2*GF(A),2}},z)

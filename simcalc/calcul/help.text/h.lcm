@@ -1,0 +1,31 @@
+                               * * * * * * *
+                               *    lcm    *
+                               * * * * * * *
+
+        "least common multiple"
+        SYNTAX: X = lcm(A1, A2, ..., An)
+
+        A1, ..., An are expressions whose values are elements in Z,
+        polynomials over Z, Z/pZ, GF(p^n), n>=2 (where p is a prime) 
+        or over number fields.
+
+        X is assigned the least common multiple of A1, ..., An.
+
+        Warning: If p > 2^30, the primality of p is not tested.
+        
+
+        Example 1: (correct)
+
+                lcm(a1, (2 * 5 - 77 : 5), (sgn(234 + 23 - (log2(234)))))
+
+
+        Example 2: (incorrect)
+
+                lcm(2/3,14)
+                
+_ERR_NR_015
+
+
+        Example 3: (correct)
+
+                lcm( MOD( x^2*y + 3*y + x + 12 ), MOD( y*x + 3 ) )

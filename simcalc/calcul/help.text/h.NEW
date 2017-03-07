@@ -1,0 +1,22 @@
+                               * * * * * * *
+                               *    NEW    *
+                               * * * * * * *
+
+NEW version 4.4.1:
+
+    ceil (see "?ceil")    
+    classnum (see "?classnum")    
+    isqrt (see "?isqrt")    
+    ispprime (see "?ispprime")    
+    ppon, ppoff (see "?pp", "?ppon", "?ppoff")
+
+    extended: computation of the torsion group of elliptic curves over
+              quadratic number fields (see "?tors")
+
+NEW version 4.2.1:
+
+    finding one root (see "?f1root")
+    irreducible polynomial generator over GF(p^n) (see "?irpgen")
+    generating elliptic curves with point order with small cofactor
+    (see "?ecnpscf");
+

@@ -1,0 +1,165 @@
+                                * * * * * * *
+                                *   nffunc  *
+                                * * * * * * *
+
+        
+        If you need help in entering algebraic numbers, polynomials
+        over number fields, matrices and vectors over these structures
+        or elliptic curves and points of elliptic curves over a number
+        field, please type "? NF".
+
+        For additional information on using functions over number 
+        fields, please type "? curnf".
+
+        Structures over number fields, which may be considered as
+        structures over Q, are usually treated as structures over
+        the rationals. If you want to lift them to the number field,
+        specified by curnf, you can use the switch nfon / nfoff.
+        After nfon in the following functions - cond, ecinf, fact, rk,
+        rk2d, rkg2d, sfp, taalg, tors - the algorithms for structures 
+        over number fields are used for the structures over Q. This is 
+        valid until nfoff.
+
+        The following functions are available over number fields:
+
+        +           aftopr      discec      mod         swnf       
+        -           bitrans     discnf      nftopol     taalg    
+        *           chcoef      dmconstr    norm        tavb2  
+        :           chpol       eccoef      prtoaf      tavb4        
+        ^           classnum    ecinf       ptcoef      tavb6         
+        /           coef        elsubst     puto        tavb8 
+        ==          cond        fact        relcln      tavc4
+        !=          conjug      gcd         rk          tavc6
+        &&          curec       intbas      rk2d        tors          
+        ||          declaw      isptec      rkg2d       trace 
+                    deg         jinv        scalar      transp
+                    deriv       linequ      sfp         unit 
+                    det         mcoef       sort        vcoef
+
+
+        '+'             means   addition;
+
+        '-'                     subtraction;
+
+        '*'                     multiplication;
+
+        ':'                     quotient;
+
+        '^'                     exponentiation;
+
+        '/'                     division;
+
+        '=='                    equal;
+
+        '!='                    not equal;
+
+        '&&'                    and;
+
+        '||'                    or;
+
+        'aftopr'                conversion from affine to projective 
+                                representation;
+
+        'bitrans'               birational transformation of an elliptic
+                                curve or a point;
+
+        'chcoef'                change coefficient of a polynomial;
+
+        'chpol'                 characteristic polynomial;
+
+        'classnum'              class num;
+
+        'coef'                  coefficient of a polynomial;
+
+        'cond'                  conductor;
+
+        'conjug'                conjugate;
+
+        'curec'                 current elliptic curve;
+
+        'declaw'                decomposition law;
+
+        'deg'                   degree;
+
+        'deriv'                 derivation;
+
+        'det'                   determinant;
+
+        'discec'                discriminant of an elliptic curve;
+
+        'discnf'                discriminant of a number field;
+
+        'dmconstr'              diagonal matrix construction;
+
+        'eccoef'                elliptic curve coefficient;
+
+        'ecinf'                 elliptic curve information;
+
+        'elsubst'               element substitution in matrices or vectors;
+
+        'fact'                  factorization;
+
+        'gcd'                   greatest common divisor;
+
+        'intbas'                integral basis;
+
+        'isptec'                is point on an elliptic curve ? ;
+
+        'jinv'                  j-invariant;
+
+        'linequ'                solution of a system of linear equations;
+
+        'mcoef'                 matrix coefficient;
+
+        'mod'                   module homomorphism;
+
+        'nftopol'               number field to polynomial;
+
+        'norm'                  norm of an algebraic number;
+
+        'prtoaf'                conversion from projective to affine 
+                                representation;
+
+        'ptcoef'                point on elliptic curve coefficient;
+
+        'puto'                  display internal representaion;
+
+        'relcln'                relative class number;
+
+        'rk'                    rank;
+
+        'rk2d'                  rank via 2-descent;
+
+        'rkg2d'                 rank via general 2-descent;
+
+        'scalar'                euclidian scalar product;
+
+        'sfp'                   squarefree part;
+
+        'sort'                  sort polynomial;
+        
+        'swnf'                  short Weierstrass normal form;
+
+        'taalg'                 Tate's algorithm;
+
+        'tavb2'                 Tate's value b2;
+
+        'tavb4'                 Tate's value b4;
+
+        'tavb6'                 Tate's value b6;
+
+        'tavb8'                 Tate's value b8;
+
+        'tavc4'                 Tate's value c4;
+
+        'tavc6'                 Tate's value c6;
+
+        'tors'                  torsion group;
+
+        'trace'                 trace of an algebraic number;
+
+        'transp'                transpose;
+
+        'unit'                  unit group;
+
+        'vcoef'                 vector coefficient.

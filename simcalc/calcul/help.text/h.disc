@@ -1,0 +1,40 @@
+                               * * * * * * *
+                               *   disc    *
+                               * * * * * * *
+
+        "discriminant"
+        SYNTAX: X = disc(P, x, alg)
+
+        P is an expression whose value is a polynomial over Z or 
+        Z/pZ (where p is a prime).
+        x is a variable of P.
+        alg is 1, 2, 3 or 4.
+
+        X is assigned the discriminant of P with respect to the 
+        variable x.
+        X is computed according to the following algorithms:
+
+        If P is a polynomial over Z:
+        the algorithm of Hankel,                if alg = 1,
+        the algorithm of Sylvester,             if alg = 2,
+        the algorithm of Collins-Sylvester,     if alg = 3,
+        the algorithm of Collins,               if alg = 4.
+
+        If P is a polynomial over Z/pZ:
+        the algorithm of Hankel,                if alg = 1,
+        the algorithm of Sylvester,             if alg = 2,
+        the algorithm of Collins,               if alg = 3 or 4.
+
+        Warning: If p > 2^30, the primality of p is not tested.
+
+
+        Example 1: (correct)
+
+                disc(a*x^2 + b*x + c, x, 1)
+
+
+        Example 2: (incorrect)
+
+                disc(x*y + x^2 + 1/7 , x, 2)
+
+_ERR_NR_041

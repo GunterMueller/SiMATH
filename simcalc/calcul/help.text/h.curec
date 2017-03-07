@@ -1,0 +1,36 @@
+                               * * * * * * *
+                               *   curec   *
+                               * * * * * * *
+
+        "current elliptic curve"
+        SYNTAX: X = curec(E)
+
+        E is an expression whose value is an elliptic curve over Q,
+        Z/pZ (where p is a prime), GF(2^n) or over a number field.
+
+        curec specifies the current elliptic curve. All points are 
+        now considered as points of E.
+        E is stored in the variable curEllCurve. 
+        X is assigned E.
+
+
+        Example 1: (correct)
+
+                curec(EC(4, 0))
+
+
+        Example 2: (correct)
+
+                curec(EC(4, 1, NF(A), 0, 0))
+
+
+        Example 3: (correct)
+
+                curec(EC(3,1,GF(2*A^2+A),2,5))
+
+
+        Example 4: (incorrect)
+
+                curec(x^3 + 4)
+
+_ERR_NR_110

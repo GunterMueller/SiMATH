@@ -1,0 +1,35 @@
+                               * * * * * * *
+                               *  ppconstr *
+                               * * * * * * *
+
+        "pseudo prime construction"
+        SYNTAX: X = ppconstr(z, n)
+
+        z is an expression whose value is a positive integer. 
+        n must be 0,1 or 2.
+
+        ppconstr constructs a pseudo prime X > z with the 
+        following attributes:
+        - if n=0: X-1 has only prime factors < M , 
+                  M= min{1000,(max(rand)+1)th prime number}
+        - if n=1: X-1 has one prime factor in the order of X.
+        - if n=2: X-1 has two prime factors in the order of
+                  sqrt(X).
+
+        ppconstr displays also the prime factorization of X-1.
+
+        AV[0]=X-1. Afterwards the factorization of X-1 in the
+        form factor - exponent in increasing order is stored
+        in AV (see "?avfunc").
+
+
+        Example 1: (correct)
+
+                X = ppconstr( 10^50,1 )
+
+
+        Example 2: (incorrect)
+
+                X = ppconstr( 34523454,4 )
+
+_ERR_NR_020             

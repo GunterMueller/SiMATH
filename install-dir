@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# This file is used to install the contents of a directory (without
+# subdirectories) because the script "install-sh" cannot handle
+# wildcards. It is called from make when installing SIMATH. 
+
+# This file is part of the SIMATH computer algebra system.
+
+for file in $2*
+do
+	echo $1 $file $3
+	$1 $file $3
+done

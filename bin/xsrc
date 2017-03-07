@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+#  FILE  : xsrc
+#  AUTHOR: M.Pfeifer / E.Herrmann
+#  DATE  : 970411.
+#
+#  DESCRIPTION: xsrc locates and copies the SIMATH-function in the
+#               current working directory
+#
+
+ECHO_T=false
+
+SM_HOME=/usr/local/simath
+SM_SOURCES=$SM_HOME/sources
+SM_VERSION=SIMATH-4.6
+
+SRC_FCN=`basename $1 .S`
+SRC_FILE=""
+
+# First we check the current working directory.
+
+if test -f ./$SRC_FCN.S
+then
+	SRC_FILE=$SRC_FCN.S; 
+	echo "nothing to do .."; exit;
+fi
+
+# If we cannot find the source file in the current working directory we
+# try to find it in the SIMATH sources directory.
+
+if test "$SRC_FILE" = ""
+then
+	for file in `ls $SM_SOURCES`
+	do
+		if test -s $SM_SOURCES/$file/$SRC_FCN.S
+		then
+		SRC_FILE="$SM_SOURCES/$file/$SRC_FCN.S"; 
+	fi
+	done
+fi
+
+# In this case there is no matching function.
+
+if test  "$SRC_FILE" = ""
+then
+        if test  "$ECHO_T" = "true"
+        then
+           echo -n "xsrc: could not locate $SRC_FCN.S"
+           echo " aborting"
+           exit 1      
+        else               
+           echo "xsrc: could not locate $SRC_FCN.S\c"
+           echo " aborting"
+           exit 1        
+        fi
+fi
+
+echo "xsrc: extracting source-code from"
+echo "	$SRC_FILE..."
+
+echo "$SRC_FCN.S"
+cat "$SRC_FILE"> "$SRC_FCN.S"

@@ -1,0 +1,41 @@
+                            * * * * * * *
+                            *  irpgen   *
+                            * * * * * * *
+
+        "irreducible polynomial generator"
+        SYNTAX: X = irpgen(p,A,n,t)
+                X = irpgen(A,n,t)
+                X = irpgen(A,n)
+
+        p is a single precision prime.
+        A is a variable.
+        n is a single precision positive integer.
+        If p or the current modulus is 2, then t=0 or t is an odd
+        single precision integer, > 1 and <=(n+1). Otherwise t=0 or t=3. 
+
+        In the first two cases, X is assigned a univariate irreducible 
+        polynomial of degree n in the variable A over Z/pZ, where in the 
+        second case p is the current modulus, which must be a single 
+        precision prime. If t=0, then X is any irreducible polynomial. 
+        Otherwise, X is an irreducible polynomial with t nonzero 
+        coefficients, if such a polynomial exists. If such a polynomial 
+        does not exist, X is any irreducible polynomial of degree n.
+
+        In the third case, X is assigned a univariate irreducible
+        polynomial of degree n in the variable A over GF(p^m), which
+        is the current Galois field.
+
+
+        Example 1: (correct)
+
+                X = irpgen(2,A,8,3)
+
+        
+        Example 2: (correct)
+
+                X = irpgen(A,8,0) 
+
+
+        Example 3: (correct)
+
+                X = irpgen(A,8) 

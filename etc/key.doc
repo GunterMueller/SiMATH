@@ -1,0 +1,19 @@
+
+------------------------------------------------------------------
+The SM keyword index allows you to search for SIMATH functions and
+MACROs that match (or match not) a number of egrep Regular Expressions
+(REs). A key is a RE or of the form !RE. In the latter case, all
+functions not matching the RE are searched for. There will be no
+destinction between uppercase/lowercase except in the case of a
+reverse search. The number of keys is limited by 9.
+ q/Q  quit to SM
+  +   add    a key  to  the list
+  -   remove a key from the list
+ c/C  change a key  in  the list
+  0   delete the entire list
+ l/L  print the list
+ p/P  print the matching  SIMATH  functions/MACROs
+ @/~  print the documentation of a function/MACRO
+ s/S  print the source  code  of a function/MACRO
+  ?   print this help menu
+------------------------------------------------------------------

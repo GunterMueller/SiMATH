@@ -1,0 +1,31 @@
+                               * * * * * * *
+                               *   mtoi    *
+                               * * * * * * *
+
+        "modular to integer"
+        SYNTAX: X = mtoi(a)
+
+        a is an expression whose value is an element of Z/mZ, a
+        polynomial over Z/mZ, a matrix or a vector over these
+        structures, an elliptic curve or a point of an elliptic 
+        curve over Z/mZ (where m is a prime).
+        
+        mtoi transforms the structures over Z/mZ into structures over Z.
+        X is assigned the corresponding structure over Z.
+        
+
+        Example 1: (correct)
+
+                mtoi({{MOD(3), MOD(23)} {MOD(2), MOD(100)}})
+
+
+        Example 2: (correct)
+
+                mtoi(PT(MOD(2), MOD(5), MOD(1)))
+
+
+        Example 3: (incorrect)
+
+                mtoi(x + y)
+
+_ERR_NR_034_mtoi_

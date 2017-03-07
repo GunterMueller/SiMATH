@@ -1,0 +1,23 @@
+                               * * * * * * *
+                               *    log2   *
+                               * * * * * * *
+
+        "logarithm, base 2"
+        SYNTAX: X = log2(A)
+
+        A is an expression whose value is a positive integer or
+        a positive rational number.
+
+        X is assigned the integer part of the base 2 logarithm of A.
+
+
+        Example 1: (correct)
+
+                log2(71 * 2^(23 - gcd(3, 12345)) + 4)
+
+
+        Example 2: (incorrect)
+
+                log2(120 - 5 * 25)
+                
+_ERR_NR_021

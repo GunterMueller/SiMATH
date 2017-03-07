@@ -1,0 +1,16 @@
+                               * * * * * * *
+                               *   rkbsd   *
+                               * * * * * * *
+
+        "rank via Birch and Swinnerton-Dyer conjecture"
+        SYNTAX: r = rkbsd(E)
+
+        E is an expression whose value is an elliptic curve over Q.
+        
+        r is assigned the rank of the Mordell-Weil group of E, 
+        computed via the Birch and Swinnerton-Dyer conjecture.
+
+        
+        Example 1: (correct)
+                
+                rk( EC( 1, 0, 0, 1, 2 ) )       

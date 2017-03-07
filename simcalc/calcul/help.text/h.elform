@@ -1,0 +1,34 @@
+                                * * * * * * *
+                                *   elform  *
+                                * * * * * * *
+
+        "elementary divisor form"
+        SYNTAX: X = elform(M, kol, kor)
+
+        M is a nonzero matrix over Z or over univariate polynomials 
+        over Z, Q or Z/pZ (where p is a prime). 
+        kol and kor are 0 or 1.
+
+        X is assigned the elementary divisor form of M.
+        If kol/kor is 1, the left/right cofactor is displayed on
+        the screen.
+
+        Corresponding to kol and kor, the left and right cofactors
+        are stored in AV (see "?avfunc").
+
+
+        Example 1: (correct)
+
+                elform({{1, 2, 0} {1, 5, 4}}, 1, 1)
+
+
+        Example 2: (correct)
+
+                elform({{x, 2} {1/2, 3}}, 1, 0)
+
+
+        Example 3: (incorrect)
+
+                elform({{1, 0} {0, 1}}, 1/2, -4)
+
+_ERR_NR_088

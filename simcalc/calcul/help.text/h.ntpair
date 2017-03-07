@@ -1,0 +1,33 @@
+                               * * * * * * *
+                               *   ntpair  *
+                               * * * * * * *
+
+        "Neron-Tate pairing"
+        SYNTAX: X = ntpair(P,Q)
+
+        P and Q are expressions whose values are points on the 
+        current elliptic curve. The current elliptic curve as well 
+        as the points P and Q must be defined over Q or over a 
+        quadratic number field.
+
+        X is assigned the Neron-Tate pairing of P and Q,
+              X = [h( P + Q ) - h(P) - h(Q)]/2
+                = [h( P + Q ) - h( P - Q )]/4
+        where h() is the Neron-Tate height.
+
+
+        Example 1: (correct)
+
+                ntpair(PT(0, 3, 1), PT(2, 4))
+
+
+        Example 2: (correct)
+
+                ntpair(PT(NF(A), NF(A+2), 3), PT(1, 0))
+
+
+        Example 3: (incorrect)
+
+                ntpair(PT(1,2))
+                
+_ERR_NR_232

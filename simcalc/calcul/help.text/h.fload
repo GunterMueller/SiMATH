@@ -1,0 +1,19 @@
+                               * * * * * * *
+                               *   fload   *
+                               * * * * * * *
+
+        "file load"
+        SYNTAX: fload
+                fload()
+                fload(NAME)
+
+        "fload" 
+        "fload()"        opens the default file ___INP, reads all lines,
+                         and closes the file. 
+        "fload(NAME)"    opens the file NAME, reads all lines, and closes
+                         the file.
+        
+
+        Strings may also be read from files using the commands "fopen", 
+        "fread", "fclose". (For more information type "?fopen", "? fread",
+        "? fclose", and "?openf".)

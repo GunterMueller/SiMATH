@@ -1,0 +1,26 @@
+                               * * * * * * *
+                               * putGF2bit *
+                               * * * * * * *
+
+        "put Galois-field element in characteristic 2, special bit 
+         representation"
+        SYNTAX: X = putGF2bit(Y)
+
+        Y is an Galois-field element in characteristic 2, interpreted as 
+        a polynomial in Z/2Z.
+        putGF2bit displays a sequence of 0 and 1, interpreted as the
+        coefficients of this polynomial in Z/2Z.
+        (For example the string 100101 represents the Galois-field  
+        element GF(A^5 + A^2 + 1) if 'A' is the specified variable.)
+
+        X is assigned Y. 
+
+        GF(2^n) is specified by "curgf" or "curgf2bit".
+        For additional information on working with the current Galois- 
+        field, please type "? curgf" or "? curgf2bit".
+
+
+        Example 1: (correct)
+
+                putGF2bit( GF(A^2+1) )
+
