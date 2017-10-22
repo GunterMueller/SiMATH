@@ -7,8 +7,8 @@ Siemens AG/Munich.
 AG/Munich.
 
 ****************************************
-Version 4.6.1
-THe original SOurces are in the Directory "Distribution".
+Version 4.6.1.
+The original Sources are in the Directory "Distribution".
 ****************************************
 
 The computer algebra system SIMATH is free software for universities
