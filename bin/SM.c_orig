@@ -24,8 +24,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>				  /* required by wait() in my_system() */
-/* GM */
-#include <stdlib.h>
 
 #ifdef HAVE_MALLOC_H
 #include <malloc.h>				  /* reqired by malloc() (of course). Apollos don't have malloc.h */
@@ -143,8 +141,7 @@ if (!var[0]) {printf("SM: name undefined\n"); break;}
   * exist, it might be better do declare getenv() explicitely.
   */
 
-/* GM */
-/* char           *getenv(); */
+char           *getenv();
 
 FILE           *commands_file;			  /* this is `.SM.cmds' */
 
@@ -655,8 +652,7 @@ void            menue()
   * getline() seems to do what is usually done by gets() or fgets().
   * It is not clear anymore what getline() is required for.
   */
-/* GM */
-/*
+
 char           *getline(s, n, pf)
     char           *s;
     int             n;
@@ -673,7 +669,6 @@ char           *getline(s, n, pf)
 	ss = NULL;
     return (ss);
 }
-*/
 
  /*
   * trap_sig_int() is called if SM receives a SIGINT signal.

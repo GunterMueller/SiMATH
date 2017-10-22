@@ -6,6 +6,8 @@ Siemens AG/Munich.
   Copyright (C) 2002 by the SIMATH group in TMU and the Siemens
 AG/Munich.
 
+Version 4.6.1
+
 The computer algebra system SIMATH is free software for universities
 and scientific research institutions as long as it is used for purely
 scientific purposes only. This software is distributed in the hope
