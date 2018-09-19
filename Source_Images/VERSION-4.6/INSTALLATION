@@ -1,0 +1,119 @@
+-1. Please read README and COPYRIGHT first.
+
+ 0. We have been working on a simplification of the installation
+    procedure, and SIMATH 4.5 uses gnu autoconf, i.e "configure" shell
+    scripts, to determine most of its configuration parameters.
+
+    Currently, on all platforms, SIMATH is being developed using the GNU
+    C compiler "gcc", so there might be some unexpected problems with
+    native compilers. "gcc" is available from many ftp servers all over
+    the world, such as prep.ai.mit.edu and its mirrors.
+
+    On some machines you might need GNU "make". You should find GNU
+    "make" where you found "gcc".  Be sure that GNU "make" is actually
+    named "make" and occurs in the search path of your shell before the
+    system's "make". If you are not sure whether your "make" can handle
+    the SIMATH Makefiles, you should install GNU "make".
+
+    Please notice that you will need about 50 MB disk space while
+    compiling SIMATH.
+
+    If you have any problems in compiling SIMATH, please mail to
+	simath@math.uni-sb.de.
+
+ 1. The GNU "readline" library will be used in simcalc. This has many
+    advantages such as emacs style command line editing and function name
+    completion. The "readline" library is part of the SIMATH distribution
+    (see ./readline-2.0) and compiled automatically. You don't have to
+    care about getting "readline".
+
+ 2.a) Now type
+	"./configure"
+    or
+	"./configure --prefix=SM_HOME.
+
+    If you simply type "./configure", SIMATH will be installed in the
+    directory /usr/local/simath. If you use "--prefix=SM_HOME" (where
+    SM_HOME is a path to a directory), e.g.
+	"./configure --prefix=/usr/math",
+    all SIMATH files will be installed in /usr/math/simath. The
+    "configure" script determines certain properties of your machine and
+    creates some files (e.g. Makefiles and C header files) reflecting
+    these properties.
+
+    On some HP machines you might get an error like
+	./configure: sh internal 2K buffer overflow
+    from /bin/sh. In this case you should rerun ./configure using /bin/ksh
+    or bash, e.g.
+	"/bin/ksh ./configure"
+    or
+	"/bin/ksh ./configure --prefix=SM_HOME.
+
+    We now assume that you have successfully run the "configure" script.
+    
+ 2.b) The executable SIMATH files must reside in the directory
+    SM_HOME/bin. You can append this directory to your search path, or you
+    can edit ./Makefile.flags and set BINDIR to one of those directories
+    which are already included in your search path, for example
+	BINDIR=/usr/local/bin.
+    There is a target named "links" in ./Makefile which creates links
+    to the executable files in SM_HOME/bin. BINDIR should be set to
+    SM_HOME/bin by the configure script (or to /usr/local/bin if you
+    ran configure without the "--prefix" option).
+
+ 2.c) Set MAX_BLOCK_NUMBER in ./smconfig.h according to the main memory of
+    your system. Read the instructions in ./smconfig.h.
+
+ 3. Type "make" in the current directory. (Be sure, that GNU "make" is
+    executed if you are on a system that requires GNU "make".) This
+    will compile all executable SIMATH files, the SIMATH calculator
+    (simcalc) and the SIMATH object libraries. It may take a few hours,
+    depending on your machine.
+
+ 4. Type "make SIMATH_install" to install the files in the directory
+    SM_HOME/simath. The following object-libraries will be copied into
+    the directory SM_HOME/simath/lib:
+      lib_arith1.a   lib_ec1.a   lib_matr1.a   lib_pol1.a   lib_list.h
+      lib_arith2.a   lib_ec2.a   lib_matr2.a   lib_pol2.a   lib_kern.h
+      lib_arith3.a   lib_ec3.a   lib_matr3.a   lib_pol3.a	
+      lib_arith4.a   lib_ec4.a                 lib_pol4.a 
+    If it is not the first time you install SIMATH in the directory
+    SM_HOME/simath, "make SIMATH_install" will overwrite the former
+    version. Therefore you should save the libraries if you modified
+    them. 
+
+ 5. Type "make links" to create links for the executable files (SM,
+    CCC, simcalc, xsrc, smman and smsrc, cmd and srctrans and dr) in 
+    SM_HOME/bin [if you like (see 3.b))].
+
+-----------------------------------------------------------------------------
+
+  After having compiled and installed everything, you will find an
+executable file named "CCC" SM_HOME/bin (and possibly links in BINDIR).
+Please read the description below carefully before using them.
+
+CCC:             
+	usage: CCC prog [ar1 ... arn]
+
+	CCC compiles a SIMATH main program "prog.S" to an executable
+	file "prog.x". Necessary C functions or SIMATH functions
+	needed will be linked automatically. If supplementary object
+	libraries ar1 ... arn are specified (where ar1 stands for
+	SM_HOME/simath/lib/libar1.a), CCC will give them to the linker,
+	and they will have priority over all SIMATH libraries.	CCC is
+	useful if you want to compile a SIMATH program within a shell
+	script. (Also see the description of 'C' and "CCC" in section
+	2.4.2 of the SIMATH manual).
+
+----------------------------------------------------------------------------
+
+  If you want to print a file "name.S" by typing 'P' in the SIMATH
+menu, you need an executable file SM_HOME/simath/bin/dr which sends a
+single file to your favorite printer. If ${SM_HOME}/simath/bin/dr
+(which is very very simple) does not work, modify it according to your
+system.
+
+-----------------------------------------------------------------------------
+
+  You will find LaTeX sources of the SIMATH manual in the directory ./doc.
+

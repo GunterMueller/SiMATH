@@ -1,0 +1,49 @@
+
+The tar archive thesis.tar contains the files
+	amssym.def
+	appendixA.tex
+	appendixB.tex
+	bibl.tex
+	bk11.sty
+	chapter1.tex
+	chapter2.tex
+	chapter3.tex
+	chapter4.tex
+	chapter5.tex
+	cyracc.def
+	defs.tex
+	mya4.sty
+	mybook.sty
+	notation.tex
+	preface.tex
+	script10.300pk
+	script10.329pk
+	script10.tfm
+	tab13.1p.tex
+	tab13.2p.tex
+	tab2.1p.tex
+	tab2.3p.tex
+	tab3.1p.tex
+	tab3.3p.tex
+	tab5.1p.tex
+	tab5.2p.tex
+	theo.tex
+	thesis.tex
+	title.tex
+	titleback.tex
+	zusfass.tex
+
+Please type
+	gunzip thesis.tar.gz
+	tar xvf thesis.tar
+	latex thesis
+
+If necessary install the files
+	script10.tfm
+	script10.300pk
+	script10.329pk
+where your TeX version needs them.
+
+If there are any problems, please send an e-mail message to
+	pascale@math.uni-sb.de
+

@@ -1,0 +1,76 @@
+
+-----------------------------------------------------------------------------
+
+This file is part of the computer algebra system SIMATH.
+
+SIMATH is a common software product of the SIMATH group in Saarbruecken
+and the Siemens AG. Copyright (C) 1992-1994 by the SIMATH group in
+Saarbruecken and the Siemens AG/Munich.
+
+The computer algebra system SIMATH is free software for universities
+and scientific research institutions as long as it is used for purely
+scientific purposes only. This software is distributed in the hope that
+it will be useful, but
+
+			WITHOUT ANY WARRANTY.
+
+
+Permission is hereby granted to copy the system for any 
+
+			PURELY SCIENTIFIC
+
+purposes, provided the above notices are retained on all copies.
+
+If you intend to use SIMATH for other applications, please contact
+	
+	SIEMENS AG
+	Corporate Research and Development
+	Dept. ZFE ST SN 3
+	D-81730 Munich
+
+Upon reception of this software, please send e-mail messages to
+
+	simath@math.uni-sb.de 			and to	
+	Heribert.Peuckert@zfe.siemens.de
+
+to inform us that you got a copy of the system. 
+
+Redistribution of this software - either in source or binary form - is
+not permitted.
+
+
+ -----------------------------------------------------------------------------
+
+The computer algebra system SIMATH is written in C. It has been
+developed for research purposes by the SIMATH group of Prof. Dr. H.G.
+Zimmer at the University of Saarland in Saarbruecken, Germany. The
+development has been partially supported by the Siemens AG.
+
+Up to now we are running SIMATH on the following machines: 
+	Sun 3/80 under SunOS 4.0.3,
+	Sun SPARCstation under SunOS 4.1.1,
+	HP 9000 series 700 under HP-UX 9.05,
+	Apollo DN 3000 under SR10.1,
+	Apollo DN 4500 under SR10.1,
+	SGI Challenge under IRIX 5.2.
+	Linux 1.1.51
+
+If you are using a different machine (and/or operating system), you can
+(and you should) try to install SIMATH. If you are successful, please
+let us know. If you had to change some of the SIMATH source files,
+please inform us of the changes to be made.
+
+If you have any problems or suggestions, please contact us by mail:
+	SIMATH-Gruppe
+	Lehrstuhl Prof. Dr. H.G. Zimmer
+	FB 9 Mathematik
+	Universitaet des Saarlandes
+	Postfach 151150
+	66041 Saarbruecken
+or by e-mail:
+	simath@math.uni-sb.de
+or by phone:
+	0681/302-2206.
+
+The latest version of SIMATH may be obtained by anonymous ftp from
+ftp.math.uni-sb.de (134.96.32.23).

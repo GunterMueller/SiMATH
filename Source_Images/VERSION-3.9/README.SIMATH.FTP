@@ -1,0 +1,22 @@
+  There are two ways of getting SIMATH via anonymous ftp.
+	
+  The first one:
+You get the file "SIMATH-3.9.tar.gz". This is a "gzipped" tar-file. You
+can unpack it by typing
+	'gzcat SIMATH-3.9.tar.gz | tar xvf -'
+or something like that, depending on your installation of gzip.
+
+  The second one:
+You get all the files "SIMATH-3.9.??", if available on your ftp server.
+These are pieces of the "gzipped" tar-file mentioned above. You will
+have to put the pieces together by typing
+	'cat SIMATH-3.9.?? | gunzip | tar xvf -'
+for example.
+
+  You will need "gzip" to uncompress the SIMATH distribution. "gzip" is
+available on many ftp servers all over the world. On other servers,
+SIMATH might be stored in a different way. If you have problems
+unpacking SIMATH, please ask your system administrator or contact
+	simath@math.uni-sb.de.
+
+

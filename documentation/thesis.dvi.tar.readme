@@ -1,0 +1,19 @@
+
+The tar archive thesis.dvi.tar contains the files
+	thesis.dvi
+	script10.tfm
+	script10.300pk
+	script10.329pk
+
+Please type
+	gunzip thesis.dvi.tar.gz
+	tar xvf thesis.dvi.tar
+and install the files
+	script10.tfm
+	script10.300pk
+	script10.329pk
+(if necessary) where your TeX version needs them.
+
+If there are any problems, please send an e-mail message to
+	pascale@math.uni-sb.de
+

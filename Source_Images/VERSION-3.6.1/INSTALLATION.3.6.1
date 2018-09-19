@@ -1,0 +1,199 @@
+
+-----------------------------------------------------------------------------
+
+This file is part of the computer algebra system SIMATH. 
+Copyright (C) 1992 by the SIMATH group in Saarbruecken.
+
+The computer algebra system SIMATH is free software. This software is
+distributed in the hope that it will be useful, but
+		WITHOUT ANY WARRANTY.
+
+Permission is hereby granted to copy the system for any non-commercial
+purposes, provided the above notices are retained on all copies.
+
+Upon reception of this software, please send an e-mail message to
+		simath@math.uni-sb.de
+to inform us that you got a copy of the system. 
+
+-----------------------------------------------------------------------------
+
+0. Before you can start installing SIMATH, you must get the file
+   ./sources/srclib.kern from the SIMATH group. ./sources/srclib.kern
+   is _not_ part of the SIMATH distribution. You will not be able to
+   compile SIMATH programs without ./sources/srclib.kern. In order to
+   get this file please send email to
+	simath@math.uni-sb.de.  
+   We will send you ./sources/srclib.kern as soon as possible.
+
+   We also have installed an email server that will immediately respond
+   to your request for ./sources/srclib.kern. Send an email message 
+   containing the lines
+	BEGIN
+	SEND srclib.kern.tar
+	END
+   or the lines
+	BEGIN
+	SEND srclib.kern.shar
+	END
+   to the email server
+	mail-server@emmy.math.uni-sb.de
+   in order to get the tar file srclib.kern.tar or the shell archive
+   srclib.kern.shar containing srclib.kern and a file README_KERN.
+
+   Note that srclib.kern.tar is encoded with uuencode before it is
+   sent. Therefore we recommend that you get srclib.kern.shar and
+   unpack it using /bin/sh.
+
+   Note that your messages to mail-server@emmy.math.uni-sb.de are
+   processed automatically, so they should not contain more than the
+   request for srclib.kern.tar or srclib.kern.shar. If you have
+   problems or suggestions please mail to simath@math.uni-sb.de.
+
+   When you get the mail file, remove the email heading (and footing,
+   if there is any).
+	
+   If you have got the tar file srclib.kern.tar type
+	"uudecode <MailFile>"
+   to decode the file and then
+	"tar xvf srclib.kern.tar"
+   to extract srclib.kern and README_KERN. Read README_KERN and copy 
+   srclib.kern into the directory ./sources.
+
+   If you have got the shell archive srclib.kern.shar type
+	"/bin/sh <MailFile>"
+   to extract srclib.kern and README_KERN. Read README_KERN and copy
+   srclib.kern into the directory ./sources.
+
+   We hope, this will enable us to keep track of all the people who are
+   interrested in SIMATH.
+
+   From now on, we suppose that you have got ./sources/srclib.kern and
+   have installed it correctly.
+
+1. Edit the files ./site.h and ./Makefile. In both files you must set
+   the variable SM_HOME to the path where you want the system to be
+   installed; for example
+	SM_HOME=/usr/local/simath 
+   in ./Makefile and
+   	#define SM_HOME "/usr/local/simath"
+   in ./site.h
+
+2. The SIMATH executable files must reside in the directory
+   SM_HOME/proz. You can append this directory to your search path, or
+   you can edit ./Makefile and set BINDIR to one of those directories
+   which are already included in your search path, for example
+	BINDIR=/usr/local/bin.
+   There is a target called "links" in ./Makefile which creates links to
+   the executable files in SM_HOME/proz. 
+   Change the variables INSTALLDIR, INSTALLFILE and LN in ./Makefile
+   according to your system.
+
+3. Copy one of the files _rechner.* to _rechner.h by typing 
+	"cp _rechner.apo10000 _rechner.h" on Apollo DN10000,
+	"cp _rechner.apollo _rechner.h"   on Apollo DN4500 and DN3000,
+	"cp _rechner.mx2 _rechner.h"      on Siemens MX2,
+	"cp _rechner.mx2+ _rechner.h"     on Siemens MX2+,
+	"cp _rechner.mx300 _rechner.h"    on Siemens MX300,
+	"cp _rechner.sparc _rechner.h"    on Sun/Sparc, 
+	"cp _rechner.sun _rechner.h"      on other Suns. 
+
+4. If you are using an Apollo workstation, you should now change to
+   version bsd4.3 (by typing "ver bsd4.3"). Of course the system will
+   also run in the sys5.3 environment.
+
+5. Type "make SIMATH_make" in the current directory. This will compile
+   all SIMATH executable files, the SIMATH calculator (simcalc) and the
+   SIMATH object-libraries. It will take 2 to 12 hours depending on
+   your machine. When "make SIMATH_make" is finished you will find a
+   file ./___SRCTRANS/srctrans.fehl which contains a list of all SIMATH
+   source files that could not be compiled together with the
+   corresponding compiler messages. Type
+	"fgrep Could ___SRCTRANS/srctrans.fehl".
+   You should get only 5 lines of output:
+	Could not compile getocnt.S
+	Could not compile setocnt.S
+	Could not compile errmsg.S
+	Could not compile globbind.S
+	Could not compile tracemsg.S
+   (Don't worry about these 5 error messages. The functions getocnt,
+   setocnt, errmsg, tracemsg and globbind will nevertheless be compiled
+   correctly.)
+   
+6. Type "make SIMATH_install" to install the files in the directory 
+   SM_HOME. The following object-libraries will be copied into the 
+   directory SM_HOME/modlib:
+   lib_TEST1.a   lib_arith1.a   lib_ec1.a    lib_matr1.a   lib_pol1.a
+   lib_TEST2.a   lib_arith2.a   lib_ec2.a    lib_matr2.a   lib_pol2.a
+   lib_TEST3.a   lib_arith3.a   lib_ec3.a    lib_matr3.a   lib_pol3.a	
+   lib_TEST4.a   lib_arith4.a   lib_ec4.a    		   lib_pol4.a 
+   lib_list.a    lib_kern.a
+   If it is not the first time you install SIMATH in the directory 
+   SM_HOME, "make SIMATH_install" will overwrite the former version. 
+
+7. Type "make links" to create links for the executable files (SM, CC,
+   TCC, CCC, TCCC, simcalc and srctrans) contained in SM_HOME/proz [if
+   you like this (see 2.)]. If one of the files SM, CC, CC, TCC, CCC,
+   TCCC, simcalc and srctrans already exists in the directory BINDIR,
+   overwriting will depend on your choice of the variable LN in the
+   Makefile. (For example LN=cp will overwrite and LN=ln will not.)
+
+8. "make clean" will try to remove everything that was not part of the
+   original tar-file (except ./sources/srclib.kern).
+
+-----------------------------------------------------------------------------
+
+  After having compiled and installed everything, you will find three
+helpful shell scripts called "srctrans", "CC" and "TCC" in SM_HOME/proz
+(and possibly in BINDIR). Please read the descriptions below carefully,
+in order to use them. In each file there exists a variable SM_HOME1.
+Edit the scripts and set SM_HOME1 to the same value as SM_HOME in the
+Makefile, for example
+	SM_HOME1=/usr/local/simath.
+
+
+
+CC:             CC prog [ar1 ... arn]
+
+	CC compiles a SIMATH program "prog.S" to an executable file
+	"prog.x". The file "prog.S" must contain one main-function.
+	C-functions or SIMATH functions which are needed will be linked
+	automatically. If supplementary object-libraries ar1 ... are
+	specified (where ar1 stands for SM_HOME/modlib/libar1.a), CC
+	will give them to the loader, and they will have priority over
+	all SIMATH libraries. CC is useful if you want to compile a
+	SIMATH program within a shell script. The executable file
+	"prog.x" is stripped. If you want to avoid this, use
+		CCC prog [ar1 ... arn]
+	(see also the description of 'C' and "CCC" in section 2.4.2 of
+	the SIMATH manual).
+
+TCC:            TCC prog  [ar1 ... arn]
+	    or  TCCC prog [ar1 ... arn]     (if you need an unstripped
+					     program prog.x)
+
+	TCC does the same as CC but the resulting file "prog.x" is the
+	test version of the SIMATH program "prog.S". For more
+	information about test versions, please read the descriptions
+	of 'T' and "TCCC" in section 2.4.2 of our manual.
+
+srctrans:       srctrans source_library object_library
+
+	srctrans compiles each file "name.S" contained in the archive
+	"source_library" to the object module "name.o" (using "cc -c
+	name.S ...") and puts all object modules into the library
+	"object_library". Error messages of the compiler are written in
+	the file srctrans.fehl. You should not start two srctrans at
+	the same time in the same directory.
+
+-----------------------------------------------------------------------------
+
+  If you want to print a file "name.S" by typing 'P' in the SIMATH
+menu, you must have an executable file ${SM_HOME}/proz/dr which sends a
+single file to your favorite printer. The file ${SM_HOME}/proz/dr
+included in this software (which is very very simple) might not work on
+your machine.
+
+-----------------------------------------------------------------------------
+
+  Remark: You will find LaTeX sources and a .dvi file of the SIMATH
+manual in the directory doc.

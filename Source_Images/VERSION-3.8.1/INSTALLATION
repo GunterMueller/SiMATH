@@ -1,0 +1,268 @@
+
+-----------------------------------------------------------------------------
+
+This file is part of the computer algebra system SIMATH.
+
+SIMATH is a common software product of the SIMATH group in Saarbruecken
+and the Siemens AG. Copyright (C) 1992-1993 by the SIMATH group in
+Saarbruecken and the Siemens AG/Munich.
+
+The computer algebra system SIMATH is free software for universities
+and scientific research institutions as long as it is used for purely
+scientific purposes only. This software is distributed in the hope that
+it will be useful, but
+
+			WITHOUT ANY WARRANTY.
+
+
+Permission is hereby granted to copy the system for any 
+
+			PURELY SCIENTIFIC
+
+purposes, provided the above notices are retained on all copies.
+
+If you intend to use SIMATH for other applications, please contact
+	
+	SIEMENS AG
+	Corporate Research and Development
+	Dept. ZFE ST SN 3
+	D-81730 Munich
+
+Upon reception of this software, please send e-mail messages to
+
+	simath@math.uni-sb.de 			and to	
+	Heribert.Peuckert@zfe.siemens.de
+
+to inform us that you got a copy of the system. 
+
+Redistribution of this software - either in source or binary form - is
+not permitted.
+
+-----------------------------------------------------------------------------
+
+ 0. This is the first version of SIMATH which is installed by Makefiles
+    instaed of shell scripts; so there might be some bugs in the
+    installation procedure.
+
+    We apologise for the somewhat difficult installation procedure. We
+    are currently working on a better method for configuring the system
+    according to your platform. We hope installing the next version of
+    SIMATH will be easier.
+
+    You will have to use the GNU replacement of "make". We will try to
+    fix this problem as soon as possible. GNU "make" is available from
+    many ftp servers all over the world, and it compiles even on
+    Apollos without problems. Be sure that "gmake" is actually named
+    "make" and occurs in the search path of your shell before "make".
+
+    If you have any problems in compiling SIMATH, please mail to
+	simath@math.uni-sb.de.
+
+ 1. Before you can start installing SIMATH, you must get the file
+    ./sources/srclib.kern from the SIMATH group. ./sources/srclib.kern
+    is _not_ part of the SIMATH distribution. You will not be able to
+    compile SIMATH programs without ./sources/srclib.kern. To get this
+    file please send email to
+	simath@math.uni-sb.de.  
+    We will send you ./sources/srclib.kern as soon as possible.
+
+    We also have installed an email server that will immediately
+    respond to your request for ./sources/srclib.kern. Send an email
+    message containing the lines
+	BEGIN
+	SEND srclib.kern-3.8.1.tar 
+	END
+    or the lines
+	BEGIN
+	SEND srclib.kern-3.8.1.shar
+	END
+    to the email server
+	mail-server@emmy.math.uni-sb.de
+    in order to get the tar file srclib.kern-3.8.1.tar or the shell
+    archive srclib.kern-3.8.1.shar containing srclib.kern and a file
+    README_KERN.
+
+    Note that srclib.kern-3.8.1.tar is encoded with uuencode before it is
+    sent. Therefore, we recommend that you get srclib.kern-3.8.1.shar and
+    unpack it using /bin/sh.
+
+    Note that your messages to mail-server@emmy.math.uni-sb.de will be
+    processed automatically, so they should not contain more than the
+    request for srclib.kern-3.8.1.tar or srclib.kern-3.8.1.shar. If you
+    have problems or suggestions, please mail to
+    simath@math.uni-sb.de.
+
+    When you get the mail file, remove the email heading (and footing,
+    if any).
+	
+    If you have got the tar file srclib.kern-3.8.1.tar, type
+	"uudecode <MailFile>"
+    to decode the file and then
+	"tar xvf srclib.kern-3.8.1.tar"
+    to extract srclib.kern and README_KERN. Read README_KERN and copy
+    srclib.kern into the directory ./sources.
+
+    If you have got the shell archive srclib.kern-3.8.1.shar, type
+	"/bin/sh <MailFile>"
+    to extract srclib.kern and README_KERN. Read README_KERN and copy
+    srclib.kern into the directory ./sources.
+
+    We hope, this will enable us to keep track of all the people who
+    are interested in SIMATH.
+
+    From now on, we suppose that you have got ./sources/srclib.kern and
+    have installed it correctly (in the directory ./sources).
+
+ 2. At least on Sun workstations it is possible to use the GNU readline
+    library in simcalc. (We have noy yet tested the readline library on
+    other platforms, but it should run on other systems as well.) This
+    has many advantages such as emacs style command line editing and
+    function name completion. We recommend that you use the readline
+    library on Suns. readline is available on many ftp servers all over
+    the world. (You will need at least version 1.1.)
+
+ 3. Together with the Kant group, we have implemented an interface
+    between SIMATH and the computer algebra package Kant. The latest
+    version of Kant is available from
+	ftp.math.tu-berlin.de 
+    in the directory 
+	/pub/algebra/Kant. 
+    If you intend to use this interface, you will need version V2R2p7
+    of Kant which should have been released in December. You will have
+    to edit the file site.h again and remake the targets "paths" and
+    "proc_SM" of the Makefile, once you have installed V2R2p7.
+
+ 4. Now edit the files ./Makefile.inc and ./site.h. In both files, you
+    must set SM_HOME to the directory where you want the system to be
+    installed; for example
+	SM_HOME=/usr/local/simath
+    in ./Makefile.inc and
+	#define SM_HOME "/usr/local/simath"
+    in ./site.h.
+
+    The executable SIMATH files must reside in the directory
+    SM_HOME/proz. You can append this directory to your search path, or
+    you can edit ./Makefile and set BINDIR to one of those directories
+    which are already included in your search path, for example
+	BINDIR=/usr/local/bin.
+    There is a target called "links" in ./Makefile which creates links
+    to the executable files in SM_HOME/proz.  Change the variables
+    INSTALLDIR, INSTALLFILE and LN in ./Makefile.inc according to your
+    system.
+
+    If you to compile the libraries with another compiler, modify CC,
+    CPPFLAGS, and CFLAGS in ./Makefile.inc. Take a close look at the
+    other macros in ./Makefile.inc and be sure to adjust them according
+    to your system.
+
+    If you want to use the KANT interface, you also have to modify
+    ./site.h. Please read the comments in ./site.h.
+
+ 5. Edit the files ./Makefile.flags.proc and ./Makefile.flags.simcalc.
+    You may modify CC, CPFLAGS, CPPFLAGS, and LDFLAGS and other macros
+    in both files.
+
+    If you intend to use the GNU readline library, modify RL_INCLUDE
+    and RL_FLAGS in ./Makefile.flags.simcalc according to your system.
+    (The readline version of "simcalc" is known to run on Suns under
+    the SunOS operating system. We have not yet tried to get it running
+    on other machines.) Follow the instructions in the Makefiles.
+
+ 6. Copy one of the files config.* to config.h by typing 
+	"cp config.apo10000 config.h" on Apollo DN10000,
+	"cp config.apollo config.h"   on Apollo DN4500 and DN3000,
+	"cp config.hp700 config.h"    on HP 9000 series 700
+	"cp config.sgi config.h"      on Silicon Graphics, 
+	"cp config.sparc config.h"    on Sun/Sparc, 
+	"cp config.sun config.h"      on older Suns. 
+    SIMATH is known to run on the following machines:
+	Apollo DN 10000 under SR10.3,
+	Apollo DN 4500 under SR10.1,
+	Apollo DN 3000 under SR10.1,
+	HP 9000 series 700 under HP-UX 0.01,
+	SGI Indigo under IRIX 4.0.5F
+	SGI Challenge under IRIX 5.1.1.2
+	Sun SPARCstation under SunOS 4.1.1,
+	Sun 3/80 under SunOS 4.0.3,
+	Sun 3/140 under SunOS 3.4.
+    If your machine is not listed above, use the config file that seems
+    to be closest to your system. If you have no idea, which config
+    file to use, try config.sun3 on a BSD operating system and
+    config.sgi on a SYSV operating system. If you need help in porting
+    the system, please contact us.
+
+ 7. If you are using an Apollo workstation, you should now change to
+    version bsd4.3 (by typing "ver bsd4.3"). Of course SIMATH will also
+    run in the sys5.3 environment after the installation. 
+
+ 8. Type "make" in the current directory. (Be sure, that GNU "make" is
+    executed.) This will compile all executable SIMATH files, the
+    SIMATH calculator (simcalc) and the SIMATH object libraries. It
+    will take 2 to 12 hours depending on your machine.
+
+ 9. Type "make SIMATH_install" to install the files in the directory
+    SM_HOME. The following object-libraries will be copied into the
+    directory SM_HOME/modlib:
+      lib_arith1.a   lib_ec1.a   lib_matr1.a   lib_pol1.a   lib_list.h
+      lib_arith2.a   lib_ec2.a   lib_matr2.a   lib_pol2.a   lib_kern.h
+      lib_arith3.a   lib_ec3.a   lib_matr3.a   lib_pol3.a	
+      lib_arith4.a   lib_ec4.a                 lib_pol4.a 
+    If it is not the first time you install SIMATH in the directory
+    SM_HOME, "make SIMATH_install" will overwrite the former version.
+    Therefore you should save the libraries if you modified them.
+
+10. Type "make links" to create links for the executable files (SM, CC,
+    CCC, simcalc and srctrans) in SM_HOME/proz [if you like (see 2.)].
+    If one of the files SM, CC, CCC, simcalc and srctrans already
+    exists in the directory BINDIR, overwriting will depend on your
+    choice of the variable LN in Makefile.inc. (For example LN=cp will
+    overwrite and LN=ln will not.)
+
+11. "make clean" will try to remove everything that was not part of
+    the original tar-file (except ./sources/srclib.kern).
+
+-----------------------------------------------------------------------------
+
+  After having compiled and installed everything, you will find two
+helpful shell scripts called "srctrans" and "CC" in SM_HOME/proz (and
+possibly in BINDIR). Please read the descriptions below carefully,
+before using them. In each file there exists a variable SM_HOME1. Edit
+the scripts and set SM_HOME1 to the same value as SM_HOME in the
+Makefile, for example
+	SM_HOME1=/usr/local/simath.
+
+CC:             CC prog [ar1 ... arn]
+
+	CC compiles a SIMATH program "prog.S" to an executable file
+	"prog.x". The file "prog.S" must contain one main-function.
+	C-functions or SIMATH functions which are needed will be linked
+	automatically. If supplementary object-libraries ar1 ... arn
+	are specified (where ar1 stands for SM_HOME/modlib/libar1.a),
+	CC will give them to the loader, and they will have priority
+	over all SIMATH libraries. CC is useful, if you want to compile
+	a SIMATH program within a shell script. The executable file
+	"prog.x" is stripped. If you want to avoid this, use
+		CCC prog [ar1 ... arn]
+	(see also the description of 'C' and "CCC" in section 2.4.2 of
+	the SIMATH manual).
+
+srctrans:       srctrans source_library object_library
+
+	srctrans compiles each file "name.S" contained in the archive
+	"source_library" to the object module "name.o" (using "cc -c
+	name.S ...") and puts all object modules into the library
+	"object_library". Error messages of the compiler are written
+	into the file srctrans.fehl. You should not start two srctrans
+	at the same time in the same directory.
+
+----------------------------------------------------------------------------
+
+  If you want to print a file "name.S" by typing 'P' in the SIMATH
+menu, you must have an executable file ${SM_HOME}/proz/dr which sends a
+single file to your favourite printer. The file ${SM_HOME}/proz/dr
+(which is very very simple) might not work on your machine.
+
+-----------------------------------------------------------------------------
+
+  Remark: You will find LaTeX sources and a .dvi file of the SIMATH
+manual in the directory ./doc.

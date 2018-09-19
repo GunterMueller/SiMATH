@@ -1,0 +1,217 @@
+Version 4.5 --- Version 4.6
+
+  Version 4.6 is the first SIMATH version supporting 64-bit platforms.
+
+  We have fixed many small bugs.
+
+---------------------------------------------------------------------------
+
+Version 4.4.1 --- Version 4.5
+
+  A lot of function about cyclotomic units, esp. iscynfHS.S
+
+---------------------------------------------------------------------------
+
+Version 4.4 --- Version 4.4.1
+
+  We have done some bug-fixes related to the construction of prime numbers.
+
+---------------------------------------------------------------------------
+
+Version 4.3 --- Version 4.4
+
+  Version 4.4 of SIMATH has a new arithmetic for GF(2). We have further
+  done some minor changes and some bug-fixes. 
+
+  About 80% of the online help system has been translated to English.
+
+  For the changes in simcalc see ?NEW in simcalc.
+
+---------------------------------------------------------------------------
+
+Version 4.2 --- Version 4.3
+
+ We have done some bug-fixes and minor changes.
+
+---------------------------------------------------------------------------
+
+Version 4.1 --- Version 4.2
+
+ We have done bug-fixes and added some programs for quadratic function
+fields.
+
+---------------------------------------------------------------------------
+
+Version 4.0.1 --- Version 4.1
+
+  Version 4.1 is a regular update of Version 4.0.1. 
+
+  SIMATH now includes functions for computing the height of points on
+elliptic curves over quadratic number fields and the regulator of elliptic
+curves over quadratic number fields.
+
+  About 50% of the online help system has been translated to English.
+
+  Some bugs of Version 4.0.1 have been fixed.
+
+---------------------------------------------------------------------------
+
+Version 4.0 --- Version 4.0.1
+  
+  Version 4.0.1 fixes some bugs related to the computation of the
+Mordell-Weil group of elliptic curves over rational numbers in
+simcalc as well as some problems with the installation.
+ 
+---------------------------------------------------------------------------
+
+Version 3.10.3 --- Version 4.0
+
+  Version 4.0 has a new directory structure. The directories ./proc,
+./header, and ./modlib have been renamed ./bin, ./include, and ./lib.
+The SIMATH source libraries have been replaced by ordinary directories.
+
+  SIMATH now includes functions for computing the rank of an elliptic
+curve over real quadratic fields of class number one. 
+
+  Some problems related to the root finding of univariate polynomials
+and to the computation of rank and integral points of elliptic curves
+have been fixed.
+
+---------------------------------------------------------------------------
+
+Version 3.10.2 --- Version 3.10.3
+
+  Version 3.10.3 fixes some problems with garbage collection on Linux 
+machines and includes a FreeBSD port. For all other machines, 3.10.3
+is identical to 3.10.2.
+
+---------------------------------------------------------------------------
+
+Version 3.10.1 --- Version 3.10.2
+
+  3.10.2 is an intermediate release (mainly for Siemens). The main
+differences to 3.10.1 are 
+ - some improved routines for matrices over Z/2Z,
+ - some extended input and output functions and
+ - some bug fixes.
+
+---------------------------------------------------------------------------
+
+Version 3.10 --- Version 3.10.1
+
+  Version 3.10 has been withdrawn shortly after it was released because
+there were some bugs in the elliptic curve subsystem. These have been fixed.
+
+---------------------------------------------------------------------------
+
+Version 3.9 --- Version 3.10
+
+  As usual, when a new version is released, there are some new and
+improved algorithms, and many new programs have been incorporated into
+simcalc. The basic structure of SIMATH has remained essentially
+unchanged.
+
+  The GNU readline library is now part of the SIMATH distribution. This
+should make installation a little bit easier.
+
+---------------------------------------------------------------------------
+
+Version 3.8.1 --- Version 3.9
+
+  We have implemented a new online documentation system. The
+documentation of a given SIMATH function is now extracted from the
+source file. This reduces the size of the system by more than 3 MB.
+
+  SIMATH is now installed using GNU autoconf, i.e. "configure" scripts
+to determine most of the configuration parameters automatically. The
+installation of SIMATH is therefore much easier.
+
+  We have implemented an algorithm for determining all integral points
+on an elliptic curve. For more information see the documentation of
+ecisnfsaip().
+
+  An algorithm for factoring univariate polynomials over algebraic
+number fields (upnffact()) has been implemented.
+
+  The following is a list of some of the new simcalc functions and
+features.
+General functions:
+  - predefinitions for simcalc are read from the file .simcalcrc
+  - arrays are allowed in variable names
+User interface:
+  - user-defined functions have been implemented, sums and products of
+    indexed expressions can be easily computed
+Elliptic curves:
+  - ntpair computes the Neron-Tate pairing
+  - whei computes the Weil height    
+  - faintp tries to find all integral points on an elliptic curve
+Z/mZ:
+  - primitive roots and the order of elements in the unit group of Z/mZ 
+    can be computed using proot and ord
+Polynomials:
+  - froot tries to find roots of univariate polynomials over Z/pZ
+  - irpgen generates irreducible polynomials over Z/pZ and Z/2Z
+  - fact has been extended to univariate polynomials over number fields 
+    and prime ideal factorization in quadratic number fields
+  - relcln computes the relative class number of abelian number fields
+
+---------------------------------------------------------------------------
+
+Version 3.7 --- Version 3.8.1
+
+  At least on Sun workstations, simcalc is now able to use the GNU
+readline library. This allows an emacs style command line editing in
+simcalc. (The GNU readline library is available from many ftp servers
+all over the world.)
+
+  The arithmetic of finite fields (of arbitrary degree over the prime
+subfield) is implemented now in simcalc.
+
+  Some new functions (ecgnp, fp, npfe) for elliptic curves over finite
+fields have been added to simcalc.
+
+  The test system is no longer part of the SIMATH distribution. Thus,
+the SIMATH sources are a little bit smaller.
+
+  We have implemented a combined Schoof-Shanks algorithm for counting
+points on elliptic curves over finite fields of characteristic 2.
+
+  Tate's algorithm is now available for curves over quadratic number
+fields.
+
+  A new floating point arithmetic, the so-called "Papanikolaou floating
+point arithmetic" ("PAF arithmetic") is accessible from within SIMATH.
+
+  The system has been ported to HP and SGI workstations. 
+
+---------------------------------------------------------------------------
+
+Version 3.6.1 --- Version 3.7
+  
+  Elliptic curves and points of elliptic curves are now implemented in
+a more efficient manner. Many higher algorithms for elliptic curves are
+available in simcalc.
+
+  The arithmetic of finite fields is now available in simcalc. 
+  
+  A comprehensive Groebner bases algorithm has been added to the
+libraries.
+
+---------------------------------------------------------------------------
+
+Version 3.5 --- Version 3.6.1
+
+  The manual and the online help of simcalc are now available in
+English.
+
+  The libraries lib_ec3.a and lib_ec4.a and the headers _ec3.h, _ec4.h,
+_Tec3.h and _Tec4.h have been added. They will be used for elliptic
+curves in later releases of SIMATH.
+
+  A Groebner basis algorithm for several domains and the arithmetic of
+elliptic curves over finite fields of characteristic 2 have been added
+to the libraries.
+
+  The arithmetic of Z/pZ and number fields is now available in
+simcalc.
+

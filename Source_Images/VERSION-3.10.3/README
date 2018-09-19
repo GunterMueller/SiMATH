@@ -1,0 +1,88 @@
+
+-----------------------------------------------------------------------------
+
+This file is part of the computer algebra system SIMATH.
+
+SIMATH is a common software product of the SIMATH group in Saarbruecken
+and the Siemens AG. Copyright (C) 1992-1996 by the SIMATH group in
+Saarbruecken and the Siemens AG/Munich.
+
+The computer algebra system SIMATH is free software for universities
+and scientific research institutions as long as it is used for purely
+scientific purposes only. This software is distributed in the hope that
+it will be useful, but
+
+			WITHOUT ANY WARRANTY.
+
+
+Permission is hereby granted to copy the system for any 
+
+			PURELY SCIENTIFIC
+
+purposes, provided the above notices are retained on all copies.
+
+If you intend to use SIMATH for other applications, please contact
+	
+	SIEMENS AG
+	Corporate Research and Development
+	Dept. ZFE ST SN 3
+	D-81730 Munich
+
+Upon reception of this software, please send e-mail messages to
+
+	simath@math.uni-sb.de 			and to	
+	Pascale.Serf@zfe.siemens.de
+
+to inform us that you got a copy of the system. 
+
+Redistribution of this software - either in source or binary form - is
+not permitted.
+
+
+ -----------------------------------------------------------------------------
+
+  The computer algebra system SIMATH is written in C. It is being
+developed for research purposes by the SIMATH group of Prof. Dr. H.G.
+Zimmer at the University of Saarland in Saarbruecken, Germany. The
+development is being partially supported by the Siemens AG.
+
+  Up to now we are running SIMATH
+	on Sun workstations under SunOS 4.0.3 and SunOS 4.1.x,
+	on HP 9000 series 700 under HP-UX 9.05,
+	on Apollo DN 3000 and DN 4500 under SR10.1,
+	on SGI computers under IRIX 5.2 and
+	on PCs under different Linux kernels.
+It should not be too difficult to port SIMATH to other operating
+systems. If you are using a different machine (and/or operating
+system), you can (and you should) try to install SIMATH. If you are
+successful, please let us know. If you had to change some of the SIMATH
+source files, please inform us of the changes to be made.
+
+  Currently, SIMATH does not support any true 64 bit machine. We will
+try to port SIMATH to 64 bit computers as soon as we have one available.
+
+If you have any problems or suggestions, please contact us by mail:
+	SIMATH-Gruppe
+	Lehrstuhl Prof. Dr. H.G. Zimmer
+	FB 9 Mathematik
+	Universitaet des Saarlandes
+	Postfach 151150
+      D-66041 Saarbruecken
+       Germany
+or by e-mail:
+	simath@math.uni-sb.de
+or by phone:
+	+49 681/302-2206.
+
+  We have set up an experimental mailing list related to the SIMATH computer 
+algebra system. If you want to subscribe to this list send email to
+	majordomo@emmy.math.uni-sb.de
+and include the line 
+	subscribe simath-list
+in the body of your mail. The purpose of the list is to announce new versions 
+of SIMATH and to discuss anything which is related to SIMATH and of public 
+interest.
+
+  The latest version of SIMATH may be obtained by anonymous ftp from
+ftp.math.uni-sb.de (134.96.32.23) in the directory /pub/simath.
+

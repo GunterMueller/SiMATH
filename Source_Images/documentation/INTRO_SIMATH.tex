@@ -1,0 +1,291 @@
+\documentstyle{article}
+\newcommand {\Strichq}{ \vrule height0.6em width0.1em depth0em \, }
+\newcommand{ \Strichb}{ \vrule height0.68em width0.065em depth0em \, }
+\newcommand {\Strichqc}{ \vrule height0.6em width0.065em depth-0.1em \, }
+\newcommand {\Q}{{\rm{Q}}\hspace{-0.55em} \Strichq \ }
+\newcommand {\Z}{{{\sf Z}\hspace{-1.3mm}{\sf Z}}}
+\newcommand {\F}{{\rm{I\!F}}}
+\newcommand {\R}{\hbox{${{{\Strichb}\hspace{-0.65mm}{\sf R}}}$}}
+\newcommand {\C}{{\rm{C}}\hspace{-0.5em} \Strichqc \ }
+\textwidth 5.8in
+\oddsidemargin 0.5cm
+\evensidemargin 0.5cm
+\begin{document}
+\pagestyle{empty}
+\pagenumbering{empty}
+
+\noindent
+{\huge
+{\bf
+\begin{center}The computer algebra system SIMATH\end{center}
+}}
+\vspace{1cm}
+\begin{center}
+{\Large {\bf Preliminary remarks}}
+\end{center}
+
+\vspace{0.4cm}
+\noindent
+Since 1985, SIMATH is developed by the research group of 
+Prof.\ Dr.\ H.G.\ Zimmer at the Universitaet des Saarlandes in Saarbruecken
+(Germany), partially supported by the Siemens AG/Munich.
+
+\vspace{0.4cm}
+\noindent
+The main area of application is {\bf algebraic number theory}.
+
+\vspace{0.4cm}
+\noindent
+SIMATH is written {\bf in C}, thus it is not necessary to learn a 
+new programming language.
+
+\vspace{0.4cm}
+\noindent
+SIMATH is an {\bf open system}, the {\bf sources are being left open}, 
+i.e.\ it is easy to add the user's own algorithm at any point within the 
+system.
+
+\vspace{0.4cm}
+
+\noindent
+Up to now SIMATH runs on the following machines: 
+\begin{center}
+\begin{tabular}{l}
+SUN 3 and SUN SPARCstations\\
+Apollo DN 3000, DN 4500 and DN 10000 \\
+Solbourne 5E/900 \\
+SGI Challenge and Indigo \\
+HP 9000 series 7xx \\
+Linux (3/86 and 4/86) .
+\end{tabular} 
+\end{center}
+
+\vspace{0.4cm} 
+
+\noindent
+The latest version 3.9 of SIMATH may be obtained by {\bf anonymous ftp} from
+ftp.math.uni-sb.de (134.96.32.23) in /pub/simath.\\
+The installation of SIMATH is performed by makefiles and shellscripts.
+
+\vspace{0.4cm}
+
+\noindent
+If you have any problems or suggestions, please contact us by mail:
+\begin{center}
+\begin{tabular}{l}
+	SIMATH-Gruppe \\
+	Lehrstuhl Prof. Dr. H.G. Zimmer \\
+	FB 9 Mathematik \\
+	Universitaet des Saarlandes \\
+	Postfach 151150 \\
+	D--66041 Saarbruecken 
+\end{tabular}
+\end{center}
+or by e-mail: \hspace{2.5cm} {\bf simath@math.uni-sb.de} \\
+or by phone: \hspace{2.5cm} 0681/302-2206.\smallskip
+
+\noindent
+www: \hspace{3.6cm} {\bf http://emmy.math.uni-sb.de/${\bf \widetilde{~} }$simath/}
+
+\vspace{1cm}
+
+\begin{center}
+{\Large {\bf The main parts of SIMATH}}
+\end{center}
+
+\vspace{0.4cm}
+
+\noindent
+\begin{itemize}
+\item SIMATH libraries containing the SIMATH procedures, i.e.\ 
+C functions performing the memory administration or 
+solving problems in algebraic number theory
+
+\item the SIMATH shell {\bf SM}, a link between the operating 
+system and SIMATH (In {\bf SM} it is easy to edit, to compile
+and to administer programs and library archives.)
+
+\item the {\bf keyword index} and the {\bf online documentation}
+
+\item the {\bf interactive calculator simcalc},
+which makes most of the existing algorithms available in the course 
+of the dialogue
+
+\item include files and C functions which are used by the {\bf SM} 
+(e.g.\ the SIMATH preprocessor)
+
+\item the {\bf memory administration} which saves time and space
+because of the {\bf automatic garbage collector} and which is compatible
+with C functions like malloc and free and with various computer 
+architectures.
+\end{itemize}
+ 
+\newpage
+\noindent
+\begin{center}
+{\Large {\bf simcalc}}
+\end{center}
+
+\vspace{0.4cm}
+
+\noindent
+The calculator {\bf simcalc} is a user interface for solving problems
+to your specific need. It enables you to perform calculations in an
+extensive range and allows you the use of standard mathematical
+notation in a fully interactive environment. 
+
+\vspace{0.4cm}
+
+\noindent
+{\bf simcalc} handles calculations in
+\begin{itemize}
+\item $\Z$, $\Q$, $\R$ (with arbitrary precision), $\C$,
+$\Z/m\Z$, algebraic number fields $\Q(\alpha)$ and Galois-fields $\F_{p^n}$,
+
+\item $\Z[x_1,\ldots ,x_n]$, $\Q[x_1,\ldots ,x_n]$, 
+$\Z/m\Z[x_1,\ldots ,x_n]$, 
+$\Q(\alpha)[x_1,\ldots ,x_n]$, $\F_{p^n}[x_1,\ldots ,x_n]$
+and $\Q(x_1,\ldots ,x_n)$, $\R[x_1,\ldots ,x_n]$ and $\C[x_1,
+\ldots ,x_n]$,
+
+\item matrices and vectors over all these structures,
+
+\item elliptic curves (and their points) over $\Q$, $\F_p$, $\Q(\alpha)$ and $\F_{2^n}$.
+
+\end{itemize}
+
+\vspace{0.4cm}
+
+\noindent
+{\bf simcalc} is easy to use because of its
+built-in system facilities, e.g.
+\begin{itemize}
+\item user-defined functions
+\item loop constructions and if-statements
+\item substitution of variables in polynomial structures
+\item extensive and comprehensive on-line help
+\item complete set of on-line documentation
+\item input errors are intercepted by self-explanatory error messages
+\item you can edit your input line and use the history with the 
+usual keys of emacs
+\item you can use arrays as variable names
+\item variable store with the possibility to list it entirely or partly
+and to delete in it
+\item overwrite protection that can be switched on and off
+\item predefinitions by .simcalcrc
+\item data input from files
+\item data output on files
+\item statistical functions
+\item you can interrupt an output or a computation
+\item you are allowed to enter shell-commands and to branch into a 
+subshell.
+\end{itemize}
+\newpage
+
+
+\begin{center}
+{\Large {\bf The algorithms in SIMATH}}
+\end{center}
+
+\vspace{0.3cm}
+
+\noindent
+There are modified input/output functions for mathematical objects,
+e.g. rationals, polynomials, matrices.
+
+\vspace{0.4cm}
+
+\begin{center}
+{\large {\bf Arithmetic}}
+\end{center}
+
+\begin{itemize}
+\item multiple precision arithmetic over $\Z$, $\Q$, $\R$, $\C$,
+$\Z/m\Z$, $\F_{p^n}$, $\F_{2^n}$ (bitwise implementation), $\Q(\alpha)$,
+$\Q_p$, $\Q(x_1, \ldots, x_r)$ and $\F_p(x)$
+\item primality testing over $\Z$ (Goldwasser-Kilian-Atkin), construction of prime numbers
+\item computation of the order of elements in the multiplicative group
+of $\Z/m\Z$
+\item discriminant of number fields $\Q(\alpha)$
+\item decomposition law for primes in $\Q(\alpha)$ 
+\item extensions of $p$--adic valuations of $\Q(\alpha)$
+\item LLL-reduction for lattices in $\Q^n$ 
+\item determining the minimal polynomials for elements of a number field or
+	an algebraic congruence function field
+\item ROUND 4 algorithm (Ford/Zassenhaus) for determining integral bases
+	in number fields or in algebraic congruence function fields 
+\item divisor and ideal class number in quadratic congruence function fields 
+\item optimized continued fractions algorithm for determining 
+	fundamental units and regulators in real quadratic 
+	congruence function fields	
+\item optimized baby step - giant step - algorithm for determing
+	regulators in real quadratic congruence function fields 
+\item relative class numbers of abelian number fields with odd prime
+power conductor.
+\end{itemize}
+
+\vspace{0.4cm}
+
+\begin{center}
+{\large {\bf Elliptic Curves}}
+\end{center}
+
+\begin{itemize}
+\item arithmetic for elliptic curves over $\Q$, $\Q(\alpha)$, $\F_p$ and $\F_{2^n}$
+\item special concept for elliptic curves (An elliptic curve is a list
+of 4 lists $(L_1, L_2, L_3, L_4)$, where $L_1$ contains the datas of the
+actual model, $L_2$ of the minimal model, $L_3$ of the short Weierstra\ss ~normal form
+and $L_4$ the invariants of the elliptic curve. All datas once computed
+are stored so that if they are again required they are read out of the
+lists.)
+\item structure and generators of the torsion group of an elliptic curve over $\Q$ 
+\item rank and basis of the Mordell-Weil group of an elliptic curve over $\Q$ 
+\item regulator and order of the Tate-Shafarevich group of an elliptic curve over $\Q$ 
+\item L-series and its derivations at $s=1$ of an elliptic curve over $\Q$
+\item determination of all integral points of an elliptic curve over $\Q$ 
+\item construction of elliptic curves with a group of rational points with given isomorphism type
+\item global minimal model of elliptic curves over $\Q$ due to Laska
+\item conductor, reduction type and local minimal model of elliptic curves over $\Q$
+	and $\Q(\sqrt{d})$ due to Tate
+\item N\'eron-Tate height for elliptic curves over $\Q$
+\item determining the number of rational points of elliptic curves over 
+	$\F_p$ or $\F_{2^n}$ (combined Schoof/Shanks method and Pollards
+	$\lambda-$method).
+\end{itemize}
+
+\vspace{0.4cm}
+
+\begin{center}
+{\large {\bf Polynomials}}
+\end{center}
+
+\begin{itemize}
+\item arithmetic for multivariate polynomials over $\Z$, $\Q$, $\Q(\alpha)$,
+$\Q(x)$, $\Q_p$, $\Z/m\Z$, $\F_{p^n}$ and $\F_{2^n}$
+\item Buchberger algorithm for determining Gr\"obner bases 
+      for polynomials over $\Z$, $\F_p$, $\F_{p^n}$, $\Q$,
+	$\Q(\alpha)$, $\Q(x)$ and $\Z[x_1, \ldots, x_n]$
+\item factorization of univariate polynomials over $\F_p$
+	and $\F_{p^n}$ due to Berlekamp, Cantor/Zassen\-haus, Ben Or and
+	Niederreiter
+\item factorization of multivariate polynomials over $\Z$ and 
+$\Q(\alpha)$.
+\end{itemize}
+
+\vspace{0.4cm}
+
+\begin{center}
+{\large {\bf Matrices and vectors }}
+\end{center}
+
+\begin{itemize}
+\item arithmetic for matrices and vectors, inverse, transpose, trace, 
+      determinant, rank, characteristic polynomial for matrices over
+	$\Z$, $\Z/m\Z$, $\F_{p^n}$, $\Q$, $\Q(\alpha)$,
+	the polynomial rings over these structures,
+	$\F_p(x)$ and $\Q(x_1, \ldots, x_r)$
+\item Hermite normal form for matrices over $\Z$
+\item elementary divisor form for matrices over $\Z$, $\F_p[x]$ and
+$\Q[x]$.
+\end{itemize}
+\end{document}
